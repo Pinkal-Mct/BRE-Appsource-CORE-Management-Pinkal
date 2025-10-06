@@ -86,6 +86,15 @@ pageextension 50101 "Item Card Ext" extends "Item Card"
         {
             caption = 'Unit';
         }
+        addafter("No.")
+        {
+            group(DescriptionGrp)
+            {
+                ShowCaption = false;
+                Visible = isVenderService or Unitcharges or isUnitService;
+            }
+        }
+        movefirst(DescriptionGrp; Description)
         addafter(Type)
         {
             group("Unit Charges Description")
@@ -120,7 +129,6 @@ pageextension 50101 "Item Card Ext" extends "Item Card"
                 }
             }
         }
-        movefirst("Unit Charges Description"; Description)
         addafter("Base Unit of Measure")
         {
             group("BaseUnitofMeasure")
@@ -489,6 +497,8 @@ pageextension 50101 "Item Card Ext" extends "Item Card"
         hideshowfields := hidefields();
         editablefalsefieldNonInventoryType := editablefalseNonInventory();
         Unitcharges := UnitChargesFieldsVisiblity();
+        isUnitService := EvaluateFastTabVisibility();
+        isVenderService := EvaluateFastTabVisibilityService();
     end;
 
     procedure SetPrimaryType(): Boolean

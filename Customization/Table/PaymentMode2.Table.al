@@ -168,11 +168,9 @@ table 50925 "Payment Mode2"
                         end;
                     Rec."Payment Status"::Cancelled:
                         begin
-                            emailrec.SendEmailCancelled(Rec); // Call for Cancelled status
+                            emailrec.SendEmailCancelled(Rec);
                             Rec.Validate("Cheque Status", Rec."Cheque Status"::Retrieved);
                         end;
-                    Rec."Payment Status"::Overdue:
-                        emailrec.SendEmailOverdue(Rec); // Call for Overdue status
                 end;
             end;
         }
@@ -186,7 +184,8 @@ table 50925 "Payment Mode2"
                 if (Rec."Cheque Status" in [Rec."Cheque Status"::Cleared, Rec."Cheque Status"::Deposited, Rec."Cheque Status"::Returned]) then
                     Rec."Deposit Status" := Rec."Deposit Status"::"Y"
                 else
-                    Rec."Deposit Status" := Rec."Deposit Status"::"N";
+                    Rec."Deposit Status" := Rec."Deposit Status"::"-";
+
                 if (Rec."Cheque Status" = Rec."Cheque Status"::Cleared) then
                     Rec."Payment Status" := Rec."Payment Status"::"Received";
                 pdcTransRec.SetRange("payment Series", Rec."Payment Series");
@@ -473,13 +472,12 @@ table 50925 "Payment Mode2"
     var
         emailrec: Codeunit "Send PaymentMode Email";
     begin
-        case Rec."Payment Status" of
-            Rec."Payment Status"::Received:
-                emailrec.SendEmail(Rec);
-            Rec."Payment Status"::Cancelled:
-                emailrec.SendEmailCancelled(Rec);
-            Rec."Payment Status"::Overdue:
-                emailrec.SendEmailOverdue(Rec);
-        end;
+        if Rec."Payment Status" <> xRec."Payment Status" then
+            case Rec."Payment Status" of
+                Rec."Payment Status"::Received:
+                    emailrec.SendEmail(Rec);
+                Rec."Payment Status"::Cancelled:
+                    emailrec.SendEmailCancelled(Rec);
+            end;
     end;
 }

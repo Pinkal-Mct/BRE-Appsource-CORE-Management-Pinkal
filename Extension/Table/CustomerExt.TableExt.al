@@ -7,7 +7,7 @@ tableextension 50101 "Customer Ext" extends Customer
             DataClassification = ToBeClassified;
             Caption = 'Username';
         }
-        field(50102; "Password"; Code[30])
+        field(50102; "Password"; Text[30])
         {
             DataClassification = ToBeClassified;
             Caption = 'Password';

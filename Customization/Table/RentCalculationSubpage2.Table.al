@@ -94,6 +94,10 @@ table 50944 "Rent Calculation Subpage2"
             Caption = 'Primary Classification';
             DataClassification = ToBeClassified;
         }
+        field(50118; "Revenue Str. Subpage Entry No."; Integer)
+        {
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {

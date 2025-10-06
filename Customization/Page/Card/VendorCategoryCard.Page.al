@@ -26,6 +26,11 @@ page 50955 "Vendor Category Card"
                     ToolTip = 'Enter the Vendor Categoryname.';
                     ShowMandatory = true;
                     NotBlank = true;
+
+                    trigger OnValidate()
+                    begin
+                        CurrPage.SaveRecord();
+                    end;
                 }
             }
         }
