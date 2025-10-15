@@ -110,7 +110,6 @@ table 50318 "Contract Renewal"
                     "Unit Type" := TenancyContractRec."Unit Type";
                     "Usage Type" := TenancyContractRec."Usage Type";
                 end else begin
-                    // Clear fields if no record is found
                     Clear("Contract Start Date");
                     Clear("Contract End Date");
                     Clear("Contract Amount");
@@ -127,12 +126,24 @@ table 50318 "Contract Renewal"
             DataClassification = ToBeClassified;
 
             trigger OnValidate()
+            var
+                TenancyContractRec: Record "Tenancy Contract";
+                ErrorLbl: Label 'Renewal contract start date (%1) must be after the original contract end date (%2).';
+                ErrorMsg: Text;
             begin
                 CalculateLeaseDuration();
+
+                if "Contract ID" <> 0 then begin
+                    TenancyContractRec.SetRange("Contract ID", "Contract ID");
+                    if TenancyContractRec.FindFirst() then
+                        if "Contract Start Date" <> 0D then
+                            if "Contract Start Date" <= TenancyContractRec."Contract End Date" then begin
+                                ErrorMsg := StrSubstNo(ErrorLbl, "Contract Start Date", TenancyContractRec."Contract End Date");
+                                Error(ErrorMsg);
+                            end;
+                end;
             end;
-
         }
-
         field(50104; "Contract End Date"; Date)
         {
             DataClassification = ToBeClassified;
@@ -147,17 +158,14 @@ table 50318 "Contract Renewal"
         {
             DataClassification = ToBeClassified;
         }
-
         field(50106; "Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
         }
-
         field(50107; "Unit Name"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-
         field(50108; "Property ID"; Code[20])
         {
             DataClassification = ToBeClassified;
@@ -257,32 +265,32 @@ table 50318 "Contract Renewal"
                 MergeUnitLeaseGrid: Record "CR Sub Lease Merged Units";
                 mergeUnitId: Integer;
             begin
-                Evaluate(mergeUnitId, Rec."Merge Unit ID");
-                MergeUnitLeaseGrid.SetRange("Merge Unit ID", FORMAT(mergeUnitId));
-                if MergeUnitLeaseGrid.FindSet() then
-                    repeat
-                        MergeUnitLeaseGrid.Delete();
-                    until MergeUnitLeaseGrid.Next() = 0;
-                MergeUnitGrid.SetRange("Merged Unit ID", mergeUnitId);
-                if MergeUnitGrid.FindSet() then
-                    repeat
-                        MergeUnitLeaseGrid.Init();
-                        MergeUnitLeaseGrid."Merge Unit ID" := FORMAT(MergeUnitGrid."Merged Unit ID");
-                        MergeUnitLeaseGrid."ID" := Rec."ID";
-                        MergeUnitLeaseGrid."Single Unit Name" := MergeUnitGrid."Single Unit Name";
-                        MergeUnitLeaseGrid."Unit ID" := MergeUnitGrid."Unit ID";
-                        MergeUnitLeaseGrid."Base Unit of Measure" := MergeUnitGrid."Base Unit of Measure";
-                        MergeUnitLeaseGrid."Unit Size" := MergeUnitGrid."Unit Size";
-                        MergeUnitLeaseGrid."Unit Name" := MergeUnitGrid."Unit Name";
-                        MergeUnitLeaseGrid."Market Rate per Square" := MergeUnitGrid."Market Rate per Square";
-                        MergeUnitLeaseGrid.Amount := MergeUnitGrid.Amount;
-                        MergeUnitLeaseGrid.Insert();
-                    until MergeUnitGrid.Next() = 0;
+                if Rec."Merge Unit ID" <> '' then begin
 
+                    Evaluate(mergeUnitId, Rec."Merge Unit ID");
 
+                    MergeUnitLeaseGrid.SetRange("Merge Unit ID", FORMAT(mergeUnitId));
+                    if MergeUnitLeaseGrid.FindSet() then
+                        repeat
+                            MergeUnitLeaseGrid.Delete();
+                        until MergeUnitLeaseGrid.Next() = 0;
 
-
-
+                    MergeUnitGrid.SetRange("Merged Unit ID", mergeUnitId);
+                    if MergeUnitGrid.FindSet() then
+                        repeat
+                            MergeUnitLeaseGrid.Init();
+                            MergeUnitLeaseGrid."Merge Unit ID" := FORMAT(MergeUnitGrid."Merged Unit ID");
+                            MergeUnitLeaseGrid."ID" := Rec."ID";
+                            MergeUnitLeaseGrid."Single Unit Name" := MergeUnitGrid."Single Unit Name";
+                            MergeUnitLeaseGrid."Unit ID" := MergeUnitGrid."Unit ID";
+                            MergeUnitLeaseGrid."Base Unit of Measure" := MergeUnitGrid."Base Unit of Measure";
+                            MergeUnitLeaseGrid."Unit Size" := MergeUnitGrid."Unit Size";
+                            MergeUnitLeaseGrid."Unit Name" := MergeUnitGrid."Unit Name";
+                            MergeUnitLeaseGrid."Market Rate per Square" := MergeUnitGrid."Market Rate per Square";
+                            MergeUnitLeaseGrid.Amount := MergeUnitGrid.Amount;
+                            MergeUnitLeaseGrid.Insert();
+                        until MergeUnitGrid.Next() = 0;
+                end;
             end;
 
         }

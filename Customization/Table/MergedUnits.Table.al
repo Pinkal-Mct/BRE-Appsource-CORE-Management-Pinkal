@@ -67,7 +67,7 @@ table 50310 "Merged Units"
             DataClassification = ToBeClassified;
             Caption = 'Total Amount';
         }
-        field(50109; "Property Type"; Code[20])
+        field(50109; "Property Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Type';

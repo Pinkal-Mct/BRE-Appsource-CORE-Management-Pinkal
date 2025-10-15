@@ -26,6 +26,11 @@ page 50959 "Calculation Type Card"
                     ToolTip = 'Enter the Vendor Categoryname.';
                     ShowMandatory = true;
                     NotBlank = true;
+
+                    trigger OnValidate()
+                    begin
+                        CurrPage.SaveRecord();
+                    end;
                 }
             }
         }

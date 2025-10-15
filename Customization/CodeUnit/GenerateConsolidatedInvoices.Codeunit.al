@@ -12,7 +12,7 @@ codeunit 50106 GenerateConsolidatedInvoices
         paymentschedule2grid: Record "Payment Schedule2";
         customercard: Record Customer;
         salesheader1card: Record "Sales Header";
-        slaesheader1card1: Record "Sales Header";
+        salesheader1card1: Record "Sales Header";
         paymentschedulecardpage: Record "Payment Schedule";
         todaydate: Date;
         currentdate: Date;
@@ -20,6 +20,7 @@ codeunit 50106 GenerateConsolidatedInvoices
         todaydate := Today();
         currentdate := Today();
         paymentScheudle3.SetFilter("Due Date", '<%1', todaydate);
+        paymentScheudle3.SetFilter("Installment No.", '>%1', 1);
         paymentScheudle3.SetRange("Contract Status", 'Active');
         if paymentScheudle3.FindSet() then
             repeat
@@ -114,23 +115,23 @@ codeunit 50106 GenerateConsolidatedInvoices
                                 if salesheader1card.FindSet() then
                                     createSalesLines(salesheader1card, paymentschedule2grid)
                                 else begin
-                                    slaesheader1card1 := CreateSalesInvoice(paymentschedule2grid."Tenant ID", paymentschedule2grid."Due Date", paymentschedule2grid."Contract ID", paymentschedule2grid."Tenant Name", paymentschedule2grid."Property Classification");
-                                    customercard.SetRange("No.", slaesheader1card1."Sell-to Customer No.");
+                                    salesheader1card1 := CreateSalesInvoice(paymentschedule2grid."Tenant ID", paymentschedule2grid."Due Date", paymentschedule2grid."Contract ID", paymentschedule2grid."Tenant Name", paymentschedule2grid."Property Classification");
+                                    customercard.SetRange("No.", salesheader1card1."Sell-to Customer No.");
                                     if customercard.FindSet() then
-                                        if slaesheader1card1."Property Classification" <> '' then begin
-                                            customercard.Validate("Gen. Bus. Posting Group", slaesheader1card1."Property Classification");
-                                            customercard.Validate("Customer Posting Group", slaesheader1card1."Property Classification");
+                                        if salesheader1card1."Property Classification" <> '' then begin
+                                            customercard.Validate("Gen. Bus. Posting Group", salesheader1card1."Property Classification");
+                                            customercard.Validate("Customer Posting Group", salesheader1card1."Property Classification");
                                             customercard.Modify();
                                         end;
-                                    if slaesheader1card1."Property Classification" <> '' then begin
-                                        slaesheader1card1.Validate("Gen. Bus. Posting Group", slaesheader1card1."Property Classification");
-                                        slaesheader1card1.Validate("Customer Posting Group", slaesheader1card1."Property Classification");
-                                        slaesheader1card1.Modify();
+                                    if salesheader1card1."Property Classification" <> '' then begin
+                                        salesheader1card1.Validate("Gen. Bus. Posting Group", salesheader1card1."Property Classification");
+                                        salesheader1card1.Validate("Customer Posting Group", salesheader1card1."Property Classification");
+                                        salesheader1card1.Modify();
                                     end;
-                                    createSalesLines(slaesheader1card1, paymentschedule2grid);
+                                    createSalesLines(salesheader1card1, paymentschedule2grid);
                                 end;
                                 paymentschedule2grid.Invoiced := true;
-                                paymentschedule2grid."Invoice ID" := slaesheader1card1."No.";
+                                paymentschedule2grid."Invoice ID" := salesheader1card1."No.";
                                 paymentschedule2grid.Modify();
                             end;
                     end;

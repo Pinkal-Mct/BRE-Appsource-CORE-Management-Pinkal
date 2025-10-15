@@ -92,7 +92,6 @@ permissionset 50100 TablePermission
         tabledata "Revenue Structure Subpage1" = RIMD,
         tabledata "RevenueRecognition Othercharge" = RIMD,
         tabledata "Secondary Classification" = RIMD,
-        tabledata "Secondary Item" = RIMD,
         tabledata "Security Deposit" = RIMD,
         tabledata "Security Deposit Entry" = RIMD,
         tabledata "Security Deposite Ledger" = RIMD,
@@ -213,7 +212,6 @@ permissionset 50100 TablePermission
         table "Revenue Structure Subpage1" = X,
         table "RevenueRecognition Othercharge" = X,
         table "Secondary Classification" = X,
-        table "Secondary Item" = X,
         table "Security Deposit" = X,
         table "Security Deposit Entry" = X,
         table "Security Deposite Ledger" = X,
@@ -401,5 +399,9 @@ permissionset 50100 TablePermission
         page "Primary Item Card" = X,
         page "Property Type Card" = X,
         page "Secondary Classification Card" = X,
-        page "Vendor Category Card" = X;
+        page "Vendor Category Card" = X,
+        tabledata OverDuePaymentmode = RIMD,
+        table OverDuePaymentmode = X,
+        codeunit OverduePaymentReq = X,
+        codeunit "Send Email Paymentmode Overdue" = X;
 }

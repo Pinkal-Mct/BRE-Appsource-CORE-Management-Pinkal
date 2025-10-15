@@ -17,9 +17,12 @@ codeunit 50302 "Send Email To PropertyManager"
                     if UserRec."Contact Email" <> '' then
                         EmailAddress.Add(UserRec."Contact Email");
                 Username := UserRec."User Name";
-            until UserPersonalizationRec.Next() = 0;
+            until UserPersonalizationRec.Next() = 0
+        else
+            Error('No users found with PROFILE ID PROPERTY MANAGER.');
+
         if EmailAddress.Count = 0 then
-            Error('No valid email addresses found for PROPERTY MANAGER.');
+            Error('No email addresses found for users with PROFILE ID PROPERTY MANAGER.');
         if Rec."Lease_M Status" = 'Approved' then
             if CompanyInfo.Get() then begin
                 EmailMessage.Create(

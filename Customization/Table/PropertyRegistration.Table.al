@@ -99,15 +99,7 @@ table 50303 "Property Registration"
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Type';
-            TableRelation = "Property Type" where("Classification Name" = field("Property Classification"));
-
-            trigger OnValidate()
-            var
-                propertyType: Record "Property Type";
-            begin
-                if propertyType.Get(Rec."Property Type") then
-                    Rec."Property Type" := propertyType."Property Type";
-            end;
+            TableRelation = "Property Type"."Property Type" where("Classification Name" = field("Property Classification"));
         }
         field(50112; "Registration Date"; Date)
         {

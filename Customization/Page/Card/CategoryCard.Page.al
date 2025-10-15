@@ -35,10 +35,19 @@ page 50905 "Category Card"
                     ToolTip = 'Enter the Category Types.';
                     ShowMandatory = true;
                     NotBlank = true;
+
+                    trigger OnValidate()
+                    begin
+                        CurrPage.SaveRecord();
+                    end;
                 }
             }
         }
     }
 
-
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        Rec.TestField("Primary Item Type");
+        Rec.TestField("Category Types");
+    end;
 }

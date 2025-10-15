@@ -9,7 +9,7 @@ codeunit 50950 "Azure AD Blob Storage"
         fileExtension: Text;
         fileSize: Decimal;
     begin
-        if not azureConfig.IsEmpty() then
+        if azureConfig.IsEmpty() then
             Error('Azure configuration is missing. Please set up the configuration.');
         validFormats.Add('.pdf');
         validFormats.Add('.docx');

@@ -259,7 +259,7 @@ table 50307 "Tenancy Contract"
             Caption = 'Single Unit ID';
             TableRelation = "Item"."No." where("Property ID" = field("Property ID"));
         }
-        field(50128; "Emirates ID"; Code[15])
+        field(50128; "Emirates ID"; Code[25])
         {
             DataClassification = ToBeClassified;
             Caption = 'Emirates ID';

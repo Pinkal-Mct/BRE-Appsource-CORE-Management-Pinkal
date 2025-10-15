@@ -1,6 +1,8 @@
 tableextension 50102 "Item Ext" extends Item
 {
     Caption = 'Unit';
+    DataCaptionFields = "No.";
+
     fields
     {
         field(50100; "UnitID"; code[100])
@@ -19,6 +21,7 @@ tableextension 50102 "Item Ext" extends Item
             begin
                 PropertyRec.SetRange("Property ID", Rec."Property ID");
                 if PropertyRec.FindFirst() then begin
+                    "Property Name" := PropertyRec."Property Name";
                     "Usage Type" := PropertyRec."Property Classification";
                     Country := PropertyRec.Country;
                     "Emirate Name" := PropertyRec."Emirate Name";
@@ -130,7 +133,7 @@ tableextension 50102 "Item Ext" extends Item
             DataClassification = ToBeClassified;
             Caption = 'Community';
         }
-        field(50117; "Unit Address"; Code[250])
+        field(50117; "Unit Address"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Address';
@@ -200,16 +203,15 @@ tableextension 50102 "Item Ext" extends Item
         {
             DataClassification = ToBeClassified;
             Caption = 'Category';
-            TableRelation = "Category Type"."Category Types";
+            TableRelation = "Category Type";
             trigger OnValidate()
             var
                 CategoryType: Record "Category type";
             begin
-                CategoryType.SetRange("Category Types", Rec."Category Types");
-                if CategoryType.FindFirst() then
-                    "Primary Item Type" := CategoryType."Primary Item Type"
-                else
-                    "Primary Item Type" := '';
+                if CategoryType.Get("Category Types") then begin
+                    "Category Types" := CategoryType."Category Types";
+                    "Primary Item Type" := CategoryType."Primary Item Type";
+                end;
             end;
         }
         field(50147; "VAT Type"; Option)
@@ -238,6 +240,14 @@ tableextension 50102 "Item Ext" extends Item
         {
             OptionMembers = " ","Regular Charges","Additional Charges";
             Caption = 'Charges Status';
+        }
+        field(50150; "Inventory Unit Status"; Option)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Unit Status';
+            OptionMembers = " ",Free,Reserved,Sold;
+            OptionCaption = ' ,Free,Reserved,Sold';
+            Editable = true;
         }
     }
     procedure CalculateAmount()

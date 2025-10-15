@@ -26,6 +26,11 @@ page 50902 "Primary Item Card"
                     ToolTip = 'Enter the primary classification name.';
                     ShowMandatory = true;
                     NotBlank = true;
+
+                    trigger OnValidate()
+                    begin
+                        CurrPage.SaveRecord();
+                    end;
                 }
             }
         }
