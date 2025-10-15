@@ -22,8 +22,13 @@ codeunit 50502 "Send Proposal Email"
     begin
         ReportID := 50102;
         SecondReportID := 50110;
+
         ConsolidatedInvoiceHeader.SetRange("Proposal ID", Rec."Proposal ID");
         if ConsolidatedInvoiceHeader.FindSet() then begin
+
+            if ConsolidatedInvoiceHeader."Tenant Contact Email" = '' then
+                Error('The email ID is blank. Please enter the email ID first.');
+
             RecRef.GetTable(ConsolidatedInvoiceHeader);
             TempBlob.CreateOutStream(OutStream);
             Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);

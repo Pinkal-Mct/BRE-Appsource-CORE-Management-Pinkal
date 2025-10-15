@@ -241,6 +241,14 @@ tableextension 50102 "Item Ext" extends Item
             OptionMembers = " ","Regular Charges","Additional Charges";
             Caption = 'Charges Status';
         }
+        field(50150; "Inventory Unit Status"; Option)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Unit Status';
+            OptionMembers = " ",Free,Reserved,Sold;
+            OptionCaption = ' ,Free,Reserved,Sold';
+            Editable = true;
+        }
     }
     procedure CalculateAmount()
     var
