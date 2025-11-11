@@ -126,8 +126,11 @@ table 50925 "Payment Mode2"
                 case Rec."Payment Status" of
                     Rec."Payment Status"::Received:
                         begin
+                            GenerateReceiptNumber();
+                            Rec.Modify();
+
                             if Rec."Payment Mode" = 'Cheque' then
-                                Rec."Cheque Status" := Rec."Cheque Status"::Cleared;
+                                Rec.Validate("Cheque Status", Rec."Cheque Status"::Cleared);
 
                             CashReceiptJournalCodeunit.CreateCashReceiptJournal(Rec);
                             Email.SendEmail(Rec);
@@ -142,12 +145,11 @@ table 50925 "Payment Mode2"
                             if not paymentmode2Grid.FindFirst() then
                                 Error('Not avavilable');
                             RecRef.GetTable(paymentmode2Grid);
-                            RecRef.GetTable(Rec);
                             TempBlob.CreateOutStream(OutStream);
                             Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
                             TempBlob.CreateInStream(inStream);
 
-                            fileName := 'Invoice_' + Format(Rec."Contract ID") + Rec."Payment Series" + '.pdf';
+                            fileName := Rec."Receipt #" + '.pdf';
 
                             folderName := 'Payment Receipt';
                             uploadResult := CopyStr(azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName), 1, 250);
@@ -256,21 +258,21 @@ table 50925 "Payment Mode2"
             Caption = 'Total Amount';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Payment Mode2".Amount where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
+            CalcFormula = sum("Payment Mode2".Amount where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID"), "Payment Status" = filter(<> 'Cancelled')));
         }
         field(50912; "Total VAT Amount"; Decimal)
         {
             Caption = 'Total VAT Amount';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Payment Mode2"."VAT Amount" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
+            CalcFormula = sum("Payment Mode2"."VAT Amount" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID"), "Payment Status" = filter(<> 'Cancelled')));
         }
         field(50913; "Total Amount Including VAT"; Decimal)
         {
             Caption = 'Total Amount Including VAT';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Payment Mode2"."Amount Including VAT" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
+            CalcFormula = sum("Payment Mode2"."Amount Including VAT" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID"), "Payment Status" = filter(<> 'Cancelled')));
         }
         field(50110; "Tenant Id"; Code[20])
         {
@@ -461,12 +463,6 @@ table 50925 "Payment Mode2"
             Caption = 'Dropdown';
         }
     }
-    trigger OnInsert()
-    begin
-        if Rec."Payment Mode" = 'Cheque' then
-            if DelChr(Rec."Cheque Number", '=', ' ') = '' then
-                Error('Cheque Number cannot be blank when Payment Mode is Cheque.');
-    end;
 
     trigger OnModify()
     var
@@ -479,5 +475,16 @@ table 50925 "Payment Mode2"
                 Rec."Payment Status"::Cancelled:
                     emailrec.SendEmailCancelled(Rec);
             end;
+    end;
+
+    procedure GenerateReceiptNumber()
+    var
+        noSeriesSetup: Record "No. Series Setup";
+        noseries: Codeunit "No. Series";
+    begin
+        if noSeriesSetup.Get() then
+            Rec."Receipt #" := noseries.GetNextNo(noSeriesSetup."Payment Receipt ID Nos.")
+        else
+            Error('No. Series Setup not found for Construction Project Nos.');
     end;
 }

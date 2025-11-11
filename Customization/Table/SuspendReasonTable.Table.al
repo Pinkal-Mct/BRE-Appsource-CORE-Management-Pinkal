@@ -229,7 +229,7 @@ table 50312 SuspendReasonTable
                 if ReleaseUnits = ReleaseUnits::"Yes" then begin
                     if ("Proposal ID" = 0) or ("Contract ID" = 0) then
                         Error('Proposal ID and Contract ID must be specified.');
-                    if TenancyContract.Get("Proposal ID", "Contract ID") then begin
+                    if TenancyContract.Get("Contract ID") then begin
                         TenancyContract."Update Contract Status" := TenancyContract."Update Contract Status"::"Initiate Under Suspension-Unit Released";
                         TenancyContract.Modify();
                     end else

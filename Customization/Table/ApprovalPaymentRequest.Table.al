@@ -87,6 +87,22 @@ table 50702 "Approval Payment Request"
             DataClassification = ToBeClassified;
             Caption = 'Items';
         }
+        field(50119; "Payment mode ID"; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Payment mode ID';
+        }
+        field(50120; "C_Cheque_Number"; Text[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Cheque Number';
+        }
+        field(50121; "C_Deposit_Bank"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Deposit Bank';
+            TableRelation = "Bank Account";
+        }
     }
     keys
     {

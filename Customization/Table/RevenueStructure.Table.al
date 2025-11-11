@@ -78,6 +78,11 @@ table 50911 "Revenue Structure"
             Caption = 'VAT %';
             Editable = false;
         }
+        field(50111; "Entry No"; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
     }
     keys
     {

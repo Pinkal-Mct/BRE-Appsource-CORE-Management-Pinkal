@@ -79,16 +79,12 @@ table 50308 "Lease Proposal Details"
                     "Usage Type" := ItemRec."Usage Type";
                     "Unit Type" := ItemRec."Unit Type";
                     "Unit Size" := ItemRec."Unit Size";
-                    "Unit Address" := ItemRec."Unit Address";
+                    "Unit Address" := CopyStr(ItemRec."Unit Address", 1, strlen(ItemRec."Unit Address"));
                     "Unit Name" := ItemRec."Unit Name";
                     "UnitID" := ItemRec."UnitID";
                     "Market Rate per Sq. Ft." := ItemRec."Market Rate per Sq. Ft.";
-                    case ItemRec."Usage Type" of
-                        'Commercial':
-                            Validate("Rent Amount VAT %", "Rent Amount VAT %"::"5%");
-                        else
-                            Validate("Rent Amount VAT %", "Rent Amount VAT %"::"0%");
-                    end;
+
+                    SetRentAmountVAT();
                     ItemRec."Unit Status" := ItemRec."Unit Status"::Selected;
                     ItemRec.Modify();
                 end;
@@ -436,6 +432,8 @@ table 50308 "Lease Proposal Details"
                         "Market Rate per Sq. Ft." := MergedUnitRec."Market Rate per Square";
                         "Single Unit Name" := MergedUnitRec."Single Unit Name";
                         "Unit Number" := MergedUnitRec."Unit Number";
+                        SetRentAmountVAT();
+
                         if MergedUnitRec."Status" = MergedUnitRec."Status"::Free then begin
                             MergedUnitRec."Status" := MergedUnitRec."Status"::Selected; // Set to Selected status
                             MergedUnitRec.Modify();
@@ -1226,6 +1224,20 @@ table 50308 "Lease Proposal Details"
         if (Year mod 4 = 0) and ((Year mod 100 <> 0) or (Year mod 400 = 0)) then
             exit(true);
         exit(false);
+    end;
+
+    procedure SetRentAmountVAT()
+    var
+        UsageTypeTxt: Text;
+    begin
+        UsageTypeTxt := UpperCase(Rec."Usage Type");
+
+        case UsageTypeTxt of
+            'COMMERCIAL':
+                "Rent Amount VAT %" := "Rent Amount VAT %"::"5%";
+            else
+                "Rent Amount VAT %" := "Rent Amount VAT %"::"0%";
+        end;
     end;
 
     procedure ValidateRecord()

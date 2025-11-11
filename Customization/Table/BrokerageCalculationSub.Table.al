@@ -9,7 +9,7 @@ table 50964 "Brokerage Calculation Sub"
             Caption = 'Owner ID';
             Editable = false;
         }
-        field(50101; "Owner Name"; Code[20])
+        field(50101; "Owner Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Owner Name';
@@ -39,7 +39,7 @@ table 50964 "Brokerage Calculation Sub"
             Caption = 'End Date';
             Editable = false;
         }
-        field(50106; "Tenant Name"; Code[20])
+        field(50106; "Tenant Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Name';
@@ -51,13 +51,13 @@ table 50964 "Brokerage Calculation Sub"
             Caption = 'Property Name';
             Editable = false;
         }
-        field(50108; "Unit Name"; Code[20])
+        field(50108; "Unit Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Name';
             Editable = false;
         }
-        field(50109; "Unit Number"; Code[20])
+        field(50109; "Unit Number"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Number';
@@ -69,7 +69,7 @@ table 50964 "Brokerage Calculation Sub"
             Caption = 'Vendor ID';
             Editable = false;
         }
-        field(50111; "Vendor Name"; Code[20])
+        field(50111; "Vendor Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Name';
@@ -93,7 +93,7 @@ table 50964 "Brokerage Calculation Sub"
             Caption = 'Paid By';
             OptionMembers = " ","Owner","Tenant";
         }
-        field(50115; "Remark"; Text[20])
+        field(50115; "Remark"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Remark';
