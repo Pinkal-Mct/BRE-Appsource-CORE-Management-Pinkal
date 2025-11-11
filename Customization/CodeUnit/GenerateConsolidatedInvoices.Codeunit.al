@@ -186,6 +186,7 @@ codeunit 50106 GenerateConsolidatedInvoices
         saleline.Validate("Type", saleline.Type::Item);
         saleline.Validate("Sell-to Customer No.", salesheader1."Sell-to Customer No.");
         item.SetRange(Description, newpaymentschedule2."Secondary Item Type");
+        item.SetFilter("Charges Status", '<>%1', item."Charges Status"::" ");
         if item.FindFirst() then begin
             saleline.Validate("No.", item."No.");
             saleline.Validate(Description, item.Description);

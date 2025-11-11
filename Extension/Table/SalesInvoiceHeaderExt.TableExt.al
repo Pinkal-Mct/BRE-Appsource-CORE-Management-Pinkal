@@ -77,6 +77,7 @@ tableextension 50504 "Sales Invoice Header Ext" extends "Sales Invoice Header"
     trigger OnAfterInsert()
     var
         paymentschedule2: Record "Payment Schedule2";
+        paymentschedule2Rec: Record "Payment Schedule2";
         additionalcharges: Record "Additional Charges Sub";
         billingcalculationgrid: Record "Final Billing Calculation Grid";
     begin
@@ -87,6 +88,14 @@ tableextension 50504 "Sales Invoice Header Ext" extends "Sales Invoice Header"
                 paymentschedule2."Invoice ID" := Rec."No.";
                 paymentschedule2.Modify();
             until paymentschedule2.Next() = 0;
+
+        paymentschedule2Rec.SetRange("Contract ID", Rec."Contract ID");
+        paymentschedule2Rec.SetRange("Invoice ID", Rec."No.");
+        if paymentschedule2Rec.FindSet() then
+            repeat
+                paymentschedule2Rec."Invoice Approval Status" := Rec."Approval Status";
+                paymentschedule2Rec.Modify();
+            until paymentschedule2Rec.Next() = 0;
 
         additionalcharges.SetRange("Contract ID", Rec."Contract ID");
         additionalcharges.SetRange("Invoiced ID", Rec."Pre-Assigned No.");

@@ -216,6 +216,12 @@ table 50934 "Payment Schedule2"
             DataClassification = ToBeClassified;
             Caption = 'Final Rent Amount Including VAT';
         }
+        field(50933; "Invoice Approval Status"; Option)
+        {
+            DataClassification = ToBeClassified;
+            OptionMembers = Pending,Approved,Rejected;
+            Caption = 'Invoice Approval Status';
+        }
     }
 
     keys
@@ -253,5 +259,23 @@ table 50934 "Payment Schedule2"
                 TenancyContractRec.Modify();
             end;
 
+    end;
+
+    trigger OnModify()
+    var
+        SalesHeader: Record "Sales Header";
+        PostedSalesInvoiceHeader: Record "Sales Invoice Header";
+    begin
+        SalesHeader.SetRange("No.", Rec."Invoice ID");
+        if SalesHeader.FindFirst() then begin
+            Rec."Invoice Approval Status" := SalesHeader."Approval Status";
+            Rec.Modify();
+        end;
+
+        PostedSalesInvoiceHeader.SetRange("No.", Rec."Invoice ID");
+        if PostedSalesInvoiceHeader.FindFirst() then begin
+            Rec."Invoice Approval Status" := PostedSalesInvoiceHeader."Approval Status";
+            Rec.Modify();
+        end
     end;
 }

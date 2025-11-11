@@ -77,6 +77,17 @@ table 50917 "CombinePaymentLog"
             AutoIncrement = true;
             Editable = false;
         }
+        field(50112; "C_Cheque_Number"; Text[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Cheque Number';
+        }
+        field(50113; "C_Deposit_Bank"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Deposit Bank';
+            TableRelation = "Bank Account";
+        }
     }
     keys
     {

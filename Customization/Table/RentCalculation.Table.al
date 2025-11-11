@@ -95,9 +95,15 @@ table 50942 "Rent Calculation"
     }
     trigger OnDelete()
     var
+        TenancyContract: Record "Tenancy Contract";
     begin
         deletepaymentschedule();
         deleterevenuestructuresubpag1();
+
+        if TenancyContract.Get(Rec."Contract ID") then begin
+            TenancyContract."Rent Calculation Link" := 0;
+            TenancyContract.Modify(true);
+        end;
     end;
 
     procedure deletepaymentschedule()
