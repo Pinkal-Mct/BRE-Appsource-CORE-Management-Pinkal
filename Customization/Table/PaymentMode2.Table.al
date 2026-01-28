@@ -115,6 +115,7 @@ table 50925 "Payment Mode2"
                 emailrec: Codeunit "Send PaymentMode Email";
                 azureBlobUploader: Codeunit "Azure AD Blob Storage";
                 TempBlob: Codeunit "Temp Blob";
+                selectDate: Page "Select Date";
                 RecRef: RecordRef;
                 fileName: Text;
                 uploadResult: Text;
@@ -127,12 +128,20 @@ table 50925 "Payment Mode2"
                     Rec."Payment Status"::Received:
                         begin
                             GenerateReceiptNumber();
+                            Commit();
+
+                            selectDate.Caption := 'Select Receipt Date for ' + Rec."Receipt #";
+                            if selectDate.RunModal() = Action::OK then
+                                Rec."Receipt Date" := selectDate.GetDate()
+                            else
+                                Error('Receipt Date selection is mandatory to proceed.');
+
                             Rec.Modify();
 
-                            if Rec."Payment Mode" = 'Cheque' then
+                            if (Rec."Payment Mode" = 'Cheque') and (Rec."Cheque Status" <> Rec."Cheque Status"::Cleared) then
                                 Rec.Validate("Cheque Status", Rec."Cheque Status"::Cleared);
 
-                            CashReceiptJournalCodeunit.CreateCashReceiptJournal(Rec);
+                            CashReceiptJournalCodeunit.CreateCashReceiptJournal(Rec, Rec."Receipt Date");
                             Email.SendEmail(Rec);
                             emailrec.SendEmail(Rec);
 
@@ -188,14 +197,15 @@ table 50925 "Payment Mode2"
                 else
                     Rec."Deposit Status" := Rec."Deposit Status"::"-";
 
-                if (Rec."Cheque Status" = Rec."Cheque Status"::Cleared) then
-                    Rec."Payment Status" := Rec."Payment Status"::"Received";
                 pdcTransRec.SetRange("payment Series", Rec."Payment Series");
                 pdcTransRec.SetRange("Contract ID", Rec."Contract ID");
                 if pdcTransRec.FindSet() then begin
                     pdcTransRec."Cheque Status" := Rec."Cheque Status";
                     pdcTransRec.Modify();
                 end;
+
+                if (Rec."Cheque Status" = Rec."Cheque Status"::Cleared) and (Rec."Payment Status" <> Rec."Payment Status"::Received) then
+                    Rec.Validate("Payment Status", Rec."Payment Status"::"Received");
             end;
         }
         field(50114; "Invoice #"; Text[100])
@@ -447,6 +457,11 @@ table 50925 "Payment Mode2"
         {
             DataClassification = ToBeClassified;
             Caption = 'Portal Side Payment Processing';
+        }
+        field(50939; "Receipt Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Receipt Date';
         }
     }
     keys

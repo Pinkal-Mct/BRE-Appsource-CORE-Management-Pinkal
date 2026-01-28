@@ -80,6 +80,10 @@ tableextension 50506 "Sales Cr. Memo Header Ext" extends "Sales Cr.Memo Header"
         Requestcreditnotegrid2: Record "Request Credit Note Grid";
         paymentmodegrid: Record "Payment Mode2";
         paymentschedulegrid: Record "Payment Schedule2";
+        PendingReceviableGrid: Record "Pending Receviable Grid";
+        finaladjustmentReduction: Record "FinancialAdjContractReduction";
+        InvoiceCreditNoteSummaryRec: Record "InvoiceCreditNoteSummary";
+        BillingCalculationCNRec: Record "Final Billing Calculation Grid";
     begin
         Requestcreditnotegrid.SetRange("Credit Note No.", "Pre-Assigned No.");
         Requestcreditnotegrid.SetRange("Contract ID", "Contract ID");
@@ -118,5 +122,37 @@ tableextension 50506 "Sales Cr. Memo Header Ext" extends "Sales Cr.Memo Header"
                     paymentschedulegrid.Modify();
                 end;
             until paymentschedulegrid.Next() = 0;
+
+        PendingReceviableGrid.SetRange("Contract ID", "Contract ID");
+        PendingReceviableGrid.SetRange("CrditNoteID Security Deposit", "Pre-Assigned No.");
+        if PendingReceviableGrid.FindSet() then
+            repeat
+                PendingReceviableGrid."CrditNoteID Security Deposit" := "No.";
+                PendingReceviableGrid.Modify();
+            until PendingReceviableGrid.Next() = 0;
+
+        finaladjustmentReduction.SetRange("Contract No.", "Contract ID");
+        finaladjustmentReduction.SetRange("Credit Note ID", "Pre-Assigned No.");
+        if finaladjustmentReduction.FindSet() then
+            repeat
+                finaladjustmentReduction."Credit Note ID" := "No.";
+                finaladjustmentReduction.Modify();
+            until finaladjustmentReduction.Next() = 0;
+
+        InvoiceCreditNoteSummaryRec.SetRange("Contract No.", "Contract ID");
+        InvoiceCreditNoteSummaryRec.SetRange("Credit Note ID", "Pre-Assigned No.");
+        if InvoiceCreditNoteSummaryRec.FindSet() then
+            repeat
+                InvoiceCreditNoteSummaryRec."Credit Note ID" := "No.";
+                InvoiceCreditNoteSummaryRec.Modify();
+            until InvoiceCreditNoteSummaryRec.Next() = 0;
+
+        BillingCalculationCNRec.SetRange("Contract ID", "Contract ID");
+        BillingCalculationCNRec.SetRange("Credit Note ID", "Pre-Assigned No.");
+        if BillingCalculationCNRec.FindSet() then
+            repeat
+                BillingCalculationCNRec."Credit Note ID" := "No.";
+                BillingCalculationCNRec.Modify();
+            until BillingCalculationCNRec.Next() = 0;
     end;
 }

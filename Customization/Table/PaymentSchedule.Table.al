@@ -124,6 +124,7 @@ table 50920 "Payment Schedule"
 
         RevenueSubpage.SetRange("ContractID", Rec."Contract ID");
         RevenueSubpage.SetRange("Payment Type", 1);
+        RevenueSubpage.SetFilter("Amount Including VAT", '<>%1', 0);
         if not RevenueSubpage.FindSet() then begin
             Message('No Payment Type 1 records found in the Tenancy Contract.');
             exit;
@@ -145,6 +146,7 @@ table 50920 "Payment Schedule"
             PaymentSchedule2."Installment End Date" := RevenueSubpage."End Date";
             PaymentSchedule2."Due Date" := RevenueSubpage."Start Date";
             PaymentSchedule2."Installment No." := 1;
+            PaymentSchedule2.Year := 1;
             if RevenueSubpage."VAT %" = RevenueSubpage."VAT %"::"5%" then
                 vatper := 5
             else
@@ -182,6 +184,7 @@ table 50920 "Payment Schedule"
                 PaymentSchedule."Amount Including VAT" := RentCalculationSubpage."Amount Including VAT";
                 PaymentSchedule."Due Date" := RentCalculationSubpage."Due Date";
                 PaymentSchedule."VAT%" := RentCalculationSubpage."VAT %";
+                PaymentSchedule.Year := RentCalculationSubpage.Year;
                 PaymentSchedule.Insert();
                 Clear(PaymentSchedule);
             until RentCalculationSubpage.Next() = 0;
@@ -218,6 +221,7 @@ table 50920 "Payment Schedule"
                 PaymentSchedule3."Amount Including VAT" := RevenueStructureSubpage."Amount Including VAT";
                 PaymentSchedule3."Due Date" := RevenueStructureSubpage."Due Date";
                 PaymentSchedule3."VAT%" := RevenueStructureSubpage."VAT %";
+                PaymentSchedule3.Year := RevenueStructureSubpage.Year;
                 PaymentSchedule3.Insert();
                 Clear(PaymentSchedule3);
             until RevenueStructureSubpage.Next() = 0;
@@ -288,18 +292,28 @@ table 50920 "Payment Schedule"
     var
     begin
         Deletepaymetnscheudlesubpage();
-
+        TenancyContractsubpageInvoicedPaidUpdate();
     end;
 
     procedure Deletepaymetnscheudlesubpage()
     var
         Paymentschedulesubpage: Record "Payment Schedule2";
     begin
-
-
         Paymentschedulesubpage.SetRange("Contract ID", Rec."Contract ID");
         if Paymentschedulesubpage.FindSet() then
             Paymentschedulesubpage.DeleteAll();
+    end;
 
+    procedure TenancyContractsubpageInvoicedPaidUpdate()
+    var
+        TenancyContractSubPageRec: Record "Tenancy Contract Subpage";
+    begin
+        TenancyContractSubPageRec.SetRange("ContractID", Rec."Contract ID");
+        if TenancyContractSubPageRec.FindSet()
+        then
+            repeat
+                TenancyContractSubPageRec.Validate("Invoiced and Paid", 0);
+                TenancyContractSubPageRec.Modify();
+            until TenancyContractSubPageRec.Next() = 0;
     end;
 }

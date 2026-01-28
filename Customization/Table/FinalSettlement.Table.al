@@ -176,6 +176,11 @@ table 50922 "FinalSettlement"
             DataClassification = ToBeClassified;
             Caption = 'Invoice ID';
         }
+        field(50123; "receivablePaymentStatuss"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'receivablePaymentStatus';
+        }
     }
     keys
     {

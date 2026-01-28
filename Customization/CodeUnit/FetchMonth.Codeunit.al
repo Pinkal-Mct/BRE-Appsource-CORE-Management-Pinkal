@@ -101,6 +101,51 @@ codeunit 53751 "Fetch Month"
         end;
     end;
 
+    procedure GetNoofMonthsFromNoofInstallment(YearlyNoofInstallment: Integer): Integer
+    begin
+        case YearlyNoofInstallment of
+            1:
+                exit(12);
+            2:
+                exit(6);
+            4:
+                exit(3);
+            12:
+                exit(1);
+        end;
+    end;
+
+    procedure GetNoOfMonths(ValidFrom: Date; ValidTo: Date; PeriodFrom: Date; PeriodTo: Date): Integer
+    var
+        FromDate: Date;
+        ToDate: Date;
+        CurrDate: Date;
+        MonthCount: Integer;
+    begin
+        if ValidTo = 0D then
+            ValidTo := PeriodTo;
+
+        FromDate := ValidFrom;
+        if PeriodFrom > FromDate then
+            FromDate := PeriodFrom;
+
+        ToDate := ValidTo;
+        if PeriodTo < ToDate then
+            ToDate := PeriodTo;
+
+        if FromDate > ToDate then
+            exit(0);
+
+        CurrDate := DMY2Date(1, Date2DMY(FromDate, 2), Date2DMY(FromDate, 3));
+        MonthCount := 0;
+
+        repeat
+            MonthCount += 1;
+            CurrDate := CalcDate('<+1M>', CurrDate);
+        until CurrDate > ToDate;
+
+        exit(MonthCount);
+    end;
 
     procedure ParseDuration(durationString: Text; var Years: Integer; var Months: Integer; var Days: Integer)
     var

@@ -80,6 +80,7 @@ tableextension 50504 "Sales Invoice Header Ext" extends "Sales Invoice Header"
         paymentschedule2Rec: Record "Payment Schedule2";
         additionalcharges: Record "Additional Charges Sub";
         billingcalculationgrid: Record "Final Billing Calculation Grid";
+        InvoiceCreditNoteSummaryRec: Record "InvoiceCreditNoteSummary";
     begin
         paymentschedule2.SetRange("Contract ID", Rec."Contract ID");
         paymentschedule2.SetRange("Invoice ID", Rec."Pre-Assigned No.");
@@ -103,8 +104,6 @@ tableextension 50504 "Sales Invoice Header Ext" extends "Sales Invoice Header"
             repeat
                 additionalcharges."Invoiced ID" := Rec."No.";
                 additionalcharges."Posted Invoice ID" := Rec."No.";
-                additionalcharges."Invoice Document" := Rec."View Invoice";
-                additionalcharges."Invoice Document URL" := Rec."View Document URL";
                 additionalcharges.Modify();
             until additionalcharges.Next() = 0;
 
@@ -114,9 +113,15 @@ tableextension 50504 "Sales Invoice Header Ext" extends "Sales Invoice Header"
             repeat
                 billingcalculationgrid."Invoice ID" := Rec."No.";
                 billingcalculationgrid."Posted Invoice ID" := Rec."No.";
-                billingcalculationgrid."Invoice Document" := Rec."View Invoice";
-                billingcalculationgrid."Invoice Document URL" := Rec."View Document URL";
                 billingcalculationgrid.Modify();
             until billingcalculationgrid.Next() = 0;
+
+        InvoiceCreditNoteSummaryRec.SetRange("Contract No.", Rec."Contract ID");
+        InvoiceCreditNoteSummaryRec.SetRange("Invoice ID", Rec."Pre-Assigned No.");
+        if InvoiceCreditNoteSummaryRec.FindSet() then
+            repeat
+                InvoiceCreditNoteSummaryRec."Invoice ID" := Rec."No.";
+                InvoiceCreditNoteSummaryRec.Modify();
+            until InvoiceCreditNoteSummaryRec.Next() = 0;
     end;
 }

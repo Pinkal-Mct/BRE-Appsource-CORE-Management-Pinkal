@@ -25,6 +25,7 @@ codeunit 50516 "Revenue Allocation Posting"
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::"G/L Account";
                 GenJournalLineRec."Document No." := RevenueAllocationGrid.Description;
                 GenJournalLineRec."Posting Date" := Today;
+                GenJournalLineRec."Contract ID" := RevenueAllocationGrid."Contract ID";
                 GenJournalLineRec.Description := 'Rent - ' + RevenueAllocationGrid."Posting Period";
                 GenJournalLineRec.Validate(Amount, RevenueAllocationGrid."Total Value");
                 GenJournalLineRec."Bal. Account Type" := GenJournalLineRec."Bal. Account Type"::"G/L Account";
@@ -54,6 +55,7 @@ codeunit 50516 "Revenue Allocation Posting"
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::"G/L Account";
                 GenJournalLineRec."Document No." := OtherChargesAllocationGrid.Description;
                 GenJournalLineRec."Posting Date" := Today;
+                GenJournalLineRec."Contract ID" := OtherChargesAllocationGrid."Contract ID";
                 GenJournalLineRec.Description := CopyStr(OtherChargesAllocationGrid."Item Type" + ' - ' + OtherChargesAllocationGrid."Posting Period", 1, 100);
                 GenJournalLineRec.Validate(Amount, OtherChargesAllocationGrid."Total Value");
                 GenJournalLineRec."Bal. Account Type" := GenJournalLineRec."Bal. Account Type"::"G/L Account";

@@ -15,9 +15,17 @@ pageextension 50108 "G/L Posting Preview Ext" extends "G/L Posting Preview"
                 trigger OnAction()
                 var
                     GenJournal: Record "Gen. Journal Line";
+                    tenancyContract: Record "Tenancy Contract";
                 begin
+                    GenJournal.Reset();
+                    GenJournal.SetRange("Journal Template Name", 'GENERAL');
+                    GenJournal.SetRange("Journal Batch Name", 'DEFAULT');
                     if GenJournal.FindSet() then
-                        GenJournal.SendToPosting(Codeunit::"Gen. Jnl.-Post");
+                        if tenancyContract.Get(GenJournal."Contract ID") then begin
+                            tenancyContract.Validate(Refund, tenancyContract.Refund + Abs(GenJournal.Amount));
+                            tenancyContract.Modify();
+                            GenJournal.SendToPosting(Codeunit::"Gen. Jnl.-Post");
+                        end;
                 end;
             }
         }

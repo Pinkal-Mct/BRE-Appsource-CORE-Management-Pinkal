@@ -243,7 +243,6 @@ permissionset 50100 TablePermission
         table "Workflow Frequency PR" = X,
         codeunit CalculateNumberOfInstallments = X,
         codeunit "Cash Receipt Journal Entry" = X,
-        codeunit "Create Sales Credit Memo" = X,
         codeunit "Final Settlement Posting Mgt." = X,
         codeunit "FS_Receivable Payment Receipt" = X,
         codeunit GenerateConsolidatedInvoices = X,
@@ -406,5 +405,19 @@ permissionset 50100 TablePermission
         codeunit "Send Email Paymentmode Overdue" = X,
         tabledata "No. Series Setup" = RIMD,
         table "No. Series Setup" = X,
-        page "No. Series Setup" = X;
+        page "No. Series Setup" = X,
+        tabledata "Adjustment Deposits" = RIMD,
+        tabledata FinancialAdjContractReduction = RIMD,
+        tabledata InvoiceCreditNoteSummary = RIMD,
+        tabledata "Management Fee Calc. Header" = RIMD,
+        tabledata "Management Fee Calc. Line" = RIMD,
+        tabledata "Management Fee Grid" = RIMD,
+        table "Adjustment Deposits" = X,
+        table FinancialAdjContractReduction = X,
+        table InvoiceCreditNoteSummary = X,
+        table "Management Fee Calc. Header" = X,
+        table "Management Fee Calc. Line" = X,
+        table "Management Fee Grid" = X,
+        page "Integer List" = X,
+        page "Select Date" = X;
 }

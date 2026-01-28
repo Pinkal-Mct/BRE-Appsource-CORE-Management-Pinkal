@@ -98,6 +98,11 @@ table 50943 "Rent Calculation Subpage"
             DataClassification = ToBeClassified;
             Caption = 'Proeprty Classifcation';
         }
+        field(50120; "Unit ID"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Unit ID';
+        }
     }
     keys
     {

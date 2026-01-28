@@ -31,6 +31,7 @@ codeunit 50950 "Azure AD Blob Storage"
     procedure UploadDocumentToBlob(var InStream: InStream; FileName: Text; FolderName: Text): Text
     var
         ConfigRecord: Record "AzureConfiguration";
+        TypeHelper: Codeunit "Type Helper";
         AccessToken: Text;
         BlobUrl: Text;
         HttpClient: HttpClient;
@@ -49,36 +50,47 @@ codeunit 50950 "Azure AD Blob Storage"
     begin
         if not ConfigRecord.FindFirst() then
             Error('Azure configuration is missing. Please set up the configuration.');
+
         StorageAccount := ConfigRecord."Storage Account Name";
         ContainerName := ConfigRecord."Default Container";
+
         if StorageAccount = '' then Error('Storage Account Name is missing in Azure configuration.');
         if ContainerName = '' then Error('Container name cannot be empty.');
         if FileName = '' then Error('File name cannot be empty.');
+
         AccessToken := GetAzureADToken();
         if AccessToken = '' then Error('Failed to obtain Azure AD token.');
+
         if FolderName <> '' then begin
             if not FolderName.EndsWith('/') then
                 FolderName := FolderName + '/';
             FullBlobPath := FolderName + FileName;
         end else
             FullBlobPath := FileName;
+
         BlobUrl := StrSubstNo(blobUrlLbl, StorageAccount, ContainerName, FullBlobPath);
+
         HttpRequest.Method := 'PUT';
         HttpRequest.SetRequestUri(BlobUrl);
         HttpRequest.GetHeaders(HttpHeaders);
+
         HttpHeaders.Add('Authorization', 'Bearer ' + AccessToken);
         HttpHeaders.Add('x-ms-blob-type', 'BlockBlob');
         HttpHeaders.Add('x-ms-version', '2020-08-04');
-        HttpHeaders.Add('x-ms-date', GetRFC1123FormattedDateTime());
+        HttpHeaders.Add('x-ms-date', TypeHelper.GetCurrUTCDateTimeAsText());
+
         ContentType := GetMimeTypeFromFileName(FileName);
         HttpHeaders.Add('x-ms-blob-content-disposition', StrSubstNo(blobContentDispositionLbl, FileName));
         HttpHeaders.Add('x-ms-blob-content-type', ContentType);
         HttpHeaders.Add('x-ms-blob-cache-control', 'public, max-age=86400');
+
         Content.WriteFrom(InStream);
         HttpRequest.Content(Content);
+
         Content.GetHeaders(HttpHeaders);
         HttpHeaders.Remove('Content-Type');
         HttpHeaders.Add('Content-Type', ContentType);
+
         if HttpClient.Send(HttpRequest, Response) then begin
             if Response.IsSuccessStatusCode() then
                 exit(StrSubstNo(responseBloburlLbl, StorageAccount, ContainerName, FullBlobPath))
@@ -88,74 +100,6 @@ codeunit 50950 "Azure AD Blob Storage"
             end;
         end else
             Error('Failed to send HTTP request.');
-    end;
-
-    procedure GetRFC1123FormattedDateTime(): Text
-    var
-        CurrentDT: DateTime;
-        FormattedDate: Text;
-        DayOfWeek: Text;
-        Month: Text;
-        WeekDayNumber: Integer;
-        MonthNumber: Integer;
-        formatedDateLbl: Label '%1, %2 %3 %4 %5:%6:%7 GMT', Comment = '%1=Day of Week, %2=Day, %3=Month, %4=Year, %5=Hours, %6=Minutes, %7=Seconds';
-    begin
-        CurrentDT := CurrentDateTime();
-        CurrentDT := CurrentDT;
-        WeekDayNumber := Date2DWY(DT2Date(CurrentDT), 1);
-        case WeekDayNumber of
-            1:
-                DayOfWeek := 'Mon';
-            2:
-                DayOfWeek := 'Tue';
-            3:
-                DayOfWeek := 'Wed';
-            4:
-                DayOfWeek := 'Thu';
-            5:
-                DayOfWeek := 'Fri';
-            6:
-                DayOfWeek := 'Sat';
-            7:
-                DayOfWeek := 'Sun';
-        end;
-        MonthNumber := Date2DMY(DT2Date(CurrentDT), 2);
-        case MonthNumber of
-            1:
-                Month := 'Jan';
-            2:
-                Month := 'Feb';
-            3:
-                Month := 'Mar';
-            4:
-                Month := 'Apr';
-            5:
-                Month := 'May';
-            6:
-                Month := 'Jun';
-            7:
-                Month := 'Jul';
-            8:
-                Month := 'Aug';
-            9:
-                Month := 'Sep';
-            10:
-                Month := 'Oct';
-            11:
-                Month := 'Nov';
-            12:
-                Month := 'Dec';
-        end;
-        FormattedDate := StrSubstNo(formatedDateLbl,
-            DayOfWeek,
-            Format(Date2DMY(DT2Date(CurrentDT), 1), 2, '<Integer,2><Filler Character,0>'),
-            Month,
-            Format(Date2DMY(DT2Date(CurrentDT), 3)),
-            Format(DT2Time(CurrentDT), 0, '<Hours24,2>'),
-            Format(DT2Time(CurrentDT), 0, '<Minutes,2>'),
-            Format(DT2Time(CurrentDT), 0, '<Seconds,2>')
-        );
-        exit(FormattedDate);
     end;
 
     local procedure GetAzureADToken(): Text
