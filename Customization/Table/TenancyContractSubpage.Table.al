@@ -30,7 +30,6 @@ table 50938 "Tenancy Contract Subpage"
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
-            Editable = false;
             trigger OnValidate()
             begin
                 CalcVATAndTotal();
@@ -70,6 +69,7 @@ table 50938 "Tenancy Contract Subpage"
             trigger OnValidate()
             begin
                 "Amount Including VAT" := Amount + "VAT Amount";
+                UpdatedPaymentRecords();
             end;
         }
         field(50106; "Start Date"; Date)
@@ -101,6 +101,11 @@ table 50938 "Tenancy Contract Subpage"
             OptionMembers = "","One Time Payment","Installment";
             Caption = 'Payment Type';
         }
+        field(50112; Invoiced; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Invoiced';
+        }
         field(50113; "Link"; Integer)
         {
             DataClassification = ToBeClassified;
@@ -122,6 +127,22 @@ table 50938 "Tenancy Contract Subpage"
             DataClassification = ToBeClassified;
             Caption = 'Contract Renewal ID';
         }
+        field(50117; "Invoiced and Paid"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Invoiced and Paid';
+
+            trigger OnValidate()
+            var
+                tenancyContractRec: Record "Tenancy Contract";
+            begin
+                if Rec."Secondary Item Type" = 'Security Deposit' then
+                    if tenancyContractRec.Get("ContractID") then begin
+                        tenancyContractRec.Validate("Security Deposit Amt. Received", tenancyContractRec."Carry Forward In" + "Invoiced and Paid");
+                        tenancyContractRec.Modify();
+                    end;
+            end;
+        }
     }
     keys
     {
@@ -130,6 +151,7 @@ table 50938 "Tenancy Contract Subpage"
             Clustered = true;
         }
     }
+
     local procedure CalcVATAndTotal()
     var
         vatPer: Integer;
@@ -140,5 +162,35 @@ table 50938 "Tenancy Contract Subpage"
             vatPer := 0;
         "VAT Amount" := Amount * (vatPer / 100);
         "Amount Including VAT" := Amount + "VAT Amount";
+    end;
+
+    procedure UpdatedPaymentRecords()
+    var
+        paymentScheduleSub: Record "Payment Schedule2";
+        paymentMode2: Record "Payment Mode2";
+        differenceAmount: Decimal;
+    begin
+        paymentScheduleSub.SetRange("Contract ID", Rec.ContractID);
+        paymentScheduleSub.SetRange("Secondary Item Type", Rec."Secondary Item Type");
+        if paymentScheduleSub.FindFirst() then
+            if Rec.Amount = 0 then begin
+                differenceAmount := paymentScheduleSub.Amount;
+                paymentScheduleSub.Delete()
+            end
+            else begin
+                differenceAmount := paymentScheduleSub.Amount - Rec.Amount;
+                paymentScheduleSub.Amount := Rec.Amount;
+                paymentScheduleSub."VAT Amount" := Rec."VAT Amount";
+                paymentScheduleSub."Amount Including VAT" := Rec."Amount Including VAT";
+                paymentScheduleSub.Modify(true);
+            end;
+
+        paymentMode2.SetRange("Contract ID", Rec.ContractID);
+        paymentMode2.SetRange("Payment Series", 'PAY01');
+        if paymentMode2.FindFirst() then begin
+            paymentMode2.Amount -= differenceAmount;
+            paymentMode2."Amount Including VAT" := paymentMode2.Amount + paymentMode2."VAT Amount";
+            paymentMode2.Modify(true);
+        end;
     end;
 }

@@ -107,7 +107,10 @@ page 50731 finalSettelement
                 {
                     Caption = 'Payment Receipt document URL';
                 }
-
+                field(receivablePaymentStatuss; Rec.receivablePaymentStatuss)
+                {
+                    Caption = 'receivable Payment Status';
+                }
             }
         }
     }

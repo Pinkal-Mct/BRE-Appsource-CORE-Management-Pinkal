@@ -255,9 +255,28 @@ table 50901 "Final Calculation"
             Caption = 'Final Payments';
             Editable = false;
         }
+        field(50140; "Remaining Security Deposit"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Remaining Security Deposit';
+        }
 
-
-
+        field(50141; "Remaining Chiller Deposit"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Remaining Chiller Deposit';
+        }
+        field(50142; "Remaining Other Deposit"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Remaining Other Deposit';
+        }
+        field(50143; "Credit Not To Be Raised"; Decimal)
+        {
+            Caption = 'Credit Note To Be Raised';
+            FieldClass = FlowField;
+            CalcFormula = sum(FinancialAdjContractReduction."Amount Incl. VAT" where("Contract No." = field("Contract ID")));
+        }
     }
 
 
@@ -289,7 +308,9 @@ table 50901 "Final Calculation"
         RevenueStructureyearlyBrokdownGrid();
         finalsettlement();
         finalsettlementrefund();
-
+        DeleteAdjustmentDeposits();
+        finaladjustmentreduction();
+        invoicecreditnotesummary();
     end;
 
     procedure deletefinalrevenuecalculation()
@@ -387,6 +408,81 @@ table 50901 "Final Calculation"
             finalsettlementrefundRec.DeleteAll();
     end;
 
+    procedure DeleteAdjustmentDeposits()
+    var
+        adjustmentDepositsRec: Record "Adjustment Deposits";
+    begin
+        adjustmentDepositsRec.SetRange("Contract Id", Rec."Contract ID");
+        if adjustmentDepositsRec.FindSet() then
+            adjustmentDepositsRec.DeleteAll();
+    end;
+
+    procedure finaladjustmentreduction()
+    var
+        finaladjustmentReductionRec: Record "FinancialAdjContractReduction";
+    begin
+        finaladjustmentReductionRec.SetRange("Contract No.", Rec."Contract ID");
+        if finaladjustmentReductionRec.FindSet() then
+            finaladjustmentReductionRec.DeleteAll();
+    end;
+
+    procedure invoicecreditnotesummary()
+    var
+        invoicecreditnotesummaryRec: Record "InvoiceCreditNoteSummary";
+    begin
+        invoicecreditnotesummaryRec.SetRange("Contract No.", Rec."Contract ID");
+        if invoicecreditnotesummaryRec.FindSet() then
+            invoicecreditnotesummaryRec.DeleteAll();
+    end;
+
+    procedure CalculateFinalSummary(var pFinalCalculation: Record "Final Calculation")
+    var
+        PendingReceivableGrid: Record "Pending Receviable Grid";
+        TerminationAddCharges: Record "Additional Charges Sub";
+        totalDifferenceAmountInclVAT: Decimal;
+        TotalRefundableAmount: Decimal;
+        TotalReceivableAmount: Decimal;
+    begin
+        PendingReceivableGrid.Reset();
+
+        PendingReceivableGrid.SetRange("Contract ID", pFinalCalculation."Contract ID");
+        if PendingReceivableGrid.FindSet() then
+            repeat
+                totalDifferenceAmountInclVAT += PendingReceivableGrid.DifferenceAmountInclVAT;
+            until PendingReceivableGrid.Next() = 0;
+
+        if totalDifferenceAmountInclVAT > 0 then
+            TotalReceivableAmount := totalDifferenceAmountInclVAT
+        else
+            TotalRefundableAmount := Abs(totalDifferenceAmountInclVAT);
+
+        TerminationAddCharges.Reset();
+        TerminationAddCharges.SetRange("Contract ID", pFinalCalculation."Contract ID");
+        if TerminationAddCharges.FindFirst() then begin
+            TerminationAddCharges.CalcSums("Amount Including VAT");
+            TotalReceivableAmount += TerminationAddCharges."Amount Including VAT";
+        end;
+
+        pFinalCalculation.CalcFields("Credit Not To Be Raised");
+        TotalReceivableAmount -= pFinalCalculation."Credit Not To Be Raised";
+
+        TotalRefundableAmount += pFinalCalculation."Total Refundable Deposit";
+
+        pFinalCalculation."Total Claim" := TotalReceivableAmount;
+        pFinalCalculation."Total Refund" := TotalRefundableAmount;
+
+        pFinalCalculation."Summery Net Balance" := pFinalCalculation."Total Claim" - pFinalCalculation."Total Refund";
+
+        if pFinalCalculation."Summery Net Balance" < 0 then begin
+            pFinalCalculation."Amount Refundable" := Abs(pFinalCalculation."Summery Net Balance");
+            pFinalCalculation."Net Receivable From The Tenant" := 0;
+        end
+        else begin
+            pFinalCalculation."Net Receivable From The Tenant" := Abs(pFinalCalculation."Summery Net Balance");
+            pFinalCalculation."Amount Refundable" := 0;
+        end;
+        pFinalCalculation.Modify();
+    end;
 }
 
 

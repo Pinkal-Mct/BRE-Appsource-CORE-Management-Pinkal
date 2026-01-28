@@ -8,46 +8,23 @@ table 50934 "Payment Schedule2"
         {
             DataClassification = ToBeClassified;
             Caption = 'Secondary Item Type';
-
-            trigger OnValidate()
-            begin
-                if "Secondary Item Type" = 'Security Deposit Amount' then
-                    UpdateBalanceAmountOnPaymentReceived();
-            end;
         }
         field(50101; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
-
         }
-
 
         field(50102; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
-
         }
-
-
 
         field(50103; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
-
-            trigger OnValidate()
-
-            begin
-                // Check if the payment status is 'Received'
-
-                // Call the procedure to update the balance amount
-                UpdateBalanceAmountOnPaymentReceived();
-            end;
-
-
-
         }
 
         field(50104; "Installment Start Date"; Date)
@@ -128,6 +105,7 @@ table 50934 "Payment Schedule2"
             begin
                 if "Payment Status" = 'Received' then
                     UpdateBalanceAmountOnPaymentReceived();
+                UpdateTenancySubpageInvoicedAndPaid();
             end;
         }
         field(50917; "Property Classification"; Text[100])
@@ -222,6 +200,11 @@ table 50934 "Payment Schedule2"
             OptionMembers = Pending,Approved,Rejected;
             Caption = 'Invoice Approval Status';
         }
+        field(50934; "Year"; Integer)
+        {
+            Caption = 'Year';
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
@@ -246,8 +229,7 @@ table 50934 "Payment Schedule2"
 
         TenancyContractRec.SetRange("Contract ID", Rec."Contract ID");
         if TenancyContractRec.FindSet() then
-            if (Rec."Secondary Item Type" = 'Security Deposit Amount') and
-     (Rec."Payment Status" = 'Received') then begin
+            if (Rec."Secondary Item Type" = 'Security Deposit') and (Rec."Payment Status" = 'Received') then begin
                 if TenancyContractRec."Security Deposit Amt. Received" <> 0 then begin
                     TenancyContractRec."Security Deposit Amt. Received" += Rec."Amount Including VAT";
                     TenancyContractRec."Security Balanced Amount" += Rec."Amount Including VAT";
@@ -276,6 +258,22 @@ table 50934 "Payment Schedule2"
         if PostedSalesInvoiceHeader.FindFirst() then begin
             Rec."Invoice Approval Status" := PostedSalesInvoiceHeader."Approval Status";
             Rec.Modify();
-        end
+        end;
+    end;
+
+    local procedure UpdateTenancySubpageInvoicedAndPaid()
+    var
+        TenancyContractSubPageRec: Record "Tenancy Contract Subpage";
+    begin
+        TenancyContractSubPageRec.SetRange("ContractID", Rec."Contract ID");
+        TenancyContractSubPageRec.SetRange("Secondary Item Type", Rec."Secondary Item Type");
+        if TenancyContractSubPageRec.FindFirst() then begin
+            if Rec."Payment Status" = 'Received' then
+                TenancyContractSubPageRec.Validate("Invoiced and Paid", TenancyContractSubPageRec."Invoiced and Paid" + Rec."Amount Including VAT")
+            else
+                TenancyContractSubPageRec.Validate("Invoiced and Paid", TenancyContractSubPageRec."Invoiced and Paid" - Rec."Amount Including VAT");
+            TenancyContractSubPageRec.Modify();
+
+        end;
     end;
 }

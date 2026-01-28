@@ -45,25 +45,18 @@ table 53751 "No. Series Setup"
             Caption = 'Vendor Profile Nos.';
             TableRelation = "No. Series".Code;
         }
-
-        // This field is used to store the vendor proposal number series. Table 53105 "Vendor Proposal" has a field for vendor proposal numbers.
         field(53758; "Vendor Proposal Nos."; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Proposal Nos.';
             TableRelation = "No. Series".Code;
         }
-        // This field is used to store the vendor proposal number series. Table 53105 "Vendor Proposal" has a field for vendor proposal numbers.
-
-        // This field is used to store the vendor contract number series. Table 53106 "Vendor Contract" has a field for vendor contract numbers.
         field(53759; "Vendor Contract Nos."; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Contract Nos.';
             TableRelation = "No. Series".Code;
         }
-        // This field is used to store the vendor contract number series. Table 53106 "Vendor Contract" has a field for vendor contract numbers.
-
         field(53760; "OEM ID Nos."; Code[20])
         {
             DataClassification = ToBeClassified;
@@ -94,12 +87,6 @@ table 53751 "No. Series Setup"
             Caption = 'Service Request ID';
             TableRelation = "No. Series".Code;
         }
-        // field(53765; "Fixed Asset ID Nos."; Code[20])
-        // {
-        //     DataClassification = ToBeClassified;
-        //     Caption = 'Fixed Asset ID';
-        //     TableRelation = "No. Series".Code;
-        // }
         field(53766; "Service Type ID Nos."; Code[20])
         {
             DataClassification = ToBeClassified;
@@ -144,6 +131,11 @@ table 53751 "No. Series Setup"
             TableRelation = "No. Series".Code;
         }
         field(53774; "Payment Receipt ID Nos."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "No. Series".Code;
+        }
+        field(53775; "Management Fee Master"; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = "No. Series".Code;

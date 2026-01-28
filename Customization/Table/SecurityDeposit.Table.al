@@ -21,8 +21,10 @@ table 50319 "Security Deposit"
             var
                 CustomerRec: Record Customer;
             begin
-                if PAGE.RunModal(PAGE::"Customer List", CustomerRec) = ACTION::LookupOK then
+                if PAGE.RunModal(PAGE::"Customer List", CustomerRec) = ACTION::LookupOK then begin
                     "Tenant Full Name" := CustomerRec.Name;
+                    "Tenant ID" := CustomerRec."No.";
+                end;
             end;
 
             trigger OnValidate()
@@ -31,8 +33,10 @@ table 50319 "Security Deposit"
             begin
                 if "Tenant Full Name" <> '' then begin
                     CustomerRec.SetRange(Name, "Tenant Full Name");
-                    if CustomerRec.IsEmpty() then
-                        Error('The selected tenant does not exist in the Customer table.');
+                    if not CustomerRec.FindFirst() then
+                        Error('The selected tenant does not exist in the Customer table.')
+                    else
+                        "Tenant ID" := CustomerRec."No.";
                 end;
             end;
         }
@@ -40,7 +44,14 @@ table 50319 "Security Deposit"
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
-            TableRelation = "Tenancy Contract"."Contract ID";
+
+            trigger OnValidate()
+            var
+                tenancyContract: Record "Tenancy Contract";
+            begin
+                if tenancyContract.Get(Rec."Contract ID") then
+                    Rec."Property Classification" := CopyStr(tenancyContract."Property Classification", 1, 30);
+            end;
         }
         field(50104; "Contract Start Date"; Date)
         {
@@ -57,11 +68,6 @@ table 50319 "Security Deposit"
         {
             DataClassification = ToBeClassified;
             Caption = 'Security Deposit Amount';
-
-            trigger OnValidate()
-            begin
-                UpdateAdjustedAmount();
-            end;
         }
 
         field(50107; "New_Contract ID"; Integer)
@@ -93,11 +99,6 @@ table 50319 "Security Deposit"
         {
             DataClassification = ToBeClassified;
             Caption = 'Enter Amount';
-
-            trigger OnValidate()
-            begin
-                UpdateAdjustedAmount();
-            end;
         }
 
         field(50112; "Security Deposit Amt. Pending"; Decimal)
@@ -136,9 +137,24 @@ table 50319 "Security Deposit"
             Caption = 'Property Classification';
             tableRelation = "Tenancy Contract"."Property Classification";
         }
+        field(50180; Status; Option)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Status';
+            OptionMembers = Open,Posted;
+        }
+        field(50181; "Tenant ID"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Tenant ID';
+            Editable = false;
+        }
+        field(50182; "Posting Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Posting Date';
+        }
     }
-
-
 
     keys
     {
@@ -147,10 +163,11 @@ table 50319 "Security Deposit"
             Clustered = true;
         }
     }
-    local procedure UpdateAdjustedAmount()
+    procedure UpdateAdjustedAmount()
     var
         TenancyContractRec: Record "Tenancy Contract";
         tenancyContractSubPage: Record "Tenancy Contract Subpage";
+        finalcalcRec: Record "Final Calculation";
     begin
         if "Balance Amount" > "Carry Forward Amount" then begin
             "Balance Amount" := "Balance Amount" - "Carry Forward Amount";
@@ -161,22 +178,33 @@ table 50319 "Security Deposit"
 
         TenancyContractRec.SetRange("Contract ID", "Contract ID");
         if TenancyContractRec.FindFirst() then begin
-            TenancyContractRec."Security Balanced Amount" := "Balance Amount";
+            TenancyContractRec."Carry Forward Out" += "Carry Forward Amount";
+            TenancyContractRec."Security Balanced Amount" := TenancyContractRec."Security Deposit Amt. Received" - (TenancyContractRec."Carry Forward Out" + TenancyContractRec.Adjustments + TenancyContractRec.Refund);
             TenancyContractRec.Modify();
+
+            finalcalcRec.SetRange("Contract ID", Rec."Contract ID");
+            if finalcalcRec.FindFirst() then begin
+                finalcalcRec."Security Deposit" := TenancyContractRec."Security Balanced Amount";
+                finalcalcRec."Remaining Security Deposit" := TenancyContractRec."Security Balanced Amount";
+                finalcalcRec.Modify(true);
+            end;
         end;
 
+        TenancyContractRec.Reset();
         TenancyContractRec.SetRange("Contract ID", "New_Contract ID");
         if TenancyContractRec.FindFirst() then begin
-            TenancyContractRec."Security Deposit Amt. Received" := "Security Deposit Amt. Received";
-            TenancyContractRec."Security Balanced Amount" := "Security Deposit Amt. Received";
-            TenancyContractRec."Security Amount Pending" := "Security Deposit Amt. Pending";  // Update the Balance Amount
-            TenancyContractRec.IsCarryForwarded := true; // Mark as carry forward
-            TenancyContractRec.Modify(); // Save the record
+            TenancyContractRec."Carry Forward In" += "Carry Forward Amount";
 
             tenancyContractSubPage.SetRange(ContractID, TenancyContractRec."Contract ID");
-            tenancyContractSubPage.SetRange("Secondary Item Type", 'Security Deposit Amount');
+            tenancyContractSubPage.SetRange("Secondary Item Type", 'Security Deposit');
             if tenancyContractSubPage.FindSet() then begin
-                tenancyContractSubPage.Amount := TenancyContractRec."Security Deposit Amount" - TenancyContractRec."Security Deposit Amt. Received";
+                TenancyContractRec."Security Deposit Amt. Received" := TenancyContractRec."Carry Forward In" + tenancyContractSubPage."Invoiced and Paid";
+                TenancyContractRec."Security Amount Pending" := TenancyContractRec."Security Deposit Amount" - TenancyContractRec."Security Deposit Amt. Received";
+                TenancyContractRec."Security Balanced Amount" := TenancyContractRec."Security Deposit Amt. Received" - (TenancyContractRec."Carry Forward Out" + TenancyContractRec.Adjustments + TenancyContractRec.Refund);
+                TenancyContractRec.IsCarryForwarded := true;
+                TenancyContractRec.Modify();
+
+                tenancyContractSubPage.Amount := TenancyContractRec."Security Amount Pending";
                 tenancyContractSubPage.Validate(Amount);
                 tenancyContractSubPage.Modify();
             end;

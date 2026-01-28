@@ -138,6 +138,8 @@ table 50902 "Additional Charges Sub"
     }
     local procedure CalcVATAndTotal()
     var
+        finalCalculation: Record "Final Calculation";
+        InvoiceCreditNoteSummaryRec: Record "InvoiceCreditNoteSummary";
         vatPer: Integer;
     begin
         if "VAT %" = "VAT %"::"5%" then
@@ -146,5 +148,42 @@ table 50902 "Additional Charges Sub"
             vatPer := 0;
         "VAT Amount" := Amount * (vatPer / 100);
         "Amount Including VAT" := Amount + "VAT Amount";
+        Rec.Modify();
+
+        finalCalculation.SetRange("Contract ID", Rec."Contract ID");
+        if finalCalculation.FindFirst() then
+            finalCalculation.CalculateFinalSummary(finalCalculation);
+
+        InvoiceCreditNoteSummaryRec.CalculateTotalInvoiceAmount(Rec);
+    end;
+
+    trigger OnDelete()
+    var
+        finalcalculationRec: Record "Final Calculation";
+        InvoiceCreditNoteSummaryRec: Record "InvoiceCreditNoteSummary";
+    begin
+        finalcalculationRec.SetRange("Contract ID", Rec."Contract ID");
+        if finalcalculationRec.FindFirst() then begin
+            finalcalculationRec."Total Claim" -= Rec."Amount Including VAT";
+            finalcalculationRec."Summery Net Balance" := finalcalculationRec."Total Claim" - finalcalculationRec."Total Refund";
+
+            finalcalculationRec."Amount Refundable" := 0;
+            finalcalculationRec."Net Receivable From The Tenant" := 0;
+            if finalcalculationRec."Summery Net Balance" < 0 then begin
+                finalcalculationRec."Amount Refundable" := Abs(finalcalculationRec."Summery Net Balance");
+                finalcalculationRec."Net Receivable From The Tenant" := 0;
+            end
+            else
+                finalcalculationRec."Net Receivable From The Tenant" := finalcalculationRec."Summery Net Balance";
+
+            finalcalculationRec.Modify();
+        end;
+
+        InvoiceCreditNoteSummaryRec.SetRange("Contract No.", Rec."Contract ID");
+        InvoiceCreditNoteSummaryRec.SetRange("Description", 'Termination Additional Charges');
+        if InvoiceCreditNoteSummaryRec.FindFirst() then
+            InvoiceCreditNoteSummaryRec.Invoice -= Rec."Amount Including VAT";
+
+        InvoiceCreditNoteSummaryRec.Modify();
     end;
 }

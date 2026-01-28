@@ -62,8 +62,8 @@ codeunit 50106 GenerateConsolidatedInvoices
                             newsalesheader1."Overdue Invoice" := 'Reactive';
                             newsalesheader1.Modify();
 
-                            paymentScheudle3.Invoiced := true;
                             paymentScheudle3."Invoice ID" := newsalesheader1."No.";
+                            paymentScheudle3.Invoiced := true;
                             paymentScheudle3."Overdue Invoice" := newsalesheader1."Overdue Invoice";
                             paymentScheudle3.Modify();
                         end;
