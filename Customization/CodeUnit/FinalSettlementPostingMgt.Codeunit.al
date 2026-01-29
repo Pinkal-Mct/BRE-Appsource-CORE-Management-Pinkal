@@ -4,20 +4,18 @@ codeunit 50108 "Final Settlement Posting Mgt."
     procedure PostFinalSettlementAmount(FinalSettlement: Record "FinalSettlement")
     var
         GenJnlLine: Record "Gen. Journal Line";
-        PendingReceivableRID: Record "Pending Receviable Grid";
         CustomerCard: Record Customer;
         BankAccount: Record "Bank Account";
         GLSetup: Record "General Ledger Setup";
-        InvoiceCreditNoteSummary: Record InvoiceCreditNoteSummary;
         FinalcalculationRec: Record "Final Calculation";
         COASetup: Record "COA Setup";
+        PostedSalesInvoice: Record "Sales Invoice Header";
         GenJnlPost: Codeunit "Gen. Jnl.-Post";
         LineNo: Integer;
         DocNo: Code[20];
         Amount: Decimal;
         PendingAmount: Decimal;
         TenantName: Text[100];
-        InvoicsummaryID: Code[20];
         JournalTemplateName: Code[10];
         JournalBatchName: Code[10];
         respectiveAccountNo: Code[20];
@@ -55,18 +53,7 @@ codeunit 50108 "Final Settlement Posting Mgt."
             end;
         end;
 
-        // Get pending receivable information
-        PendingReceivableRID.Reset();
-        PendingReceivableRID.SetRange("Contract ID", FinalSettlement."Contract ID");
-        if PendingReceivableRID.FindFirst() then
-            PendingAmount := PendingReceivableRID."Total Receivable"
-        else
-            PendingAmount := 0;
-
-        InvoiceCreditNoteSummary.Reset();
-        InvoiceCreditNoteSummary.SetRange("Contract No.", FinalSettlement."Contract ID");
-        if InvoiceCreditNoteSummary.FindFirst() then
-            InvoicsummaryID := CopyStr(InvoiceCreditNoteSummary."Invoice ID", 1, 20);
+        PendingAmount := Round(FinalSettlement."Receivable from the Tenant", 0.01);
 
         // Find Bank Account
         if FinalSettlement."Receivable Payment mode" = 'Cash' then begin
@@ -98,28 +85,23 @@ codeunit 50108 "Final Settlement Posting Mgt."
         LineNo := 10000;
         ClearJournalLines(JournalTemplateName, JournalBatchName);
 
-        Clear(GenJnlLine);
-        GenJnlLine.Init();
-        GenJnlLine."Journal Template Name" := JournalTemplateName;
-        GenJnlLine."Journal Batch Name" := JournalBatchName;
-        GenJnlLine."Line No." := LineNo;
-        GenJnlLine."Posting Date" := Today;
-        GenJnlLine."Document No." := DocNo;
-        GenJnlLine."Document Type" := GenJnlLine."Document Type"::Payment;
-        GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
-        GenJnlLine."Account No." := FinalSettlement."Tenant ID";
-        GenJnlLine.Description := TenantName;
-        GenJnlLine."Contract ID" := FinalSettlement."Contract ID";
+        PostedSalesInvoice.SetRange("Contract ID", FinalSettlement."Contract ID");
+        if PostedSalesInvoice.FindSet() then
+            repeat
+                PostedSalesInvoice.CalcFields("Remaining Amount");
+                if PostedSalesInvoice."Remaining Amount" > 0 then begin
+                    Clear(GenJnlLine);
+                    CreateCashGeneralLines(GenJnlLine, JournalTemplateName, JournalBatchName, LineNo, DocNo, FinalSettlement, PostedSalesInvoice."No.", TenantName, respectiveAccountNo, balAccountType, PostedSalesInvoice."Remaining Amount");
+                    LineNo += 10000;
+                    PendingAmount -= PostedSalesInvoice."Remaining Amount";
+                    PendingAmount := Round(PendingAmount, 0.01);
+                end;
+            until PostedSalesInvoice.Next() = 0;
 
-        if ValidateInvoice(InvoicsummaryID) then begin
-
-            GenJnlLine."Applies-to Doc. Type" := GenJnlLine."Applies-to Doc. Type"::Invoice;
-            GenJnlLine."Applies-to Doc. No." := InvoicsummaryID;
+        if PendingAmount > 0 then begin
+            Clear(GenJnlLine);
+            CreateCashGeneralLines(GenJnlLine, JournalTemplateName, JournalBatchName, LineNo, DocNo, FinalSettlement, '', TenantName, respectiveAccountNo, balAccountType, PendingAmount);
         end;
-
-        GenJnlLine."Bal. Account Type" := balAccountType;
-        GenJnlLine."Bal. Account No." := respectiveAccountNo;
-        GenJnlLine.Validate(Amount, -FinalSettlement."Receivable Total Amount");
 
         GenJnlPost.Run(GenJnlLine);
 
@@ -127,21 +109,6 @@ codeunit 50108 "Final Settlement Posting Mgt."
         ClearJournalLines(JournalTemplateName, JournalBatchName);
 
         Message('Final Settlement amount posted successfully. Total Receive: %1, Pending: %2', FinalcalculationRec."Total Receive", PendingAmount);
-    end;
-
-    procedure ValidateInvoice(invoiceId: Code[20]): Boolean
-    var
-        postedSalesInvoice: Record "Sales Invoice Header";
-    begin
-        if postedSalesInvoice.Get(invoiceId) then begin
-            postedSalesInvoice.CalcFields("Remaining Amount");
-            if postedSalesInvoice."Remaining Amount" > 0 then
-                exit(true)
-            else
-                exit(false);
-        end
-        else
-            exit(false);
     end;
 
     procedure ClearJournalLines(JournalTemplateName: Code[10]; JournalBatchName: Code[10])
@@ -154,5 +121,28 @@ codeunit 50108 "Final Settlement Posting Mgt."
         GenJnlLine.SetRange("Journal Batch Name", JournalBatchName);
         if GenJnlLine.FindSet() then
             GenJnlLine.DeleteAll(true);
+    end;
+
+    procedure CreateCashGeneralLines(var GenJnlLine: Record "Gen. Journal Line"; JournalTemplateName: Code[10]; JournalBatchName: Code[10]; LineNo: Integer; DocNo: Code[20]; FinalSettlement: Record FinalSettlement; postedSalesInvoice: Code[20]; TenantName: Text[100]; respectiveAccountNo: Code[20]; balAccountType: Enum "Gen. Journal Account Type"; remainingAmount: Decimal)
+    begin
+        GenJnlLine.Init();
+        GenJnlLine."Journal Template Name" := JournalTemplateName;
+        GenJnlLine."Journal Batch Name" := JournalBatchName;
+        GenJnlLine."Line No." := LineNo;
+        GenJnlLine."Posting Date" := Today;
+        GenJnlLine."Document No." := DocNo;
+        GenJnlLine."Document Type" := GenJnlLine."Document Type"::Payment;
+        GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
+        GenJnlLine."Account No." := FinalSettlement."Tenant ID";
+        GenJnlLine.Description := TenantName;
+        GenJnlLine."Contract ID" := FinalSettlement."Contract ID";
+        if postedSalesInvoice <> '' then begin
+            GenJnlLine."Applies-to Doc. Type" := GenJnlLine."Applies-to Doc. Type"::Invoice;
+            GenJnlLine."Applies-to Doc. No." := PostedSalesInvoice;
+        end;
+        GenJnlLine."Bal. Account Type" := balAccountType;
+        GenJnlLine."Bal. Account No." := respectiveAccountNo;
+        GenJnlLine.Validate(Amount, -remainingAmount);
+        GenJnlLine.Insert();
     end;
 }

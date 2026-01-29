@@ -108,6 +108,7 @@ table 53765 "FinancialAdjContractReduction"
     local procedure CalcVATAndTotal()
     var
         InvoiceCreditNoteSummaryRec: Record "InvoiceCreditNoteSummary";
+        finalCalculation: Record "Final Calculation";
         vatPer: Integer;
     begin
         if "VAT %" = "VAT %"::"5%" then
@@ -120,17 +121,39 @@ table 53765 "FinancialAdjContractReduction"
         Rec.Modify();
 
         InvoiceCreditNoteSummaryRec.CalculateInvoiceCreditNoteSummary(Rec);
+
+        finalCalculation.SetRange("Contract ID", Rec."Contract No.");
+        if finalCalculation.FindFirst() then
+            finalCalculation.CalculateFinalSummary(finalCalculation);
     end;
 
     trigger OnDelete()
     var
+        finalcalculationRec: Record "Final Calculation";
         InvoiceCreditNoteSummaryRec: Record "InvoiceCreditNoteSummary";
     begin
+        finalcalculationRec.SetRange("Contract ID", Rec."Contract No.");
+        if finalcalculationRec.FindFirst() then begin
+            finalcalculationRec."Total Claim" -= Rec."Amount Incl. VAT";
+            finalcalculationRec."Summery Net Balance" := finalcalculationRec."Total Claim" - finalcalculationRec."Total Refund";
+
+            finalcalculationRec."Amount Refundable" := 0;
+            finalcalculationRec."Net Receivable From The Tenant" := 0;
+            if finalcalculationRec."Summery Net Balance" < 0 then begin
+                finalcalculationRec."Amount Refundable" := Abs(finalcalculationRec."Summery Net Balance");
+                finalcalculationRec."Net Receivable From The Tenant" := 0;
+            end
+            else
+                finalcalculationRec."Net Receivable From The Tenant" := finalcalculationRec."Summery Net Balance";
+
+            finalcalculationRec.Modify();
+
+        end;
+
         InvoiceCreditNoteSummaryRec.SetRange("Contract No.", Rec."Contract No.");
         InvoiceCreditNoteSummaryRec.SetRange("Description", 'Finanacial Adjustments / Contract Reductions');
         InvoiceCreditNoteSummaryRec.SetRange("Revenue Description", Rec."Revenue Description");
-        if InvoiceCreditNoteSummaryRec.FindFirst() then begin
+        if InvoiceCreditNoteSummaryRec.FindFirst() then
             InvoiceCreditNoteSummaryRec.Delete();
-        end;
     end;
 }
