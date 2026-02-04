@@ -19,6 +19,7 @@ codeunit 50502 "Send Proposal Email"
         SecondFileName: Text[250];
         ReportID: Integer;
         SecondReportID: Integer;
+        Leaseamount: Decimal;
     begin
         ReportID := 50102;
         SecondReportID := 50110;
@@ -43,7 +44,11 @@ codeunit 50502 "Send Proposal Email"
                 SecondFileName := 'additional_details_' + Format(AdditionalDetailsTable.ProposalID) + '.pdf';
             end else
                 Error('No data found for the second report.');
+
             Message('Preparing to send email to: %1', ConsolidatedInvoiceHeader."Tenant Contact Email");
+
+            Leaseamount := Round(ConsolidatedInvoiceHeader."Annual Rent Amount", 0.01);
+
             if CompanyInfo.Get() then
                 EmailMessage.Create(
                     ConsolidatedInvoiceHeader."Tenant Contact Email",
@@ -56,7 +61,7 @@ codeunit 50502 "Send Proposal Email"
                     '<p><b>Property Name:</b> ' + ConsolidatedInvoiceHeader."Property Name" + '<br/>' +
                     '<b>Unit Number:</b> ' + ConsolidatedInvoiceHeader."Unit Number" + '<br/>' +
                     '<b>Area:</b> ' + Format(ConsolidatedInvoiceHeader."Unit Size") + '<br/>' +
-                    '<b>Lease Amount:</b> ' + Format(ConsolidatedInvoiceHeader."Annual Rent Amount") + '<br/>' +
+                    '<b>Lease Amount:</b> ' + Format(Leaseamount) + '<br/>' +
                     '<b>Lease Term:</b> ' + ConsolidatedInvoiceHeader."Lease Duration" + '</p>' +
                     '<h3>Terms and Conditions:</h3>' +
                     '<p>The tenancy contract will be renewable annually upon the successful completion of the yearly rental payment.<br/>' +
@@ -68,6 +73,7 @@ codeunit 50502 "Send Proposal Email"
                     '</html>',
                     true
                 );
+
             EmailMessage.AddAttachment(FileName, '', InStream);
             EmailMessage.AddAttachment(SecondFileName, '', SecondInStream);
             if Email.Send(EmailMessage) then

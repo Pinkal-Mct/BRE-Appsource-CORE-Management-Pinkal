@@ -13,6 +13,7 @@ codeunit 50503 "Send Contract Email"
         ReportID: Integer;
         Emirate: Enum Emirates;
         CurrentEmirateValue: Enum Emirates;
+        Leaseamount: Decimal;
     begin
         if Evaluate(CurrentEmirateValue, Rec.Emirate) then
             case CurrentEmirateValue of
@@ -34,6 +35,9 @@ codeunit 50503 "Send Contract Email"
             TempBlob.CreateInStream(InStream);
             FileName := 'Contract_' + Format(Rec."Tenant ID") + '.pdf';
             Message('Preparing to send email to: %1', Rec."Email Address");
+
+            Leaseamount := Round(Rec."Annual Rent Amount", 0.01);
+
             if CompanyInfo.Get() then
                 EmailMessage.Create(Rec."Email Address",
                                     'Tenancy Contract Document Attached_' + Format(Rec."Tenant ID"),
@@ -47,7 +51,7 @@ codeunit 50503 "Send Contract Email"
                                     '<b>Property Name:</b> ' + Rec."Property Name" + '<br/>' +
                                     '<b>Location:</b> ' + Format(CurrentEmirateValue) + '   ' + Rec.Community + '<br/>' +
                                     '<b>Contract Period:</b> ' + Format(Rec."Contract Start Date") + '  ' + 'To' + '  ' + Format(Rec."Contract End Date") + '<br/>' +
-                                    '<b>Lease Amount:</b> ' + Format(Rec."Annual Rent Amount") + '<br/>' +
+                                    '<b>Lease Amount:</b> ' + Format(Leaseamount) + '<br/>' +
                                     '<b>Payment Mode:</b> ' + Format(Rec."No of Installments") + '  ' + Format(Rec."Payment Method") + '</p>' + '<br/>' +
                                     '<p>Kindly review the attached document thoroughly. If you have any questions or need further clarification, please do not hesitate to contact us.</p>' +
                                     '<p>Thank you for choosing ' + CompanyInfo.Name + '.</p>' +
