@@ -101,10 +101,25 @@ table 50120 "Management Fee Calc. Header"
         field(50108; "All Owners"; Boolean)
         {
             DataClassification = ToBeClassified;
+
+            trigger OnValidate()
+            begin
+                if Rec."All Owners" = true then begin
+
+                    Rec."Owner ID" := 0;
+                    Rec."Owner Name" := '';
+                end;
+            end;
         }
         field(50109; "All Properties"; Boolean)
         {
             DataClassification = ToBeClassified;
+
+            trigger OnValidate()
+            begin
+                if Rec."All Properties" = true then
+                    Rec.Property := '';
+            end;
         }
     }
 

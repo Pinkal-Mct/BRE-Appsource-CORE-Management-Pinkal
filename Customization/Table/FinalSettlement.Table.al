@@ -76,32 +76,34 @@ table 50922 "FinalSettlement"
                 ReportID: Integer;
                 OutStream: OutStream;
             begin
-                if Rec."Receivable Payment Status" = Enum::"Payment Status"::Received then begin
-                    FinalSettlementPosting.PostFinalSettlementAmount(Rec);
-                    Email.SendEmail(Rec);
-                    ReportID := 50114;
-                    paymentmode2Grid.Reset();
-                    paymentmode2Grid.SetRange("Tenant ID", Rec."Tenant ID");
-                    paymentmode2Grid.SetRange("Contract ID", Rec."Contract ID");
-                    if not paymentmode2Grid.FindFirst() then
-                        Error('Not avavilable');
-                    RecRef.GetTable(paymentmode2Grid);
-                    RecRef.GetTable(Rec);
-                    TempBlob.CreateOutStream(OutStream);
-                    Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
-                    TempBlob.CreateInStream(inStream);
-                    fileName := 'Receipt_' + Format(Rec."Contract ID") + Format(Rec."FC ID") + '.pdf';
-                    folderName := 'Payment Receipt';
-                    uploadResult := azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName);
-                    if fileName <> '' then begin
-                        Rec."Payment Receipt" := fileName;
-                        Rec."Payment Receipt document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                if Rec."Receivable Payment Status" = Enum::"Payment Status"::Received then
+                    if Confirm('Do you want to post journal lines?', true) then begin
+                        FinalSettlementPosting.PostFinalSettlementAmount(Rec);
+                        Email.SendEmail(Rec);
+                        ReportID := 50114;
+                        paymentmode2Grid.Reset();
+                        paymentmode2Grid.SetRange("Tenant ID", Rec."Tenant ID");
+                        paymentmode2Grid.SetRange("Contract ID", Rec."Contract ID");
+                        if not paymentmode2Grid.FindFirst() then
+                            Error('Not avavilable');
+                        RecRef.GetTable(paymentmode2Grid);
+                        RecRef.GetTable(Rec);
+                        TempBlob.CreateOutStream(OutStream);
+                        Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
+                        TempBlob.CreateInStream(inStream);
+                        fileName := 'Receipt_' + Format(Rec."Contract ID") + Format(Rec."FC ID") + '.pdf';
+                        folderName := 'Payment Receipt';
+                        uploadResult := azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName);
+                        if fileName <> '' then begin
+                            Rec."Payment Receipt" := fileName;
+                            Rec."Payment Receipt document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec.Modify();
+                            Message('File uploaded successfully: %1', fileName);
+                        end;
                         Rec.Modify();
-                        Message('File uploaded successfully: %1', fileName);
-                    end;
-                    Rec.Modify();
-
-                end
+                    end
+                    else
+                        exit;
             end;
         }
 
