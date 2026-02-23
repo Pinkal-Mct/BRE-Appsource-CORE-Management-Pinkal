@@ -36,6 +36,7 @@ table 50944 "Rent Calculation Subpage2"
         field(50105; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 : 2;
             Caption = 'Amount';
             Editable = false;
         }
@@ -63,6 +64,7 @@ table 50944 "Rent Calculation Subpage2"
         field(50111; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 : 2;
             Caption = 'Amount Including VAT';
             Editable = false;
         }
@@ -87,7 +89,7 @@ table 50944 "Rent Calculation Subpage2"
             Caption = 'Total Amount';
             FieldClass = FlowField;
             CalcFormula = sum("Rent Calculation Subpage2".Amount where("RC ID" = field("RC ID")));
-            DecimalPlaces = 0 : 0;
+            DecimalPlaces = 2 : 2;
         }
         field(50117; "Primary Classification"; Text[100])
         {

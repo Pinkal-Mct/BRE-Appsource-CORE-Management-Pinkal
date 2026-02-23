@@ -116,24 +116,6 @@ table 50947 "Pending Receviable Grid"
             FieldClass = FlowField;
             CalcFormula = sum("Pending Receviable Grid".ReceiptsAmountInclVAT where("Contract ID" = field("Contract ID")));
         }
-        field(50122; "Total Difference Amount"; Decimal)
-        {
-            Caption = 'Total Difference Amount';
-            FieldClass = FlowField;
-            CalcFormula = sum("Pending Receviable Grid".DifferenceAmount where("Contract ID" = field("Contract ID")));
-        }
-        field(50123; "Total Difference VAT"; Decimal)
-        {
-            Caption = 'Total Difference VAT';
-            FieldClass = FlowField;
-            CalcFormula = sum("Pending Receviable Grid".DifferenceVAT where("Contract ID" = field("Contract ID")));
-        }
-        field(50124; "Total DifferenceAmountIncl.VAT"; Decimal)
-        {
-            Caption = 'Total Difference Amount Incl. VAT';
-            FieldClass = FlowField;
-            CalcFormula = sum("Pending Receviable Grid".DifferenceAmountInclVAT where("Contract ID" = field("Contract ID")));
-        }
         field(50125; "Payment Type"; Text[250])
         {
             Caption = 'Payment Type';

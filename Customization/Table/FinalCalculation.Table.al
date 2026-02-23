@@ -299,6 +299,7 @@ table 50901 "Final Calculation"
     trigger OnDelete()
     var
     begin
+        DeleteFinalcalculationlink();
         deletefinalrevenuecalculation();
         deletebillingcaculation();
         PendingreceivablePayable();
@@ -311,6 +312,17 @@ table 50901 "Final Calculation"
         DeleteAdjustmentDeposits();
         finaladjustmentreduction();
         invoicecreditnotesummary();
+    end;
+
+    procedure DeleteFinalcalculationlink()
+    var
+        TenancyContractRec: Record "Tenancy Contract";
+    begin
+        TenancyContractRec.SetRange("Contract ID", Rec."Contract ID");
+        if TenancyContractRec.FindFirst() then begin
+            TenancyContractRec.Link := 0;
+            TenancyContractRec.Modify();
+        end;
     end;
 
     procedure deletefinalrevenuecalculation()

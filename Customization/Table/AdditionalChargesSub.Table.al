@@ -28,6 +28,7 @@ table 50902 "Additional Charges Sub"
         field(50102; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 : 2;
             Caption = 'Amount';
             trigger OnValidate()
             begin
@@ -47,6 +48,7 @@ table 50902 "Additional Charges Sub"
         field(50104; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 : 2;
             Caption = 'VAT Amount';
             Editable = false;
             trigger OnValidate()
@@ -63,6 +65,7 @@ table 50902 "Additional Charges Sub"
         field(50105; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 : 2;
             Caption = 'Amount Including VAT';
             Editable = false;
             trigger OnValidate()
@@ -96,6 +99,7 @@ table 50902 "Additional Charges Sub"
         {
             Caption = 'Total Amount';
             FieldClass = FlowField;
+            DecimalPlaces = 2 : 2;
             CalcFormula = sum("Additional Charges Sub"."Amount Including VAT" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
         }
         field(50116; "Invoiced"; Boolean)

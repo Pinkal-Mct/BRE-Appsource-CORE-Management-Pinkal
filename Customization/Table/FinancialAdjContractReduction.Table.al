@@ -36,6 +36,7 @@ table 53765 "FinancialAdjContractReduction"
         field(53703; Amount; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 : 2;
             trigger OnValidate()
             begin
                 CalcVATAndTotal();
@@ -55,6 +56,7 @@ table 53765 "FinancialAdjContractReduction"
         field(53705; "Amount Incl. VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 : 2;
         }
         field(53706; "Description"; Text[100])
         {
@@ -63,6 +65,7 @@ table 53765 "FinancialAdjContractReduction"
         field(53707; Total; Decimal)
         {
             FieldClass = FlowField;
+            DecimalPlaces = 2 : 2;
             CalcFormula = sum(FinancialAdjContractReduction."Amount" where("Contract No." = field("Contract No.")));
         }
         field(53708; "Total VAT"; Decimal)
@@ -73,6 +76,7 @@ table 53765 "FinancialAdjContractReduction"
         field(53709; "Total Amount Incl.VAT"; Decimal)
         {
             FieldClass = FlowField;
+            DecimalPlaces = 2 : 2;
             CalcFormula = sum(FinancialAdjContractReduction."Amount Incl. VAT" where("Contract No." = field("Contract No.")));
         }
         field(53710; "VAT Amount"; Decimal)

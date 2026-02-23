@@ -20,20 +20,24 @@ table 53766 "InvoiceCreditNoteSummary"
         field(53703; Invoice; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 : 2;
         }
         field(53704; "Credit Note"; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 2 : 2;
         }
         field(53705; "Total Invoice"; Decimal)
         {
             FieldClass = FlowField;
+            DecimalPlaces = 2 : 2;
             CalcFormula = sum(InvoiceCreditNoteSummary."Invoice" where("Contract No." = field("Contract No.")));
 
         }
         field(53708; "Total Credit Note"; Decimal)
         {
             FieldClass = FlowField;
+            DecimalPlaces = 2 : 2;
             CalcFormula = sum(InvoiceCreditNoteSummary."Credit Note" where("Contract No." = field("Contract No.")));
         }
         field(53706; Invoiced; Boolean)
