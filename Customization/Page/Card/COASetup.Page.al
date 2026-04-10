@@ -91,6 +91,11 @@ page 50524 "COA Setup"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the G/L account for post-dated checks that have been cleared or returned.';
                 }
+                field("PDC Liabilities"; Rec."PDC Liabilities")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the G/L account for post-dated checks liabilities.';
+                }
             }
             part(COASetupLines; "COA Setup List")
             {

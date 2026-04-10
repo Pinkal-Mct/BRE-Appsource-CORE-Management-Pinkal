@@ -86,6 +86,12 @@ table 50513 "COA Setup"
             Caption = 'Carried forward Out-Security Deposits';
             TableRelation = "G/L Account"."No.";
         }
+        field(50515; "PDC Liabilities"; Code[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'PDC Liabilities';
+            TableRelation = "G/L Account"."No.";
+        }
     }
 
     keys

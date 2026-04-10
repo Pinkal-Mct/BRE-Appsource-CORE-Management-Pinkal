@@ -50,6 +50,11 @@ table 53764 "Management Fee Grid"
             DataClassification = ToBeClassified;
             OptionMembers =
                 " ","Percentage of Monthly Revenue","Percentage of Annual Rent","Percentage of Collections","Per Unit Fee",Hybrid;
+            trigger OnValidate()
+            begin
+                if Rec."Calculation Method" = Rec."Calculation Method"::"Per Unit Fee" then
+                    Rec."Base Amount Source" := Rec."Base Amount Source"::"Number of Units";
+            end;
         }
 
         // 5. Calculation Sub-Type
@@ -76,7 +81,16 @@ table 53764 "Management Fee Grid"
         field(53710; "Base Amount Source"; Option)
         {
             DataClassification = ToBeClassified;
-            OptionMembers = Revenue,Collections,"Annual Rent";
+            OptionMembers = Revenue,Collections,"Annual Rent","Number of Units";
+
+            trigger OnValidate()
+            begin
+                if Rec."Base Amount Source" = Rec."Base Amount Source"::"Number of Units" then
+                    if Rec."Calculation Method" <> Rec."Calculation Method"::"Per Unit Fee" then begin
+                        Message('Base Amount Source should be "Number of Units" only when Calculation Method is "Per Unit Fee".');
+                        Rec."Base Amount Source" := Rec."Base Amount Source"::Revenue;
+                    end;
+            end;
         }
 
         // 9. Payment Frequency
@@ -90,11 +104,23 @@ table 53764 "Management Fee Grid"
         field(53712; "Valid From"; Date)
         {
             DataClassification = ToBeClassified;
+            trigger OnValidate()
+            begin
+                if (Rec."Valid From" <= Today()) and (Rec."Valid To" >= Today()) then
+                    if Rec."Contract Status" <> Rec."Contract Status"::Active then
+                        Rec."Contract Status" := Rec."Contract Status"::Active;
+            end;
         }
 
         field(53713; "Valid To"; Date)
         {
             DataClassification = ToBeClassified;
+            trigger OnValidate()
+            begin
+                if (Rec."Valid From" <= Today()) and (Rec."Valid To" >= Today()) then
+                    if Rec."Contract Status" <> Rec."Contract Status"::Active then
+                        Rec."Contract Status" := Rec."Contract Status"::Active;
+            end;
         }
 
         field(53714; "Contract Status"; Option)
@@ -117,7 +143,7 @@ table 53764 "Management Fee Grid"
         {
             DataClassification = ToBeClassified;
         }
-        field(53718; Percentage; Integer)
+        field(53718; Percentage; Decimal)
         {
             DataClassification = ToBeClassified;
         }

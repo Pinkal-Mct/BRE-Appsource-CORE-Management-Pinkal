@@ -189,7 +189,7 @@ table 50319 "Security Deposit"
                 finalcalcRec.Modify(true);
             end;
         end;
-
+        Modify(true);
         TenancyContractRec.Reset();
         TenancyContractRec.SetRange("Contract ID", "New_Contract ID");
         if TenancyContractRec.FindFirst() then begin

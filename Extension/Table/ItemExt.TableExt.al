@@ -39,11 +39,25 @@ tableextension 50102 "Item Ext" extends Item
         {
             Caption = 'Property Name';
             DataClassification = ToBeClassified;
+            TableRelation = "Property Registration"."Property Name";
         }
         field(50102; "Unit Number"; Text[50])
         {
             Caption = 'Actual Unit Number';
             DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                UnitRec: Record Item;
+            begin
+                // Check duplicate Unit Number for same Property
+                UnitRec.Reset();
+                UnitRec.SetRange("Property ID", Rec."Property ID");
+                UnitRec.SetRange("Unit Number", Rec."Unit Number");
+
+                // Exclude current record (important for Modify case)
+                if not UnitRec.IsEmpty() then
+                    Error('Unit Number %1 already exists for Property %2.', "Unit Number", "Property ID");
+            end;
         }
         field(50103; "Floor Number"; Integer)
         {

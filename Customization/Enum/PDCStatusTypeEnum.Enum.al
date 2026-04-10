@@ -36,4 +36,8 @@ enum 50505 "PDC Status Type Enum"
     {
         Caption = 'Deferred';
     }
+    value(9; "Cancelled")
+    {
+        Caption = 'Cancelled';
+    }
 }

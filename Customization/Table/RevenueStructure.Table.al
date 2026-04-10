@@ -30,6 +30,8 @@ table 50911 "Revenue Structure"
             DataClassification = ToBeClassified;
             Caption = 'Amount';
             Editable = false;
+            DecimalPlaces = 2 : 2;
+
         }
 
         field(50104; "Contract Start Date"; Date)
@@ -56,6 +58,8 @@ table 50911 "Revenue Structure"
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
             Editable = false;
+            DecimalPlaces = 2 : 2;
+
         }
 
         field(50108; "Amount Including VAT"; Decimal)
@@ -63,6 +67,8 @@ table 50911 "Revenue Structure"
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
             Editable = false;
+            DecimalPlaces = 2 : 2;
+
         }
 
         field(50109; "Tenant ID"; Code[20])

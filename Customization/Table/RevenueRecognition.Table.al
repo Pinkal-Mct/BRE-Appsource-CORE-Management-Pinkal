@@ -1,19 +1,23 @@
 table 50929 "Revenue Recognition"
 {
     DataClassification = ToBeClassified;
+
     fields
     {
+
         field(50102; "RR Id"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Caption = 'RR Id';
         }
+
         field(50100; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             TableRelation = "Tenancy Contract"."Contract ID";
             Caption = 'Contract ID';
+
             trigger OnValidate()
             var
                 tenancyrec: Record "Tenancy Contract";
@@ -24,21 +28,27 @@ table 50929 "Revenue Recognition"
                     "Start Date" := tenancyrec."Contract Start Date";
                     "End Date" := tenancyrec."Contract End Date";
                     "Contract Amount" := tenancyrec."Annual Rent Amount";
+
                 end else begin
+                    // Clear the field if no record is found
                     "Tenant Id" := '';
                     "Start Date" := 0D;
                     "End Date" := 0D;
                     "Contract Amount" := 0;
                 end;
+
                 CalculateMonthlyRevenue();
+
             end;
         }
+
         field(50101; "Tenant Id"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Id';
             TableRelation = "Lease Proposal Details"."Tenant ID";
-            Editable = false;
+            Editable = false; // Make it read-only for the user
+
         }
         field(50103; "Start Date"; Date)
         {
@@ -50,12 +60,15 @@ table 50929 "Revenue Recognition"
             DataClassification = ToBeClassified;
             Caption = 'End Date';
         }
+
         field(50105; "Contract Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Amount';
         }
+
     }
+
     keys
     {
         key(PK; "RR ID")
@@ -63,100 +76,204 @@ table 50929 "Revenue Recognition"
             Clustered = true;
         }
     }
+
     local procedure CalculateMonthlyRevenue()
     var
         SubpageRec: Record "Revenue Recognition Subpage";
-        TempSubpageRecs: array[1000] of Record "Revenue Recognition Subpage" temporary;
+
+    begin
+        SubpageRec.DeleteAll();
+
+        // Detect which rent grid contains records
+        if ProcessSingleUnit(Rec."Contract ID") then
+            exit;
+
+        if ProcessMultiUnit(Rec."Contract ID") then
+            exit;
+
+        if ProcessMergedSingleRent(Rec."Contract ID") then
+            exit;
+
+        if ProcessMergedMultiRent(Rec."Contract ID") then
+            exit;
+
+        ProcessSpecialRent(Rec."Contract ID");
+    end;
+
+    local procedure ProcessSingleUnit(ContractID: Integer): Boolean
+    var
+        SingleUnitRent: Record "TC Single Unit Rent SubPage";
+    begin
+        SingleUnitRent.SetRange("Contract ID", ContractID);
+
+        if not SingleUnitRent.FindSet() then
+            exit(false);
+
+        repeat
+            ProcessRentLine(
+                SingleUnitRent."Start Date",
+                SingleUnitRent."End Date",
+                SingleUnitRent."Final Annual Amount");
+        until SingleUnitRent.Next() = 0;
+
+        exit(true);
+    end;
+
+    local procedure ProcessMultiUnit(ContractID: Integer): Boolean
+    var
+        MultiUnitRent: Record "TC Single LumAnnualAmnt SP";
+    begin
+        MultiUnitRent.SetRange("Contract ID", ContractID);
+
+        if not MultiUnitRent.FindSet() then
+            exit(false);
+
+        repeat
+            ProcessRentLine(
+                MultiUnitRent."SL_Start Date",
+                MultiUnitRent."SL_End Date",
+                MultiUnitRent."SL_Final Annual Amount");
+        until MultiUnitRent.Next() = 0;
+
+        exit(true);
+    end;
+
+    local procedure ProcessMergedSingleRent(ContractID: Integer): Boolean
+    var
+        MergedSingleRent: Record "TC Merge SameSqure SubPage";
+    begin
+        MergedSingleRent.SetRange("Contract ID", ContractID);
+
+        if not MergedSingleRent.FindSet() then
+            exit(false);
+
+        repeat
+            ProcessRentLine(
+                MergedSingleRent."MS_Start Date",
+                MergedSingleRent."MS_End Date",
+                MergedSingleRent."MS_Final Annual Amount");
+        until MergedSingleRent.Next() = 0;
+
+        exit(true);
+    end;
+
+    local procedure ProcessMergedMultiRent(ContractID: Integer): Boolean
+    var
+        MergedMultiRent: Record "TC Merge DifferentSq SubPage";
+    begin
+        MergedMultiRent.SetRange("Contract ID", ContractID);
+
+        if not MergedMultiRent.FindSet() then
+            exit(false);
+
+        repeat
+            ProcessRentLine(
+                MergedMultiRent."MD_Start Date",
+                MergedMultiRent."MD_End Date",
+                MergedMultiRent."MD_Final Annual Amount");
+        until MergedMultiRent.Next() = 0;
+
+        exit(true);
+    end;
+
+    local procedure ProcessSpecialRent(ContractID: Integer): Boolean
+    var
+        SpecialRent: Record "TC Merge LumAnnualAmount SP";
+    begin
+        SpecialRent.SetRange("Contract ID", ContractID);
+
+        if not SpecialRent.FindSet() then
+            exit(false);
+
+        repeat
+            ProcessRentLine(
+                SpecialRent."ML_Start Date",
+                SpecialRent."ML_End Date",
+                SpecialRent."ML_Final Annual Amount");
+        until SpecialRent.Next() = 0;
+
+        exit(true);
+    end;
+
+    local procedure ProcessRentLine(StartDate: Date; EndDate: Date; FinalAnnualAmount: Decimal)
+    var
+        SubpageRec: Record "Revenue Recognition Subpage";
+        ExistingSubpageRec: Record "Revenue Recognition Subpage";
         TotalDays: Integer;
-        CurrentDate: Date;
-        MonthDays: Integer;
         DailyRate: Decimal;
+        MonthDays: Integer;
+        CurrentDate: Date;
         MonthlyRate: Decimal;
-        AllocatedAmount: Decimal;
         FirstDayNextMonth: Date;
         LastDayOfMonth: Date;
-        DaysInMonth: Integer;
-        Year: Integer;
-        Month: Integer;
-        IsLeap: Boolean;
         MonthlyRate2: Decimal;
         TotalMonths: Integer;
         ActualDaysInMonth: Integer;
-        LastEntryNo: Integer;
-        Method2Total: Decimal;
-        RecCount: Integer;
-        RemainingAmount: Decimal;
+        MonthText: Text[50];
     begin
-        SubpageRec.DeleteAll();
-        if ("Start Date" = 0D) or ("End Date" = 0D) then
+        TotalDays := EndDate - StartDate + 1;
+        if TotalDays <= 0 then
             exit;
-        TotalMonths := CalculateTotalMonths("Start Date", "End Date");
-        TotalDays := ("End Date" - "Start Date") + 1;
-        DailyRate := "Contract Amount" / TotalDays;
-        CurrentDate := "Start Date";
-        Method2Total := 0;
-        RecCount := 0;
-        MonthlyRate2 := Round("Contract Amount" / TotalMonths);
-        while CurrentDate <= "End Date" do begin
-            RecCount += 1;
-            TempSubpageRecs[RecCount].Init();
-            LastEntryNo += 1;
-            TempSubpageRecs[RecCount]."Entry No." := LastEntryNo;
-            TempSubpageRecs[RecCount]."Contract ID" := "Contract ID";
-            TempSubpageRecs[RecCount]."Tenant Id" := "Tenant Id";
-            TempSubpageRecs[RecCount]."Month" := FORMAT(CurrentDate, 0, '<Month Text>') + '-' + FORMAT(CurrentDate, 0, '<Year>');
+
+        DailyRate := FinalAnnualAmount / TotalDays;
+
+        TotalMonths := CalculateTotalMonths(StartDate, EndDate);
+
+        MonthlyRate2 := FinalAnnualAmount / TotalMonths;
+
+        CurrentDate := StartDate;
+
+        while CurrentDate <= EndDate do begin
+
             if DATE2DMY(CurrentDate, 2) = 12 then
                 FirstDayNextMonth := DMY2DATE(1, 1, DATE2DMY(CurrentDate, 3) + 1)
             else
                 FirstDayNextMonth := DMY2DATE(1, DATE2DMY(CurrentDate, 2) + 1, DATE2DMY(CurrentDate, 3));
             LastDayOfMonth := FirstDayNextMonth - 1;
-            if "End Date" < LastDayOfMonth then
-                MonthDays := "End Date" - CurrentDate + 1
+
+            if EndDate < LastDayOfMonth then
+                MonthDays := EndDate - CurrentDate + 1
             else
                 MonthDays := LastDayOfMonth - CurrentDate + 1;
-            if CurrentDate = "Start Date" then
-                if MonthDays > ("End Date" - CurrentDate + 1) then
-                    MonthDays := ("End Date" - CurrentDate + 1);
-            Year := DATE2DMY(CurrentDate, 3);
-            Month := DATE2DMY(CurrentDate, 2);
-            IsLeap := IsLeapYear(Year);
-            if Month = 2 then begin
-                if IsLeap then
-                    DaysInMonth := 29
-                else
-                    DaysInMonth := 28;
-            end else
-                if (Month = 4) or (Month = 6) or (Month = 9) or (Month = 11) then
-                    DaysInMonth := 30
-                else
-                    DaysInMonth := 31;
-            ActualDaysInMonth := GetDaysInMonthss(CurrentDate);
-            AllocatedAmount := MonthDays * DailyRate;
-            TempSubpageRecs[RecCount]."RR - Method 1 (Day)" := AllocatedAmount;
+
+            if CurrentDate = StartDate then
+                if MonthDays > (EndDate - CurrentDate + 1) then
+                    MonthDays := (EndDate - CurrentDate + 1);
+
+            ActualDaysInMonth := GetDaysInMonth(CurrentDate, StartDate, EndDate);
+
             if MonthDays < ActualDaysInMonth then
                 MonthlyRate := Round(MonthlyRate2 / ActualDaysInMonth * MonthDays)
             else
                 MonthlyRate := MonthlyRate2;
 
-            Method2Total += MonthlyRate;
-            TempSubpageRecs[RecCount]."RR - Method 2 (Month)" := MonthlyRate;
-            TempSubpageRecs[RecCount]."No. of Days" := MonthDays;
+            MonthText := FORMAT(CurrentDate, 0, '<Month Text>') + '-' + FORMAT(CurrentDate, 0, '<Year>');
+
+            ExistingSubpageRec.SetRange("RR Id");
+            ExistingSubpageRec.SetRange(Month, MonthText);
+            if ExistingSubpageRec.FindFirst() then begin
+                ExistingSubpageRec."No. of Days" += MonthDays;
+                ExistingSubpageRec."RR - Method 1 (Day)" += (MonthDays * DailyRate);
+                ExistingSubpageRec."RR - Method 2 (Month)" += MonthlyRate;
+                ExistingSubpageRec.Modify();
+            end
+            else begin
+                SubpageRec.Init();
+                SubpageRec."RR Id" := Rec."RR Id";
+                SubpageRec."Contract ID" := Rec."Contract ID";
+                SubpageRec."Tenant Id" := Rec."Tenant Id";
+                SubpageRec."Month" := MonthText;
+                SubpageRec."No. of Days" := MonthDays;
+                SubpageRec."RR - Method 1 (Day)" := (MonthDays * DailyRate);
+                SubpageRec."RR - Method 2 (Month)" := MonthlyRate;
+                SubpageRec.Insert();
+                Clear(SubpageRec);
+            end;
             CurrentDate := FirstDayNextMonth;
         end;
-        RemainingAmount := "Contract Amount" - (Method2Total - TempSubpageRecs[RecCount]."RR - Method 2 (Month)");
-        TempSubpageRecs[RecCount]."RR - Method 2 (Month)" := RemainingAmount;
-        for LastEntryNo := 1 to RecCount do begin
-            SubpageRec.Init();
-            SubpageRec."Entry No." := TempSubpageRecs[LastEntryNo]."Entry No.";
-            SubpageRec."Contract ID" := TempSubpageRecs[LastEntryNo]."Contract ID";
-            SubpageRec."Tenant Id" := TempSubpageRecs[LastEntryNo]."Tenant Id";
-            SubpageRec."Month" := TempSubpageRecs[LastEntryNo]."Month";
-            SubpageRec."No. of Days" := TempSubpageRecs[LastEntryNo]."No. of Days";
-            SubpageRec."RR - Method 1 (Day)" := TempSubpageRecs[LastEntryNo]."RR - Method 1 (Day)";
-            SubpageRec."RR - Method 2 (Month)" := TempSubpageRecs[LastEntryNo]."RR - Method 2 (Month)";
-            SubpageRec.Insert();
-        end;
     end;
+
+
 
     local procedure IsLeapYear(Year: Integer): Boolean
     begin
@@ -172,29 +289,30 @@ table 50929 "Revenue Recognition"
         DaysInEndMonth: Integer;
         FirstDayOfNextMonth: Date;
     begin
-        StartYear := DATE2DMY(StartDate, 3);
-        StartMonth := DATE2DMY(StartDate, 2);
-        EndYear := DATE2DMY(EndDate, 3);
-        EndMonth := DATE2DMY(EndDate, 2);
-        EndDay := DATE2DMY(EndDate, 1);
+        // Extract the year, month, and day from the start and end dates
+        StartYear := DATE2DMY(StartDate, 3); // Year
+        StartMonth := DATE2DMY(StartDate, 2); // Month
+                                              // StartDay := DATE2DMY(StartDate, 1); // Day
+
+        EndYear := DATE2DMY(EndDate, 3); // Year
+        EndMonth := DATE2DMY(EndDate, 2); // Month
+        EndDay := DATE2DMY(EndDate, 1); // Day
+
+        // Calculate the difference in months
         Result := ((EndYear - StartYear) * 12) + (EndMonth - StartMonth);
+
+        // Calculate the number of days in the end month
         if EndMonth = 12 then
-            FirstDayOfNextMonth := DMY2DATE(1, 1, EndYear + 1)
+            FirstDayOfNextMonth := DMY2DATE(1, 1, EndYear + 1) // January of the next year
         else
-            FirstDayOfNextMonth := DMY2DATE(1, EndMonth + 1, EndYear);
+            FirstDayOfNextMonth := DMY2DATE(1, EndMonth + 1, EndYear); // First day of the next month
+
         DaysInEndMonth := FirstDayOfNextMonth - DMY2DATE(1, EndMonth, EndYear);
+
+        // Check if EndDate includes the full final month
+        // DaysInEndMonth := CALCDATE('<CM+1>', DMY2DATE(1, EndMonth, EndYear)) - DMY2DATE(1, EndMonth, EndYear);
         if EndDay = DaysInEndMonth then
             Result := Result + 1;
-    end;
-
-    local procedure GetDaysInMonth(CurrentDate: Date): Integer
-    var
-        FirstDayNextMonth: Date;
-        FirstDayCurrentMonth: Date;
-    begin
-        FirstDayNextMonth := CALCDATE('<+CM>', CurrentDate);
-        FirstDayCurrentMonth := CALCDATE('<-CM>', CurrentDate);
-        exit(FirstDayNextMonth - FirstDayCurrentMonth);
     end;
 
     procedure GetDaysInMonthss(CurrentDate: Date): Integer
@@ -203,19 +321,67 @@ table 50929 "Revenue Recognition"
         Month: Integer;
         IsLeap: Boolean;
     begin
-        Year := DATE2DMY(CurrentDate, 3);
-        Month := DATE2DMY(CurrentDate, 2);
+        Year := DATE2DMY(CurrentDate, 3); // Extract Year from CurrentDate
+        Month := DATE2DMY(CurrentDate, 2); // Extract Month from CurrentDate
         IsLeap := IsLeapYear(Year);
+
+        // IsLeap := ContractHasLeapDay(ContractStartDate, ContractEndDate);
+
         case Month of
-            1, 3, 5, 7, 8, 10, 12:
+            1, 3, 5, 7, 8, 10, 12: // 31-day months
                 exit(31);
-            4, 6, 9, 11:
+            4, 6, 9, 11: // 30-day months
                 exit(30);
-            2:
+            2: // February
                 if IsLeap then
-                    exit(29)
+                    exit(29) // Leap year February has 29 days
                 else
-                    exit(28);
+                    exit(28); // Non-leap year February has 28 days
         end;
     end;
+
+    procedure GetDaysInMonth(CurrentDate: Date; ContractStartDate: Date; ContractEndDate: Date): Integer
+    var
+        Year: Integer;
+        Month: Integer;
+        IsLeap: Boolean;
+    begin
+        Year := DATE2DMY(CurrentDate, 3); // Extract Year from CurrentDate
+        Month := DATE2DMY(CurrentDate, 2); // Extract Month from CurrentDate
+                                           // IsLeap := IsLeapYear(Year);
+        if Month = 2 then
+            IsLeap := ContractHasLeapDay(ContractStartDate, ContractEndDate);
+
+        case Month of
+            1, 3, 5, 7, 8, 10, 12: // 31-day months
+                exit(31);
+            4, 6, 9, 11: // 30-day months
+                exit(30);
+            2: // February
+                if IsLeap then
+                    exit(29) // Leap year February has 29 days
+                else
+                    exit(28); // Non-leap year February has 28 days
+        end;
+    end;
+
+    //-----------------Calculate Total Days in Months's-----------------//
+
+    local procedure ContractHasLeapDay(StartDate: Date; EndDate: Date): Boolean
+    var
+        LeapDate: Date;
+        Year: Integer;
+    begin
+        for Year := DATE2DMY(StartDate, 3) to DATE2DMY(EndDate, 3) do
+            if IsLeapYear(Year) then begin
+                LeapDate := DMY2DATE(29, 2, Year);
+                if (LeapDate >= StartDate) and (LeapDate <= EndDate) then
+                    exit(true);
+            end;
+        exit(false);
+    end;
+
+    //-----------------Calculate Total Days in Months's-----------------//
+
+
 }

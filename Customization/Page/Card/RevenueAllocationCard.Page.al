@@ -87,6 +87,8 @@ page 50122 "Revenue Allocation Card"
                 part("Revenue Recognition Item Details"; "Revenue Recognition Item Sub")
                 {
                     SubPageLink = "RR_No." = field("No.");
+                    UpdatePropagation = Both;
+
                 }
             }
 
@@ -96,6 +98,8 @@ page 50122 "Revenue Allocation Card"
                 part("Revenue Recognition Details"; "Revenue Recognition Detail Sub")
                 {
                     SubPageLink = "RR_No." = field("No.");
+                    UpdatePropagation = Both;
+
                 }
             }
             group(" ")
@@ -187,7 +191,7 @@ page 50122 "Revenue Allocation Card"
                             CalculateTotals();
                         end
                         else
-                            Message('First Select Revenue Method in Company Data Card');
+                            Message('Revenue Method is not selected in Company Data Card');
                 end;
             }
             action(RevenueAllocation)
@@ -399,7 +403,8 @@ page 50122 "Revenue Allocation Card"
      TerminationDate: Date;
      MonthNo: Integer;
      FinancialYear: Integer;
-     RevenueMethod: Option "Per Day Rent","Fixed Monthly Rent")
+         RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
+
     var
         FilteredContractRec: Record "Revenue Allocation SubGrid";
         SuspensionRec: Record SuspendReasonTable;
@@ -461,59 +466,20 @@ page 50122 "Revenue Allocation Card"
             SuspensionStartDate := SuspensionRec.DateEffective;
             SuspensionEndDate := SuspensionRec.SuspensionEndDate;
             // If suspension start date is within selected month
-            if (SuspensionStartDate <> 0D) and
-               (SuspensionStartDate >= SelectedMonthStart) and
-               (SuspensionStartDate <= SelectedMonthEnd) then
-                // Adjust end date to day before suspension
-                AdjustedEndDate := SuspensionStartDate;
 
-
-            // If suspension period overlaps with selected month
             if (SuspensionStartDate <> 0D) and (SuspensionEndDate <> 0D) then
-                // Case 1: Suspension starts before selected month and ends during selected month
-                if (SuspensionStartDate < SelectedMonthStart) and
-                   (SuspensionEndDate >= SelectedMonthStart) and
-                   (SuspensionEndDate <= SelectedMonthEnd) then begin
-                    // Regular period starts after suspension ends
-                    if (SuspensionEndDate + 1) <= SelectedMonthEnd then
-                        AdjustedStartDate := SuspensionEndDate + 1
-                    else
-                        AdjustedStartDate := SelectedMonthEnd + 1; // No regular days
-                end
-                // Case 2: Suspension starts during selected month and ends after selected month
-                else
-                    if (SuspensionStartDate >= SelectedMonthStart) and
-                            (SuspensionStartDate <= SelectedMonthEnd) and
-                            ((SuspensionEndDate > SelectedMonthEnd) or (SuspensionEndDate = 0D)) then begin
-                        // Regular period ends before suspension starts
-                        if (SuspensionStartDate - 1) >= SelectedMonthStart then
-                            AdjustedEndDate := SuspensionStartDate - 1
-                        else
-                            AdjustedEndDate := SelectedMonthStart - 1; // No regular days
-                    end
-                    // Case 3: Suspension starts and ends during selected month
-                    else
-                        if (SuspensionStartDate >= SelectedMonthStart) and
-                                (SuspensionStartDate <= SelectedMonthEnd) and
-                                (SuspensionEndDate >= SelectedMonthStart) and
-                                (SuspensionEndDate <= SelectedMonthEnd) then begin
-                            // For this case, we need to handle it differently
-                            // This would require splitting into two periods (before and after suspension)
-                            // For now, we'll take the period after suspension
-                            if (SuspensionEndDate + 1) <= SelectedMonthEnd then
-                                AdjustedStartDate := SuspensionEndDate + 1
-                            else
-                                AdjustedStartDate := SelectedMonthEnd + 1; // No regular days
-                        end
-                        // Case 4: Suspension covers entire selected month
-                        else
-                            if (SuspensionStartDate <= SelectedMonthStart) and
-                                    (SuspensionEndDate >= SelectedMonthEnd) then begin
-                                // No regular days in this month
-                                AdjustedStartDate := SelectedMonthEnd + 1;
-                                AdjustedEndDate := SelectedMonthStart - 1;
-                            end;
+                // If suspension overlaps month
+                if not ((SuspensionEndDate < SelectedMonthStart) or
+                        (SuspensionStartDate > SelectedMonthEnd)) then begin
 
+                    // Case: suspension starts inside month
+                    if SuspensionStartDate > SelectedMonthStart then
+                        AdjustedEndDate := SuspensionStartDate - 1;
+
+                    // Case: suspension ends inside month
+                    if SuspensionEndDate < SelectedMonthEnd then
+                        AdjustedStartDate := SuspensionEndDate + 1;
+                end;
         end;
 
         if (AdjustedStartDate <= AdjustedEndDate) then
@@ -593,12 +559,12 @@ page 50122 "Revenue Allocation Card"
         FilteredContractRec."Posting Year" := FinancialYear;
 
         if RevenueMethod = RevenueMethod::"Per Day Rent" then begin
-            FilteredContractRec."Per Day Rent" := Round(PerDayRent); // Use the per day rent passed from the grid
+            FilteredContractRec."Per Day Rent" := Round(PerDayRentWithoutGracePeriod); // Use the per day rent passed from the grid
             FilteredContractRec."Total Value" := CalculatedDays * FilteredContractRec."Per Day Rent";
             FilteredContractRec."Owner Share" := CalculatedDays * FilteredContractRec."Per Day Rent";
         end
         else begin
-            FilteredContractRec."Per Month Rent" := CalculatePerMonthRent((FilteredContractRec."Final Annual Amount" / 12), CalculatedDays, MonthNo, FinancialYear); // Use the per day rent passed from the grid
+            FilteredContractRec."Per Month Rent" := CalculatePerMonthRent(FilteredContractRec."Final Annual Amount", CalculatedDays, MonthNo, FinancialYear, ContractRec, MultiYearStartDate, MultiYearEndDate); // Use the per day rent passed from the grid
             FilteredContractRec."Total Value" := FilteredContractRec."Per Month Rent";
             FilteredContractRec."Owner Share" := FilteredContractRec."Per Month Rent";
         end;
@@ -681,7 +647,7 @@ page 50122 "Revenue Allocation Card"
      ContractRec: Record "Tenancy Contract";
      MonthNo: Integer;
      FinancialYear: Integer;
-     RevenueMethod: Option "Per Day Rent","Fixed Monthly Rent")
+     RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
     var
         SingleUnitRent: Record "TC Single Unit Rent SubPage";
         MultiUnitRent: Record "TC Single LumAnnualAmnt SP";
@@ -859,7 +825,8 @@ page 50122 "Revenue Allocation Card"
      PreviousYearNo: Integer;
      ContractStartDate: Date;
      PreviousMonthEnd: Date;
-     RevenueMethod: Option "Per Day Rent","Fixed Monthly Rent")
+        RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
+
     var
         FilteredContractRec: Record "Revenue Allocation SubGrid";
         SuspensionRec: Record SuspendReasonTable;
@@ -966,12 +933,12 @@ page 50122 "Revenue Allocation Card"
         FilteredContractRec."Final Annual Amount" := pTotalAnnualAmount;
 
         if RevenueMethod = RevenueMethod::"Per Day Rent" then begin
-            FilteredContractRec."Per Day Rent" := Round(PerDayRent);
+            FilteredContractRec."Per Day Rent" := Round(PerDayRentWithoutGracePeriod);
             FilteredContractRec."Total Value" := MissedDays * FilteredContractRec."Per Day Rent";
             FilteredContractRec."Owner Share" := MissedDays * FilteredContractRec."Per Day Rent";
         end
         else begin
-            FilteredContractRec."Per Month Rent" := CalculatePerMonthRent((FilteredContractRec."Final Annual Amount" / 12), MissedDays, PreviousMonthNo, PreviousYearNo);
+            FilteredContractRec."Per Month Rent" := CalculatePerMonthRent(FilteredContractRec."Final Annual Amount", MissedDays, PreviousMonthNo, PreviousYearNo, ContractRec, MultiYearStartDate, MultiYearEndDate);
             FilteredContractRec."Total Value" := FilteredContractRec."Per Month Rent";
             FilteredContractRec."Owner Share" := FilteredContractRec."Per Month Rent";
         end;
@@ -1053,7 +1020,7 @@ page 50122 "Revenue Allocation Card"
     //---------------Fetch Contracts--------------//
 
     // Then modify the FetchContracts procedure to use this
-    procedure FetchContracts(RevenueMethod: Option "Per Day Rent","Fixed Monthly Rent")
+    procedure FetchContracts(RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
     var
         ContractRec: Record "Tenancy Contract";                     // Main contract record
         SuspensionRec: Record SuspendReasonTable;                   // Suspension information
@@ -1121,14 +1088,13 @@ page 50122 "Revenue Allocation Card"
                         ShouldProcessContract := true;
 
                     ContractRec."Tenant Contract Status"::Terminated:
-                        if (TerminationDate >= SelectedMonthStart) and (TerminationDate <= SelectedMonthEnd) then
+                        if (TerminationDate >= SelectedMonthStart) then
                             ShouldProcessContract := true;
 
                     ContractRec."Tenant Contract Status"::Suspended:
                         // FIXED: Added null date check and improved logic
                         if (SuspensionDate <> 0D) and
-                           (SuspensionDate >= SelectedMonthStart) and
-                           (SuspensionDate <= SelectedMonthEnd) then
+                           (SuspensionDate >= SelectedMonthStart) then
                             ShouldProcessContract := true;
                 end;
 
@@ -1273,7 +1239,8 @@ page 50122 "Revenue Allocation Card"
         SelectedMonthEnd: Date;
         MonthNo: Integer;
         FinancialYear: Integer;
-        RevenueMethod: Option "Per Day Rent","Fixed Monthly Rent")
+              RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
+
     var
         RequestCreditNotegrid: Record "Request Credit Note Grid";
         RequestCreditNotegridFromCN: Record "Request Credit Note Grid";
@@ -1387,7 +1354,7 @@ page 50122 "Revenue Allocation Card"
                             FilteredContractRec."Owner Share" := FilteredContractRec."Per Day Rent" * Noofdays;
                         end
                         else begin
-                            FilteredContractRec."Per Month Rent" := CalculatePerMonthRent((FilteredContractRec."Final Annual Amount" / 12), Noofdays, MonthNo, FinancialYear);
+                            FilteredContractRec."Per Month Rent" := CalculatePerMonthRent(FilteredContractRec."Final Annual Amount", Noofdays, MonthNo, FinancialYear, ContractRec, MultiYearStartDate, MultiYearEndDate);
                             FilteredContractRec."Total Value" := FilteredContractRec."Per Month Rent";
                             FilteredContractRec."Owner Share" := FilteredContractRec."Per Month Rent";
                         end;
@@ -1402,7 +1369,7 @@ page 50122 "Revenue Allocation Card"
     ContractRec: Record "Tenancy Contract";
     MonthNo: Integer;
     FinancialYear: Integer;
-    RevenueMethod: Option "Per Day Rent","Fixed Monthly Rent")
+ RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
     var
         SuspensionRec: Record SuspendReasonTable;
         SingleUnitRent: Record "TC Single Unit Rent SubPage";
@@ -1575,10 +1542,12 @@ page 50122 "Revenue Allocation Card"
     RecoveryStartDate: Date;
     RecoveryEndDate: Date;
     RecoveryType: Text;
-    RevenueMethod: Option "Per Day Rent","Fixed Monthly Rent")
+    RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
     var
         FilteredContractRec: Record "Revenue Allocation SubGrid";
         SuspensionRec: Record SuspendReasonTable;
+        TotalContractDays: Integer;
+        PerDayRentWithoutGracePeriod: Decimal;
         CalculatedRecoveryDays: Integer;
         NewLineNo: Integer;
         GridAnnualAmount: Decimal;
@@ -1601,6 +1570,10 @@ page 50122 "Revenue Allocation Card"
             CalculatedRecoveryDays := EffectiveEndDate - EffectiveStartDate + 1
         else
             CalculatedRecoveryDays := 0;
+
+        TotalContractDays := MultiYearEndDate - MultiYearStartDate + 1;
+
+        PerDayRentWithoutGracePeriod := (GridAnnualAmount / TotalContractDays);
 
         if CalculatedRecoveryDays > 0 then begin
             RecoveryAmount := CalculatedRecoveryDays * PerDayRent;
@@ -1649,12 +1622,12 @@ page 50122 "Revenue Allocation Card"
             FilteredContractRec."Final Annual Amount" := pTotalAnnualAmount;
 
             if RevenueMethod = RevenueMethod::"Per Day Rent" then begin
-                FilteredContractRec."Per Day Rent" := Round(PerDayRent);
-                FilteredContractRec."Total Value" := RecoveryAmount;
-                FilteredContractRec."Owner Share" := RecoveryAmount;
+                FilteredContractRec."Per Day Rent" := Round(PerDayRentWithoutGracePeriod);
+                FilteredContractRec."Total Value" := FilteredContractRec."Per Day Rent" * CalculatedRecoveryDays;
+                FilteredContractRec."Owner Share" := FilteredContractRec."Per Day Rent" * CalculatedRecoveryDays;
             end
             else begin
-                FilteredContractRec."Per Month Rent" := CalculatePerMonthRent((FilteredContractRec."Final Annual Amount" / 12), CalculatedRecoveryDays, MonthNo, FinancialYear);
+                FilteredContractRec."Per Month Rent" := CalculatePerMonthRent(FilteredContractRec."Final Annual Amount", CalculatedRecoveryDays, Date2DMY(EffectiveEndDate, 2), Date2DMY(EffectiveEndDate, 3), ContractRec, MultiYearStartDate, MultiYearEndDate);
                 FilteredContractRec."Total Value" := FilteredContractRec."Per Month Rent";
                 FilteredContractRec."Owner Share" := FilteredContractRec."Per Month Rent";
             end;
@@ -1663,7 +1636,7 @@ page 50122 "Revenue Allocation Card"
             FilteredContractRec."Posting Month" := MonthNo;
             FilteredContractRec."Posting Year" := FinancialYear;
             FilteredContractRec.Description := 'Suspension';
-            FilteredContractRec."Posting Period" := 'Suspension Recovery - ' + Format(MonthNo) + ' ' + Format(FinancialYear);
+            FilteredContractRec."Posting Period" := 'Suspension Recovery - ' + Format(Date2DMY(EffectiveEndDate, 2)) + ' ' + Format(Date2DMY(EffectiveEndDate, 3));
             FilteredContractRec."Owner Name" := ContractRec."Owner's Name";
 
             FilteredContractRec.Insert();
@@ -1712,18 +1685,30 @@ page 50122 "Revenue Allocation Card"
         CalculateAndStoreTotalRevenue();
     end;
 
-    procedure CalculatePerMonthRent(permonthrent: Decimal; CalculatedDays: Integer; MonthNo: Integer; FinancialYear: Integer): Decimal
+    procedure CalculatePerMonthRent(annualAmount: Decimal; CalculatedDays: Integer; MonthNo: Integer; FinancialYear: Integer; ContractRec: Record "Tenancy Contract"; MultiYearStartDate: Date; MultiYearEndDate: Date): Decimal
     var
         revenuerecognition: Record "Revenue Recognition";
+        FetchMonth: Codeunit "Fetch Month";
+        MonthlyBase: Decimal;
         MonthlyRate: Decimal;
+        DaysInMonth: Integer;
+        NumofMonths: Integer;
     begin
-        if CalculatedDays < revenuerecognition.GetDaysInMonthss(DMY2Date(1, MonthNo, FinancialYear)) then
-            MonthlyRate := Round(permonthrent / revenuerecognition.GetDaysInMonthss(DMY2Date(1, MonthNo, FinancialYear)) * CalculatedDays)
-        else
-            MonthlyRate := permonthrent;
+        NumofMonths := FetchMonth.GetNoOfMonths(MultiYearStartDate, MultiYearEndDate);
+
+        if NumofMonths = 0 then
+            NumofMonths := 1;
+
+        DaysInMonth := revenuerecognition.GetDaysInMonthss(DMY2Date(1, MonthNo, FinancialYear));
+
+        MonthlyBase := annualAmount / NumofMonths;
+
+        MonthlyRate := Round((MonthlyBase / DaysInMonth) * CalculatedDays);
 
         exit(MonthlyRate);
     end;
+
+
 
     var
         totalcontractAmountsss: Decimal;

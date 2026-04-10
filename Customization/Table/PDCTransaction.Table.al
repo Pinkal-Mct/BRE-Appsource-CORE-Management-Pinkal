@@ -37,6 +37,15 @@ table 50507 "PDC Transaction"
         field(50507; "Cheque Status"; Enum "PDC Status Type Enum")
         {
             DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                CashReceiptJournalCodeunit: Codeunit "Cash Receipt Journal Entry";
+                selectDate: Page "Select Date";
+            begin
+                if Rec."Cheque Status" = Rec."Cheque Status"::Cancelled then
+                    if xRec."Cheque Status" = xRec."Cheque Status"::"Cheque Received" then
+                        CashReceiptJournalCodeunit.ReversePDCReceivedTransaction(Rec, 'PDC Payment Cancellation', Rec."Transaction Date");
+            end;
         }
         field(50508; "Contract ID"; Integer)
         {
@@ -92,6 +101,59 @@ table 50507 "PDC Transaction"
         {
             DataClassification = ToBeClassified;
         }
+        field(50518; "Transaction Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50519; "Payment Mode"; Text[100])
+        {
+            Caption = 'Payment Mode';
+            TableRelation = "Payment Type"."Payment Method";
+        }
+        field(50520; "Due Date"; Date)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Due Date';
+        }
+        field(50521; "New Cheque Number"; Text[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Cheque Number';
+        }
+        field(50522; "Deposit Bank"; Code[100])
+        {
+            Caption = 'Deposit Bank';
+            TableRelation = "Bank Account";
+
+            trigger OnValidate()
+            var
+                BankAccountRec: Record "Bank Account";
+            begin
+                if "Deposit Bank" <> '' then
+                    if BankAccountRec.Get("Deposit Bank") then
+                        "Deposit Bank" := BankAccountRec."Name";
+            end;
+        }
+        field(50523; Inserted; Boolean)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50524; "Upload Cheque"; Text[2048])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Upload Cheque';
+            InitValue = 'Upload Cheque';
+        }
+        field(50525; "New View Document URL"; Text[2048])
+        {
+            DataClassification = ToBeClassified;
+        }
+
+        field(50526; "New View"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+            InitValue = 'View Document';
+        }
     }
     keys
     {
@@ -103,11 +165,8 @@ table 50507 "PDC Transaction"
     trigger OnInsert()
     var
         NoSeriesMgt: Codeunit "No. Series";
-        PDCReceivedCashReceiptJournal: Codeunit 50514;
-
     begin
         if "PDC ID" = '' then
             "PDC ID" := NoSeriesMgt.GetNextNo('PDCTRANID', Today(), true);
-        PDCReceivedCashReceiptJournal.ProcessPDCTransaction(Rec);
     end;
 }

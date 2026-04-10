@@ -92,6 +92,25 @@ table 50919 "SplitPaymentLog"
             AutoIncrement = true;
             Editable = false;
         }
+        field(50113; "Deposit Bank Name"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Bank Account";
+
+            trigger OnValidate()
+            var
+                BankAccountRec: Record "Bank Account";
+            begin
+                if "Deposit Bank Name" <> '' then
+                    if BankAccountRec.Get("Deposit Bank Name") then
+                        "Deposit Bank Name" := BankAccountRec."Name";
+            end;
+        }
+        field(50114; "Cheque Number"; Text[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Cheque Number';
+        }
     }
 
     keys

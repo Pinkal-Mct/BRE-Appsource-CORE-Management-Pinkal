@@ -58,6 +58,8 @@ codeunit 50304 "Payment Reminder Processor"
      'Payment ID: ' + Format(PaymentRec."Payment Series") + '</p>' +
      '<p>If you have any questions or require assistance, feel free to reach out to us.</p>' +
      '<p><i>This is a system-generated email.</i></p>' +
+           '<p>Best regards,<br/><b>' + CompanyInfo."Name" + '</b></p>' +
+
      '</body></html>';
         EmailMessage.Create(
             RecipientEmail,

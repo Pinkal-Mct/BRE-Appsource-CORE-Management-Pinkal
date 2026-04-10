@@ -54,7 +54,25 @@ table 50915 "Split Payment Change"
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
+        }
+        field(50110; "Deposit Bank Name"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Bank Account";
 
+            trigger OnValidate()
+            var
+                BankAccountRec: Record "Bank Account";
+            begin
+                if "Deposit Bank Name" <> '' then
+                    if BankAccountRec.Get("Deposit Bank Name") then
+                        "Deposit Bank Name" := BankAccountRec."Name";
+            end;
+        }
+        field(50111; "Cheque Number"; Text[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Cheque Number';
         }
     }
 
@@ -65,6 +83,15 @@ table 50915 "Split Payment Change"
             Clustered = true;
         }
     }
+
+
+    trigger OnModify()
+    var
+        SplitPaymentHandler: Codeunit "Split Payment Handler";
+    begin
+        SplitPaymentHandler.ProcessSplitPayment(Rec);
+    end;
+
 
 
 }

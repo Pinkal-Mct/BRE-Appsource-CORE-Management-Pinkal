@@ -34,6 +34,8 @@ table 50308 "Lease Proposal Details"
                     Community := PropertyRec.Community;
                     "DEWA Number" := PropertyRec."DEWA Number";
                     "Property Size" := PropertyRec."Property Size";
+                    "Market Rate per Sq. Ft." := PropertyRec."Market Rate per Sq. Ft.";
+
                 end else
                     "Property Name" := '';
             end;

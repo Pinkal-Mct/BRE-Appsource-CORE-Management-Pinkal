@@ -21,7 +21,7 @@ codeunit 50106 GenerateConsolidatedInvoices
         todaydate := Today();
         currentdate := Today();
         paymentScheudle3.SetFilter("Due Date", '<%1', todaydate);
-        paymentScheudle3.SetFilter("Installment No.", '>%1', 1);
+        paymentScheudle3.SetFilter("Payment Series", '<>%1', 'PAY01');
         paymentScheudle3.SetRange("Contract Status", 'Active');
         if paymentScheudle3.FindSet() then
             repeat
@@ -160,23 +160,26 @@ codeunit 50106 GenerateConsolidatedInvoices
         noseries: Codeunit "No. Series";
     begin
         salesHeader.Init();
-        if salesReciveable.FindFirst() then
-            salesHeader."No." := noseries.GetNextNo(salesReciveable."Invoice Nos.", Today, true);
-        salesHeader.Validate("Document Type", SalesHeader."Document Type"::Invoice);
+        if salesReciveable.FindSet() then
+            salesHeader."No." := noseries.GetNextNo(salesReciveable."Invoice Nos.", Today(), true);
+        salesHeader."Document Type" := SalesHeader."Document Type"::Invoice;
         salesHeader.Validate("Sell-to Customer No.", TenantID);
-        salesHeader.Validate("Bill-to Customer No.", TenantID);
-        salesHeader.Validate("Bill-to Name", TenantName);
-        salesHeader.Validate("Sell-to Customer Name", TenantName);
-        salesHeader.Validate("Due Date", DueDate);
-        salesHeader.Validate("Contract ID", ContractID);
-        salesHeader.Validate("Tenant Name", TenantName);
-        salesHeader.Validate("Document Date", Today);
-        salesHeader.Validate("Posting Date", Today);
-        salesHeader.Validate("Shipment Date", Today);
-        salesHeader.Validate("Posting No. Series", salesReciveable."Posted Invoice Nos.");
-        salesHeader.Validate("Property Classification", PropertyClassification);
+        salesHeader."Bill-to Customer No." := TenantID;
+        salesHeader."Bill-to Name" := TenantName;
+        salesHeader."Sell-to Customer Name" := TenantName;
+        salesHeader."Due Date" := DueDate;
+        salesHeader."Contract ID" := ContractID;
+        salesHeader."Tenant Name" := TenantName;
+        salesHeader."Document Date" := Today();
+        salesHeader."VAT Reporting Date" := Today();
+        salesHeader."Posting Date" := Today();
+        salesHeader."Shipment Date" := Today();
+        salesHeader."Posting No. Series" := salesReciveable."Posted Invoice Nos.";
+        salesHeader."Property Classification" := PropertyClassification;
         salesHeader.Insert();
+
         exit(salesHeader);
+
     end;
 
     procedure createSalesLines(salesheader1: Record "Sales Header"; newpaymentschedule2: Record "Payment Schedule2")
@@ -184,6 +187,7 @@ codeunit 50106 GenerateConsolidatedInvoices
         saleline: Record "Sales Line";
         newSaleslines: Record "Sales Line";
         item: Record Item;
+        RoundDecimal: Decimal;
     begin
         saleline.Init();
         saleline."Document Type" := saleline."Document Type"::Invoice;
@@ -210,9 +214,8 @@ codeunit 50106 GenerateConsolidatedInvoices
         end;
         saleline.Validate("Quantity (Base)", 1);
         saleline.Validate(Quantity, 1);
-        saleline.Validate("Unit Price", newpaymentschedule2."Amount");
-        saleline.Validate("Line Amount", saleline.Quantity * saleline."Unit Price");
-        saleline.Validate(Amount, saleline.Quantity * saleline."Unit Price");
+        RoundDecimal := Abs(Round(newpaymentschedule2.Amount, 0.01));
+        saleline.Validate("Unit Price", RoundDecimal);
         saleline.Validate("Qty. to Invoice", 1);
         saleline.Validate("Qty. to Ship", 1);
         saleline.Validate("Qty. to Invoice (Base)", 1);

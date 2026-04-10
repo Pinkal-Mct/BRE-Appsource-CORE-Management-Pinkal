@@ -138,6 +138,10 @@ page 50709 paymentSchedule2
                 {
                     Caption = 'Final Rent Amount';
                 }
+                field("Payment_Series"; Rec."Payment Series")
+                {
+                    Caption = 'Payment Series';
+                }
 
             }
         }

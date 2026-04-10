@@ -465,7 +465,7 @@ page 50973 "Revenue Recognition Item Sub"
                 // Set revenue structure details from subpage
                 RevenueRecognitionDetails."Multi Year Start Date" := pRevenueStructureSubpage."Period Start Date";
                 RevenueRecognitionDetails."Multi Year End Date" := pRevenueStructureSubpage."Period End Date";
-                RevenueRecognitionDetails."Annual Amount" := pRevenueStructureSubpage."Final Annual Amount" + pRevenueStructureSubpage."Final Annual Amount" * 5 / 100;
+                RevenueRecognitionDetails."Annual Amount" := pRevenueStructureSubpage."Final Annual Amount";
                 RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
                 RevenueRecognitionDetails."Item Type" := CopyStr(pItemType, 1, StrLen(pItemType));
                 RevenueRecognitionDetails."Contract Amount" := pRevenueStructureSubpage."Final Annual Amount";
@@ -1088,7 +1088,7 @@ page 50973 "Revenue Recognition Item Sub"
                     else
                         revenuestructuredetails."VAT %" := 0;
 
-                    RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount" + revenuestructuredetails."Final Annual Amount" * revenuestructuredetails."VAT %" / 100;
+                    RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount";
                     RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
                 end;
             until revenuestructuredetails.Next() = 0;
@@ -1571,7 +1571,7 @@ page 50973 "Revenue Recognition Item Sub"
                 // Set revenue structure details from subpage
                 RevenueRecognitionDetails."Multi Year Start Date" := pRevenueStructureSubpage."Period Start Date";
                 RevenueRecognitionDetails."Multi Year End Date" := pRevenueStructureSubpage."Period End Date";
-                RevenueRecognitionDetails."Annual Amount" := pRevenueStructureSubpage."Final Annual Amount" + pRevenueStructureSubpage."Final Annual Amount" * 5 / 100;
+                RevenueRecognitionDetails."Annual Amount" := pRevenueStructureSubpage."Final Annual Amount";
                 RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
                 RevenueRecognitionDetails."Item Type" := CopyStr(pItemType, 1, StrLen(pItemType));
                 RevenueRecognitionDetails."Contract Amount" := pRevenueStructureSubpage."Final Annual Amount";
@@ -2164,7 +2164,7 @@ page 50973 "Revenue Recognition Item Sub"
                     else
                         revenuestructuredetails."VAT %" := 0;
 
-                    RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount" + revenuestructuredetails."Final Annual Amount" * revenuestructuredetails."VAT %" / 100;
+                    RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount";
                     RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
                 end;
             until revenuestructuredetails.Next() = 0;

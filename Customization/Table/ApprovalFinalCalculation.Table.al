@@ -20,7 +20,8 @@ table 50908 "Approval Final Calculation"
         field(50102; Status; Option)
         {
             DataClassification = ToBeClassified;
-            OptionMembers = Pending,Approved;
+            OptionMembers = Pending,Approved,Rejected;
+            Caption = 'Status';
         }
         field(50107; "Tenant ID"; Code[50])
         {

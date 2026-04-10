@@ -419,5 +419,12 @@ permissionset 50100 TablePermission
         table "Management Fee Calc. Line" = X,
         table "Management Fee Grid" = X,
         page "Integer List" = X,
-        page "Select Date" = X;
+        page "Select Date" = X,
+               tabledata "Base Amount Data" = RIMD,
+        tabledata "Base Amount Data Header" = RIMD,
+        table "Base Amount Data" = X,
+        tabledata "Base Amount Data Unit Wise" = RIMD,
+        table "Base Amount Data Unit Wise" = X,
+        codeunit "FS Refundable Payment Receipt" = X,
+        codeunit "Split Payment Handler" = X;
 }

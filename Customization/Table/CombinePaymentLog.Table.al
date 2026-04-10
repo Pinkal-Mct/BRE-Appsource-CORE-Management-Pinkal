@@ -82,11 +82,20 @@ table 50917 "CombinePaymentLog"
             DataClassification = ToBeClassified;
             Caption = 'Cheque Number';
         }
-        field(50113; "C_Deposit_Bank"; Code[20])
+        field(50152; "C_Deposit_Bank"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Deposit Bank';
             TableRelation = "Bank Account";
+
+            trigger OnValidate()
+            var
+                BankAccountRec: Record "Bank Account";
+            begin
+                if "C_Deposit_Bank" <> '' then
+                    if BankAccountRec.Get("C_Deposit_Bank") then
+                        "C_Deposit_Bank" := BankAccountRec."Name";
+            end;
         }
     }
     keys

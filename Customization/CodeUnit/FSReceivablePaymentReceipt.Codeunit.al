@@ -21,8 +21,8 @@ codeunit 50103 "FS_Receivable Payment Receipt"
             Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
             TempBlob.CreateInStream(InStream);
             FileName := 'Payment Receipt_' + Format(ConsolidatedInvoiceHeader."Contract ID") + '.pdf';
-            Message('Preparing to send email to: %1', ConsolidatedInvoiceHeader."Tenant Email");
-            if CompanyInfo.Get() then
+            if CompanyInfo.Get() then begin
+
                 EmailMessage.Create(
                                    ConsolidatedInvoiceHeader."Tenant Email",
                                    'Payment Receipt Attached_' + Format(ConsolidatedInvoiceHeader."Contract ID"),
@@ -34,7 +34,8 @@ codeunit 50103 "FS_Receivable Payment Receipt"
                                    '</html>',
                                    true
                                );
-            EmailMessage.AddAttachment(FileName, '', InStream);
+                EmailMessage.AddAttachment(FileName, '', InStream);
+            end;
             if Email.Send(EmailMessage) then
                 Message('Email sent successfully to: %1', ConsolidatedInvoiceHeader."Tenant Email")
             else

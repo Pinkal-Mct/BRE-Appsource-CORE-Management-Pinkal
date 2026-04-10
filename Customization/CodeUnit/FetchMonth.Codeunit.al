@@ -115,6 +115,62 @@ codeunit 53751 "Fetch Month"
         end;
     end;
 
+
+    // procedure GetNoOfMonths(FromDate: Date; ToDate: Date): Integer
+    // var
+    //     CurrDate: Date;
+    //     MonthCount: Integer;
+    // begin
+    //     if (FromDate = 0D) or (ToDate = 0D) then
+    //         exit(0);
+
+    //     if FromDate > ToDate then
+    //         exit(0);
+
+    //     CurrDate := DMY2Date(1, Date2DMY(FromDate, 2), Date2DMY(FromDate, 3));
+
+    //     MonthCount := 0;
+
+    //     repeat
+    //         MonthCount += 1;
+    //         CurrDate := CalcDate('<+1M>', CurrDate);
+    //     until CurrDate > ToDate;
+
+    //     exit(MonthCount);
+    // end;
+
+    procedure GetNoOfMonths(StartDate: Date; EndDate: Date): Integer
+    var
+        StartYear: Integer;
+        StartMonth: Integer;
+        StartDay: Integer;
+        EndYear: Integer;
+        EndMonth: Integer;
+        EndDay: Integer;
+        Result: Integer;
+    begin
+        if (StartDate = 0D) or (EndDate = 0D) then
+            exit(0);
+
+        if StartDate > EndDate then
+            exit(0);
+
+        StartYear := DATE2DMY(StartDate, 3);
+        StartMonth := DATE2DMY(StartDate, 2);
+        StartDay := DATE2DMY(StartDate, 1);
+
+        EndYear := DATE2DMY(EndDate, 3);
+        EndMonth := DATE2DMY(EndDate, 2);
+        EndDay := DATE2DMY(EndDate, 1);
+
+        Result := (EndYear - StartYear) * 12 + (EndMonth - StartMonth);
+
+        if EndDay >= StartDay then
+            Result += 1;
+
+        exit(Result);
+    end;
+
     procedure GetNoOfMonths(ValidFrom: Date; ValidTo: Date; PeriodFrom: Date; PeriodTo: Date): Integer
     var
         FromDate: Date;

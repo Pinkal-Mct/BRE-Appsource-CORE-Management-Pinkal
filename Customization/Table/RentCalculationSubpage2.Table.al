@@ -89,7 +89,7 @@ table 50944 "Rent Calculation Subpage2"
             Caption = 'Total Amount';
             FieldClass = FlowField;
             CalcFormula = sum("Rent Calculation Subpage2".Amount where("RC ID" = field("RC ID")));
-            DecimalPlaces = 2 : 2;
+            DecimalPlaces = 0 : 2;
         }
         field(50117; "Primary Classification"; Text[100])
         {

@@ -38,6 +38,8 @@ table 50916 "Revenue Structure Subpage1"
             DataClassification = ToBeClassified;
             Caption = 'Amount';
             Editable = false;
+            DecimalPlaces = 2 : 2;
+
         }
         field(50107; "Entry No."; Integer)
         {
@@ -54,6 +56,8 @@ table 50916 "Revenue Structure Subpage1"
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
             Editable = false;
+            DecimalPlaces = 2 : 2;
+
         }
         field(50116; "VAT %"; Integer)
         {
@@ -65,6 +69,8 @@ table 50916 "Revenue Structure Subpage1"
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
             Editable = false;
+            DecimalPlaces = 2 : 2;
+
         }
         field(50112; "Secondary Item Type"; Text[100])
         {
@@ -87,7 +93,8 @@ table 50916 "Revenue Structure Subpage1"
             Caption = 'Total Amount';
             FieldClass = FlowField;
             CalcFormula = sum("Revenue Structure Subpage1".Amount where("RS ID" = field("RS ID")));
-            DecimalPlaces = 0 : 0;
+            DecimalPlaces = 2 : 2;
+
         }
     }
     keys

@@ -32,6 +32,8 @@ table 50914 "Revenue Structure Subpage"
             DataClassification = ToBeClassified;
             Caption = 'Final Annual Amount';
             Editable = true;
+            DecimalPlaces = 2 : 2;
+
         }
         field(50105; "Yearly No. of Installment"; Integer)
         {
@@ -60,6 +62,8 @@ table 50914 "Revenue Structure Subpage"
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("Revenue Structure Subpage"."Final Annual Amount" where("Contract ID" = field("Contract Id"), "RS ID" = field("RS ID")));
+            DecimalPlaces = 2 : 2;
+
         }
         field(50111; "Link"; Text[50])
         {
@@ -71,11 +75,14 @@ table 50914 "Revenue Structure Subpage"
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
+            DecimalPlaces = 2 : 2;
+
         }
         field(50114; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
+            DecimalPlaces = 2 : 2;
         }
         field(50115; "Secondary Item Type"; Text[100])
         {

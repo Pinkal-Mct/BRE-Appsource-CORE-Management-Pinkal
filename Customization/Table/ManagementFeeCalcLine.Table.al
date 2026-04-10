@@ -63,7 +63,7 @@ table 50121 "Management Fee Calc. Line"
         field(53110; "Base Amount Source"; Option)
         {
             DataClassification = ToBeClassified;
-            OptionMembers = Revenue,Collections,"Annual Rent";
+            OptionMembers = Revenue,Collections,"Annual Rent","Number of Units";
         }
         field(53111; "Base Amount"; Decimal)
         {
@@ -99,7 +99,7 @@ table 50121 "Management Fee Calc. Line"
         {
             DataClassification = ToBeClassified;
         }
-        field(53118; Percentage; Integer)
+        field(53118; Percentage; Decimal)
         {
             DataClassification = ToBeClassified;
         }
@@ -112,6 +112,11 @@ table 50121 "Management Fee Calc. Line"
             FieldClass = FlowField;
             CalcFormula = sum("Management Fee Calc. Line"."Management Fee" where("Header No." = field("Header No.")));
         }
+        field(53221; "Base Amount Details"; Text[12])
+        {
+            DataClassification = ToBeClassified;
+            InitValue = 'View Details';
+        }
     }
 
     keys
@@ -121,5 +126,14 @@ table 50121 "Management Fee Calc. Line"
             Clustered = true;
         }
     }
+    trigger OnDelete()
+    var
+        baseAmountHeader: Record "Base Amount Data Header";
+    begin
+        baseAmountHeader.SetRange("Header No.", Rec."Header No.");
+        baseAmountHeader.SetRange("Line No.", Rec."Entry No.");
+        if baseAmountHeader.FindSet() then
+            baseAmountHeader.DeleteAll(true);
+    end;
 
 }

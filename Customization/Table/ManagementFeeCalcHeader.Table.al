@@ -134,9 +134,30 @@ table 50120 "Management Fee Calc. Header"
     trigger OnDelete()
     var
         managementFeeCalcLine: Record "Management Fee Calc. Line";
+        baseAmountHeader: Record "Base Amount Data Header";
+        baseAmountData: Record "Base Amount Data";
+        baseAmountDataUnitWise: Record "Base Amount Data Unit Wise";
     begin
         managementFeeCalcLine.SetRange("Header No.", Rec."Entry No.");
-        if managementFeeCalcLine.FindSet() then
+        if managementFeeCalcLine.FindSet() then begin
+            repeat
+                baseAmountHeader.SetRange("Header No.", managementFeeCalcLine."Header No.");
+                baseAmountHeader.SetRange("Line No.", managementFeeCalcLine."Entry No.");
+                if baseAmountHeader.FindSet() then begin
+                    repeat
+                        baseAmountData.SetRange("Header No.", baseAmountHeader."Header No.");
+                        baseAmountData.SetRange("Line No.", baseAmountHeader."Line No.");
+                        if baseAmountData.FindSet() then
+                            baseAmountData.DeleteAll();
+                        baseAmountDataUnitWise.SetRange("Header No.", baseAmountHeader."Header No.");
+                        baseAmountDataUnitWise.SetRange("Line No.", baseAmountHeader."Line No.");
+                        if baseAmountDataUnitWise.FindSet() then
+                            baseAmountDataUnitWise.DeleteAll();
+                    until baseAmountHeader.Next() = 0;
+                    baseAmountHeader.DeleteAll();
+                end;
+            until managementFeeCalcLine.Next() = 0;
             managementFeeCalcLine.DeleteAll();
+        end;
     end;
 }

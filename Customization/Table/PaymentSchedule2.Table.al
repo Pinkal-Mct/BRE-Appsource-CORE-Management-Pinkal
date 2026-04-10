@@ -12,20 +12,21 @@ table 50934 "Payment Schedule2"
         field(50101; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
-            DecimalPlaces = 2 : 2;
+            DecimalPlaces = 0 : 2;
             Caption = 'Amount';
         }
 
         field(50102; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
+            DecimalPlaces = 0 : 2;
             Caption = 'VAT Amount';
         }
 
         field(50103; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
-            DecimalPlaces = 2 : 2;
+            DecimalPlaces = 0 : 2;
             Caption = 'Amount Including VAT';
         }
 
@@ -183,7 +184,7 @@ table 50934 "Payment Schedule2"
         {
             //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
-            DecimalPlaces = 2 : 2;
+            DecimalPlaces = 0 : 2;
             Caption = 'Credit Note Amount';
         }
         field(50931; "Final Rent Amount"; Decimal)

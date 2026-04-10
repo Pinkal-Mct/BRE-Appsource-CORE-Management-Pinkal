@@ -97,11 +97,19 @@ table 50702 "Approval Payment Request"
             DataClassification = ToBeClassified;
             Caption = 'Cheque Number';
         }
-        field(50121; "C_Deposit_Bank"; Code[20])
+        field(50121; "C_Deposit_Bank"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Deposit Bank';
             TableRelation = "Bank Account";
+        }
+        field(50153; "Old Cheque"; Text[20])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(50154; "Transaction Date"; Date)
+        {
+            DataClassification = ToBeClassified;
         }
     }
     keys

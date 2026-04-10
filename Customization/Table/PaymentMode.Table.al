@@ -172,11 +172,41 @@ table 50924 "Payment Mode"
             DataClassification = ToBeClassified;
             Caption = 'Cheque Number';
         }
-        field(50152; "C_Deposit_Bank"; Code[20])
+        field(50152; "C_Deposit_Bank"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Deposit Bank';
             TableRelation = "Bank Account";
+
+            trigger OnValidate()
+            var
+                BankAccountRec: Record "Bank Account";
+            begin
+                if "C_Deposit_Bank" <> '' then
+                    // Attempt to find the Bank Account using the No. from the Deposit Bank
+                    if BankAccountRec.Get("C_Deposit_Bank") then
+                        "C_Deposit_Bank" := BankAccountRec."Name";
+            end;
+        }
+        field(50153; "CP_Cheque_Number"; Text[20])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Cheque Number';
+        }
+        field(50154; "CP_Deposit_Bank"; Code[100])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Deposit Bank';
+            TableRelation = "Bank Account";
+
+            trigger OnValidate()
+            var
+                BankAccountRec: Record "Bank Account";
+            begin
+                if "CP_Deposit_Bank" <> '' then
+                    if BankAccountRec.Get("CP_Deposit_Bank") then
+                        "CP_Deposit_Bank" := BankAccountRec."Name";
+            end;
         }
     }
     keys

@@ -77,6 +77,12 @@ table 50310 "Merged Units"
             DataClassification = ToBeClassified;
             Caption = 'Merge Unit Status';
             OptionMembers = "Free","Occupied","Selected","N/A";
+
+            trigger OnValidate()
+            begin
+                UpdateSingleUnitStatus();
+            end;
+
         }
         field(50111; "FixedNumber"; Code[100])
         {
@@ -154,5 +160,54 @@ table 50310 "Merged Units"
             FixedNumber := NewUnitNo;
         end;
         AutoGenerateUnitName();
+    end;
+
+    procedure UpdateSingleUnitStatus()
+    var
+        UnitRec: Record Item;
+        UnitList: List of [Text];
+        UnitIdTxt: Text;
+        CleanText: Text;
+        UnitId: Text;
+    begin
+        UnitIdTxt := Rec."Unit ID";
+
+        if UnitIdTxt = '' then
+            exit;
+
+        // Replace '.' → '|'
+        CleanText := ConvertStr(UnitIdTxt, '.', '|');
+
+        UnitList := CleanText.Split('|');
+
+        foreach UnitId in UnitList do begin
+            UnitId := DelChr(UnitId, '=', ' ');
+
+            if UnitId = '' then
+                continue;
+
+            UnitRec.Reset();
+            UnitRec.SetRange("No.", UnitId);
+
+            if UnitRec.FindFirst() then begin
+
+                // ✅ SAFE mapping
+                case Rec.Status of
+                    Rec.Status::Free:
+                        UnitRec."Unit Status" := UnitRec."Unit Status"::Free;
+
+                    Rec.Status::Selected:
+                        UnitRec."Unit Status" := UnitRec."Unit Status"::Selected;
+
+                    Rec.Status::Occupied:
+                        UnitRec."Unit Status" := UnitRec."Unit Status"::Occupied;
+
+                    Rec.Status::"N/A":
+                        UnitRec."Unit Status" := UnitRec."Unit Status"::" ";
+                end;
+
+                UnitRec.Modify();
+            end;
+        end;
     end;
 }

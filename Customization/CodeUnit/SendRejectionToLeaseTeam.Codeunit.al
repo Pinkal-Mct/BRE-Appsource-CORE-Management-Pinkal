@@ -38,8 +38,14 @@ codeunit 50511 "SendRejectionToLeaseTeam"
 
     procedure ComposeRejectionEmailBody(PaymentTransactionId: Integer; PaymentId: Text; ContractId: Integer; LeasingManagerFullName: Text; Compnyname: Text): Text
     var
+
+        CompanyInfo: Record "Company Information";
+        CompanyName: Text;
         EmailBody: Text;
     begin
+        if CompanyInfo.Get() then
+            CompanyName := CompanyInfo."Name";
+
         EmailBody :=
             '<p>Dear Leasing Team,<br>' +
             '<p>We have reviewed the payment entry and identified discrepancies. Approval of the payment entries for the <strong> contract ' + Format(ContractId) + '</strong> is <strong>"On Hold".</strong> Please check the details and update the required information for further processing.</p>' +
@@ -62,14 +68,12 @@ codeunit 50511 "SendRejectionToLeaseTeam"
             'Action Required:<br>' +
             'Please review the transaction and update the details as necessary to resolve the issue.<br>' +
             '<br>' +
-            'You can take the necessary action by accessing the Payment Transactions List via the link below:<br>' +
-            '<a href="https://businesscentral.dynamics.com/0fc6d7a4-aa1d-4825-bc34-7dd0c18a4f63/RealestateDev?company=BlueRidge%20Real-Estate&page=50515&dc=0&bookmark=15_TsUAAAJ7_1AAVAAtADEAOQ">Access Payment Transaction List</a><br>' +
-            '<br>' +
             'If you have any questions, please contact the Finance Manager for clarification.<br>' +
             '<br>' +
             'Best regards,</p>' +
-            '<p> Finance Team<br>' + Format(Compnyname) +
+             Compnyname +
             '</p>';
-        exit(StrSubstNo(EmailBody, PaymentTransactionId, TenantId(), ContractId, Compnyname));
+
+        exit(StrSubstNo(EmailBody, PaymentTransactionId, TenantId, ContractId, Compnyname));
     end;
 }

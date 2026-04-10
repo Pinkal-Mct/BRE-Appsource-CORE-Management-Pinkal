@@ -29,5 +29,20 @@ table 53768 "Base Amount Data Header"
             Clustered = true;
         }
     }
+    trigger OnDelete()
+    var
+        baseAmountData: Record "Base Amount Data";
+        baseAmountDataUnitWise: Record "Base Amount Data Unit Wise";
+    begin
+        baseAmountData.SetRange("Header No.", Rec."Header No.");
+        baseAmountData.SetRange("Line No.", Rec."Line No.");
+        if baseAmountData.FindSet() then
+            baseAmountData.DeleteAll(true);
+
+        baseAmountDataUnitWise.SetRange("Header No.", Rec."Header No.");
+        baseAmountDataUnitWise.SetRange("Line No.", Rec."Line No.");
+        if baseAmountDataUnitWise.FindSet() then
+            baseAmountDataUnitWise.DeleteAll(true);
+    end;
 }
 

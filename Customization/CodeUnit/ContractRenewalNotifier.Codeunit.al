@@ -60,7 +60,7 @@ codeunit 50306 "Contract Renewal Notifier"
       Format(TenancyContract."Renewal Notification to Tenant") + ' days</b>. To ensure continuity, we would like to know if you are interested in renewing your contract.</p>' +
       '<p>Please let us know your decision at your earliest convenience so we can proceed accordingly. If you have any questions or require assistance, feel free to reach out to us.</p>' +
       '<p>Looking forward to your response.</p>' +
-      '<p>Best regards,</p>' +
+      '<p>Best regards,<br/><b>' + CompanyInfo."Name" + '</b></p>' +
       '</body></html>';
         EmailMsg.Create(
             RecipientEmail,

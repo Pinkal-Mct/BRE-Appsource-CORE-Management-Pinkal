@@ -3,6 +3,11 @@ table 50932 "Revenue Recognition Subpage"
     DataClassification = ToBeClassified;
     fields
     {
+        field(50109; "RR Id"; Integer)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'RR Id';
+        }
         field(50102; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;

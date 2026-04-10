@@ -1,4 +1,4 @@
-table 53767 "Base Amount Data"
+table 53769 "Base Amount Data Unit Wise"
 {
     DataClassification = ToBeClassified;
 
@@ -69,12 +69,6 @@ table 53767 "Base Amount Data"
             DataClassification = ToBeClassified;
         }
 
-        field(53713; "Annual Rent Amount"; Decimal)
-        {
-            DecimalPlaces = 0 : 2;
-            DataClassification = ToBeClassified;
-        }
-
         field(53714; "Contract Status"; Text[10])
         {
             DataClassification = ToBeClassified;
@@ -112,24 +106,10 @@ table 53767 "Base Amount Data"
         {
             DataClassification = ToBeClassified;
         }
-        field(53722; "Total Amount"; Decimal)
+        field(53724; "Total Quantity"; Integer)
         {
             FieldClass = FlowField;
-            CalcFormula = sum("Base Amount Data"."Base Amount" where("Header No." = field("Header No."), "Line No." = field("Line No.")));
-            DecimalPlaces = 0 : 2;
-        }
-        field(53723; "Base Amount"; Decimal)
-        {
-            DataClassification = ToBeClassified;
-            DecimalPlaces = 0 : 2;
-        }
-        field(53725; "Receipt Date"; Date)
-        {
-            DataClassification = ToBeClassified;
-        }
-        field(53726; "Receipt No."; Text[100])
-        {
-            DataClassification = ToBeClassified;
+            CalcFormula = sum("Base Amount Data Unit Wise".Quantity where("Header No." = FIELD("Header No."), "Line No." = field("Line No.")));
         }
     }
     keys

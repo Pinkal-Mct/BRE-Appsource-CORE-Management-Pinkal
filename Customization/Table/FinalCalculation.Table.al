@@ -72,27 +72,26 @@ table 50901 "Final Calculation"
 
             trigger OnValidate()
             var
-                FinalCalculation: Record "Final Calculation";
+                StartDate: Date;
                 TerminateDate: Date;
-                EndDate: Date;
             begin
-                FinalCalculation.SetRange("FC ID", Rec."FC ID");
-                FinalCalculation.SetRange("Contract ID", Rec."Contract ID");
-                if not FinalCalculation.IsEmpty() then begin
-                    EndDate := Rec."Contract End Date";
-                    TerminateDate := Rec."Termination Date";
+                if ("Contract Start Date" = 0D) or ("Contract End Date" = 0D) then
+                    Error('Contract Start and End Date must be defined first.');
 
-                    if (EndDate = TerminateDate) then
-                        "Termination Status" := "Termination Status"::"Regular Termination"
-                    else
-                        if (EndDate > TerminateDate) then
-                            "Termination Status" := "Termination Status"::"Early Termination"
-                        else
-                            Error('Termination Date cannot be greater than Contract End Date.');
+                StartDate := "Contract Start Date";
+                TerminateDate := "Termination Date";
 
-                end;
+                if TerminateDate > "Contract End Date" then
+                    Error('Termination Date cannot be greater than Contract End Date.');
+
+                if TerminateDate = "Contract End Date" then
+                    "Termination Status" := "Termination Status"::"Regular Termination"
+                else
+                    "Termination Status" := "Termination Status"::"Early Termination";
+
+                "Actual Contract Tenure" :=
+                    TerminateDate - StartDate + 1;
             end;
-
         }
 
         field(50110; "Original Contract Tenure"; Integer)
@@ -133,7 +132,7 @@ table 50901 "Final Calculation"
         field(50117; Status; Option)
         {
             DataClassification = ToBeClassified;
-            OptionMembers = Pending,Approved;
+            OptionMembers = Pending,Approved,Rejected;
         }
 
         field(50118; "Security Deposit"; Decimal)

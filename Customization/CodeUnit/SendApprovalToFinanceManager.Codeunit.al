@@ -44,8 +44,18 @@ codeunit 50510 "SendApprovalToFinanceManager"
 
     procedure ComposeNewEmailBody(PaymentTransactionId: Text; TenantId: Text; ContractId: Integer): Text
     var
+        EnvInformation: Codeunit "Environment Information";
+        AzureADTenant: Codeunit "Azure AD Tenant";
+        CompanyInfo: Record "Company Information";
+        CompanyName: Text;
         EmailBody: Text;
+        BCTenantID: Text;
+        BCEnvName: Text;
+        urlpage: Text;
     begin
+        if CompanyInfo.Get() then
+            CompanyName := CompanyInfo."Name";
+
         EmailBody :=
             '<p>Dear Finance Team,<br>' +
             'A new Payment Transaction has been created and requires your approval. Below are the transaction details:<br>' +
@@ -59,20 +69,27 @@ codeunit 50510 "SendApprovalToFinanceManager"
             '<tr><td>Contract ID</td><td>%3</td></tr>' +
             '</table>' +
             '<br>' +
-            'Please review this transaction and take the necessary action:<br>' +
-            '<a href="https://businesscentral.dynamics.com/0fc6d7a4-aa1d-4825-bc34-7dd0c18a4f63/RealestateDev?company=BlueRidge%20Real-Estate&page=50515&dc=0&bookmark=15_TsUAAAJ7_1AAVAAtADEAOQ">Access Payment Transaction List</a><br>' +
-            '<br>' +
             'For any questions or concerns, feel free to contact the initiator of this transaction.<br>' +
             '<br>' +
             'Best regards,<br>' +
+            CompanyName +
+            // '[Your Name]<br>' +
+            // '[Your Position]<br>' +
+            // '[Company Name]'+
             '</p>';
+
         exit(StrSubstNo(EmailBody, PaymentTransactionId, TenantId, ContractId));
     end;
 
+
     procedure ComposeUpdatedEmailBody(PaymentTransactionId: Text; TenantId: Text; ContractId: Integer): Text
     var
+        CompanyInfo: Record "Company Information";
+        CompanyName: Text;
         EmailBody: Text;
     begin
+        if CompanyInfo.Get() then
+            CompanyName := CompanyInfo."Name";
         EmailBody :=
             '<p>Dear Finance Manager,<br>' +
             'We have updated the payment details as per the feedback. Kindly review and approve the revised entry for the <strong> contract ' + Format(ContractId) + '</strong> for further processing.<br>' +
@@ -80,6 +97,7 @@ codeunit 50510 "SendApprovalToFinanceManager"
             'Please review and provide your approval at your earliest convenience.<br>' +
             '<br>' +
             'Best regards,<br>' +
+            CompanyName +
             '</p>';
         exit(StrSubstNo(EmailBody, ContractId, PaymentTransactionId));
     end;

@@ -25,20 +25,14 @@ codeunit 50107 "Security Deposit Posting Mgt."
             Error('Security Deposit Amount Received is zero. Cannot post.');
 
         COASetup.Get();
-        if PropertyType = 'Residential' then begin
-            if COASetup."Tenant Receivables-Residential" <> '' then
-                TenantReceivableAccount := COASetup."Tenant Receivables-Residential"
-            else
-                Error('COA Setup doest not exist for Tenant Receivables-Residential Account');
-
-        end else
-            if COASetup."Tenant Receivables-Commercial" <> '' then
-                TenantReceivableAccount := COASetup."Tenant Receivables-Commercial"
-            else
-                Error('COA Setup doest not exist for Tenant Receivables-Commercial Account');
-
-        CarryForwardOutAccount := COASetup."Carried Forward Out SD";
-        CarryForwardInAccount := COASetup."Carried Forward in SD";
+        if COASetup."Carried Forward Out SD" <> '' then
+            CarryForwardOutAccount := COASetup."Carried Forward Out SD"
+        else
+            Error('COA Setup doest not exist for Carried Forward Out SD Account');
+        if COASetup."Carried Forward in SD" <> '' then
+            CarryForwardInAccount := COASetup."Carried Forward in SD"
+        else
+            Error('COA Setup doest not exist for Carried Forward in SD Account');
 
         DocNo := 'SD-' + Format(SecurityDeposit."Contract ID");
 
@@ -114,5 +108,11 @@ codeunit 50107 "Security Deposit Posting Mgt."
 
         GenJnlPost.Run(GenJnlLine);
         Message('Security Deposit posted successfully.');
+
+        GenJnlLine.Reset();
+        GenJnlLine.SetRange("Journal Template Name", 'CASH RECE');
+        GenJnlLine.SetRange("Journal Batch Name", 'DEFAULT');
+        if GenJnlLine.FindSet() then
+            GenJnlLine.DeleteAll();
     end;
 }
