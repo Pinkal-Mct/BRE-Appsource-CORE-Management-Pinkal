@@ -23,6 +23,12 @@ page 50141 "Sub Unearned Revenue Card"
                     ToolTip = 'Unique identifier for the line in the unearned revenue report.';
                     Editable = false;
                 }
+                field("Report Period"; Rec."Report Period")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    ToolTip = 'Reporting period for the unearned charges data.';
+                }
                 field("Contract ID"; Rec."Contract ID")
                 {
                     ApplicationArea = All;
@@ -144,7 +150,7 @@ page 50141 "Sub Unearned Revenue Card"
                 var
                     createExcelReport: Codeunit "Create Excel Report";
                 begin
-                    createExcelReport.GenerateExcelReportForAnyTable(50117, 50118, Rec."Header No.");
+                    createExcelReport.GenerateExcelReportForAnyTable(50117, 50119, Rec."Header No.");
                 end;
             }
         }

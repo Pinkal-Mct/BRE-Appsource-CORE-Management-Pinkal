@@ -111,6 +111,11 @@ table 50118 "Sub Unearned Charges"
             Caption = 'Header No.';
             Editable = false;
         }
+        field(50119; "Report Period"; Text[40])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Report Period';
+        }
     }
     keys
     {

@@ -413,6 +413,8 @@ page 50139 "Unearned Revenue Report Card"
                 unearnedRevenueBuffer."RevenueAllocated DuringtheYear" := RevenueAllocation;
                 unearnedRevenueBuffer."Unearned Revenue Balance" := UnearnedRevenueAllocation;
                 unearnedRevenueBuffer."Shortfall/Excess" := unearnedRevenueBuffer."Unearned Revenue Balance" - unearnedRevenueBuffer.CalculatedUnearnedRevBalance;
+                unearnedRevenueBuffer."Report Period" := Format(Rec."Starting Date Year") + ' - ' + Format(Rec."Ending Date Year");
+
                 unearnedRevenueBuffer.Insert();
             until tenancyContract.Next() = 0;
     end;
@@ -730,6 +732,7 @@ page 50139 "Unearned Revenue Report Card"
                     unearnedRevenueBuffer.CalculatedUnearnedRevBalance := 0;
 
                 unearnedRevenueBuffer."Shortfall/Excess" := unearnedRevenueBuffer."Unearned Revenue Balance" - unearnedRevenueBuffer.CalculatedUnearnedRevBalance;
+                unearnedRevenueBuffer."Report Period" := Format(Rec."Starting Date Year") + ' - ' + Format(Rec."Ending Date Year");
 
                 unearnedRevenueBuffer.Insert();
             until tenancyContract.Next() = 0;

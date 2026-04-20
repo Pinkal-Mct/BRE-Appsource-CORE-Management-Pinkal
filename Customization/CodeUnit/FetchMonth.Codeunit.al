@@ -244,4 +244,78 @@ codeunit 53751 "Fetch Month"
                 end;
         end;
     end;
+
+    procedure CalculateLeaseDuration(StartDate: Date; EndDate: Date) PeriodDuration: Text
+    var
+        Years: Integer;
+        Months: Integer;
+        Days: Integer;
+        DurationText: Text;
+        TempStartDate: Date;
+        daysInMonth: Integer;
+    begin
+
+        if (StartDate <> 0D) and (EndDate <> 0D) then begin
+            if EndDate >= StartDate then begin
+
+                TempStartDate := StartDate;
+
+                // Calculate the years
+                Years := 0;
+                while (CALCDATE('<+1Y>', TempStartDate) <= EndDate) or
+                (CALCDATE('<+1Y-1D>', TempStartDate) = EndDate) do begin
+                    TempStartDate := CALCDATE('<+1Y>', TempStartDate);
+                    Years := Years + 1;
+                end;
+
+                // Calculate the months
+                Months := 0;
+                while CALCDATE('<+1M>', TempStartDate) <= EndDate do begin
+                    TempStartDate := CALCDATE('<+1M>', TempStartDate);
+                    Months := Months + 1;
+                end;
+
+                // Calculate the remaining days
+                Days := EndDate - TempStartDate + 1;
+
+                if Days >= 28 then begin
+                    daysInMonth := GetNoofDaysInMonth(Date2DMY(TempStartDate, 2), Date2DMY(TempStartDate, 3));
+                    if Days = daysInMonth then begin
+                        Months := Months + 1;
+                        Days := 0;
+                    end
+                    else
+                        if Days > daysInMonth then begin
+                            Months := Months + 1;
+                            Days := Days - daysInMonth;
+                        end;
+                end;
+
+                if Months = 12 then begin
+                    Years := Years + 1;
+                    Months := 0;
+                end
+                else
+                    if Months > 12 then begin
+                        Years := Years + (Months div 12);
+                        Months := Months mod 12;
+                    end;
+
+                // Build the duration text
+                DurationText := '';
+                if Years > 0 then
+                    DurationText := Format(Years) + ' year(s) ';
+
+                if Months > 0 then
+                    DurationText := DurationText + Format(Months) + ' month(s) ';
+
+                if Days > 0 then
+                    DurationText := DurationText + Format(Days) + ' day(s)';
+
+                PeriodDuration := DelChr(DurationText, '<>', ' ');
+            end else
+                PeriodDuration := '';
+        end else
+            PeriodDuration := '';
+    end;
 }

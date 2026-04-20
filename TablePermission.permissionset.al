@@ -241,7 +241,7 @@ permissionset 50100 TablePermission
         table "Vendor Profile" = X,
         table "Workflow Frequency" = X,
         table "Workflow Frequency PR" = X,
-        codeunit CalculateNumberOfInstallments = X,
+        codeunit "Installment Calculation Engine" = X,
         codeunit "Cash Receipt Journal Entry" = X,
         codeunit "Final Settlement Posting Mgt." = X,
         codeunit "FS_Receivable Payment Receipt" = X,

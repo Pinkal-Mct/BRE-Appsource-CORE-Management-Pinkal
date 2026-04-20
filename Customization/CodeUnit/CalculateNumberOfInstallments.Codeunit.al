@@ -1,6 +1,6 @@
-codeunit 50105 CalculateNumberOfInstallments
+codeunit 50105 "Installment Calculation Engine"
 {
-    procedure CalculateInstallments(var prevenuestructuresubpage: Record "Revenue Structure Subpage")
+    procedure CalculateTotalInstallments(var prevenuestructuresubpage: Record "Revenue Structure Subpage")
     var
         revenuestructure: Record "Revenue Structure";
         revenuestructuresubpage: Record "Revenue Structure Subpage";
@@ -48,5 +48,25 @@ codeunit 50105 CalculateNumberOfInstallments
             revenuestructure."Number of Installments" := Totalinstallments;
             revenuestructure.Modify();
         end;
+    end;
+
+
+    procedure CalculateInstallments(DurationText: Text; Frequency: Text) NoofInstallmets: Integer
+    var
+        fetchMonth: Codeunit "Fetch Month";
+        Years, Months, Days : Integer;
+        TotalMonths, MonthsPerInstallment, Installments : Integer;
+    begin
+        fetchMonth.ParseDuration(DurationText, Years, Months, Days);
+
+        TotalMonths := (Years * 12) + Months;
+
+        MonthsPerInstallment := fetchMonth.GetNoofMonthsFromFrequency(Frequency);
+
+        Installments := TotalMonths DIV MonthsPerInstallment;
+        if (TotalMonths MOD MonthsPerInstallment > 0) or (Days > 0) then
+            Installments += 1;
+
+        exit(Installments);
     end;
 }

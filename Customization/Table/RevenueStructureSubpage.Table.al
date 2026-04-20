@@ -40,6 +40,14 @@ table 50914 "Revenue Structure Subpage"
             DataClassification = ToBeClassified;
             Caption = 'Yearly No. of Instalment';
             Editable = true;
+
+            trigger OnValidate()
+            var
+                calculateinstallmentstotal: Codeunit "Installment Calculation Engine";
+            begin
+                calculateinstallmentstotal.CalculateTotalInstallments(Rec);
+            end;
+
         }
         field(50106; "Entry No."; Integer)
         {
@@ -100,6 +108,23 @@ table 50914 "Revenue Structure Subpage"
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
+        field(50118; "Payment Frequency"; Option)
+        {
+            OptionMembers = " ",Monthly,Quarterly,"Half-Yearly",Yearly;
+            DataClassification = ToBeClassified;
+
+            trigger OnValidate()
+            var
+                fetchMonth: Codeunit "Fetch Month";
+                installmentCalcEngine: Codeunit "Installment Calculation Engine";
+                PeriodDuration: Text;
+            begin
+                if Rec."Payment Frequency" <> Rec."Payment Frequency"::" " then begin
+                    PeriodDuration := fetchMonth.CalculateLeaseDuration(Rec."Period Start Date", Rec."Period End Date");
+                    Rec.Validate("Yearly No. of Installment", installmentCalcEngine.CalculateInstallments(PeriodDuration, Format(Rec."Payment Frequency")));
+                end;
+            end;
+        }
     }
     keys
     {
@@ -111,8 +136,8 @@ table 50914 "Revenue Structure Subpage"
 
     trigger OnDelete()
     var
-        calculateinstallmentstotal: Codeunit CalculateNumberOfInstallments;
+        installmentCalcEngine: Codeunit "Installment Calculation Engine";
     begin
-        calculateinstallmentstotal.BeforeDeleteCalculateInstallments(Rec);
+        installmentCalcEngine.BeforeDeleteCalculateInstallments(Rec);
     end;
 }

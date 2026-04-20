@@ -23,6 +23,12 @@ page 50142 "Sub Unearned Charges"
                     Editable = false;
                     ToolTip = 'Unique identifier for the line in the unearned charges report.';
                 }
+                field("Report Period"; Rec."Report Period")
+                {
+                    ApplicationArea = All;
+                    Editable = false;
+                    ToolTip = 'Reporting period for the unearned charges data.';
+                }
                 field("Contract ID"; Rec."Contract ID")
                 {
                     ApplicationArea = All;
@@ -144,7 +150,7 @@ page 50142 "Sub Unearned Charges"
                 var
                     createExcelReport: Codeunit "Create Excel Report";
                 begin
-                    createExcelReport.GenerateExcelReportForAnyTable(50118, 50118, Rec."Header No.");
+                    createExcelReport.GenerateExcelReportForAnyTable(50117, 50119, Rec."Header No.");
                 end;
             }
         }

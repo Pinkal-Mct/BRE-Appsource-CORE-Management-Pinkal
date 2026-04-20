@@ -39,6 +39,7 @@ tableextension 50102 "Item Ext" extends Item
         {
             Caption = 'Property Name';
             DataClassification = ToBeClassified;
+            ValidateTableRelation = false;
             TableRelation = "Property Registration"."Property Name";
         }
         field(50102; "Unit Number"; Text[50])

@@ -21,12 +21,14 @@ table 53764 "Management Fee Grid"
         {
             FieldClass = FlowField;
             CalcFormula = lookup("Owner Profile"."Full Name" where("Owner ID" = field("Owner ID")));
+
         }
 
         field(53704; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             TableRelation = "Property Registration"."Property Name" where("Owner ID" = field("Owner ID"));
+            ValidateTableRelation = false;
 
 
             trigger OnValidate()

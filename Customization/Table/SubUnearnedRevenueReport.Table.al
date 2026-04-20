@@ -111,6 +111,11 @@ table 50117 "Sub Unearned Revenue Report"
             Caption = 'Header No.';
             Editable = false;
         }
+        field(50119; "Report Period"; Text[40])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Report Period';
+        }
     }
     keys
     {

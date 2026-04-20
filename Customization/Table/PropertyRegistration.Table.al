@@ -45,7 +45,7 @@ table 50303 "Property Registration"
         field(50106; "Market Rate per Sq. Ft."; Decimal)
         {
             DataClassification = ToBeClassified;
-            Caption = 'Market Rate per Sq.(Dirham)';
+            Caption = 'Market Rate per Sq. Ft.';
         }
         field(50107; "Emirate Name"; Text[50])
         {
@@ -193,7 +193,7 @@ table 50303 "Property Registration"
     }
     keys
     {
-        key(PK; "Property ID", "Property Classification", "Property Type", "Property Size", "Property Name")
+        key(PK; "Property ID", "Property Classification", "Property Type", "Property Size")
         {
             Clustered = true;
         }

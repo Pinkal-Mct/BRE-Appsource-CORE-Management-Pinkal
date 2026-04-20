@@ -6,6 +6,7 @@ page 50140 "Unearned Revenue Report List"
     Caption = 'Unearned Revenue Report List';
     UsageCategory = Lists;
     CardPageId = 50139;
+    Editable = false;
 
     layout
     {
