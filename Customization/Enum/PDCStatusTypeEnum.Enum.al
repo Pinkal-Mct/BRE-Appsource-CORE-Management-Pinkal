@@ -1,4 +1,4 @@
-enum 50505 "PDC Status Type Enum"
+enum 73209586 "PDC Status Type Enum"
 {
     Extensible = true;
     value(0; " ")

@@ -1,4 +1,4 @@
-codeunit 50102 "Send Payment Receipt"
+codeunit 73209615 "Send Payment Receipt"
 {
     procedure SendEmail(Rec: Record "Payment Mode2"): Text;
     var

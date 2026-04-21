@@ -1,4 +1,4 @@
-codeunit 50310 "Contract Renewal Response"
+codeunit 73209585 "Contract Renewal Response"
 {
     procedure SyncToTenancyContractRenewal(ContractStatusRec: Record "Approval Contract Status")
     var

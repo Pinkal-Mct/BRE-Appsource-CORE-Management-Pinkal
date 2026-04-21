@@ -1,4 +1,4 @@
-codeunit 50103 "FS_Receivable Payment Receipt"
+codeunit 73209592 "FS_Receivable Payment Receipt"
 {
     procedure SendEmail(Rec: Record FinalSettlement): Text;
     var

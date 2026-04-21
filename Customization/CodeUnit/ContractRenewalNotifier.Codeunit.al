@@ -1,4 +1,4 @@
-codeunit 50306 "Contract Renewal Notifier"
+codeunit 73209583 "Contract Renewal Notifier"
 {
     Subtype = Normal;
     trigger OnRun()

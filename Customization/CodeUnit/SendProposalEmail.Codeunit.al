@@ -1,4 +1,4 @@
-codeunit 50502 "Send Proposal Email"
+codeunit 73209617 "Send Proposal Email"
 {
     procedure SendEmail(Rec: Record "Lease Proposal Details"): Text;
     var

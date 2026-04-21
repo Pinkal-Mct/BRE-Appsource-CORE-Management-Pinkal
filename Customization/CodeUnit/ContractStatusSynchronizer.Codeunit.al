@@ -1,4 +1,4 @@
-codeunit 50308 "Contract Status Synchronizer"
+codeunit 73209586 "Contract Status Synchronizer"
 {
     procedure SyncToTenancyContract(ContractStatusRec: Record "Approval Contract Status")
     var

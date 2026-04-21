@@ -1,4 +1,4 @@
-enum 50508 "Termination Type Enum"
+enum 73209594 "Termination Type Enum"
 {
     Extensible = true;
     value(0; " ")

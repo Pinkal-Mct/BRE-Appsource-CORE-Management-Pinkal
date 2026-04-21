@@ -1,4 +1,4 @@
-page 50326 "UserSettingAPI"
+page 73209615 "UserSettingAPI"
 {
     PageType = API;
     SourceTable = "User Personalization";

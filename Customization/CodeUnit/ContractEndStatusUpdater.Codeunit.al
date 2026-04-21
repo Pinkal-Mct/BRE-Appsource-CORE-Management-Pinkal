@@ -1,4 +1,4 @@
-codeunit 50311 "Contract End Status Updater"
+codeunit 73209582 "Contract End Status Updater"
 {
     Subtype = Normal;
     trigger OnRun()

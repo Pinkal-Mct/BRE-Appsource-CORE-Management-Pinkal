@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 
-page 50706 CompanyData
+page 73209580 CompanyData
 {
     APIGroup = 'tenants';
     APIPublisher = 'realestate';

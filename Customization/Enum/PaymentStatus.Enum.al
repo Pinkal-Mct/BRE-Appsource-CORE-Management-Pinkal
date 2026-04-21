@@ -1,4 +1,4 @@
-enum 50507 "Payment Status"
+enum 73209585 "Payment Status"
 {
     Extensible = true;
     value(0; " ")

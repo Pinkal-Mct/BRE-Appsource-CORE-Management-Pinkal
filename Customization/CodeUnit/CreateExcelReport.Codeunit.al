@@ -1,4 +1,4 @@
-codeunit 50954 "Create Excel Report"
+codeunit 73209588 "Create Excel Report"
 {
 
     var

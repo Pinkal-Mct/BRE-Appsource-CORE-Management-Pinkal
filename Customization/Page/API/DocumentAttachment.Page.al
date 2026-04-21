@@ -2,7 +2,7 @@ namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
 using Microsoft.Foundation.Attachment;
 
-page 50718 DocumentAttachment
+page 73209586 DocumentAttachment
 {
     APIGroup = 'payment';
     APIPublisher = 'realestate';

@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 50727 "Revenue Calculate Sub Api"
+page 73209610 "Revenue Calculate Sub Api"
 {
     APIGroup = 'finalcal';
     APIPublisher = 'realestate';

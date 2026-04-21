@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 50725 pendingreceivablegrid
+page 73209607 pendingreceivablegrid
 {
     APIGroup = 'finalcal';
     APIPublisher = 'realestate';

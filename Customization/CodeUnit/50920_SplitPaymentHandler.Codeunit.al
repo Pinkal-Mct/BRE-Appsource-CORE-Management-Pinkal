@@ -1,4 +1,4 @@
-codeunit 50921 "Split Payment Handler"
+codeunit 73209575 "Split Payment Handler"
 {
     procedure ProcessSplitPayment(var SplitPaymentRec: Record "Split Payment Change")
     var

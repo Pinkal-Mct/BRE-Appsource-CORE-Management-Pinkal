@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 50726 RentCalculate
+page 73209609 RentCalculate
 {
     APIGroup = 'finalcal';
     APIPublisher = 'realestate';

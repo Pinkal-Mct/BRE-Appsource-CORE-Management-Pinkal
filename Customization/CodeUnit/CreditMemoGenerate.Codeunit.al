@@ -1,4 +1,4 @@
-codeunit 50952 "Credit Memo Generate"
+codeunit 73209589 "Credit Memo Generate"
 {
     Subtype = Normal;
     procedure GenerateCreditMemo(RequestCreditnoteGrid: Record "Request Credit Note Grid")

@@ -1,4 +1,4 @@
-enum 50502 "Tenant Document Type Enum"
+enum 73209593 "Tenant Document Type Enum"
 {
     Extensible = false;
     value(0; " ")

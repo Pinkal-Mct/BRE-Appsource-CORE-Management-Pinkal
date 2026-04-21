@@ -1,4 +1,4 @@
-codeunit 50309 "Contract Renewal Request"
+codeunit 73209584 "Contract Renewal Request"
 {
     [EventSubscriber(ObjectType::Table, Database::"Contract Renewal", 'OnAfterModifyEvent', '', false, false)]
     local procedure OnAfterModifyTenancyContract(var Rec: Record "Contract Renewal"; xRec: Record "Contract Renewal"; RunTrigger: Boolean)

@@ -2,7 +2,7 @@ namespace PropertyManagement.PropertyManagement;
 
 using Microsoft.Bank.BankAccount;
 
-page 50713 BankAccountFetch
+page 73209578 BankAccountFetch
 {
     APIGroup = 'payment';
     APIPublisher = 'realestate';

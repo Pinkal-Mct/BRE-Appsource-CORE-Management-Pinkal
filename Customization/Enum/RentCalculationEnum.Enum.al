@@ -1,4 +1,4 @@
-enum 50100 "Rent Calculation Enum"
+enum 73209590 "Rent Calculation Enum"
 {
     Extensible = true;
 

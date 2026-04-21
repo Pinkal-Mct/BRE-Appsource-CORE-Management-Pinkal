@@ -1,4 +1,4 @@
-codeunit 50307 "Property Manager Approval"
+codeunit 73209598 "Property Manager Approval"
 {
     procedure UpdateContractStatus(var Rec: Record "Tenancy Contract"; NewStatus: Option)
     var

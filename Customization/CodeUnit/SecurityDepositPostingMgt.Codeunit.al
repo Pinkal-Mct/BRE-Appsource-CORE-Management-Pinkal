@@ -1,4 +1,4 @@
-codeunit 50107 "Security Deposit Posting Mgt."
+codeunit 73209604 "Security Deposit Posting Mgt."
 {
     procedure PostSecurityDepositAmount(SecurityDeposit: Record "Security Deposit")
     var

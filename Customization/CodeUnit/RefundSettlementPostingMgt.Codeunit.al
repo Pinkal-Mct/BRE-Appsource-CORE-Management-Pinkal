@@ -1,4 +1,4 @@
-codeunit 50109 "Refund Settlement Posting Mgt."
+codeunit 73209599 "Refund Settlement Posting Mgt."
 {
     procedure PostRefundJournalLines(FinalSettlementRefund: Record "FinalSettlementRefund")
     var

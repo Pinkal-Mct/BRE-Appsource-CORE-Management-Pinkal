@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 
-page 50704 LeaseProposal
+page 73209596 LeaseProposal
 {
     APIGroup = 'tenants';
     APIPublisher = 'realestate';

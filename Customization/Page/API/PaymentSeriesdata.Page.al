@@ -1,4 +1,4 @@
-page 50518 "Payment Series Data"
+page 73209603 "Payment Series Data"
 {
     PageType = API;
     APIGroup = 'finance';

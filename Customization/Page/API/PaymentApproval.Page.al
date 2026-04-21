@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 
-page 50711 PaymentApproval
+page 73209599 PaymentApproval
 {
     APIGroup = 'payment';
     APIPublisher = 'realestate';

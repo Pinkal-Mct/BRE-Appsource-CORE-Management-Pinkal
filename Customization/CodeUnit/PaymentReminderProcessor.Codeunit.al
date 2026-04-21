@@ -1,4 +1,4 @@
-codeunit 50304 "Payment Reminder Processor"
+codeunit 73209597 "Payment Reminder Processor"
 {
     Subtype = Normal;
     trigger OnRun()

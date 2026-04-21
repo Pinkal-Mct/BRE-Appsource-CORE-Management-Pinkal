@@ -2,7 +2,7 @@ namespace PropertyManagement.PropertyManagement;
 
 using Microsoft.Foundation.Company;
 
-page 50705 CompanyInformationdata
+page 73209581 CompanyInformationdata
 {
     APIGroup = 'company';
     APIPublisher = 'realestate';

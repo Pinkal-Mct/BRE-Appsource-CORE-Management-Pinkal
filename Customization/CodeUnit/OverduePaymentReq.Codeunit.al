@@ -1,4 +1,4 @@
-codeunit 50910 "OverduePaymentReq"
+codeunit 73209596 "OverduePaymentReq"
 {
     procedure SendApprovalrequest(Rec: Record OverDuePaymentmode): Text;
     var

@@ -1,4 +1,4 @@
-codeunit 50904 "Send Credit Memo to Tenant"
+codeunit 73209608 "Send Credit Memo to Tenant"
 {
     procedure SendMailToTenantForCreditMemo(pSalesCrMemoHeader: Record "Sales Cr.Memo Header"; FileName: Text[250]; InStream: InStream)
     var

@@ -1,4 +1,4 @@
-codeunit 50902 "Send Email Paymentmode Overdue"
+codeunit 73209609 "Send Email Paymentmode Overdue"
 {
     procedure SendEmailOverdue(Rec: Record OverDuePaymentmode): Text;
     var

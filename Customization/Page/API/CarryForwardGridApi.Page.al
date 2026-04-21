@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 50730 "Carry Forward Grid Api"
+page 73209579 "Carry Forward Grid Api"
 {
     APIGroup = 'finalcal';
     APIPublisher = 'realestate';

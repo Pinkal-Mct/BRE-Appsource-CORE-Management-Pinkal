@@ -1,4 +1,4 @@
-enum 50433 "Report Type"
+enum 73209591 "Report Type"
 {
     Extensible = true;
 

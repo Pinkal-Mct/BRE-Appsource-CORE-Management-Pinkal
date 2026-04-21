@@ -1,4 +1,4 @@
-codeunit 50512 RejectSalesInvoice
+codeunit 73209601 RejectSalesInvoice
 {
     procedure SendInvoiceToLeaseManager(Rec: Record "Sales Header")
     var

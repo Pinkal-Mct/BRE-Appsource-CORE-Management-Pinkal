@@ -1,4 +1,4 @@
-codeunit 50106 GenerateConsolidatedInvoices
+codeunit 73209593 GenerateConsolidatedInvoices
 {
     trigger OnRun()
     var

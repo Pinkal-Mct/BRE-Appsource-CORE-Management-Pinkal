@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 50729 "Additional Charges Sub Api"
+page 73209575 "Additional Charges Sub Api"
 {
     APIGroup = 'finalcal';
     APIPublisher = 'realestate';

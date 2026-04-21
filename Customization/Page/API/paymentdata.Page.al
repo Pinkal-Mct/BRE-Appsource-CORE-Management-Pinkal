@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 
-page 50707 paymentdata
+page 73209600 paymentdata
 {
     APIGroup = 'payment';
     APIPublisher = 'realestate';

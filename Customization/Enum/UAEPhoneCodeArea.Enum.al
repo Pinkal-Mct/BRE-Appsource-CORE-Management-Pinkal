@@ -1,4 +1,4 @@
-enum 50307 "UAE Phone Code Area"
+enum 73209595 "UAE Phone Code Area"
 {
     Extensible = true;
     value(971; "971")

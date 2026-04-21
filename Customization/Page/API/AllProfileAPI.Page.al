@@ -1,4 +1,4 @@
-page 50325 "All Profile API"
+page 73209576 "All Profile API"
 {
     PageType = API;
     SourceTable = "All Profile";

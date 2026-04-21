@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 50733 finalpaymentapproval
+page 73209591 finalpaymentapproval
 {
     APIGroup = 'finalcal';
     APIPublisher = 'realestste';

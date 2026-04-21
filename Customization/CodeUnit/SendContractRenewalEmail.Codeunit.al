@@ -1,4 +1,4 @@
-codeunit 50101 "Send Contract Renewal Email"
+codeunit 73209607 "Send Contract Renewal Email"
 {
     procedure SendEmail(Rec: Record "Contract Renewal"): Text;
     var

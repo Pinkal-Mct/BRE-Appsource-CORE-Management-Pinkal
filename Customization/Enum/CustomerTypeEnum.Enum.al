@@ -1,4 +1,4 @@
-enum 50504 "Customer Type Enum"
+enum 73209576 "Customer Type Enum"
 {
     Extensible = true;
     value(0; "Tenant")

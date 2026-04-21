@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 50735 creditnote
+page 73209584 creditnote
 {
     APIGroup = 'finalcal';
     APIPublisher = 'realestate';

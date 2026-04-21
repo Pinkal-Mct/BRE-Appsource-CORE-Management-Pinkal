@@ -1,4 +1,4 @@
-codeunit 50110 "Copy Item Ext"
+codeunit 73209587 "Copy Item Ext"
 {
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Copy Item", OnAfterCopyItem, '', false, false)]
     local procedure OnAfterCopyItem(var TargetItem: Record Item)

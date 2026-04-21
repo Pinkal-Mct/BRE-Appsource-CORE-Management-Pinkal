@@ -1,4 +1,4 @@
-codeunit 50901 ResendUpdateInvoiceFM
+codeunit 73209602 ResendUpdateInvoiceFM
 {
     procedure ResendUpdateInvoice(Rec: Record "Sales Header")
     var

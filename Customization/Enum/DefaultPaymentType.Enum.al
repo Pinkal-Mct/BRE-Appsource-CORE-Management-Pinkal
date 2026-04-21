@@ -1,4 +1,4 @@
-enum 50101 "Default Payment Type"
+enum 73209577 "Default Payment Type"
 {
     Extensible = true;
 

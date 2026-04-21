@@ -1,4 +1,4 @@
-page 50360 "Workflow Frequency PR API"
+page 73209616 "Workflow Frequency PR API"
 {
     PageType = API;
     SourceTable = "Workflow Frequency PR";

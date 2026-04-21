@@ -1,4 +1,4 @@
-enum 51252 "Module Enum"
+enum 73209583 "Module Enum"
 {
     Extensible = true;
     Caption = 'Item Type';

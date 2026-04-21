@@ -1,4 +1,4 @@
-codeunit 53751 "Fetch Month"
+codeunit 73209590 "Fetch Month"
 {
     procedure GetMonthName(MonthNo: Integer): Text
     begin

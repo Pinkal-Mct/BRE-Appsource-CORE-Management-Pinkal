@@ -1,4 +1,4 @@
-enum 50506 "Approval Status Enum"
+enum 73209575 "Approval Status Enum"
 {
     Extensible = true;
     value(0; "Pending")

@@ -1,4 +1,4 @@
-enum 51257 "Item Type Template Enum"
+enum 73209582 "Item Type Template Enum"
 {
     Extensible = true;
     Caption = 'Item Type Template';

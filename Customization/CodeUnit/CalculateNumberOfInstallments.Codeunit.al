@@ -1,4 +1,4 @@
-codeunit 50105 "Installment Calculation Engine"
+codeunit 73209579 "Installment Calculation Engine"
 {
     procedure CalculateTotalInstallments(var prevenuestructuresubpage: Record "Revenue Structure Subpage")
     var

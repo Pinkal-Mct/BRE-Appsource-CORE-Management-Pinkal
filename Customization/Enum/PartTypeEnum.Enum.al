@@ -1,4 +1,4 @@
-enum 51251 "Part Type Enum"
+enum 73209584 "Part Type Enum"
 {
     Extensible = true;
     Caption = 'Part Type';

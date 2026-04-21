@@ -1,4 +1,4 @@
-page 50703 "tenantContractApi"
+page 73209611 "tenantContractApi"
 {
     PageType = API;
     DelayedInsert = true;

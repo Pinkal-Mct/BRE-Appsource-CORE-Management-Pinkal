@@ -1,4 +1,4 @@
-enum 51258 "Emirates"
+enum 73209580 "Emirates"
 {
     Extensible = true;
     Caption = 'Emirates';

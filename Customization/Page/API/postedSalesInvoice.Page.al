@@ -2,7 +2,7 @@ namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
 using Microsoft.Sales.History;
 
-page 50717 postedSalesInvoice
+page 73209608 postedSalesInvoice
 {
     APIGroup = 'payment';
     APIPublisher = 'realestate';

@@ -1,4 +1,4 @@
-page 50319 "Approval Contract Status API"
+page 73209577 "Approval Contract Status API"
 {
     PageType = API;
     SourceTable = "Approval Contract Status";

@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 
-page 50708 paymentSchedule1
+page 73209601 paymentSchedule1
 {
     APIGroup = 'tenants';
     APIPublisher = 'realestate';

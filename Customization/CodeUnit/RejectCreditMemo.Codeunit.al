@@ -1,4 +1,4 @@
-codeunit 50906 "Reject Credit Memo"
+codeunit 73209600 "Reject Credit Memo"
 {
     procedure SendInvoiceToLeaseManager(Rec: Record "Sales Header")
     var

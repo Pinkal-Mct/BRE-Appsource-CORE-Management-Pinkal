@@ -1,4 +1,4 @@
-codeunit 50302 "Send Email To PropertyManager"
+codeunit 73209610 "Send Email To PropertyManager"
 {
     procedure SendEmail(Rec: Record "ContractEndProcessApproval"): Text;
     var

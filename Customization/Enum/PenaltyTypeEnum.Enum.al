@@ -1,4 +1,4 @@
-enum 50509 "Penalty Type Enum"
+enum 73209588 "Penalty Type Enum"
 {
     Extensible = true;
     value(0; " ")

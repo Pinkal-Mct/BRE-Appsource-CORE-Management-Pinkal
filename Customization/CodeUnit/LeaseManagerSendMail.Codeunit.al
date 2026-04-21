@@ -1,4 +1,4 @@
-codeunit 50508 LeaseManagerSendMail
+codeunit 73209595 LeaseManagerSendMail
 {
     trigger OnRun()
     var
