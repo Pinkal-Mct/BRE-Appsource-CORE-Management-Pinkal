@@ -1,4 +1,4 @@
-page 50957 "Vendor Calculation Details Sub"
+page 73209665 "Vendor Calculation Details Sub"
 {
     PageType = ListPart;
     SourceTable = "Vendor Calculation Details";

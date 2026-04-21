@@ -1,4 +1,4 @@
-page 50505 "Azure Configuration"
+page 73209617 "Azure Configuration"
 {
     PageType = Card;
     ApplicationArea = All;

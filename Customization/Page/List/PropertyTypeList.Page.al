@@ -1,11 +1,11 @@
-page 50111 "Property Type List"
+page 73209655 "Property Type List"
 {
     PageType = List;
     SourceTable = "Property Type";
     ApplicationArea = All;
     Caption = 'Property Type List';
     UsageCategory = Lists;
-    CardPageId = 51259;
+    CardPageId = 73209631;
 
     layout
     {

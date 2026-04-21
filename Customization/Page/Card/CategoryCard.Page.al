@@ -1,4 +1,4 @@
-page 50905 "Category Card"
+page 73209619 "Category Card"
 {
     PageType = Card;
     SourceTable = "Category Type";

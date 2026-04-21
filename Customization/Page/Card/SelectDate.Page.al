@@ -1,4 +1,4 @@
-page 50985 "Select Date"
+page 73209635 "Select Date"
 {
     PageType = StandardDialog;
     ApplicationArea = All;

@@ -1,4 +1,4 @@
-page 50309 "Owner Profile Card"
+page 73209627 "Owner Profile Card"
 {
     PageType = Card;
     SourceTable = "Owner Profile";

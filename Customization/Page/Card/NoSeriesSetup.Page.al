@@ -1,4 +1,4 @@
-page 53751 "No. Series Setup"
+page 73209626 "No. Series Setup"
 {
     PageType = Card;
     SourceTable = "No. Series Setup";

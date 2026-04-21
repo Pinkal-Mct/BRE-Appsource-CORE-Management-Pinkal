@@ -1,11 +1,11 @@
-page 50140 "Unearned Revenue Report List"
+page 73209664 "Unearned Revenue Report List"
 {
     PageType = List;
     SourceTable = "Unearned Revenue Report";
     ApplicationArea = All;
     Caption = 'Unearned Revenue Report List';
     UsageCategory = Lists;
-    CardPageId = 50139;
+    CardPageId = 73209636;
     Editable = false;
 
     layout

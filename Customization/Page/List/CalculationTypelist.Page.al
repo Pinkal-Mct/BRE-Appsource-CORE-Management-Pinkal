@@ -1,11 +1,11 @@
-page 50960 "Calculation Type List"
+page 73209641 "Calculation Type List"
 {
     PageType = List;
     SourceTable = "Calculation Type";
     ApplicationArea = All;
     Caption = 'Calculation Type List';
     UsageCategory = Lists;
-    CardPageId = 50959;
+    CardPageId = 73209618;
 
     layout
     {

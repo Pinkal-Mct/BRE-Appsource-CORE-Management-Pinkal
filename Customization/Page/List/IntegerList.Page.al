@@ -1,4 +1,4 @@
-page 50147 "Integer List"
+page 73209648 "Integer List"
 {
     PageType = List;
     ApplicationArea = All;

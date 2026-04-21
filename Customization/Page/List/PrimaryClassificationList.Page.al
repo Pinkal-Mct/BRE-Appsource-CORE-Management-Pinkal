@@ -1,11 +1,11 @@
-page 50303 "Primary Classification List"
+page 73209653 "Primary Classification List"
 {
     PageType = List;
     SourceTable = "Primary Classification";
     ApplicationArea = All;
     Caption = 'Primary Classification List';
     UsageCategory = Lists;
-    CardPageId = 51258;
+    CardPageId = 73209629;
 
     layout
     {

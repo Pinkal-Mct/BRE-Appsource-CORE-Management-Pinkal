@@ -1,11 +1,11 @@
-page 50112 "Country List"
+page 73209646 "Country List"
 {
     PageType = List;
     SourceTable = Country;
     ApplicationArea = All;
     Caption = 'Country List';
     UsageCategory = Lists;
-    CardPageId = 51255;
+    CardPageId = 73209623;
 
     layout
     {

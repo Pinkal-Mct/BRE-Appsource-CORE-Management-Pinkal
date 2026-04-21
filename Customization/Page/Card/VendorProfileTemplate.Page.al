@@ -1,4 +1,4 @@
-page 53762 "Vendor Profile Template"
+page 73209639 "Vendor Profile Template"
 {
     PageType = Card;
     ApplicationArea = All;

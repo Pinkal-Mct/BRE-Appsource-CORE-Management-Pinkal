@@ -1,4 +1,4 @@
-page 50433 "Report Request"
+page 73209632 "Report Request"
 {
     PageType = Card;
     ApplicationArea = All;

@@ -1,11 +1,11 @@
-page 50124 "Revenue Allocation List"
+page 73209657 "Revenue Allocation List"
 {
     PageType = List;
     SourceTable = "Revenue Allocation Details";
     ApplicationArea = All;
     Caption = 'Revenue Allocation List';
     UsageCategory = Lists;
-    CardPageId = 50122;
+    CardPageId = 73209633;
 
     layout
     {

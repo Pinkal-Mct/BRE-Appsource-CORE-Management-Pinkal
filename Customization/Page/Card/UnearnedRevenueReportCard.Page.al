@@ -1,4 +1,4 @@
-page 50139 "Unearned Revenue Report Card"
+page 73209636 "Unearned Revenue Report Card"
 {
     PageType = Card;
     SourceTable = "Unearned Revenue Report";

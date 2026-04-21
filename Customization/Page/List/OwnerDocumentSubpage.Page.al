@@ -1,4 +1,4 @@
-page 50501 "Owner Document Subpage"
+page 73209650 "Owner Document Subpage"
 {
     PageType = ListPart;
     ApplicationArea = All;

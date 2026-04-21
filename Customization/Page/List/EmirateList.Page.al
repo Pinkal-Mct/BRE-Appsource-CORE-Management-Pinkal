@@ -1,11 +1,11 @@
-page 50114 "Emirate List"
+page 73209647 "Emirate List"
 {
     PageType = List;
     SourceTable = Emirate;
     ApplicationArea = All;
     Caption = 'Emirate List';
     UsageCategory = Lists;
-    CardPageId = 51256;
+    CardPageId = 73209624;
 
     layout
     {

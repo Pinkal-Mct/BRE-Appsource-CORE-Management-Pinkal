@@ -1,4 +1,4 @@
-page 50123 "Revenue Allocation SubGrid"
+page 73209658 "Revenue Allocation SubGrid"
 {
     PageType = ListPart;
     ApplicationArea = All;

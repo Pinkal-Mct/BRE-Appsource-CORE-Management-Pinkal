@@ -1,4 +1,4 @@
-page 50122 "Revenue Allocation Card"
+page 73209633 "Revenue Allocation Card"
 {
     PageType = Card;
     SourceTable = "Revenue Allocation Details";

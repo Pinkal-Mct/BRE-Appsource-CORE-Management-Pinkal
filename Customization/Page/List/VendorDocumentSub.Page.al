@@ -1,4 +1,4 @@
-page 50958 "Vendor Document Sub"
+page 73209667 "Vendor Document Sub"
 {
     PageType = ListPart;
     SourceTable = "Vendor Document";

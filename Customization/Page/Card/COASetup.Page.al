@@ -1,4 +1,4 @@
-page 50524 "COA Setup"
+page 73209620 "COA Setup"
 {
     PageType = Card;
     ApplicationArea = All;

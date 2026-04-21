@@ -1,11 +1,11 @@
-page 50901 "Primary Item List"
+page 73209654 "Primary Item List"
 {
     PageType = List;
     SourceTable = "Primary Item";
     ApplicationArea = All;
     Caption = 'Primary Item List';
     UsageCategory = Lists;
-    CardPageId = 50902;
+    CardPageId = 73209630;
 
     layout
     {

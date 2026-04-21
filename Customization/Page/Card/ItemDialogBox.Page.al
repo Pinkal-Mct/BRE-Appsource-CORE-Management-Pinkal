@@ -1,4 +1,4 @@
-page 51263 "Item Dialog Box"
+page 73209625 "Item Dialog Box"
 {
     PageType = StandardDialog;
     ApplicationArea = All;

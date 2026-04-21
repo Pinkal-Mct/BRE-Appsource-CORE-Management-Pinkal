@@ -1,11 +1,11 @@
-page 50310 "Owner Profile List"
+page 73209651 "Owner Profile List"
 {
     PageType = List;
     SourceTable = "Owner Profile";
     ApplicationArea = All;
     Caption = 'Owner Profiles';
     UsageCategory = Lists;
-    CardPageId = 50309;
+    CardPageId = 73209627;
 
     layout
     {

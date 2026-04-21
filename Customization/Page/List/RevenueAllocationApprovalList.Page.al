@@ -1,4 +1,4 @@
-page 50983 "RevenueAllocationApproval List"
+page 73209656 "RevenueAllocationApproval List"
 {
     PageType = List;
     SourceTable = "Revenue Allocation Approval";

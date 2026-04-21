@@ -1,4 +1,4 @@
-page 50984 "OtherCharges-UnearnedRevenue"
+page 73209649 "OtherCharges-UnearnedRevenue"
 {
     PageType = ListPart;
     ApplicationArea = All;

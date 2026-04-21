@@ -1,10 +1,10 @@
-page 50712 "Company Data List"
+page 73209645 "Company Data List"
 {
     PageType = List;
     SourceTable = "Company Data";
     ApplicationArea = All;
     Caption = 'Company Data List';
-    CardPageId = 50701;
+    CardPageId = 73209622;
     UsageCategory = Administration;
 
     layout

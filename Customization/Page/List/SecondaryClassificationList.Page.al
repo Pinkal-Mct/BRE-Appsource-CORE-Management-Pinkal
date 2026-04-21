@@ -1,11 +1,11 @@
-page 50304 "Secondary Classification List"
+page 73209661 "Secondary Classification List"
 {
     PageType = List;
     SourceTable = "Secondary Classification";
     ApplicationArea = All;
     Caption = 'Unit Type List';
     UsageCategory = Lists;
-    CardPageId = 51260;
+    CardPageId = 73209634;
 
     layout
     {

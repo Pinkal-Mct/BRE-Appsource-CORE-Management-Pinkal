@@ -1,11 +1,11 @@
-page 50116 "Community List"
+page 73209644 "Community List"
 {
     PageType = List;
     SourceTable = Community;
     ApplicationArea = All;
     Caption = 'Community List';
     UsageCategory = Lists;
-    CardPageId = 51257;
+    CardPageId = 73209621;
 
     layout
     {

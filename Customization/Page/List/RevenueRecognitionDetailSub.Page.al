@@ -1,4 +1,4 @@
-page 50974 "Revenue Recognition Detail Sub"
+page 73209659 "Revenue Recognition Detail Sub"
 {
     PageType = ListPart;
     ApplicationArea = All;

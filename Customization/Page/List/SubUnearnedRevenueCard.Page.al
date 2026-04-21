@@ -1,4 +1,4 @@
-page 50141 "Sub Unearned Revenue Card"
+page 73209663 "Sub Unearned Revenue Card"
 {
     PageType = ListPart;
     ApplicationArea = All;

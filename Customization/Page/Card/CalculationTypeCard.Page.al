@@ -1,4 +1,4 @@
-page 50959 "Calculation Type Card"
+page 73209618 "Calculation Type Card"
 {
     PageType = Card;
     SourceTable = "Calculation Type";

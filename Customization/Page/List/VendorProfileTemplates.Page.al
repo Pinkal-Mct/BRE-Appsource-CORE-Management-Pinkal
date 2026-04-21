@@ -1,4 +1,4 @@
-page 53761 "Vendor Profile Templates"
+page 73209669 "Vendor Profile Templates"
 {
     PageType = List;
     ApplicationArea = All;

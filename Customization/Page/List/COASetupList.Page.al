@@ -1,4 +1,4 @@
-page 50523 "COA Setup List"
+page 73209643 "COA Setup List"
 {
     PageType = ListPart;
     ApplicationArea = All;

@@ -1,11 +1,11 @@
-page 50904 "Category List"
+page 73209642 "Category List"
 {
     PageType = List;
     SourceTable = "Category Type";
     ApplicationArea = All;
     Caption = 'Category List';
     UsageCategory = Lists;
-    CardPageId = 50905;
+    CardPageId = 73209619;
 
     layout
     {

@@ -1,11 +1,11 @@
-page 50956 "Vendor Category List"
+page 73209666 "Vendor Category List"
 {
     PageType = List;
     SourceTable = "Vendor Category";
     ApplicationArea = All;
     Caption = 'Vendor Category List';
     UsageCategory = Lists;
-    CardPageId = 50955;
+    CardPageId = 73209638;
 
     layout
     {
