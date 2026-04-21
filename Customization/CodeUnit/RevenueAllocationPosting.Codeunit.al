@@ -2,7 +2,7 @@ codeunit 50516 "Revenue Allocation Posting"
 {
     Subtype = Normal;
 
-    procedure PostRevenueAllocation(RevenueAllocationRec: Record "Revenue Allocation Details")
+    procedure PostRevenueAllocation(RevenueAllocationRec: Record "Revenue Allocation Details"; preview: Boolean)
     var
         RevenueAllocationGrid: Record "Revenue Allocation SubGrid";
         COASetup: Record "COA Setup";
@@ -42,6 +42,7 @@ codeunit 50516 "Revenue Allocation Posting"
         // Loop through the Revenue Allocation records
 
         RevenueAllocationGrid.SetRange("Header No.", RevenueAllocationRec."No.");
+        RevenueAllocationGrid.SetFilter("Total Value", '<>0');
         if RevenueAllocationGrid.FindSet() then begin
             LineNumber := 0;
             repeat
@@ -49,7 +50,7 @@ codeunit 50516 "Revenue Allocation Posting"
                 LineNumber := GenJournalLineRec."Line No." + 10000;
                 GenJournalLineRec.Init();
                 GenJournalLineRec."Journal Template Name" := 'GENERAL';
-                GenJournalLineRec."Journal Batch Name" := 'DEFAULT';
+                GenJournalLineRec."Journal Batch Name" := 'REVENUE';
                 GenJournalLineRec."Line No." := LineNumber;
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::"G/L Account";
                 GenJournalLineRec."Document No." := RevenueAllocationGrid.Description;
@@ -73,9 +74,13 @@ codeunit 50516 "Revenue Allocation Posting"
 
             until RevenueAllocationGrid.Next() = 0;
 
-        end;
+        end
+        else
+            Error('No Revenue Allocation records found to post.');
 
         OtherChargesAllocationGrid.SetRange("RR_No.", RevenueAllocationRec."No.");
+        OtherChargesAllocationGrid.SetFilter("Total Value", '<>0');
+
         if OtherChargesAllocationGrid.FindSet() then begin
             LineNumber := GenJournalLineRec."Line No." + 10000;
             repeat
@@ -85,7 +90,7 @@ codeunit 50516 "Revenue Allocation Posting"
                 LineNumber := GenJournalLineRec."Line No." + 10000;
                 GenJournalLineRec.Init();
                 GenJournalLineRec."Journal Template Name" := 'GENERAL';
-                GenJournalLineRec."Journal Batch Name" := 'DEFAULT';
+                GenJournalLineRec."Journal Batch Name" := 'REVENUE';
                 GenJournalLineRec."Line No." := LineNumber;
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::"G/L Account";
                 GenJournalLineRec."Document No." := OtherChargesAllocationGrid.Description;
@@ -110,12 +115,17 @@ codeunit 50516 "Revenue Allocation Posting"
 
 
             until OtherChargesAllocationGrid.Next() = 0;
+        end else
+            Error('No Other Charges Allocation records found to post.');
+
+        if not preview then begin
+            GenJnlPost.Run(GenJournalLineRec);
+            Message('Revenue Allocation has been posted successfully.');
+        end
+        else begin
+
+            Commit();
+            GenJnlPost.Preview(GenJournalLineRec);
         end;
-
-        Commit();
-        GenJnlPost.Preview(GenJournalLineRec);
-
-
-
     end;
 }

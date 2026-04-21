@@ -71,31 +71,58 @@ page 50983 "RevenueAllocationApproval List"
     {
         area(Processing)
         {
+            action(Preview)
+            {
+                ApplicationArea = All;
+                Caption = 'Preview';
+                Image = View;
+                ToolTip = 'Preview the entries before approval or rejection.';
+
+                trigger OnAction()
+                var
+                    revenueallocation: Record "Revenue Allocation Details";
+                    RevenueAllocationPosting: Codeunit "Revenue Allocation Posting";
+                    Previewcheck: Boolean;
+                begin
+                    Previewcheck := true;
+                    if revenueallocation.Get(Rec."ID") then
+                        RevenueAllocationPosting.PostRevenueAllocation(revenueallocation, Previewcheck);
+                end;
+
+            }
             action(Approve)
             {
                 ApplicationArea = All;
                 Caption = 'Approve';
                 Image = Approve;
                 Visible = IsFinanceManager;
-                ToolTip = 'Approve the selected revenue allocation entry.';
+                ToolTip = 'Approve the current request after verification.';
+
 
                 trigger OnAction()
                 var
                     revenueallocation: Record "Revenue Allocation Details";
                     RevenueAllocationPosting: Codeunit "Revenue Allocation Posting";
+                    approvalRevenuerequest: Codeunit "Approval Revenue Allocation";
+                    previewcheck: Boolean;
                 begin
                     if Rec.Status = Rec.Status::Approved then
                         Error('This entry is already approved');
 
                     if Confirm('Do you want to approve this entry?') then begin
-                        Rec.Status := Rec.Status::Approved;
-                        Rec.Modify();
+                        // Update entry status
+
 
                         if revenueallocation.Get(Rec."ID") then begin
-                            revenueallocation.Status := revenueallocation.Status::Approve;
-                            revenueallocation.Modify();
+                            previewcheck := false;
+                            RevenueAllocationPosting.PostRevenueAllocation(revenueallocation, previewcheck);
 
-                            RevenueAllocationPosting.PostRevenueAllocation(revenueallocation);
+                            revenueallocation.Status := revenueallocation.Status::Approve;
+                            approvalRevenuerequest.ApprovalRevenuerequest(Rec);
+                            revenueallocation.Modify();
+                            Rec.Status := Rec.Status::Approved;
+                            Rec.Modify();
+
                         end;
 
                         Message('Entry has been approved successfully!');
@@ -108,25 +135,32 @@ page 50983 "RevenueAllocationApproval List"
                 Caption = 'Reject';
                 Image = Cancel;
                 Visible = IsFinanceManager;
-                ToolTip = 'Reject the selected revenue allocation entry.';
-
+                ToolTip = 'Reject the current request as per your review.';
 
                 trigger OnAction()
                 var
                     revenueallocation: Record "Revenue Allocation Details";
+                    approvalRevenuerequest: Codeunit "Approval Revenue Allocation";
                 begin
                     if Rec.Status = Rec.Status::Reject then
                         Error('This entry is already rejected');
-                    Rec.Status := Rec.Status::Reject;
-                    Rec.Modify();
+                    // Update current record
 
+
+                    // Update Credit Note record
                     if revenueallocation.Get(Rec."ID") then begin
                         revenueallocation.Status := revenueallocation.Status::Reject;
+                        approvalRevenuerequest.RejectRevenuerequest(Rec);
                         revenueallocation.Modify();
+                        Rec.Status := Rec.Status::Reject;
+                        // Rec."Reason for Rejection" := ReasonForRejection;
+                        Rec.Modify();
                     end;
 
                     Message('Entry has been rejected successfully!');
                 end;
+
+
             }
         }
 

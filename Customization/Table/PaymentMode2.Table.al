@@ -189,6 +189,9 @@ table 50925 "Payment Mode2"
                 OutStream: OutStream;
                 inStream: InStream;
             begin
+                if (Rec."Payment Mode" = 'Pending') or (Rec."Approval Status" = Rec."Approval Status"::Pending) then
+                    Error('Please ensure the payment mode is selected and approved before updating the payment status.');
+
                 case Rec."Payment Status" of
                     Rec."Payment Status"::Received:
                         begin
