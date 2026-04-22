@@ -1,25 +1,25 @@
-table 50505 "Module Setup"
+table 73209637 "Module Setup"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
 
-        field(50501; "Module Name"; Code[50])
+        field(73209575; "Module Name"; Code[50])
         {
             DataClassification = ToBeClassified;
         }
-        field(50502; "Is Active"; Boolean)
+        field(73209576; "Is Active"; Boolean)
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50504; "Extension Name"; Code[50])
+        field(73209577; "Extension Name"; Code[50])
         {
             Caption = 'Extension Name';
         }
 
-        field(50505; "Business Unit Code"; Code[20])
+        field(73209578; "Business Unit Code"; Code[20])
         {
             Caption = 'Business Unit Code';
             TableRelation = "Business Unit".Code;

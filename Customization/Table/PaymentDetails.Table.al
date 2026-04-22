@@ -1,51 +1,51 @@
-table 50948 "Payment Details"
+table 73209644 "Payment Details"
 {
     DataClassification = ToBeClassified;
     Caption = 'Payment Detais';
     fields
     {
-        field(50100; "Item Description"; Text[100])
+        field(73209575; "Item Description"; Text[100])
         {
             Caption = 'Payment Description';
             DataClassification = ToBeClassified;
         }
-        field(50101; "Amount"; Decimal)
+        field(73209576; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
         }
-        field(50102; "VAT Amount"; Decimal)
+        field(73209577; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
         }
-        field(50103; "Amount Including VAT"; Decimal)
+        field(73209578; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
         }
-        field(50104; "Payment Status"; Text[100])
+        field(73209579; "Payment Status"; Text[100])
         {
             Caption = 'Payment Status';
             DataClassification = ToBeClassified;
         }
-        field(50105; "Payment Date"; Date)
+        field(73209580; "Payment Date"; Date)
         {
             Caption = 'Payment Date';
             DataClassification = ToBeClassified;
         }
-        field(50106; "Contract ID"; Integer)
+        field(73209581; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
             DataClassification = ToBeClassified;
         }
-        field(50107; "Entry No."; Integer)
+        field(73209582; "Entry No."; Integer)
         {
             Caption = 'Entry No.';
             AutoIncrement = true;
             DataClassification = ToBeClassified;
         }
-        field(50108; "Termination Date"; Date)
+        field(73209583; "Termination Date"; Date)
         {
             Caption = 'Termination Date';
             Editable = false;

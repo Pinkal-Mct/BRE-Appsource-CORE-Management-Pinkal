@@ -1,4 +1,4 @@
-table 50919 "SplitPaymentLog"
+table 73209690 "SplitPaymentLog"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "ID";
@@ -6,59 +6,59 @@ table 50919 "SplitPaymentLog"
 
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'ID';
             Editable = false;
         }
-        field(50101; "Approval Status"; Text[100])
+        field(73209576; "Approval Status"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Status';
             Editable = false;
         }
-        field(50102; "Request Type"; Text[50])
+        field(73209577; "Request Type"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Request Type';
             Editable = false;
         }
 
-        field(50103; "Tenant ID"; Text[50])
+        field(73209578; "Tenant ID"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
             Editable = false;
         }
-        field(50104; "Contract ID"; Integer)
+        field(73209579; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
             Editable = false;
         }
 
-        field(50105; "New Amount"; Decimal)
+        field(73209580; "New Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'New Amount';
             Editable = false;
         }
-        field(50106; "New VAT Amount"; Decimal)
+        field(73209581; "New VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'New Vat Amount';
             Editable = false;
         }
 
-        field(50107; "Change Amount Including VAT"; Decimal)
+        field(73209582; "Change Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'New Amount Including VAT';
             Editable = false;
         }
 
-        field(50108; "Payment mode"; Text[300])
+        field(73209583; "Payment mode"; Text[300])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment mode';
@@ -66,33 +66,33 @@ table 50919 "SplitPaymentLog"
             Editable = false;
         }
 
-        field(50109; "Due Date"; Date)
+        field(73209584; "Due Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'New Due Date';
             Editable = false;
         }
 
-        field(50110; "Payment Series"; Text[200])
+        field(73209585; "Payment Series"; Text[200])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Series';
             Editable = false;
         }
-        field(50111; "Items"; Text[500])
+        field(73209586; "Items"; Text[500])
         {
             DataClassification = ToBeClassified;
             Caption = 'Items';
             Editable = false;
         }
 
-        field(50112; "Entry No."; Integer)
+        field(73209587; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50113; "Deposit Bank Name"; Text[100])
+        field(73209588; "Deposit Bank Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             TableRelation = "Bank Account";
@@ -106,7 +106,7 @@ table 50919 "SplitPaymentLog"
                         "Deposit Bank Name" := BankAccountRec."Name";
             end;
         }
-        field(50114; "Cheque Number"; Text[20])
+        field(73209589; "Cheque Number"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Cheque Number';

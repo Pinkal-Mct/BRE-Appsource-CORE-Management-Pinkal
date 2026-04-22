@@ -1,62 +1,62 @@
-table 53766 "InvoiceCreditNoteSummary"
+table 73209626 "InvoiceCreditNoteSummary"
 {
     DataClassification = ToBeClassified;
     fields
     {
 
-        field(53700; "Entry No."; Integer)
+        field(73209575; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(53701; "Contract No."; Integer)
+        field(73209576; "Contract No."; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(53702; "Description"; Text[100])
+        field(73209577; "Description"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(53703; Invoice; Decimal)
-        {
-            DataClassification = ToBeClassified;
-            DecimalPlaces = 0 : 2;
-        }
-        field(53704; "Credit Note"; Decimal)
+        field(73209578; Invoice; Decimal)
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 0 : 2;
         }
-        field(53705; "Total Invoice"; Decimal)
+        field(73209579; "Credit Note"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            DecimalPlaces = 0 : 2;
+        }
+        field(73209580; "Total Invoice"; Decimal)
         {
             FieldClass = FlowField;
             DecimalPlaces = 0 : 2;
             CalcFormula = sum(InvoiceCreditNoteSummary."Invoice" where("Contract No." = field("Contract No.")));
 
         }
-        field(53708; "Total Credit Note"; Decimal)
+        field(73209581; "Total Credit Note"; Decimal)
         {
             FieldClass = FlowField;
             DecimalPlaces = 0 : 2;
             CalcFormula = sum(InvoiceCreditNoteSummary."Credit Note" where("Contract No." = field("Contract No.")));
         }
-        field(53706; Invoiced; Boolean)
+        field(73209582; Invoiced; Boolean)
         {
             DataClassification = ToBeClassified;
         }
-        field(53707; "Credit Noted"; Boolean)
+        field(73209583; "Credit Noted"; Boolean)
         {
             DataClassification = ToBeClassified;
         }
-        field(53709; "Invoice ID"; Code[50])
+        field(73209584; "Invoice ID"; Code[50])
         {
             DataClassification = ToBeClassified;
         }
-        field(53710; "Credit Note ID"; Code[50])
+        field(73209585; "Credit Note ID"; Code[50])
         {
             DataClassification = ToBeClassified;
         }
-        field(53711; "Revenue Description"; Text[100])
+        field(73209586; "Revenue Description"; Text[100])
         {
             DataClassification = ToBeClassified;
         }

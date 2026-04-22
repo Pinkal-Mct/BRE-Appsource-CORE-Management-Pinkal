@@ -1,122 +1,122 @@
-table 50964 "Brokerage Calculation Sub"
+table 73209588 "Brokerage Calculation Sub"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50100; "Owner ID"; Integer)
+        field(73209575; "Owner ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Owner ID';
             Editable = false;
         }
-        field(50101; "Owner Name"; Text[100])
+        field(73209576; "Owner Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Owner Name';
             Editable = false;
         }
-        field(50102; "Property ID"; Code[20])
+        field(73209577; "Property ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property ID';
             Editable = false;
         }
-        field(50103; "Contract ID"; Integer)
+        field(73209578; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
             Editable = false;
         }
-        field(50104; "Start Date"; Date)
+        field(73209579; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Start Date';
             Editable = false;
         }
-        field(50105; "End Date"; Date)
+        field(73209580; "End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'End Date';
             Editable = false;
         }
-        field(50106; "Tenant Name"; Text[100])
+        field(73209581; "Tenant Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Name';
             Editable = false;
         }
-        field(50107; "Property Name"; Text[100])
+        field(73209582; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Name';
             Editable = false;
         }
-        field(50108; "Unit Name"; Text[100])
+        field(73209583; "Unit Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Name';
             Editable = false;
         }
-        field(50109; "Unit Number"; Text[100])
+        field(73209584; "Unit Number"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Number';
             Editable = false;
         }
-        field(50110; "Vendor ID"; Code[20])
+        field(73209585; "Vendor ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor ID';
             Editable = false;
         }
-        field(50111; "Vendor Name"; Text[100])
+        field(73209586; "Vendor Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Name';
             Editable = false;
         }
-        field(50112; "Brokerage Percentage"; Integer)
+        field(73209587; "Brokerage Percentage"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Brokerage Percentage';
             Editable = false;
         }
-        field(50113; "Brokerage Amount"; Decimal)
+        field(73209588; "Brokerage Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Brokerage Amount';
             Editable = false;
         }
-        field(50114; "Paid By"; Option)
+        field(73209589; "Paid By"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Paid By';
             OptionMembers = " ","Owner","Tenant";
         }
-        field(50115; "Remark"; Text[100])
+        field(73209590; "Remark"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Remark';
         }
-        field(50116; "Action Date"; Date)
+        field(73209591; "Action Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Action Date';
         }
-        field(50117; "Entry No."; Integer)
+        field(73209592; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Entry No.';
             Editable = false;
             AutoIncrement = true;
         }
-        field(50118; "ID"; Integer)
+        field(73209593; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'ID';
             Editable = false;
         }
-        field(50119; "Total brokerage Amount"; Decimal)
+        field(73209594; "Total brokerage Amount"; Decimal)
         {
             // DataClassification = ToBeClassified;
             Caption = 'Total brokerage Amount';
@@ -124,33 +124,33 @@ table 50964 "Brokerage Calculation Sub"
             FieldClass = FlowField;
             CalcFormula = sum("Brokerage Calculation Sub"."Brokerage Amount" where("ID" = field("ID"), "Owner ID" = field("Owner ID")));
         }
-        field(50120; "Percentage"; Integer)
+        field(73209595; "Percentage"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Brokerage Percentage';
             Editable = false;
         }
-        field(50121; "Amount"; Decimal)
+        field(73209596; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Brokerage Amount';
             Editable = false;
         }
-        field(50122; "Calculation Method"; Text[100])
+        field(73209597; "Calculation Method"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Calculation Method';
             TableRelation = "Calculation Type"."Calculation Type";
             Editable = false;
         }
-        field(50123; "Base Amount Type"; Option)
+        field(73209598; "Base Amount Type"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Base Amount Type';
             OptionMembers = " ","Revenue","Collection","Annual Rent","Monthly Rent";
             Editable = false;
         }
-        field(50124; "Base Amount"; Decimal)
+        field(73209599; "Base Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Base Amount';

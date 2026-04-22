@@ -1,15 +1,15 @@
-table 50310 "Merged Units"
+table 73209634 "Merged Units"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50100; "Merged Unit ID"; Integer)
+        field(73209575; "Merged Unit ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Merged Unit ID';
             AutoIncrement = true;
         }
-        field(50101; "Property ID"; Code[20])
+        field(73209576; "Property ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property ID';
@@ -30,49 +30,49 @@ table 50310 "Merged Units"
                 end;
             end;
         }
-        field(50102; "Property Name"; Text[100])
+        field(73209577; "Property Name"; Text[100])
         {
             Caption = 'Property Name';
             DataClassification = ToBeClassified;
         }
-        field(50103; "Unit ID"; Code[100])
+        field(73209578; "Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit ID';
             TableRelation = "Item"."No."
         where("Property ID" = field("Property ID"));
         }
-        field(50104; "Unit Name"; Code[100])
+        field(73209579; "Unit Name"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Name';
         }
-        field(50105; "Merged Unit Name"; Code[100])
+        field(73209580; "Merged Unit Name"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Merged Unit Name';
         }
-        field(50106; "Unit Size"; Decimal)
+        field(73209581; "Unit Size"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Unit Size';
         }
-        field(50107; "Market Rate per Square"; Decimal)
+        field(73209582; "Market Rate per Square"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Market Rate per Square';
         }
-        field(50108; "Amount"; Decimal)
+        field(73209583; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Amount';
         }
-        field(50109; "Property Type"; Text[100])
+        field(73209584; "Property Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Type';
         }
-        field(50110; "Status"; Option)
+        field(73209585; "Status"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Merge Unit Status';
@@ -84,27 +84,27 @@ table 50310 "Merged Units"
             end;
 
         }
-        field(50111; "FixedNumber"; Code[100])
+        field(73209586; "FixedNumber"; Code[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50112; "Spliting Status"; Option)
+        field(73209587; "Spliting Status"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Splitting  Status';
             OptionMembers = " ","Merge","Unmerge";
         }
-        field(50113; "Base Unit of Measure"; Code[10])
+        field(73209588; "Base Unit of Measure"; Code[10])
         {
             DataClassification = ToBeClassified;
             Caption = 'Base Unit of Measure';
         }
-        field(50114; "Single Unit Name"; Text[500])
+        field(73209589; "Single Unit Name"; Text[500])
         {
             DataClassification = ToBeClassified;
             Caption = 'Single Unit Names';
         }
-        field(50115; "Unit Number"; Text[50])
+        field(73209590; "Unit Number"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Number';

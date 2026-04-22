@@ -1,10 +1,10 @@
-table 50909 "Workflow Frequency"
+table 73209714 "Workflow Frequency"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50100; "Company ID"; Integer)
+        field(73209575; "Company ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Company ID';
@@ -12,26 +12,26 @@ table 50909 "Workflow Frequency"
 
         }
 
-        field(50101; "Entry No."; Integer)
+        field(73209576; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
 
-        field(50102; "Workflow"; Option)
+        field(73209577; "Workflow"; Option)
         {
             OptionMembers = " ","Payment Reminder","Invoice","Renewal Notification to Tenant","Tenant Loyalty Check Reminder";
             Caption = 'Workflow';
         }
 
-        field(50103; "frequncy Status"; Option)
+        field(73209578; "frequncy Status"; Option)
         {
             OptionMembers = " ","Company","Property";
             Caption = 'frequncy Status';
         }
 
-        field(50104; "No. of Days"; Integer)
+        field(73209579; "No. of Days"; Integer)
         {
             DataClassification = ToBeClassified;
         }

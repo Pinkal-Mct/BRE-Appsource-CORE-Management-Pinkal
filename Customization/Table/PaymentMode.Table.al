@@ -1,9 +1,9 @@
-table 50924 "Payment Mode"
+table 73209645 "Payment Mode"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50103; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             TableRelation = "Payment Schedule"."Contract ID";
@@ -35,24 +35,24 @@ table 50924 "Payment Mode"
                 GetNextSequenceNo();
             end;
         }
-        field(50916; "Contract Start date"; Date)
+        field(73209576; "Contract Start date"; Date)
         {
             Caption = 'Contract Start date';
             DataClassification = ToBeClassified;
         }
-        field(50911; "Contract End date"; Date)
+        field(73209577; "Contract End date"; Date)
         {
             Caption = 'Contract End date';
             DataClassification = ToBeClassified;
         }
-        field(50101; "Tenant Id"; Code[20])
+        field(73209578; "Tenant Id"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Id';
             TableRelation = "Payment Schedule"."Contract ID";
             Editable = false;
         }
-        field(50501; "Approval Status"; Option)
+        field(73209579; "Approval Status"; Option)
         {
             OptionMembers = " ","Pending","Approved","On-Hold","Rejected";
             trigger OnValidate()
@@ -60,7 +60,7 @@ table 50924 "Payment Mode"
                 paymentGridRec: Record "Payment Mode2";
                 paymentSeriesRec: Record "Payment Mode2";
                 PdcTransRec: Record "PDC Transaction";
-                sendRejectionToLeaseTeam: Codeunit 50511;
+                sendRejectionToLeaseTeam: Codeunit 73209618;
                 approvalPending: Boolean;
                 Isrejected: Boolean;
             begin
@@ -111,68 +111,68 @@ table 50924 "Payment Mode"
                 end;
             end;
         }
-        field(50502; "On-hold"; Option)
+        field(73209580; "On-hold"; Option)
         {
             OptionMembers = " ","True","False";
         }
-        field(50503; "Isupdated"; Option)
+        field(73209581; "Isupdated"; Option)
         {
             OptionMembers = " ","True","False";
         }
-        field(50129; "Tenant Name"; Text[100])
+        field(73209582; "Tenant Name"; Text[100])
         {
             Caption = 'Tenant Name';
         }
-        field(50130; "Tenant Email"; Text[100])
+        field(73209583; "Tenant Email"; Text[100])
         {
             Caption = 'Tenant Email';
         }
-        field(50133; "Combine Payment Series"; Text[150])
+        field(73209584; "Combine Payment Series"; Text[150])
         {
             DataClassification = ToBeClassified;
         }
-        field(50132; "Combine Due Date"; Date)
+        field(73209585; "Combine Due Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50134; "Combine Payment Mode"; Text[150])
-        {
-            DataClassification = ToBeClassified;
-            TableRelation = "Payment Type"."Payment Method";
-        }
-        field(50135; "Combine Amount"; Decimal)
-        {
-            DataClassification = ToBeClassified;
-        }
-        field(50136; "Combine VAT Amount"; Decimal)
-        {
-            DataClassification = ToBeClassified;
-        }
-        field(50137; "Combine Amount Including VAT"; Decimal)
-        {
-            DataClassification = ToBeClassified;
-        }
-        field(50131; "Change Payment Mode"; Text[100])
+        field(73209586; "Combine Payment Mode"; Text[150])
         {
             DataClassification = ToBeClassified;
             TableRelation = "Payment Type"."Payment Method";
         }
-        field(50128; "Change Payment Series"; Text[100])
+        field(73209587; "Combine Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50150; "Payment Reminder"; Integer)
+        field(73209588; "Combine VAT Amount"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(73209589; "Combine Amount Including VAT"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(73209590; "Change Payment Mode"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = "Payment Type"."Payment Method";
+        }
+        field(73209591; "Change Payment Series"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(73209592; "Payment Reminder"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Reminder';
             Editable = false;
         }
-        field(50151; "C_Cheque_Number"; Text[20])
+        field(73209593; "C_Cheque_Number"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Cheque Number';
         }
-        field(50152; "C_Deposit_Bank"; Code[100])
+        field(73209594; "C_Deposit_Bank"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Deposit Bank';
@@ -188,12 +188,12 @@ table 50924 "Payment Mode"
                         "C_Deposit_Bank" := BankAccountRec."Name";
             end;
         }
-        field(50153; "CP_Cheque_Number"; Text[20])
+        field(73209595; "CP_Cheque_Number"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Cheque Number';
         }
-        field(50154; "CP_Deposit_Bank"; Code[100])
+        field(73209596; "CP_Deposit_Bank"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Deposit Bank';

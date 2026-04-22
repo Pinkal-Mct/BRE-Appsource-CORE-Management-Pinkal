@@ -1,58 +1,58 @@
-table 50958 "Billing Calculation CN"
+table 73209586 "Billing Calculation CN"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50101; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
-        field(50102; "Tenant ID"; Code[20])
+        field(73209576; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-        field(50103; "Item"; Text[100])
+        field(73209577; "Item"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Item';
         }
-        field(50104; "Amount"; Decimal)
+        field(73209578; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
         }
-        field(50105; "VAT Amount"; Decimal)
+        field(73209579; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
         }
-        field(50106; "Amount Including VAT"; Decimal)
+        field(73209580; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
         }
-        field(50107; "Entry No."; Integer)
+        field(73209581; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Entry No.';
             AutoIncrement = true;
             Editable = false;
         }
-        field(50108; "VAT %"; Integer)
+        field(73209582; "VAT %"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT %';
         }
-        field(50109; "Total Amount"; Decimal)
+        field(73209583; "Total Amount"; Decimal)
         {
             Caption = 'Total Amount';
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("Billing Calculation CN"."Amount Including VAT" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
         }
-        field(50110; "Credit Note ID"; Integer)
+        field(73209584; "Credit Note ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Note ID';

@@ -1,11 +1,11 @@
-table 50920 "Payment Schedule"
+table 73209648 "Payment Schedule"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "Contract ID";
 
     fields
     {
-        field(50101; "Tenant Id"; Code[20])
+        field(73209575; "Tenant Id"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Id';
@@ -13,7 +13,7 @@ table 50920 "Payment Schedule"
             Editable = false;
         }
 
-        field(50102; "Contract ID"; Integer)
+        field(73209576; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             TableRelation = "Tenancy Contract"."Contract ID" WHERE("Tenant Contract Status" = CONST(Active));
@@ -48,7 +48,7 @@ table 50920 "Payment Schedule"
             end;
         }
 
-        field(50103; "Total Amount Including VAT"; Decimal)
+        field(73209577; "Total Amount Including VAT"; Decimal)
         {
             Caption = 'Total Amount Including VAT';
             Editable = false;
@@ -57,47 +57,47 @@ table 50920 "Payment Schedule"
         }
 
 
-        field(50111; "Total Amount"; Decimal)
+        field(73209578; "Total Amount"; Decimal)
         {
             Caption = 'Total Amount';
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("Payment Schedule2".Amount where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
         }
-        field(50911; "Contract End date"; Date)
+        field(73209579; "Contract End date"; Date)
         {
             Caption = 'Contract End date';
             DataClassification = ToBeClassified;
         }
-        field(50912; "Total VAT Amount"; Decimal)
+        field(73209580; "Total VAT Amount"; Decimal)
         {
             Caption = 'Total VAT Amount';
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("Payment Schedule2"."VAT Amount" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
         }
-        field(50913; "Tenant Name"; Text[100])
+        field(73209581; "Tenant Name"; Text[100])
         {
             Caption = 'Tenant Name';
 
         }
-        field(50914; "Property Classification"; Text[100])
+        field(73209582; "Property Classification"; Text[100])
         {
             Caption = 'Property Classification';
             DataClassification = ToBeClassified;
         }
 
-        field(50915; "Contract Status"; Text[100])
+        field(73209583; "Contract Status"; Text[100])
         {
             Caption = 'Contract Status';
             DataClassification = ToBeClassified;
         }
-        field(50916; "Contract Start date"; Date)
+        field(73209584; "Contract Start date"; Date)
         {
             Caption = 'Contract Start date';
             DataClassification = ToBeClassified;
         }
-        field(50917; "Property ID"; Code[40])
+        field(73209585; "Property ID"; Code[40])
         {
             Caption = 'Property ID';
             DataClassification = ToBeClassified;

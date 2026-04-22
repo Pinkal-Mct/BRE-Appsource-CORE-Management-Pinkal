@@ -1,39 +1,39 @@
-table 50925 "Payment Mode2"
+table 73209646 "Payment Mode2"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
 
-        field(50100; "Payment Series"; Text[20])
+        field(73209575; "Payment Series"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Series';
 
         }
 
-        field(50101; "Amount"; Decimal)
+        field(73209576; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
 
         }
 
-        field(50102; "VAT Amount"; Decimal)
+        field(73209577; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
 
         }
 
-        field(50103; "Amount Including VAT"; Decimal)
+        field(73209578; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
 
         }
 
-        field(50104; "Due Date"; Date)
+        field(73209579; "Due Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Due Date';
@@ -80,7 +80,7 @@ table 50925 "Payment Mode2"
 
 
 
-        field(50105; "Payment Mode"; Text[100])
+        field(73209580; "Payment Mode"; Text[100])
         {
             Caption = 'Payment Mode';
             TableRelation = "Payment Type"."Payment Method";
@@ -100,7 +100,7 @@ table 50925 "Payment Mode2"
             end;
         }
 
-        field(50106; "Cheque Number"; Text[20])
+        field(73209581; "Cheque Number"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Cheque Number';
@@ -134,7 +134,7 @@ table 50925 "Payment Mode2"
             end;
         }
 
-        field(50107; "Deposit Bank"; Code[100])
+        field(73209582; "Deposit Bank"; Code[100])
         {
             Caption = 'Deposit Bank';
             TableRelation = "Bank Account"; // You can add a TableRelation here if required
@@ -159,13 +159,13 @@ table 50925 "Payment Mode2"
             end;
         }
 
-        field(50108; "Deposit Status"; Option)
+        field(73209583; "Deposit Status"; Option)
         {
             OptionMembers = "-","N","Y";
             Caption = 'Deposit Status';
         }
 
-        field(50112; "Payment Status"; Enum "Payment Status")
+        field(73209584; "Payment Status"; Enum "Payment Status")
         {
             //OptionMembers = "Scheduled","Due","Received","Overdue","Cancelled";
             Caption = 'Payment Status';
@@ -175,7 +175,7 @@ table 50925 "Payment Mode2"
                 paymentmode2Grid: Record "Payment Mode2";
                 paymentschedule2: Record "Payment Schedule2";
                 PDCTransRec: Record "PDC Transaction";
-                CashReceiptJournalCodeunit: Codeunit 50514;
+                CashReceiptJournalCodeunit: Codeunit 73209580;
                 Email: Codeunit "Send Payment Receipt";
                 emailrec: Codeunit "Send PaymentMode Email";
                 azureBlobUploader: Codeunit "Azure AD Blob Storage";
@@ -267,7 +267,7 @@ table 50925 "Payment Mode2"
 
         }
 
-        field(50113; "Cheque Status"; Enum "PDC Status Type Enum")
+        field(73209585; "Cheque Status"; Enum "PDC Status Type Enum")
         {
             // OptionMembers = "-","Cheque Received","Cleared","Deposited","Due & cheque not deposited","Retrieved","Returned","Replaced & Received","Deferred";
             Caption = 'Cheque Status';
@@ -289,25 +289,25 @@ table 50925 "Payment Mode2"
 
         }
 
-        field(50114; "Invoice #"; Text[100])
+        field(73209586; "Invoice #"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Invoice #';
         }
 
-        field(50115; "Receipt #"; Text[100])
+        field(73209587; "Receipt #"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Receipt #';
         }
 
-        field(50116; "Old Cheque #"; Text[100])
+        field(73209588; "Old Cheque #"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Old Cheque #';
         }
 
-        field(50117; "Upload Cheque"; Text[2048])
+        field(73209589; "Upload Cheque"; Text[2048])
         {
             DataClassification = ToBeClassified;
             Caption = 'Upload Cheque';
@@ -315,27 +315,27 @@ table 50925 "Payment Mode2"
         }
 
 
-        field(50118; "Download"; Text[50])
+        field(73209590; "Download"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Download';
             InitValue = 'Download';
         }
 
-        field(50120; "View"; Text[2048])
+        field(73209591; "View"; Text[2048])
         {
             DataClassification = ToBeClassified;
             Caption = 'View';
             InitValue = 'View';
         }
 
-        field(50119; "View Revenue Details"; Text[100])
+        field(73209592; "View Revenue Details"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'View Revenue Details';
             InitValue = 'View Revenue Details';
         }
-        field(50121; "View Document URL"; Text[2048])
+        field(73209593; "View Document URL"; Text[2048])
         {
             DataClassification = ToBeClassified;
             Caption = 'View Document URL';
@@ -353,7 +353,7 @@ table 50925 "Payment Mode2"
         }
 
 
-        field(50123; "Total Amount"; Decimal)
+        field(73209594; "Total Amount"; Decimal)
         {
             Caption = 'Total Amount';
             Editable = false;
@@ -367,14 +367,14 @@ table 50925 "Payment Mode2"
             // CalcFormula = sum("Payment Mode2".Amount where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
         }
 
-        field(50912; "Total VAT Amount"; Decimal)
+        field(73209595; "Total VAT Amount"; Decimal)
         {
             Caption = 'Total VAT Amount';
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("Payment Mode2"."VAT Amount" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID"), "Payment Status" = filter(<> 'Cancelled')));
         }
-        field(50913; "Total Amount Including VAT"; Decimal)
+        field(73209596; "Total Amount Including VAT"; Decimal)
         {
             Caption = 'Total Amount Including VAT';
             Editable = false;
@@ -382,29 +382,29 @@ table 50925 "Payment Mode2"
             CalcFormula = sum("Payment Mode2"."Amount Including VAT" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID"), "Payment Status" = filter(<> 'Cancelled')));
         }
 
-        field(50110; "Tenant Id"; Code[20])
+        field(73209597; "Tenant Id"; Code[20])
         {
             Caption = 'Tenant Id';
         }
 
 
-        field(50111; "Contract ID"; Integer)
+        field(73209598; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
         }
 
-        field(50122; "Entry No."; Integer)
+        field(73209599; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
 
-        field(50124; "Id"; Integer)
+        field(73209600; "Id"; Integer)
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50125; "Approval Status"; Enum "Approval Status Enum")
+        field(73209601; "Approval Status"; Enum "Approval Status Enum")
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()
@@ -412,8 +412,8 @@ table 50925 "Payment Mode2"
                 paymentModeRec: Record "Payment Mode";
                 paymentGridRec: Record "Payment Mode2";
                 pdcTransRec: Record "PDC Transaction";
-                sendRejectionToLeaseTeam: Codeunit 50511;
-                approvalflow: Codeunit 50510;
+                sendRejectionToLeaseTeam: Codeunit 73209618;
+                approvalflow: Codeunit 73209605;
                 AllApproved: Boolean;
                 AnyPending: Boolean;
                 AnyRejected: Boolean;
@@ -518,84 +518,84 @@ table 50925 "Payment Mode2"
             end;
         }
 
-        field(50126; "Reason"; Text[150])
+        field(73209602; "Reason"; Text[150])
         {
             DataClassification = ToBeClassified;
         }
-        field(50127; "IsUpdated"; Option)
+        field(73209603; "IsUpdated"; Option)
         {
             // DataClassification = ToBeClassified;
             OptionMembers = " ","Yes","No";
         }
 
-        field(50128; "Approve/Decline Status"; Text[50])
+        field(73209604; "Approve/Decline Status"; Text[50])
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50129; "Tenant Name"; Text[100])
+        field(73209605; "Tenant Name"; Text[100])
         {
             Caption = 'Tenant Name';
         }
 
-        field(50130; "Tenant Email"; Text[100])
+        field(73209606; "Tenant Email"; Text[100])
         {
             Caption = 'Tenant Email';
         }
 
-        field(50131; "Payment Received Date"; Date)
+        field(73209607; "Payment Received Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50132; "View Invoice"; Text[250])
+        field(73209608; "View Invoice"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'View Invoice';
         }
-        field(50133; "View Reciept document URL"; Text[250])
+        field(73209609; "View Reciept document URL"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'View Document URL';
         }
 
-        field(50134; "Payment Reminder"; Integer)
+        field(73209610; "Payment Reminder"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Reminder';
             Editable = false;
 
         }
-        field(50929; "Credit Note No."; Code[100])
+        field(73209611; "Credit Note No."; Code[100])
         {
             //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'Credit Note No.';
         }
 
-        field(50935; "Credit Note Amount"; Decimal)
+        field(73209612; "Credit Note Amount"; Decimal)
         {
             //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'Credit Note Amount';
         }
-        field(50936; "Final Rent Amount"; Decimal)
+        field(73209613; "Final Rent Amount"; Decimal)
         {
             //OptionMembers = "0%","5%";
             DataClassification = ToBeClassified;
             Caption = 'Final Rent Amount';
         }
-        field(50937; "FinalRentAmountIncludingVAT"; Decimal)
+        field(73209614; "FinalRentAmountIncludingVAT"; Decimal)
         {
             //OptionMembers = "0%","5%";    
             DataClassification = ToBeClassified;
             Caption = 'Final Rent Amount Including VAT';
         }
-        field(50938; "PortalSidePaymentProcessing"; Text[100])
+        field(73209615; "PortalSidePaymentProcessing"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Portal Side Payment Processing';
         }
-        field(50939; "Receipt Date"; Date)
+        field(73209616; "Receipt Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Receipt Date';

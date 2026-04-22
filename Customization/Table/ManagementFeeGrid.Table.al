@@ -1,30 +1,30 @@
-table 53764 "Management Fee Grid"
+table 73209631 "Management Fee Grid"
 {
 
     DataClassification = ToBeClassified;
     fields
     {
-        field(53700; "Entry No."; Integer)
+        field(73209575; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(53701; "Management Fee Number"; Code[20])
+        field(73209576; "Management Fee Number"; Code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(53702; "Vendor ID"; Code[20])
+        field(73209577; "Vendor ID"; Code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(53703; "Company/Owner Name"; Text[100])
+        field(73209578; "Company/Owner Name"; Text[100])
         {
             FieldClass = FlowField;
             CalcFormula = lookup("Owner Profile"."Full Name" where("Owner ID" = field("Owner ID")));
 
         }
 
-        field(53704; "Property Name"; Text[100])
+        field(73209579; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             TableRelation = "Property Registration"."Property Name" where("Owner ID" = field("Owner ID"));
@@ -41,13 +41,13 @@ table 53764 "Management Fee Grid"
             end;
         }
 
-        field(53705; "Property Type"; Text[100])
+        field(73209580; "Property Type"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
 
         // 4. Calculation Method
-        field(53706; "Calculation Method"; Option)
+        field(73209581; "Calculation Method"; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers =
@@ -60,27 +60,27 @@ table 53764 "Management Fee Grid"
         }
 
         // 5. Calculation Sub-Type
-        field(53707; "Calculation Sub-Type"; Option)
+        field(73209582; "Calculation Sub-Type"; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = " ","Percentage Based","Fixed Amount";
         }
 
         // 6. Percentage Type
-        field(53708; "Percentage Type"; Option)
+        field(73209583; "Percentage Type"; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = "",Fixed,Variable;
         }
 
         // 7. Percentage / Amount
-        field(53709; "Amount"; Decimal)
+        field(73209584; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
 
         // 8. Base Amount Source
-        field(53710; "Base Amount Source"; Option)
+        field(73209585; "Base Amount Source"; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = Revenue,Collections,"Annual Rent","Number of Units";
@@ -96,14 +96,14 @@ table 53764 "Management Fee Grid"
         }
 
         // 9. Payment Frequency
-        field(53711; "Payment Frequency"; Option)
+        field(73209586; "Payment Frequency"; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = Monthly,Quarterly,"Half-Yearly",Yearly;
         }
 
         // 10. Validity Period
-        field(53712; "Valid From"; Date)
+        field(73209587; "Valid From"; Date)
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()
@@ -114,7 +114,7 @@ table 53764 "Management Fee Grid"
             end;
         }
 
-        field(53713; "Valid To"; Date)
+        field(73209588; "Valid To"; Date)
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()
@@ -125,7 +125,7 @@ table 53764 "Management Fee Grid"
             end;
         }
 
-        field(53714; "Contract Status"; Option)
+        field(73209589; "Contract Status"; Option)
         {
             OptionMembers = Active,Expired;
             DataClassification = ToBeClassified;
@@ -133,23 +133,23 @@ table 53764 "Management Fee Grid"
         }
 
         // Document
-        field(53715; "Contract Document"; Text[250])
+        field(73209590; "Contract Document"; Text[250])
         {
             DataClassification = ToBeClassified;
         }
-        field(53716; "View Document"; Text[250])
+        field(73209591; "View Document"; Text[250])
         {
             DataClassification = ToBeClassified;
         }
-        field(53717; "URL Document"; Text[250])
+        field(73209592; "URL Document"; Text[250])
         {
             DataClassification = ToBeClassified;
         }
-        field(53718; Percentage; Decimal)
+        field(73209593; Percentage; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(53719; "Owner ID"; Integer)
+        field(73209594; "Owner ID"; Integer)
         {
             DataClassification = ToBeClassified;
             TableRelation = "Owner Profile"."Owner ID";
@@ -159,11 +159,11 @@ table 53764 "Management Fee Grid"
                 CalcFields("Company/Owner Name");
             end;
         }
-        field(53720; "Validity Period"; Text[50])
+        field(73209595; "Validity Period"; Text[50])
         {
             DataClassification = ToBeClassified;
         }
-        field(53721; "Property Management Company"; Text[100])
+        field(73209596; "Property Management Company"; Text[100])
         {
             DataClassification = ToBeClassified;
         }

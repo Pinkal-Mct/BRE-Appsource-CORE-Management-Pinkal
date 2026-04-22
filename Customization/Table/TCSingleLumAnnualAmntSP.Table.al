@@ -1,14 +1,14 @@
-table 50331 "TC Single LumAnnualAmnt SP"
+table 73209700 "TC Single LumAnnualAmnt SP"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(50101; "SL_Merged Unit ID"; Code[100])
+        field(73209576; "SL_Merged Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()
@@ -27,91 +27,91 @@ table 50331 "TC Single LumAnnualAmnt SP"
                     Error('No matching Lease Proposal found for the selected Unit ID.');
             end;
         }
-        field(50102; "SL_Unit ID"; Code[100])
+        field(73209577; "SL_Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50103; "SL_Year"; Integer)
+        field(73209578; "SL_Year"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(50104; "SL_Start Date"; Date)
+        field(73209579; "SL_Start Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50105; "SL_End Date"; Date)
+        field(73209580; "SL_End Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50106; "SL_Number of Days"; Integer)
+        field(73209581; "SL_Number of Days"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(50107; "SL_Unit Sq Ft"; Decimal)
+        field(73209582; "SL_Unit Sq Ft"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50108; "SL_Rate per Sq.Ft"; Decimal)
+        field(73209583; "SL_Rate per Sq.Ft"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50109; "SL_Rent Increase %"; Decimal)
+        field(73209584; "SL_Rent Increase %"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50110; "SL_Annual Amount"; Decimal)
+        field(73209585; "SL_Annual Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50111; "SL_Round off"; Decimal)
+        field(73209586; "SL_Round off"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50112; "SL_Final Annual Amount"; Decimal)
+        field(73209587; "SL_Final Annual Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50113; "SL_Per Day Rent"; Decimal)
+        field(73209588; "SL_Per Day Rent"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50114; "Single Lumpsum Rent1"; Code[100])
+        field(73209589; "Single Lumpsum Rent1"; Code[100])
         {
             DataClassification = ToBeClassified;
             InitValue = 'Click Here For Get Data.';
             Caption = 'Click Here For Get Data.';
         }
-        field(50115; "SL_Line No."; Integer)
+        field(73209590; "SL_Line No."; Integer)
         {
             DataClassification = ToBeClassified;
         }
 
 
-        field(50116; "TotalFinalAmount"; Decimal)
+        field(73209591; "TotalFinalAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Single LumAnnualAmnt SP"."SL_Final Annual Amount" where("Id" = field("Id")));
         }
 
-        field(50117; "TotalAnnualAmount"; Decimal)
+        field(73209592; "TotalAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Single LumAnnualAmnt SP"."SL_Annual Amount" where("Id" = field("Id")));
         }
 
-        field(50118; "TotalRoundOff"; Decimal)
+        field(73209593; "TotalRoundOff"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Single LumAnnualAmnt SP"."SL_Round off" where("Id" = field("Id")));
         }
 
 
-        field(50119; "TotalFirstAnnualAmount"; Decimal)
+        field(73209594; "TotalFirstAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Single LumAnnualAmnt SP"."SL_Final Annual Amount" where("Id" = field("Id"), SL_Year = const(1)));
         }
-        field(50121; "Contract Id"; Integer)
+        field(73209595; "Contract Id"; Integer)
         {
             DataClassification = ToBeClassified;
         }

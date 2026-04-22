@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 using System.Utilities;
-report 50106 ContractMasterData
+report 73209575 ContractMasterData
 {
     ApplicationArea = All;
     Caption = 'ContractMasterData';

@@ -1,44 +1,44 @@
-table 50500 "DocumentUploadDetails"
+table 73209613 "DocumentUploadDetails"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50100; "OwnerId"; Integer)
+        field(73209575; "OwnerId"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'OwnerId';
         }
-        field(50101; "Document Type"; Enum "Document Type Enum")
+        field(73209576; "Document Type"; Enum "Document Type Enum")
         {
             DataClassification = ToBeClassified;
             Caption = 'Document Type';
         }
-        field(50102; "Document Name"; Text[50])
+        field(73209577; "Document Name"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Document Name';
         }
-        field(50103; "Upload Document"; Text[250])
+        field(73209578; "Upload Document"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Upload Document';
         }
-        field(50104; "Entry No."; Integer)
+        field(73209579; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50105; "View & Download"; Text[20])
+        field(73209580; "View & Download"; Text[20])
         {
             DataClassification = ToBeClassified;
             InitValue = 'View';
         }
-        field(50106; "Download"; Text[20])
+        field(73209581; "Download"; Text[20])
         {
             DataClassification = ToBeClassified;
             InitValue = 'Download';
         }
-        field(50107; "View Document URL"; Text[250])
+        field(73209582; "View Document URL"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'View Document URL';

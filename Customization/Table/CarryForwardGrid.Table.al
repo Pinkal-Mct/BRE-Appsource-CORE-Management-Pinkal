@@ -1,33 +1,33 @@
-table 50114 "Carry Forward Grid"
+table 73209591 "Carry Forward Grid"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50100; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
             Editable = false;
         }
-        field(50101; "Security Deposit"; Text[100])
+        field(73209576; "Security Deposit"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Security Deposit';
             Editable = false;
         }
-        field(50102; "Total Amount"; Decimal)
+        field(73209577; "Total Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Amount';
             Editable = false;
         }
-        field(50103; "Entry No."; Integer)
+        field(73209578; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50104; "New Contract ID"; Integer)
+        field(73209579; "New Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Editable = false;

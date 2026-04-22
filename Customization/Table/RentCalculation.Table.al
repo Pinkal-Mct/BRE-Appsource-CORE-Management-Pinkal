@@ -1,80 +1,80 @@
-table 50942 "Rent Calculation"
+table 73209664 "Rent Calculation"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50112; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
             TableRelation = "Tenancy Contract"."Contract ID";
         }
-        field(50101; "RC ID"; Integer)
+        field(73209576; "RC ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50102; "Secondary Item Type"; Text[100])
+        field(73209577; "Secondary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Secondary Item Type';
             Editable = false;
         }
-        field(50103; "Amount"; Decimal)
+        field(73209578; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
             Editable = false;
         }
-        field(50104; "Contract Start Date"; Date)
+        field(73209579; "Contract Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Start Date';
             Editable = false;
         }
-        field(50105; "Contract End Date"; Date)
+        field(73209580; "Contract End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract End Date';
             Editable = false;
         }
-        field(50106; "Number of Installments"; Integer)
+        field(73209581; "Number of Installments"; Integer)
         {
             Caption = 'Number of Installments';
         }
-        field(50107; "VAT Amount"; Decimal)
+        field(73209582; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
             Editable = false;
         }
-        field(50108; "Amount Including VAT"; Decimal)
+        field(73209583; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
             Editable = false;
         }
-        field(50109; "Tenant ID"; Code[20])
+        field(73209584; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
             Editable = false;
             TableRelation = "Lease Proposal Details"."Tenant ID";
         }
-        field(50110; "Rent Calculation Type"; Text[100])
+        field(73209585; "Rent Calculation Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Rent Calculation Type';
             Editable = false;
         }
-        field(50111; "VAT %"; Option)
+        field(73209586; "VAT %"; Option)
         {
             OptionMembers = "0","5";
             Caption = 'VAT %';
             Editable = false;
         }
-        field(50912; "Property Classification"; Text[100])
+        field(73209587; "Property Classification"; Text[100])
         {
             Caption = 'Property Classification';
             DataClassification = ToBeClassified;

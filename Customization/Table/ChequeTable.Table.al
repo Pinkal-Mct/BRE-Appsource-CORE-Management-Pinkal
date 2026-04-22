@@ -1,30 +1,30 @@
-table 50508 "Cheque Table"
+table 73209593 "Cheque Table"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50501; "ChequeID"; Code[20])
+        field(73209575; "ChequeID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Cheque ID';
         }
-        field(50502; "LeaseID"; Code[20])
+        field(73209576; "LeaseID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Lease ID';
         }
-        field(50503; "ChequeDate"; Date)
+        field(73209577; "ChequeDate"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Cheque Date';
         }
-        field(50504; "ChequeAmount"; Decimal)
+        field(73209578; "ChequeAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Cheque Amount';
         }
-        field(50505; "ChequeStatus"; Enum "PDC Status Type Enum")
+        field(73209579; "ChequeStatus"; Enum "PDC Status Type Enum")
         {
             DataClassification = CustomerContent;
             Caption = 'Cheque Status';

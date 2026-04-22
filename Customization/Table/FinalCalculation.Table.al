@@ -1,71 +1,71 @@
-table 50901 "Final Calculation"
+table 73209617 "Final Calculation"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50112; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
 
 
         }
-        field(50113; "ContractYear(Termination Date)"; Integer)
+        field(73209576; "ContractYear(Termination Date)"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Year On Termination Date';
 
         }
 
-        field(50101; "FC ID"; Integer)
+        field(73209577; "FC ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
 
-        field(50104; "Contract Start Date"; Date)
+        field(73209578; "Contract Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Start Date';
 
         }
 
-        field(50105; "Contract End Date"; Date)
+        field(73209579; "Contract End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract End Date';
 
         }
 
-        field(50102; "Unit Type"; Text[100])
+        field(73209580; "Unit Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Type';
 
         }
 
-        field(50103; "Contract Amount"; Decimal)
+        field(73209581; "Contract Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Amount';
 
         }
 
-        field(50109; "Tenant ID"; Code[20])
+        field(73209582; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
 
             TableRelation = "Lease Proposal Details"."Tenant ID";
         }
-        field(50106; "Intimation Date"; Date)
+        field(73209583; "Intimation Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Intimation Date';
 
         }
-        field(50107; "Termination Date"; Date)
+        field(73209584; "Termination Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Termination Date';
@@ -94,21 +94,21 @@ table 50901 "Final Calculation"
             end;
         }
 
-        field(50110; "Original Contract Tenure"; Integer)
+        field(73209585; "Original Contract Tenure"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Original Contract Tenure';
 
         }
 
-        field(50111; "Actual Contract Tenure"; Integer)
+        field(73209586; "Actual Contract Tenure"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Actual Contract Tenure';
 
         }
 
-        field(50114; "Total No. Of Days"; Integer)
+        field(73209587; "Total No. Of Days"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total No. Of Days(Termination Year)';
@@ -116,161 +116,161 @@ table 50901 "Final Calculation"
         }
 
 
-        field(50115; "Per Day Rent"; Decimal)
+        field(73209588; "Per Day Rent"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Per Day Rent(Termination Year)';
 
         }
 
-        field(50116; "Annual Rent Amount TermiYear"; Decimal)
+        field(73209589; "Annual Rent Amount TermiYear"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Annual Rent Amount of Termination Year';
         }
 
-        field(50117; Status; Option)
+        field(73209590; Status; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = Pending,Approved,Rejected;
         }
 
-        field(50118; "Security Deposit"; Decimal)
+        field(73209591; "Security Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Security Deposit';
         }
-        field(50119; "Adjustment Security Deposit"; Decimal)
+        field(73209592; "Adjustment Security Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Adjustment Security Deposit';
         }
-        field(50120; "Net Balance"; Decimal)
+        field(73209593; "Net Balance"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Net Balance';
         }
-        field(50121; "Chiller Deposit"; Decimal)
+        field(73209594; "Chiller Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Chiller Deposit';
         }
-        field(50122; "Other Deposit"; Decimal)
+        field(73209595; "Other Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Other Deposit';
         }
 
-        field(50123; "Termination Status"; Option)
+        field(73209596; "Termination Status"; Option)
         {
             OptionMembers = " ","Regular Termination","Early Termination","Suspension to Termination";
             Editable = false;
         }
 
-        field(50124; "Total Refundable Deposit"; Decimal)
+        field(73209597; "Total Refundable Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50125; "Total Claim"; Decimal)
+        field(73209598; "Total Claim"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Claim';
         }
-        field(50126; "Total Refund"; Decimal)
+        field(73209599; "Total Refund"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Refund';
         }
-        field(50127; "Summery Net Balance"; Decimal)
+        field(73209600; "Summery Net Balance"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Net Balance';
         }
-        field(50128; "Amount Refundable"; Decimal)
+        field(73209601; "Amount Refundable"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Refundable To The Tenant';
         }
-        field(50129; "Net Receivable From The Tenant"; Decimal)
+        field(73209602; "Net Receivable From The Tenant"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Net Receivable From The Tenant';
         }
-        field(50137; "Total Receive"; Decimal)
+        field(73209603; "Total Receive"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Receive';
         }
 
-        field(50130; "Final Calculation Document"; Text[500])
+        field(73209604; "Final Calculation Document"; Text[500])
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Calculation Document';
             InitValue = 'Final Calculation Document';
         }
 
-        field(50131; "Total Adjustment"; Decimal)
+        field(73209605; "Total Adjustment"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Adjustment';
         }
-        field(50132; "Final Calculation URL"; Text[250])
+        field(73209606; "Final Calculation URL"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Calculaion URL';
         }
-        field(50133; "Tenant Email"; Text[250])
+        field(73209607; "Tenant Email"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Email';
         }
-        field(50134; "Tenant Name"; Text[100])
+        field(73209608; "Tenant Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Name';
         }
-        field(50135; "Credit Note Document"; Text[1000])
+        field(73209609; "Credit Note Document"; Text[1000])
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Note Document';
             InitValue = 'Credit Note Document';
         }
-        field(50136; "Credit Note URL"; Text[1000])
+        field(73209610; "Credit Note URL"; Text[1000])
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Note View';
             InitValue = 'Credit Note View';
         }
-        field(50138; "Updated Payments"; Decimal)
+        field(73209611; "Updated Payments"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Updated Payments';
             Editable = false;
         }
 
-        field(50139; "Final Payments"; Decimal)
+        field(73209612; "Final Payments"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Payments';
             Editable = false;
         }
-        field(50140; "Remaining Security Deposit"; Decimal)
+        field(73209613; "Remaining Security Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Remaining Security Deposit';
         }
 
-        field(50141; "Remaining Chiller Deposit"; Decimal)
+        field(73209614; "Remaining Chiller Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Remaining Chiller Deposit';
         }
-        field(50142; "Remaining Other Deposit"; Decimal)
+        field(73209615; "Remaining Other Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Remaining Other Deposit';
         }
-        field(50143; "Credit Not To Be Raised"; Decimal)
+        field(73209616; "Credit Not To Be Raised"; Decimal)
         {
             Caption = 'Credit Note To Be Raised';
             FieldClass = FlowField;

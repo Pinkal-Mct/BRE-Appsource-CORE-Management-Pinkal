@@ -1,11 +1,11 @@
-table 50307 "Tenancy Contract"
+table 73209702 "Tenancy Contract"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "Contract ID";
 
     fields
     {
-        field(50100; "Owner's Name"; Text[100])
+        field(73209575; "Owner's Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Owner Name';
@@ -26,43 +26,43 @@ table 50307 "Tenancy Contract"
                 end;
             end;
         }
-        field(50101; "Lessor's Name"; Text[100])
+        field(73209576; "Lessor's Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Lessor Name';
         }
-        field(50102; "Lessor's Emirates ID"; Code[15])
+        field(73209577; "Lessor's Emirates ID"; Code[15])
         {
             DataClassification = ToBeClassified;
             Caption = 'Lessor Emirates ID';
         }
-        field(50103; "License No."; Code[20])
+        field(73209578; "License No."; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'License No.';
         }
-        field(50104; "Licensing Authority"; Text[100])
+        field(73209579; "Licensing Authority"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Licensing Authority';
         }
-        field(50105; "Lessor's Email"; Text[100])
+        field(73209580; "Lessor's Email"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Lessor Email';
         }
-        field(50106; "Lessor's Phone"; Text[20])
+        field(73209581; "Lessor's Phone"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Lessor Phone';
         }
-        field(50107; "Contract ID"; Integer)
+        field(73209582; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
             AutoIncrement = true;
         }
-        field(50108; "Proposal ID"; Integer)
+        field(73209583; "Proposal ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Proposal ID';
@@ -146,35 +146,35 @@ table 50307 "Tenancy Contract"
                 end;
             end;
         }
-        field(50109; "Property Name"; Text[100])
+        field(73209584; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Name';
         }
-        field(50110; "Customer Name"; Text[100])
+        field(73209585; "Customer Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Name';
             TableRelation = Customer.Name;
         }
-        field(50111; "Unit Name"; Text[100])
+        field(73209586; "Unit Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Name';
         }
-        field(50112; "Ejari Name"; Text[100])
+        field(73209587; "Ejari Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Ejari Name';
         }
-        field(50113; "Property Classification"; Text[100])
+        field(73209588; "Property Classification"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Classification';
             TableRelation = "Primary Classification"."Classification Name";
             NotBlank = true;
         }
-        field(50114; "Property Type"; Text[100])
+        field(73209589; "Property Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Type';
@@ -188,12 +188,12 @@ table 50307 "Tenancy Contract"
                     Rec."Property Type" := secondaryClassification."Property Type";
             end;
         }
-        field(50115; "Annual Rent Amount"; Decimal)
+        field(73209590; "Annual Rent Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Amount ';
         }
-        field(50116; "Contract Date"; Date)
+        field(73209591; "Contract Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Date';
@@ -204,37 +204,37 @@ table 50307 "Tenancy Contract"
                 TenancyContractSubpage2();
             end;
         }
-        field(50117; "Contract Start Date"; Date)
+        field(73209592; "Contract Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Start Date';
         }
-        field(50118; "Contract End Date"; Date)
+        field(73209593; "Contract End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract End Date';
         }
-        field(50119; "Contract Tenor"; Text[50])
+        field(73209594; "Contract Tenor"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Period (Months)';
         }
-        field(50120; "Base Unit of Measure"; Code[10])
+        field(73209595; "Base Unit of Measure"; Code[10])
         {
             DataClassification = ToBeClassified;
             Caption = 'Base Unit of Measure';
         }
-        field(50121; "Unit Sq. Feet"; Decimal)
+        field(73209596; "Unit Sq. Feet"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Size';
         }
-        field(50122; "Grace Period"; Integer)
+        field(73209597; "Grace Period"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Grace Period (Days)';
         }
-        field(50123; "Grace Start Date"; Date)
+        field(73209598; "Grace Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Grace Start Date';
@@ -243,7 +243,7 @@ table 50307 "Tenancy Contract"
                 this.CalculateGracePeriod();
             end;
         }
-        field(50124; "Grace End Date"; Date)
+        field(73209599; "Grace End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Grace End Date';
@@ -252,55 +252,55 @@ table 50307 "Tenancy Contract"
                 CalculateGracePeriod();
             end;
         }
-        field(50125; "Tenant ID"; Code[20])
+        field(73209600; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
             TableRelation = Customer."No.";
         }
-        field(50126; "Property ID"; Code[20])
+        field(73209601; "Property ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property ID';
             TableRelation = "Property Registration"."Property ID";
         }
-        field(50127; "Unit ID"; Code[100])
+        field(73209602; "Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Single Unit ID';
             TableRelation = "Item"."No." where("Property ID" = field("Property ID"));
         }
-        field(50128; "Emirates ID"; Code[25])
+        field(73209603; "Emirates ID"; Code[25])
         {
             DataClassification = ToBeClassified;
             Caption = 'Emirates ID';
         }
-        field(50129; "Contact Number"; Text[20])
+        field(73209604; "Contact Number"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Contact Number';
         }
-        field(50130; "Email Address"; Text[100])
+        field(73209605; "Email Address"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Email Address';
         }
-        field(50131; "Payment Frequency"; Option)
+        field(73209606; "Payment Frequency"; Option)
         {
             OptionMembers = " ",Monthly,Quarterly,"Half-Yearly",Yearly;
             DataClassification = ToBeClassified;
         }
-        field(50132; "Payment Method"; Text[100])
+        field(73209607; "Payment Method"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50133; "Update Contract Status"; Option)
+        field(73209608; "Update Contract Status"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Update Contract Status';
             OptionMembers = " ","Initiate Activation Process","Initiate Suspension Process","Initiate Termination Process","Initiate Under Suspension-Unit Released";
         }
-        field(50134; "Tenant Contract Status"; Option)
+        field(73209609; "Tenant Contract Status"; Option)
         {
             Editable = true;
             DataClassification = ToBeClassified;
@@ -429,123 +429,123 @@ table 50307 "Tenancy Contract"
                     emailrec.SendEmail(Rec);
             end;
         }
-        field(50135; "UnitID"; code[100])
+        field(73209610; "UnitID"; code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Uniq Unit ID';
         }
-        field(50136; "Created By"; Text[100])
+        field(73209611; "Created By"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Created By';
         }
-        field(50137; "Handover is Completed"; Boolean)
+        field(73209612; "Handover is Completed"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Handover is Completed';
         }
-        field(50152; "Handover of PDC"; Boolean)
+        field(73209613; "Handover of PDC"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Handover of PDC';
         }
-        field(50153; "Signed TC Document"; Boolean)
+        field(73209614; "Signed TC Document"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Signed TC Document';
         }
-        field(50154; "Handover Unit"; Boolean)
+        field(73209615; "Handover Unit"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Handover Unit';
         }
-        field(50138; "Merge Unit ID"; Code[10])
+        field(73209616; "Merge Unit ID"; Code[10])
         {
             DataClassification = ToBeClassified;
             Caption = 'Merge Unit ID';
         }
-        field(50139; "Rent Amount"; Decimal)
+        field(73209617; "Rent Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Annual Rent Amount ';
         }
-        field(50140; "Tenant_License No."; Code[20])
+        field(73209618; "Tenant_License No."; Code[20])
         {
             Caption = 'Tenant Trade License No.';
             DataClassification = ToBeClassified;
         }
-        field(50141; "Tenant_Licensing Authority"; Text[100])
+        field(73209619; "Tenant_Licensing Authority"; Text[100])
         {
             Caption = 'Tenant_Licensing Authority';
             DataClassification = ToBeClassified;
         }
-        field(50142; "Security Deposit Amount"; Decimal)
+        field(73209620; "Security Deposit Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50143; "Unit Number"; Code[50])
+        field(73209621; "Unit Number"; Code[50])
         {
             DataClassification = ToBeClassified;
         }
-        field(50144; "Makani Number"; Text[50])
+        field(73209622; "Makani Number"; Text[50])
         {
             DataClassification = ToBeClassified;
         }
-        field(50145; "Emirate"; Text[50])
+        field(73209623; "Emirate"; Text[50])
         {
             DataClassification = ToBeClassified;
         }
-        field(50146; "Community"; Text[100])
+        field(73209624; "Community"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50147; "DEWA Number"; Text[50])
+        field(73209625; "DEWA Number"; Text[50])
         {
             Caption = 'DEWA Number';
             DataClassification = ToBeClassified;
         }
-        field(50148; "Property Size"; Code[30])
+        field(73209626; "Property Size"; Code[30])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Size';
         }
-        field(50149; "ID"; Integer)
+        field(73209627; "ID"; Integer)
         {
             Caption = 'Suspended Reason ID';
             DataClassification = ToBeClassified;
         }
-        field(50150; "Suspended Reason list"; Text[250])
+        field(73209628; "Suspended Reason list"; Text[250])
         {
             Caption = 'Suspended Reason list';
             DataClassification = ToBeClassified;
         }
-        field(50151; "No of Installments"; Integer)
+        field(73209629; "No of Installments"; Integer)
         {
             Caption = 'No of Installments';
             Editable = false;
         }
-        field(50155; "Upload Document"; Text[250])
+        field(73209630; "Upload Document"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Upload Document';
         }
-        field(50156; "view Document"; Text[250])
+        field(73209631; "view Document"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'view Document';
         }
-        field(50157; "document URL"; Text[250])
+        field(73209632; "document URL"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Logo URL';
         }
-        field(50158; "Renewal Contract Status"; Option)
+        field(73209633; "Renewal Contract Status"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Renewal Contract Status';
             OptionMembers = "N/A","Notify Tenant For Renewal";
         }
-        field(50159; "Contract Type"; Option)
+        field(73209634; "Contract Type"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Type';
@@ -556,7 +556,7 @@ table 50307 "Tenancy Contract"
                 Rec.Insert();
             end;
         }
-        field(50160; "Renewal Proposal ID"; Integer)
+        field(73209635; "Renewal Proposal ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Renewal Proposal ID';
@@ -618,46 +618,46 @@ table 50307 "Tenancy Contract"
                 end;
             end;
         }
-        field(50161; "Yes/No"; Boolean)
+        field(73209636; "Yes/No"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Yes/No';
         }
-        field(50162; "Praposal Type Selected"; Option)
+        field(73209637; "Praposal Type Selected"; Option)
         {
             OptionMembers = " ","Single Unit","Merge Unit";
             DataClassification = ToBeClassified;
         }
-        field(50163; "Unit Address"; Text[100])
+        field(73209638; "Unit Address"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50164; "Usage Type"; Text[100])
+        field(73209639; "Usage Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Usage Type';
             NotBlank = true;
         }
-        field(50165; "Unit Type"; Text[100])
+        field(73209640; "Unit Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Type';
         }
-        field(50166; "Single Unit Name"; Text[500])
+        field(73209641; "Single Unit Name"; Text[500])
         {
             DataClassification = ToBeClassified;
             Caption = 'Single Unit Names';
         }
-        field(50167; "Market Rate per Sq. Ft."; Decimal)
+        field(73209642; "Market Rate per Sq. Ft."; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Market Rate per Sq. Ft. ';
         }
-        field(50168; "Facilities/Amenities"; Text[250])
+        field(73209643; "Facilities/Amenities"; Text[250])
         {
             DataClassification = ToBeClassified;
         }
-        field(50169; "Security Deposit Amt. Received"; Decimal)
+        field(73209644; "Security Deposit Amt. Received"; Decimal)
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()
@@ -666,48 +666,48 @@ table 50307 "Tenancy Contract"
                 UpdateSecurityDepositBalance();
             end;
         }
-        field(50170; "Single Rent Calculation"; Option)
+        field(73209645; "Single Rent Calculation"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Single Unit Rent Calculation Type';
             Editable = false;
             OptionMembers = " ","Single Unit with square feet rate","Single Unit with lumpsum square feet rate";
         }
-        field(50171; "Merge Rent Calculation"; Option)
+        field(73209646; "Merge Rent Calculation"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Merge Unit Rent Calculation Type';
             OptionMembers = " ","Merged Unit with same square feet","Merged Unit with differential square feet rate","Merged Unit with lumpsum annual amount";
         }
-        field(50172; "Update Data"; Text[100])
+        field(73209647; "Update Data"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Rent Calculation';
             InitValue = 'Update Data';
         }
-        field(50178; "Final Calculation"; Text[100])
+        field(73209648; "Final Calculation"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Calculation';
             InitValue = 'Final Calculation';
             Editable = false;
         }
-        field(50173; "Contract VAT %"; Option)
+        field(73209649; "Contract VAT %"; Option)
         {
             OptionMembers = "0%","5%";
             Editable = false;
         }
-        field(50174; "Contract VAT Amount"; Decimal)
+        field(73209650; "Contract VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
         }
-        field(50175; "Contract Amount Including VAT"; Decimal)
+        field(73209651; "Contract Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
         }
-        field(50176; "Security Amount Pending"; Decimal)
+        field(73209652; "Security Amount Pending"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
@@ -717,179 +717,179 @@ table 50307 "Tenancy Contract"
                 UpdateTenancyContractSubPage();
             end;
         }
-        field(50177; "Security Balanced Amount"; Decimal)
+        field(73209653; "Security Balanced Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Editable = false;
         }
-        field(50179; "Termination Of Contract"; Option)
+        field(73209654; "Termination Of Contract"; Option)
         {
             OptionMembers = " ","Regular Termination","Early Termination","Suspension to Termination";
             Editable = true;
         }
-        field(50180; "Termination Date"; Date)
+        field(73209655; "Termination Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50181; "Unpaid Rent Due"; Decimal)
+        field(73209656; "Unpaid Rent Due"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50182; "Penalty Charges"; Decimal)
+        field(73209657; "Penalty Charges"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50183; "Damage Charges"; Decimal)
+        field(73209658; "Damage Charges"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50184; "Service Charges Due"; Decimal)
+        field(73209659; "Service Charges Due"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50185; "Final Refundable Amount"; Decimal)
+        field(73209660; "Final Refundable Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50186; "Approval Required"; Boolean)
+        field(73209661; "Approval Required"; Boolean)
         {
             DataClassification = ToBeClassified;
         }
-        field(50187; "Approval Stauts"; Enum "Approval Status Enum")
+        field(73209662; "Approval Stauts"; Enum "Approval Status Enum")
         {
             DataClassification = ToBeClassified;
         }
-        field(50188; "Approved By"; Text[100])
+        field(73209663; "Approved By"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50189; "Final Settlement Date"; Date)
+        field(73209664; "Final Settlement Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50191; "Rent Calculation Link"; Integer)
+        field(73209665; "Rent Calculation Link"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Rent Calculation Link';
             Editable = false;
         }
-        field(50192; "Link"; Integer)
+        field(73209666; "Link"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Calculation Link';
             Editable = false;
         }
-        field(50193; "Renewal Notification to Tenant"; Integer)
+        field(73209667; "Renewal Notification to Tenant"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Renewal Notification to Tenant';
             Editable = true;
         }
-        field(50194; "Tenant Loyalty Check Reminder"; Integer)
+        field(73209668; "Tenant Loyalty Check Reminder"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Loyalty Check Reminder';
             Editable = true;
         }
-        field(50195; "Payment Reminder"; Integer)
+        field(73209669; "Payment Reminder"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Reminder';
             Editable = false;
         }
-        field(50196; "Previous Status"; Text[100])
+        field(73209670; "Previous Status"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Previous Status';
             Editable = true;
         }
-        field(50197; "Vendor ID"; Code[20])
+        field(73209671; "Vendor ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor ID';
         }
-        field(50198; "Vendor Name"; Text[100])
+        field(73209672; "Vendor Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Name';
         }
-        field(50199; "Percentage"; Integer)
+        field(73209673; "Percentage"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Percentage';
         }
-        field(50200; "Amount"; Decimal)
+        field(73209674; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
         }
-        field(50202; "Calculation Method"; Text[100])
+        field(73209675; "Calculation Method"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Calculation Method';
             TableRelation = "Calculation Type"."Calculation Type";
         }
 
-        field(50203; "Percentage Type"; Option)
+        field(73209676; "Percentage Type"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Percentage Type';
             OptionMembers = " ","Fixed","Variable";
         }
-        field(50204; "Base Amount Type"; Option)
+        field(73209677; "Base Amount Type"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Base Amount Type';
             OptionMembers = " ","Revenue","Collection","Annual Rent","Monthly Rent";
         }
-        field(50205; "Frequency Of Payment"; Option)
+        field(73209678; "Frequency Of Payment"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Frequency Of Payment';
             OptionMembers = " ","Monthly","Quaterly","Half Yearly","Yearly";
         }
 
-        field(50206; "Start Date"; Date)
+        field(73209679; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Start Date';
             //  Editable = false;
         }
-        field(50207; "End Date"; Date)
+        field(73209680; "End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'End Date';
             //  Editable = false;
         }
 
-        field(50208; "Contract Status"; Option)
+        field(73209681; "Contract Status"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Status';
             OptionMembers = " ","Active","Terminate";
         }
-        field(50209; "Owner ID"; Integer)
+        field(73209682; "Owner ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Owner ID';
             Editable = false;
             TableRelation = "Owner Profile"."Owner ID";
         }
-        field(50210; "Lessor's Nationality"; Text[50])
+        field(73209683; "Lessor's Nationality"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Nationality';
         }
-        field(50211; "Lessor's Address"; Text[100])
+        field(73209684; "Lessor's Address"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Address';
         }
-        field(50212; IsCarryForwarded; Boolean)
+        field(73209685; IsCarryForwarded; Boolean)
         {
             DataClassification = ToBeClassified;
         }
-        field(50213; "Carry Forward In"; Decimal)
+        field(73209686; "Carry Forward In"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Carry Forward In';
@@ -906,7 +906,7 @@ table 50307 "Tenancy Contract"
                 end;
             end;
         }
-        field(50214; "Carry Forward Out"; Decimal)
+        field(73209687; "Carry Forward Out"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Carry Forward Out';
@@ -915,7 +915,7 @@ table 50307 "Tenancy Contract"
                 UpdateSecurityDepositBalance();
             end;
         }
-        field(50215; Adjustments; Decimal)
+        field(73209688; Adjustments; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Adjustments';
@@ -925,7 +925,7 @@ table 50307 "Tenancy Contract"
                 UpdateSecurityDepositBalance();
             end;
         }
-        field(50216; Refund; Decimal)
+        field(73209689; Refund; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Refund';

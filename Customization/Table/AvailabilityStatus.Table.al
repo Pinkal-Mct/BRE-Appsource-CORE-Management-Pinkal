@@ -1,17 +1,17 @@
-table 50304 "Availability Status"
+table 73209581 "Availability Status"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "ID";
 
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true; // Automatically increment the ID
             Editable = false; // Make it read-only for the user
         }
-        field(50101; "Status"; Text[100])
+        field(73209576; "Status"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Status Name';

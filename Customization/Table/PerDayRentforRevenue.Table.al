@@ -1,40 +1,40 @@
-table 50317 "Per Day Rent for Revenue"
+table 73209657 "Per Day Rent for Revenue"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50108; "Id"; Integer)
+        field(73209575; "Id"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50101; "Proposal Id"; Integer)
+        field(73209576; "Proposal Id"; Integer)
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50102; "Merge Unit Id"; Code[20])
+        field(73209577; "Merge Unit Id"; Code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(50103; "Year"; Integer)
+        field(73209578; "Year"; Integer)
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50104; "Unit ID"; Code[200])
+        field(73209579; "Unit ID"; Code[200])
         {
             DataClassification = ToBeClassified;
         }
-        field(50105; "Sq.Ft"; Decimal)
+        field(73209580; "Sq.Ft"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50106; "Per Day Rent Per Unit"; Decimal)
+        field(73209581; "Per Day Rent Per Unit"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50107; "Get Data"; Code[100])
+        field(73209582; "Get Data"; Code[100])
         {
             DataClassification = ToBeClassified;
             InitValue = 'Click Here For Get Data.';

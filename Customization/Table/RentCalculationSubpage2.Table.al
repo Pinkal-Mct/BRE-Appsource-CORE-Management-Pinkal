@@ -1,102 +1,102 @@
-table 50944 "Rent Calculation Subpage2"
+table 73209666 "Rent Calculation Subpage2"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50100; "Year"; Integer)
+        field(73209575; "Year"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Year';
             Editable = false;
         }
-        field(50101; "Installment No."; Integer)
+        field(73209576; "Installment No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Installment No.';
             Editable = false;
         }
-        field(50102; "Installment Start Date"; Date)
+        field(73209577; "Installment Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Installment Start Date';
             Editable = false;
         }
-        field(50103; "Installment End Date"; Date)
+        field(73209578; "Installment End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Installment End Date';
             Editable = false;
         }
-        field(50104; "Due Date"; Date)
+        field(73209579; "Due Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Due Date';
             Editable = false;
         }
-        field(50105; "Amount"; Decimal)
+        field(73209580; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 2;
             Caption = 'Amount';
             Editable = false;
         }
-        field(50107; "Entry No."; Integer)
+        field(73209581; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50108; "RC ID"; Integer)
+        field(73209582; "RC ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'RC ID';
         }
-        field(50110; "VAT Amount"; Decimal)
+        field(73209583; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
             Editable = false;
         }
-        field(50116; "VAT %"; Integer)
+        field(73209584; "VAT %"; Integer)
         {
             Caption = 'VAT %';
             Editable = false;
         }
-        field(50111; "Amount Including VAT"; Decimal)
+        field(73209585; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 2;
             Caption = 'Amount Including VAT';
             Editable = false;
         }
-        field(50112; "Secondary Item Type"; Text[100])
+        field(73209586; "Secondary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Secondary Item Type';
             Editable = false;
         }
-        field(50113; "Tenant ID"; Code[20])
+        field(73209587; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-        field(50115; "Contract ID"; Integer)
+        field(73209588; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
-        field(50114; "Total Amount"; Decimal)
+        field(73209589; "Total Amount"; Decimal)
         {
             Caption = 'Total Amount';
             FieldClass = FlowField;
             CalcFormula = sum("Rent Calculation Subpage2".Amount where("RC ID" = field("RC ID")));
             DecimalPlaces = 0 : 2;
         }
-        field(50117; "Primary Classification"; Text[100])
+        field(73209590; "Primary Classification"; Text[100])
         {
             Caption = 'Primary Classification';
             DataClassification = ToBeClassified;
         }
-        field(50118; "Revenue Str. Subpage Entry No."; Integer)
+        field(73209591; "Revenue Str. Subpage Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
         }

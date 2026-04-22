@@ -1,28 +1,28 @@
-table 50109 "Revenue Allocation Details"
+table 73209671 "Revenue Allocation Details"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "No.";
     fields
     {
-        field(50100; "No."; Integer)
+        field(73209575; "No."; Integer)
         {
             DataClassification = SystemMetadata;
             Editable = false;
             AutoIncrement = true;
             Caption = 'ID';
         }
-        field(50101; "Financial Year"; Integer)
+        field(73209576; "Financial Year"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Financial Year';
         }
-        field(50102; "Month"; Option)
+        field(73209577; "Month"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Month';
             OptionMembers = " ",January,February,March,April,May,June,July,August,September,October,November,December;
         }
-        field(50103; "Status"; Option)
+        field(73209578; "Status"; Option)
         {
             OptionMembers = "Pending","Approve","Reject";
             Caption = 'Status';

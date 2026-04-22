@@ -1,17 +1,17 @@
-table 50116 "Unearned Revenue Report"
+table 73209706 "Unearned Revenue Report"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "No.";
     fields
     {
-        field(50100; "No."; Integer)
+        field(73209575; "No."; Integer)
         {
             DataClassification = SystemMetadata;
             Editable = false;
             AutoIncrement = true;
             Caption = 'ID';
         }
-        field(50101; "Starting Date Year"; Date)
+        field(73209576; "Starting Date Year"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Starting Date Year';
@@ -26,7 +26,7 @@ table 50116 "Unearned Revenue Report"
                         Error('Starting Date Year cannot be greater than Ending Date Year.');
             end;
         }
-        field(50103; "Ending Date Year"; Date)
+        field(73209577; "Ending Date Year"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Ending Date Year';
@@ -38,49 +38,49 @@ table 50116 "Unearned Revenue Report"
             end;
         }
 
-        field(50; "R_Total Contract Value"; Decimal)
+        field(73209578; "R_Total Contract Value"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Contract Value';
             Editable = false;
         }
 
-        field(51; "R_Total Opening Balance"; Decimal)
+        field(73209579; "R_Total Opening Balance"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Opening Balance';
             Editable = false;
         }
 
-        field(52; "R_T_Invoice Raised During Year"; Decimal)
+        field(73209580; "R_T_Invoice Raised During Year"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Invoice Raised During Year';
             Editable = false;
         }
 
-        field(53; "R_T_Revenue Allocated During Y"; Decimal)
+        field(73209581; "R_T_Revenue Allocated During Y"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Revenue Allocated During Year';
             Editable = false;
         }
 
-        field(54; "R_T_Unearned Revenue Balance"; Decimal)
+        field(73209582; "R_T_Unearned Revenue Balance"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Unearned Revenue Balance';
             Editable = false;
         }
 
-        field(55; "R_T_Cal Unearned RevBalance"; Decimal)
+        field(73209583; "R_T_Cal Unearned RevBalance"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Calculated Unearned Rev Balance';
             Editable = false;
         }
 
-        field(56; "R_Total Shortfall Excess"; Decimal)
+        field(73209584; "R_Total Shortfall Excess"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Shortfall/Excess';

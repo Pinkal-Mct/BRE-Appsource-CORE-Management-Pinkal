@@ -1,47 +1,47 @@
-table 50509 "PDC Approval"
+table 73209653 "PDC Approval"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = SystemId;
     fields
     {
-        field(50501; Id; Integer)
+        field(73209575; Id; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50509; Status; Text[50])
+        field(73209576; Status; Text[50])
         {
             DataClassification = ToBeClassified;
         }
-        field(50510; "PDC Id"; code[20])
+        field(73209577; "PDC Id"; code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(50502; Tenant_Id; Code[20])
+        field(73209578; Tenant_Id; Code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(50503; Contract_Id; Integer)
+        field(73209579; Contract_Id; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(50504; Check_No; Text[100])
+        field(73209580; Check_No; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50505; Deposite_Bank; Text[100])
+        field(73209581; Deposite_Bank; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50506; Total_Amount; Decimal)
+        field(73209582; Total_Amount; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50507; Due_Date; Date)
+        field(73209583; Due_Date; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50508; View; Text[2048])
+        field(73209584; View; Text[2048])
         {
             DataClassification = ToBeClassified;
         }

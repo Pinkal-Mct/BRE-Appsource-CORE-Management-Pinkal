@@ -1,53 +1,53 @@
-table 50303 "Property Registration"
+table 73209661 "Property Registration"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "Property ID";
     fields
     {
-        field(50100; "Property ID"; Code[20])
+        field(73209575; "Property ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property ID';
         }
-        field(50127; "Company ID"; Integer)
+        field(73209576; "Company ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Company ID';
             TableRelation = "Company Data"."Company ID";
         }
-        field(50101; "Description"; Text[100])
+        field(73209577; "Description"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Description';
         }
-        field(50102; "Property Name"; Text[100])
+        field(73209578; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Name';
         }
-        field(50103; "Blocked"; Enum "Vendor Blocked")
+        field(73209579; "Blocked"; Enum "Vendor Blocked")
         {
             DataClassification = ToBeClassified;
             Caption = 'Blocked';
         }
-        field(50104; "Type"; Option)
+        field(73209580; "Type"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Type';
             OptionMembers = Inventory,"Non Inventory";
         }
-        field(50105; "Base Unit of Measure"; Code[10])
+        field(73209581; "Base Unit of Measure"; Code[10])
         {
             DataClassification = ToBeClassified;
             Caption = 'Base Unit of Measure';
             TableRelation = "Unit of Measure"."Code";
         }
-        field(50106; "Market Rate per Sq. Ft."; Decimal)
+        field(73209582; "Market Rate per Sq. Ft."; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Market Rate per Sq. Ft.';
         }
-        field(50107; "Emirate Name"; Text[50])
+        field(73209583; "Emirate Name"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Emirate';
@@ -66,7 +66,7 @@ table 50303 "Property Registration"
                     Error('Invalid Emirate Name: %1', "Emirate Name");
             end;
         }
-        field(50108; "Community"; Text[100])
+        field(73209584; "Community"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Community';
@@ -80,12 +80,12 @@ table 50303 "Property Registration"
                     Community := communityRec."Community Name";
             end;
         }
-        field(50109; "Number of Units"; Integer)
+        field(73209585; "Number of Units"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Number Of Units';
         }
-        field(50110; "Property Classification"; Text[100])
+        field(73209586; "Property Classification"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Classification';
@@ -95,89 +95,89 @@ table 50303 "Property Registration"
                 "Property Type" := '';
             end;
         }
-        field(50111; "Property Type"; Text[100])
+        field(73209587; "Property Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Type';
             TableRelation = "Property Type"."Property Type" where("Classification Name" = field("Property Classification"));
         }
-        field(50112; "Registration Date"; Date)
+        field(73209588; "Registration Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Registration Date';
         }
-        field(50113; "GTIN"; Code[100])
+        field(73209589; "GTIN"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'GTIN';
         }
-        field(50114; "Owner ID"; Integer)
+        field(73209590; "Owner ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Owner ID';
             TableRelation = "Owner Profile"."Owner ID";
         }
-        field(50115; "Ownership Documents"; Text[250])
+        field(73209591; "Ownership Documents"; Text[250])
         {
             Caption = 'Ownership Documents';
             DataClassification = ToBeClassified;
         }
-        field(50116; "Compliance Certificates"; Text[250])
+        field(73209592; "Compliance Certificates"; Text[250])
         {
             Caption = 'Compliance Certificates';
             DataClassification = ToBeClassified;
         }
-        field(50117; "Legal Documents"; Text[250])
+        field(73209593; "Legal Documents"; Text[250])
         {
             Caption = 'Legal Documents';
             DataClassification = ToBeClassified;
         }
-        field(50118; "Property Size"; Code[30])
+        field(73209594; "Property Size"; Code[30])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Size';
         }
-        field(50119; "Address"; Text[250])
+        field(73209595; "Address"; Text[250])
         {
             Caption = 'Address';
             DataClassification = ToBeClassified;
         }
-        field(50120; "Built-up Area"; Decimal)
+        field(73209596; "Built-up Area"; Decimal)
         {
             Caption = 'Built-up Area (sq. ft)';
             DataClassification = ToBeClassified;
         }
-        field(50121; "Makani Number"; Text[50])
+        field(73209597; "Makani Number"; Text[50])
         {
             Caption = 'Makani Number';
             DataClassification = ToBeClassified;
         }
-        field(50122; "Municipality Number"; Text[50])
+        field(73209598; "Municipality Number"; Text[50])
         {
             Caption = 'Municipality Number';
             DataClassification = ToBeClassified;
         }
-        field(50123; "DEWA Number"; Text[50])
+        field(73209599; "DEWA Number"; Text[50])
         {
             Caption = 'DEWA Number';
             DataClassification = ToBeClassified;
         }
-        field(50124; "Number of Floors"; Integer)
+        field(73209600; "Number of Floors"; Integer)
         {
             Caption = 'Number of Floors';
             DataClassification = ToBeClassified;
         }
-        field(50125; "Number of Lifts"; Integer)
+        field(73209601; "Number of Lifts"; Integer)
         {
             Caption = 'Number of Lifts';
             DataClassification = ToBeClassified;
         }
-        field(50126; "Business Unit Code"; Code[20])
+        field(73209602; "Business Unit Code"; Code[20])
         {
             Caption = 'Business Unit Code';
             TableRelation = "Business Unit".Code;
         }
-        field(50158; "Country"; Text[100])
+        field(73209603; "Country"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Country';

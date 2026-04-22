@@ -1,28 +1,28 @@
-table 50102 "Country"
+table 73209602 "Country"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
             NotBlank = false;
         }
-        field(50101; "Sl No."; Integer)
+        field(73209576; "Sl No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Sl No.';
             Editable = false;
         }
-        field(50102; "Country Code"; Code[30])
+        field(73209577; "Country Code"; Code[30])
         {
             DataClassification = ToBeClassified;
             Caption = 'Country Code';
         }
-        field(50103; "Country Name"; Text[100])
+        field(73209578; "Country Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Country Name';

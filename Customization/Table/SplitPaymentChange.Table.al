@@ -1,61 +1,61 @@
-table 50915 "Split Payment Change"
+table 73209689 "Split Payment Change"
 {
     DataClassification = ToBeClassified;
     fields
     {
 
-        field(50100; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
 
         }
-        field(50101; "Split Payment Series"; Text[100])
+        field(73209576; "Split Payment Series"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50102; "Secondary Item Type"; Text[100])
+        field(73209577; "Secondary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50103; "Split Due Date"; Date)
+        field(73209578; "Split Due Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50104; "Split Payment Mode"; Text[150])
+        field(73209579; "Split Payment Mode"; Text[150])
         {
             DataClassification = ToBeClassified;
             TableRelation = "Payment Type"."Payment Method";
         }
 
-        field(50105; "Split Amount"; Decimal)
+        field(73209580; "Split Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50106; "Split VAT Amount"; Decimal)
+        field(73209581; "Split VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50107; "Split Amount Including VAT"; Decimal)
+        field(73209582; "Split Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
 
-        field(50108; "Entry No."; Integer)
+        field(73209583; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50109; "Tenant Id"; Code[20])
+        field(73209584; "Tenant Id"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-        field(50110; "Deposit Bank Name"; Text[100])
+        field(73209585; "Deposit Bank Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             TableRelation = "Bank Account";
@@ -69,7 +69,7 @@ table 50915 "Split Payment Change"
                         "Deposit Bank Name" := BankAccountRec."Name";
             end;
         }
-        field(50111; "Cheque Number"; Text[20])
+        field(73209586; "Cheque Number"; Text[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Cheque Number';

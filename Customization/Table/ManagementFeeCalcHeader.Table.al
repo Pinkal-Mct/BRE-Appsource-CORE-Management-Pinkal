@@ -1,19 +1,19 @@
-table 50120 "Management Fee Calc. Header"
+table 73209629 "Management Fee Calc. Header"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50100; "Entry No."; Integer)
+        field(73209575; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50101; "Report Date"; Date)
+        field(73209576; "Report Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50102; "Owner ID"; Integer)
+        field(73209577; "Owner ID"; Integer)
         {
             DataClassification = ToBeClassified;
             TableRelation = "Owner Profile"."Owner ID";
@@ -23,16 +23,16 @@ table 50120 "Management Fee Calc. Header"
                 CalcFields("Owner Name");
             end;
         }
-        field(50103; "Owner Name"; Text[100])
+        field(73209578; "Owner Name"; Text[100])
         {
             FieldClass = FlowField;
             CalcFormula = lookup("Owner Profile"."Full Name" where("Owner ID" = field("Owner ID")));
         }
-        field(50104; "Property"; Text[100])
+        field(73209579; "Property"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50105; "Financial Year"; Integer)
+        field(73209580; "Financial Year"; Integer)
         {
             DataClassification = ToBeClassified;
 
@@ -58,7 +58,7 @@ table 50120 "Management Fee Calc. Header"
                 end;
             end;
         }
-        field(50106; "Period From"; Date)
+        field(73209581; "Period From"; Date)
         {
             DataClassification = ToBeClassified;
 
@@ -77,7 +77,7 @@ table 50120 "Management Fee Calc. Header"
                       Rec."Financial Year");
             end;
         }
-        field(50107; "Period To"; Date)
+        field(73209582; "Period To"; Date)
         {
             DataClassification = ToBeClassified;
 
@@ -98,7 +98,7 @@ table 50120 "Management Fee Calc. Header"
                     Error('Period To cannot be earlier than Period From.');
             end;
         }
-        field(50108; "All Owners"; Boolean)
+        field(73209583; "All Owners"; Boolean)
         {
             DataClassification = ToBeClassified;
 
@@ -111,7 +111,7 @@ table 50120 "Management Fee Calc. Header"
                 end;
             end;
         }
-        field(50109; "All Properties"; Boolean)
+        field(73209584; "All Properties"; Boolean)
         {
             DataClassification = ToBeClassified;
 

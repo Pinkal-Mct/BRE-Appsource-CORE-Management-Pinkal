@@ -1,16 +1,16 @@
-table 50935 "Payment Type"
+table 73209652 "Payment Type"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "Payment ID";
     fields
     {
-        field(50100; "Payment ID"; Integer)
+        field(73209575; "Payment ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50101; "Payment Method"; Text[100])
+        field(73209576; "Payment Method"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Method';

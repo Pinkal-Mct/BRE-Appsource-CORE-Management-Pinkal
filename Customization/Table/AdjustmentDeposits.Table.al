@@ -1,42 +1,42 @@
-table 50119 "Adjustment Deposits"
+table 73209576 "Adjustment Deposits"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50100; "Entry No."; Integer)
+        field(73209575; "Entry No."; Integer)
         {
             AutoIncrement = true;
         }
 
-        field(50101; "Item Description"; Enum "Deposit Type")
+        field(73209576; "Item Description"; Enum "Deposit Type")
         {
         }
 
-        field(50102; "Transaction Type"; Option)
+        field(73209577; "Transaction Type"; Option)
         {
             OptionMembers = " ",Refund,Adjustment;
         }
 
-        field(50104; "Amount"; Decimal)
+        field(73209578; "Amount"; Decimal)
         {
         }
 
-        field(50105; "Narration"; Text[250])
+        field(73209579; "Narration"; Text[250])
         {
         }
 
-        field(50106; "Posted"; Boolean)
+        field(73209580; "Posted"; Boolean)
         {
         }
 
-        field(50107; "Posting Date"; Date)
+        field(73209581; "Posting Date"; Date)
         {
         }
-        field(50108; "Contract Id"; Integer)
+        field(73209582; "Contract Id"; Integer)
         {
         }
-        field(50109; "Adjusted"; Boolean)
+        field(73209583; "Adjusted"; Boolean)
         {
         }
     }

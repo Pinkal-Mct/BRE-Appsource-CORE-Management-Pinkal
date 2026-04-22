@@ -1,20 +1,20 @@
-table 50514 "COA Setup Line"
+table 73209595 "COA Setup Line"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50500; "Entry No."; Integer)
+        field(73209575; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50501; "Primary Key"; Code[10])
+        field(73209576; "Primary Key"; Code[10])
         {
             DataClassification = SystemMetadata;
             Caption = 'Primary Key';
         }
-        field(50502; "Secondary Item"; Text[100])
+        field(73209577; "Secondary Item"; Text[100])
         {
             DataClassification = ToBeClassified;
             TableRelation = Item where("Item Type Template" = const("Item Type Template Enum"::"Secondary Item"));
@@ -24,22 +24,22 @@ table 50514 "COA Setup Line"
                 PopulateItemDescription(Rec."Secondary Item");
             end;
         }
-        field(50503; Residential; Code[20])
+        field(73209578; Residential; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = "G/L Account"."No.";
         }
-        field(50504; Commercial; Code[20])
+        field(73209579; Commercial; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = "G/L Account"."No.";
         }
-        field(50505; "Residential-Unearned"; Code[20])
+        field(73209580; "Residential-Unearned"; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = "G/L Account"."No.";
         }
-        field(50506; "Commercial-Unearned"; code[20])
+        field(73209581; "Commercial-Unearned"; code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = "G/L Account"."No.";

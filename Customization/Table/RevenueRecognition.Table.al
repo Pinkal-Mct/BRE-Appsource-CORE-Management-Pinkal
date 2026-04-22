@@ -1,18 +1,18 @@
-table 50929 "Revenue Recognition"
+table 73209675 "Revenue Recognition"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
 
-        field(50102; "RR Id"; Integer)
+        field(73209575; "RR Id"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Caption = 'RR Id';
         }
 
-        field(50100; "Contract ID"; Integer)
+        field(73209576; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             TableRelation = "Tenancy Contract"."Contract ID";
@@ -42,7 +42,7 @@ table 50929 "Revenue Recognition"
             end;
         }
 
-        field(50101; "Tenant Id"; Code[20])
+        field(73209577; "Tenant Id"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Id';
@@ -50,18 +50,18 @@ table 50929 "Revenue Recognition"
             Editable = false; // Make it read-only for the user
 
         }
-        field(50103; "Start Date"; Date)
+        field(73209578; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Start Date';
         }
-        field(50104; "End Date"; Date)
+        field(73209579; "End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'End Date';
         }
 
-        field(50105; "Contract Amount"; Decimal)
+        field(73209580; "Contract Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Amount';

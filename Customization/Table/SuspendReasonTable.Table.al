@@ -1,17 +1,17 @@
-table 50312 SuspendReasonTable
+table 73209695 SuspendReasonTable
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
 
     fields
     {
-        field(50100; ID; Integer)
+        field(73209575; ID; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'ID';
             AutoIncrement = true;
         }
-        field(50101; "Contract ID"; Integer)
+        field(73209576; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
@@ -41,78 +41,78 @@ table 50312 SuspendReasonTable
                 end;
             end;
         }
-        field(50102; TenantID; Code[20])
+        field(73209577; TenantID; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-        field(50103; TenantName; Text[100])
+        field(73209578; TenantName; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Name';
         }
-        field(50104; EmiratesID; Text[50])
+        field(73209579; EmiratesID; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Emirates ID';
         }
-        field(50105; ContactNumber; Text[50])
+        field(73209580; ContactNumber; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Contact Number';
         }
-        field(50106; EmailAddress; Text[100])
+        field(73209581; EmailAddress; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Email Address';
         }
-        field(50107; TradeLicenseNo; Text[50])
+        field(73209582; TradeLicenseNo; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Trade License No.';
         }
-        field(50108; LicensingAuthority; Text[100])
+        field(73209583; LicensingAuthority; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Licensing Authority';
         }
-        field(50109; DateEffective; Date)
+        field(73209584; DateEffective; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Suspension Start Date';
         }
-        field(50110; Reason; Option)
+        field(73209585; Reason; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Reason';
             OptionMembers = " ","Legal Reason","Business Reason";
         }
-        field(50111; Description; Text[250])
+        field(73209586; Description; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Description';
         }
-        field(50112; ReleaseUnit; Boolean)
+        field(73209587; ReleaseUnit; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Release Unit';
         }
-        field(50113; ReleaseDate; Date)
+        field(73209588; ReleaseDate; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Release Date';
         }
-        field(50114; SuspensionEffectiveDate; Date)
+        field(73209589; SuspensionEffectiveDate; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Effective Date of Suspension to Active';
         }
-        field(50115; IssueResolutionDescription; Text[250])
+        field(73209590; IssueResolutionDescription; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Issue Resolution Description';
         }
-        field(50116; "Tenant Contract Status"; Option)
+        field(73209591; "Tenant Contract Status"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Contract Status';
@@ -151,7 +151,7 @@ table 50312 SuspendReasonTable
             end;
 
         }
-        field(50117; "Proposal ID"; Integer)
+        field(73209592; "Proposal ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Proposal ID';
@@ -184,7 +184,7 @@ table 50312 SuspendReasonTable
                 end;
             end;
         }
-        field(50120; "Renewal Proposal ID"; Integer)
+        field(73209593; "Renewal Proposal ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Renewal ID';
@@ -217,7 +217,7 @@ table 50312 SuspendReasonTable
                 end;
             end;
         }
-        field(50118; ReleaseUnits; Option)
+        field(73209594; ReleaseUnits; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Release Units';
@@ -238,13 +238,13 @@ table 50312 SuspendReasonTable
             end;
         }
 
-        field(50119; SuspensionEndDate; Date)
+        field(73209595; SuspensionEndDate; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Suspension End Date';
         }
 
-        field(50121; "Contract Type"; Option)
+        field(73209596; "Contract Type"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Type';

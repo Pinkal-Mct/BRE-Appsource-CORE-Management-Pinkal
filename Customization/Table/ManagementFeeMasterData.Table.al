@@ -1,16 +1,16 @@
-table 50928 "Management Fee MasterData"
+table 73209632 "Management Fee MasterData"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "Vendor ID";
     fields
     {
-        field(50500; "Management Fee Number"; Code[20])
+        field(73209575; "Management Fee Number"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Management Fee Number';
 
         }
-        field(50101; "Vendor ID"; Code[20])
+        field(73209576; "Vendor ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor ID';
@@ -24,7 +24,7 @@ table 50928 "Management Fee MasterData"
             end;
 
         }
-        field(50102; "Vendor Name"; Text[100])
+        field(73209577; "Vendor Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Name';

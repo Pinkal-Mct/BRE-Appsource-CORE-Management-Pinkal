@@ -1,15 +1,15 @@
-table 50961 "Revenue Recognition Item"
+table 73209677 "Revenue Recognition Item"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50100; "RR_No."; Integer)
+        field(73209575; "RR_No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'No.';
             Editable = false;
         }
-        field(50101; "Item Type"; Text[100])
+        field(73209576; "Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Item Type';
@@ -23,7 +23,7 @@ table 50961 "Revenue Recognition Item"
                     "Item Type" := SecondaryItemRec.Description;
             end;
         }
-        field(50103; "Entry No."; Integer)
+        field(73209577; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Entry No.';

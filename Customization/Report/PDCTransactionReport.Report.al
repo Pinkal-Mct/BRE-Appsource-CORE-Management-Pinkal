@@ -1,5 +1,5 @@
 namespace BREPropertyManagementMargi.BREPropertyManagementMargi;
-report 50111 "PDC Transaction Report"
+report 73209576 "PDC Transaction Report"
 {
     ApplicationArea = All;
     Caption = 'PDC Transaction Report';

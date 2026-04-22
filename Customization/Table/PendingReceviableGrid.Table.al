@@ -1,143 +1,143 @@
-table 50947 "Pending Receviable Grid"
+table 73209656 "Pending Receviable Grid"
 {
     DataClassification = ToBeClassified;
     Caption = 'Pending Receviable Grid';
     fields
     {
-        field(50100; RevenueDescription; Text[100])
+        field(73209575; RevenueDescription; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Revenue Description';
         }
-        field(50101; RevisedAmount; Decimal)
+        field(73209576; RevisedAmount; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Revised Amount';
         }
-        field(50102; RevisedVAT; Decimal)
+        field(73209577; RevisedVAT; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Revised VAT';
         }
-        field(50103; RevisedAmountInclVAT; Decimal)
+        field(73209578; RevisedAmountInclVAT; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Revised Amount Incl. VAT';
         }
-        field(50104; ReceiptsAmount; Decimal)
+        field(73209579; ReceiptsAmount; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Receipts Amount';
         }
-        field(50105; ReceiptsVAT; Decimal)
+        field(73209580; ReceiptsVAT; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Receipts VAT';
         }
-        field(50106; ReceiptsAmountInclVAT; Decimal)
+        field(73209581; ReceiptsAmountInclVAT; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Receipts Amount Incl. VAT';
         }
-        field(50107; DifferenceAmount; Decimal)
+        field(73209582; DifferenceAmount; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Difference Amount';
         }
-        field(50108; DifferenceVAT; Decimal)
+        field(73209583; DifferenceVAT; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Difference VAT';
         }
-        field(50109; DifferenceAmountInclVAT; Decimal)
+        field(73209584; DifferenceAmountInclVAT; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Difference Amount Incl. VAT';
         }
-        field(50111; "Contract ID"; Integer)
+        field(73209585; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
             DataClassification = ToBeClassified;
         }
-        field(50112; "Entry No"; Integer)
+        field(73209586; "Entry No"; Integer)
         {
             Caption = 'Entry No';
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50113; "Termination Date"; Date)
+        field(73209587; "Termination Date"; Date)
         {
             Caption = 'Termination Date';
             DataClassification = ToBeClassified;
         }
-        field(50114; "Total Refundable"; Decimal)
+        field(73209588; "Total Refundable"; Decimal)
         {
             Caption = 'Total Refundable';
             DataClassification = ToBeClassified;
         }
-        field(50115; "Total Receivable"; Decimal)
+        field(73209589; "Total Receivable"; Decimal)
         {
             Caption = 'Total Receivable';
             DataClassification = ToBeClassified;
         }
-        field(50116; "Total Revised Amount"; Decimal)
+        field(73209590; "Total Revised Amount"; Decimal)
         {
             Caption = 'Total Revised Amount';
             FieldClass = FlowField;
             CalcFormula = sum("Pending Receviable Grid".RevisedAmount where("Contract ID" = field("Contract ID")));
         }
-        field(50117; "Total Revised VAT"; Decimal)
+        field(73209591; "Total Revised VAT"; Decimal)
         {
             Caption = 'Total Revised VAT';
             FieldClass = FlowField;
             CalcFormula = sum("Pending Receviable Grid".RevisedVAT where("Contract ID" = field("Contract ID")));
         }
-        field(50118; "Total Revised AmountIncl. VAT"; Decimal)
+        field(73209592; "Total Revised AmountIncl. VAT"; Decimal)
         {
             Caption = 'Total Revised AmountIncl. VAT';
             FieldClass = FlowField;
             CalcFormula = sum("Pending Receviable Grid".RevisedAmountInclVAT where("Contract ID" = field("Contract ID")));
         }
-        field(50119; "Total Receipts Amount"; Decimal)
+        field(73209593; "Total Receipts Amount"; Decimal)
         {
             Caption = 'Total Receipts Amount';
             FieldClass = FlowField;
             CalcFormula = sum("Pending Receviable Grid".ReceiptsAmount where("Contract ID" = field("Contract ID")));
         }
-        field(50120; "Total Receipts VAT"; Decimal)
+        field(73209594; "Total Receipts VAT"; Decimal)
         {
             Caption = 'Total Receipts VAT';
             FieldClass = FlowField;
             CalcFormula = sum("Pending Receviable Grid".ReceiptsVAT where("Contract ID" = field("Contract ID")));
         }
-        field(50121; "Total Receipts AmountIncl. VAT"; Decimal)
+        field(73209595; "Total Receipts AmountIncl. VAT"; Decimal)
         {
             Caption = 'Total Receipts AmountIncl. VAT';
             FieldClass = FlowField;
             CalcFormula = sum("Pending Receviable Grid".ReceiptsAmountInclVAT where("Contract ID" = field("Contract ID")));
         }
-        field(50125; "Payment Type"; Text[250])
+        field(73209596; "Payment Type"; Text[250])
         {
             Caption = 'Payment Type';
             DataClassification = ToBeClassified;
         }
-        field(50126; "Tenant ID"; Code[50])
+        field(73209597; "Tenant ID"; Code[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-        field(50127; "Unit Type"; Text[50])
+        field(73209598; "Unit Type"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Type';
         }
-        field(50128; "GeneratedCRMemoSD"; Boolean)
+        field(73209599; "GeneratedCRMemoSD"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Generated CR Memo Security Deposit';
             InitValue = false;
         }
-        field(50129; "CrditNoteID Security Deposit"; Code[50])
+        field(73209600; "CrditNoteID Security Deposit"; Code[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Note ID Security Deposit';

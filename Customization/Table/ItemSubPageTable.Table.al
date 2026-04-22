@@ -1,15 +1,15 @@
-table 50506 ItemSubPageTable
+table 73209627 ItemSubPageTable
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50500; Id; Code[20])
+        field(73209575; Id; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = Item;
         }
-        field(50501; UnitName; Text[20])
+        field(73209576; UnitName; Text[20])
         {
             DataClassification = ToBeClassified;
         }

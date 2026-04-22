@@ -1,71 +1,71 @@
-table 50968 "Request Credit Note Grid"
+table 73209669 "Request Credit Note Grid"
 {
     DataClassification = ToBeClassified;
     Caption = 'Request Credit Note Grid';
     fields
     {
-        field(50958; "Request No."; Code[20])
+        field(73209575; "Request No."; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Request No.';
         }
-        field(50960; "Contract ID"; Integer)
+        field(73209576; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
-        field(50961; "Property Name"; Text[100])
+        field(73209577; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Name';
         }
-        field(50962; "Tenant No."; Code[20])
+        field(73209578; "Tenant No."; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant No.';
         }
-        field(50963; "Customer Name"; Text[100])
+        field(73209579; "Customer Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Customer Name';
         }
-        field(50964; "Payment Series"; Code[20])
+        field(73209580; "Payment Series"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Series';
         }
-        field(50974; "Current Charges Amount"; Decimal)
+        field(73209581; "Current Charges Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Current Rent Amount';
         }
-        field(50972; "Total Reduction"; Decimal)
+        field(73209582; "Total Reduction"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Reduction';
         }
-        field(50965; "Line No."; Integer)
+        field(73209583; "Line No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Line No.';
             AutoIncrement = true;
         }
-        field(50966; "Credit Note No."; Code[20])
+        field(73209584; "Credit Note No."; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Note No.';
         }
-        field(50967; "Total Pay Rent Amount"; Decimal)
+        field(73209585; "Total Pay Rent Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Pay Rent Amount';
         }
-        field(50968; "Property Classification"; Text[50])
+        field(73209586; "Property Classification"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Classification';
         }
-        field(50969; "Credit Memo Generated"; Boolean)
+        field(73209587; "Credit Memo Generated"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Memo Generated';
@@ -86,21 +86,21 @@ table 50968 "Request Credit Note Grid"
                 end;
             end;
         }
-        field(50970; "Secondary Item Type"; Text[50])
+        field(73209588; "Secondary Item Type"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Secondary Item Type';
         }
-        field(50971; Charges; Text[250])
+        field(73209589; Charges; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Charges';
         }
-        field(50973; Invoiced; Boolean)
+        field(73209590; Invoiced; Boolean)
         {
             DataClassification = ToBeClassified;
         }
-        field(50975; "Invoice ID"; Code[50])
+        field(73209591; "Invoice ID"; Code[50])
         {
             DataClassification = ToBeClassified;
         }

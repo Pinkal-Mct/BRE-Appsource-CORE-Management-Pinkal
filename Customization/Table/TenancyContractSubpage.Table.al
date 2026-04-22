@@ -1,14 +1,14 @@
-table 50938 "Tenancy Contract Subpage"
+table 73209703 "Tenancy Contract Subpage"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50100; "ContractID"; Integer)
+        field(73209575; "ContractID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
-        field(50101; "Secondary Item Type"; Text[100])
+        field(73209576; "Secondary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Secondary Item';
@@ -26,7 +26,7 @@ table 50938 "Tenancy Contract Subpage"
                     "VAT %" := 0;
             end;
         }
-        field(50102; "Amount"; Decimal)
+        field(73209577; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
@@ -35,7 +35,7 @@ table 50938 "Tenancy Contract Subpage"
                 CalcVATAndTotal();
             end;
         }
-        field(50103; "VAT %"; Option)
+        field(73209578; "VAT %"; Option)
         {
             OptionMembers = "0%","5%";
             Caption = 'VAT %';
@@ -45,7 +45,7 @@ table 50938 "Tenancy Contract Subpage"
                 CalcVATAndTotal();
             end;
         }
-        field(50104; "VAT Amount"; Decimal)
+        field(73209579; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
@@ -61,7 +61,7 @@ table 50938 "Tenancy Contract Subpage"
                 "VAT Amount" := Amount * (vatPer / 100);
             end;
         }
-        field(50105; "Amount Including VAT"; Decimal)
+        field(73209580; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
@@ -72,62 +72,62 @@ table 50938 "Tenancy Contract Subpage"
                 UpdatedPaymentRecords();
             end;
         }
-        field(50106; "Start Date"; Date)
+        field(73209581; "Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Start Date';
             Editable = false;
         }
-        field(50107; "End Date"; Date)
+        field(73209582; "End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'End Date';
             Editable = false;
         }
-        field(50109; "Generate Payment Schedule"; Text[250])
+        field(73209583; "Generate Payment Schedule"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Generate Payment Schedule';
             InitValue = 'Generate Payment Schedule';
             Editable = false;
         }
-        field(50110; "Entry No."; Integer)
+        field(73209584; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50111; "Payment Type"; Option)
+        field(73209585; "Payment Type"; Option)
         {
             OptionMembers = "","One Time Payment","Installment";
             Caption = 'Payment Type';
         }
-        field(50112; Invoiced; Decimal)
+        field(73209586; Invoiced; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Invoiced';
         }
-        field(50113; "Link"; Integer)
+        field(73209587; "Link"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Revenue Structure Link';
             Editable = false;
         }
-        field(50114; "TenantID"; Code[20])
+        field(73209588; "TenantID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-        field(50115; "ProposalID"; Integer)
+        field(73209589; "ProposalID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Proposal ID';
         }
-        field(50116; "Contract Renewal ID"; Integer)
+        field(73209590; "Contract Renewal ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Renewal ID';
         }
-        field(50117; "Invoiced and Paid"; Decimal)
+        field(73209591; "Invoiced and Paid"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Invoiced and Paid';

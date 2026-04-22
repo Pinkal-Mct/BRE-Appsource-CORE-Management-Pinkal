@@ -1,18 +1,18 @@
-table 50970 "Other Charges UnearnedRevenue"
+table 73209640 "Other Charges UnearnedRevenue"
 {
 
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50100; "No."; Integer)
+        field(73209575; "No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'No.';
             Editable = false;
         }
 
-        field(50101; "Item Type"; Text[100])
+        field(73209576; "Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Item Type';
@@ -27,7 +27,7 @@ table 50970 "Other Charges UnearnedRevenue"
                     "Item Type" := SecondaryItemRec.Description;
             end;
         }
-        field(50103; "Entry No."; Integer)
+        field(73209577; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Entry No.';

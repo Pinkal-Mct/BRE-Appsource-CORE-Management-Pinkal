@@ -1,34 +1,34 @@
-table 50510 "Payment Transaction"
+table 73209651 "Payment Transaction"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = "PT Id";
     fields
     {
-        field(50501; "PT Id"; Code[50])
+        field(73209575; "PT Id"; Code[50])
         {
             DataClassification = ToBeClassified;
 
         }
 
-        field(50502; "Tenant Id"; code[20])
+        field(73209576; "Tenant Id"; code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = Customer."No.";
         }
-        field(50503; "Tenant Name"; Text[100])
+        field(73209577; "Tenant Name"; Text[100])
         {
 
             FieldClass = FlowField;
             CalcFormula = Lookup(Customer.Name WHERE("No." = FIELD("Tenant Id"))); // Displays Customer Name
         }
 
-        field(50504; "Contract Id"; Integer)
+        field(73209578; "Contract Id"; Integer)
         {
 
             TableRelation = "Tenancy Contract";
         }
 
-        field(50505; "Approval Status"; Enum "Approval Status Enum")
+        field(73209579; "Approval Status"; Enum "Approval Status Enum")
         {
             DataClassification = ToBeClassified;
         }

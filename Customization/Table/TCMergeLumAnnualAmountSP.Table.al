@@ -1,14 +1,14 @@
-table 50329 "TC Merge LumAnnualAmount SP"
+table 73209697 "TC Merge LumAnnualAmount SP"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(50101; "ML_Merged Unit ID"; Code[100])
+        field(73209576; "ML_Merged Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
             trigger OnValidate()
@@ -27,94 +27,94 @@ table 50329 "TC Merge LumAnnualAmount SP"
                     Error('No matching Lease Proposal found for the selected Unit ID.');
             end;
         }
-        field(50102; "ML_Unit ID"; Code[20])
+        field(73209577; "ML_Unit ID"; Code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(50103; "ML_Year"; Integer)
+        field(73209578; "ML_Year"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(50104; "ML_Start Date"; Date)
+        field(73209579; "ML_Start Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50105; "ML_End Date"; Date)
+        field(73209580; "ML_End Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50106; "ML_Number of Days"; Integer)
+        field(73209581; "ML_Number of Days"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(50107; "ML_Unit Sq Ft"; Decimal)
+        field(73209582; "ML_Unit Sq Ft"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50108; "ML_Rate per Sq.Ft"; Decimal)
+        field(73209583; "ML_Rate per Sq.Ft"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50109; "ML_Rent Increase %"; Decimal)
+        field(73209584; "ML_Rent Increase %"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50110; "ML_Annual Amount"; Decimal)
+        field(73209585; "ML_Annual Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50111; "ML_Round off"; Decimal)
+        field(73209586; "ML_Round off"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50112; "ML_Final Annual Amount"; Decimal)
+        field(73209587; "ML_Final Annual Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50113; "ML_Per Day Rent"; Decimal)
+        field(73209588; "ML_Per Day Rent"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50114; "Merge Lumpsum Rent1"; Code[100])
+        field(73209589; "Merge Lumpsum Rent1"; Code[100])
         {
             DataClassification = ToBeClassified;
             InitValue = 'Click Here For Get Data.';
             Caption = 'Click Here For Get Data.';
         }
-        field(50115; "ML_Line No."; Integer)
+        field(73209590; "ML_Line No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
 
 
-        field(50116; "TotalFinalAmount"; Decimal)
+        field(73209591; "TotalFinalAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Merge LumAnnualAmount SP"."ML_Final Annual Amount" where("Id" = field(ID)));
 
 
         }
-        field(50117; "TotalAnnualAmount"; Decimal)
+        field(73209592; "TotalAnnualAmount"; Decimal)
         {
 
             FieldClass = FlowField;
             CalcFormula = sum("TC Merge LumAnnualAmount SP"."ML_Annual Amount" where("Id" = field("Id")));
 
         }
-        field(50118; "TotalRoundOff"; Decimal)
+        field(73209593; "TotalRoundOff"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Merge LumAnnualAmount SP"."ML_Round off" where("Id" = field("Id")));
 
         }
 
-        field(50119; "TotalFirstAnnualAmount"; Decimal)
+        field(73209594; "TotalFirstAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Merge LumAnnualAmount SP"."ML_Final Annual Amount" where("Id" = field("Id"), ML_Year = const(1)));
         }
-        field(50121; "Contract Id"; Integer)
+        field(73209595; "Contract Id"; Integer)
         {
             DataClassification = ToBeClassified;
         }

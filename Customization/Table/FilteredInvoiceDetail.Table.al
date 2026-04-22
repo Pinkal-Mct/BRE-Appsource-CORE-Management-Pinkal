@@ -1,40 +1,40 @@
-table 50956 "Filtered Invoice Detail"
+table 73209615 "Filtered Invoice Detail"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'ID';
             Editable = false;
         }
-        field(50101; "Contract ID"; Integer)
+        field(73209576; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
-        field(50102; "Tenant ID"; Code[20])
+        field(73209577; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-        field(50103; "Invoice ID"; Text[100])
+        field(73209578; "Invoice ID"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Invoice ID';
         }
-        field(50104; "Item Name"; Text[100])
+        field(73209579; "Item Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Item Name';
         }
-        field(50105; "Item Amount"; Decimal)
+        field(73209580; "Item Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Item Amount';
         }
-        field(50110; "Entry No."; Integer)
+        field(73209581; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Entry No.';

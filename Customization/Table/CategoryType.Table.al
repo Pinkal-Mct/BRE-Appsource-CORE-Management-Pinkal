@@ -1,4 +1,4 @@
-table 50903 "Category Type"
+table 73209592 "Category Type"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
@@ -7,19 +7,19 @@ table 50903 "Category Type"
     {
 
 
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50101; "Primary Item Type"; Text[100])
+        field(73209576; "Primary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Primary Item';
             TableRelation = "Primary Item"."Primary Item Type";
         }
-        field(50102; "Category Types"; Text[100])
+        field(73209577; "Category Types"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Category';

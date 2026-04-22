@@ -1,102 +1,102 @@
-table 50512 "Security Deposite Ledger"
+table 73209685 "Security Deposite Ledger"
 {
     DataClassification = ToBeClassified;
     Caption = 'Security Deposite Ledger';
 
     fields
     {
-        field(50501; "Ledger ID"; Code[20])
+        field(73209575; "Ledger ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Ledger ID';
             Editable = false;
         }
 
-        field(50502; "Contract ID"; Code[20])
+        field(73209576; "Contract ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
             TableRelation = "Tenancy Contract"."Contract ID";
         }
 
-        field(50503; "Tenant ID"; Code[20])
+        field(73209577; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
             TableRelation = Customer."No.";
         }
 
-        field(50504; "Property ID"; Code[20])
+        field(73209578; "Property ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property ID';
             TableRelation = "Property Registration"."Property ID";
         }
-        field(50505; "Transaction Date"; DateTime)
+        field(73209579; "Transaction Date"; DateTime)
         {
             DataClassification = ToBeClassified;
             Caption = 'Transaction Date';
             Editable = false;
         }
 
-        field(50506; "Transaction Type"; Option)
+        field(73209580; "Transaction Type"; Option)
         {
             // DataClassification = ToBeClassified;
             OptionMembers = " ","Deposit","Deduction","Refund";
             Caption = 'Transaction Type';
         }
-        field(50507; "Initial Deposit Amount"; Decimal)
+        field(73209581; "Initial Deposit Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Initial Deposit Amount';
         }
-        field(50508; "Unpaid Rent Deduction"; Decimal)
+        field(73209582; "Unpaid Rent Deduction"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Unpaid Rent Deduction';
         }
-        field(50509; "Damage Charges Deduction"; Decimal)
+        field(73209583; "Damage Charges Deduction"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Damage Charges Deduction';
         }
-        field(50510; "Penalty Deduction"; Decimal)
+        field(73209584; "Penalty Deduction"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Penalty Deduction';
         }
-        field(50511; "Service Charges Deduction"; Decimal)
+        field(73209585; "Service Charges Deduction"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Service Charges Deduction';
         }
-        field(50512; "Other Deductions"; Decimal)
+        field(73209586; "Other Deductions"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Other Deductions';
         }
-        field(50513; "Total Deductions"; Decimal)
+        field(73209587; "Total Deductions"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Deductions';
         }
-        field(50514; "Refundable Amount"; Decimal)
+        field(73209588; "Refundable Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Refundable Amount';
         }
-        field(50515; "Approval Status"; Enum "Approval Status Enum")
+        field(73209589; "Approval Status"; Enum "Approval Status Enum")
         {
             DataClassification = ToBeClassified;
             Caption = 'Approval Status';
         }
-        field(50516; "Processed By"; Code[20])
+        field(73209590; "Processed By"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Processed By';
             // TableRelation = User;
         }
-        field(50517; "Final Settlement Date"; DateTime)
+        field(73209591; "Final Settlement Date"; DateTime)
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Settlement Date';

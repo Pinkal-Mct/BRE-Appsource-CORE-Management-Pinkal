@@ -1,22 +1,22 @@
-table 50302 "Secondary Classification"
+table 73209683 "Secondary Classification"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50101; "Classification Name"; Text[100])
+        field(73209576; "Classification Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Primary Classification';
             TableRelation = "Primary Classification"."Classification Name";
         }
-        field(50102; "Property Type"; Text[100])
+        field(73209577; "Property Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Type';

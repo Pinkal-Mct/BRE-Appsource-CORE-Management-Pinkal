@@ -1,16 +1,16 @@
-table 50930 "Vendor Category"
+table 73209709 "Vendor Category"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50101; "Vendor Category Type"; Text[100])
+        field(73209576; "Vendor Category Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Category Type';

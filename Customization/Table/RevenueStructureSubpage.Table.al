@@ -1,33 +1,33 @@
-table 50914 "Revenue Structure Subpage"
+table 73209681 "Revenue Structure Subpage"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50100; "Year"; Integer)
+        field(73209575; "Year"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Year';
             Editable = false;
         }
-        field(50101; "Period Start Date"; Date)
+        field(73209576; "Period Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Start Date';
             Editable = false;
         }
-        field(50102; "Period End Date"; Date)
+        field(73209577; "Period End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'End Date';
             Editable = false;
         }
-        field(50103; "Number of Days"; Integer)
+        field(73209578; "Number of Days"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Number of Days';
             Editable = false;
         }
-        field(50104; "Final Annual Amount"; Decimal)
+        field(73209579; "Final Annual Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Annual Amount';
@@ -35,7 +35,7 @@ table 50914 "Revenue Structure Subpage"
             DecimalPlaces = 2 : 2;
 
         }
-        field(50105; "Yearly No. of Installment"; Integer)
+        field(73209580; "Yearly No. of Installment"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Yearly No. of Instalment';
@@ -49,22 +49,22 @@ table 50914 "Revenue Structure Subpage"
             end;
 
         }
-        field(50106; "Entry No."; Integer)
+        field(73209581; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50107; "RS ID"; Integer)
+        field(73209582; "RS ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'RS ID';
         }
-        field(50109; "Tenant Id"; Code[20])
+        field(73209583; "Tenant Id"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-        field(50110; "Total Amount"; Decimal)
+        field(73209584; "Total Amount"; Decimal)
         {
             Caption = 'Total Amount';
             Editable = false;
@@ -73,42 +73,42 @@ table 50914 "Revenue Structure Subpage"
             DecimalPlaces = 2 : 2;
 
         }
-        field(50111; "Link"; Text[50])
+        field(73209585; "Link"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Update Data';
             InitValue = 'Update Data';
         }
-        field(50113; "VAT Amount"; Decimal)
+        field(73209586; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
             DecimalPlaces = 2 : 2;
 
         }
-        field(50114; "Amount Including VAT"; Decimal)
+        field(73209587; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
             DecimalPlaces = 2 : 2;
         }
-        field(50115; "Secondary Item Type"; Text[100])
+        field(73209588; "Secondary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Secondary Item Type';
         }
-        field(50116; "VAT %"; Option)
+        field(73209589; "VAT %"; Option)
         {
             OptionMembers = "0","5";
             Caption = 'VAT %';
             Editable = false;
         }
-        field(50117; "Contract ID"; Integer)
+        field(73209590; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
-        field(50118; "Payment Frequency"; Option)
+        field(73209591; "Payment Frequency"; Option)
         {
             OptionMembers = " ",Monthly,Quarterly,"Half-Yearly",Yearly;
             DataClassification = ToBeClassified;

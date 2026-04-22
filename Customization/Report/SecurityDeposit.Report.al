@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 using Microsoft.Sales.History;
-report 50109 "Security Deposit"
+report 73209577 "Security Deposit"
 {
     ApplicationArea = All;
     Caption = 'Security Deposit';

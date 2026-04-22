@@ -1,16 +1,16 @@
-table 50953 "Calculation Type"
+table 73209590 "Calculation Type"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50101; "Calculation Type"; Text[100])
+        field(73209576; "Calculation Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Calculation Type';

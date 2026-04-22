@@ -1,22 +1,22 @@
-table 53768 "Base Amount Data Header"
+table 73209584 "Base Amount Data Header"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(53700; "Header No."; Integer)
+        field(73209575; "Header No."; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(53701; "Line No."; Integer)
+        field(73209576; "Line No."; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(53702; "Base Amount Type"; Text[20])
+        field(73209577; "Base Amount Type"; Text[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(53703; "No."; Integer)
+        field(73209578; "No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;

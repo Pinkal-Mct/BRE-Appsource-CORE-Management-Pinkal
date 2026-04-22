@@ -1,62 +1,62 @@
-table 50922 "FinalSettlement"
+table 73209622 "FinalSettlement"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
 
-        field(50100; "FC ID"; Integer)
+        field(73209575; "FC ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Receivable FC ID';
         }
-        field(50101; "Contract ID"; Integer)
+        field(73209576; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Receivable Contract ID';
         }
 
-        field(50102; "Receivable from the Tenant"; Decimal)
+        field(73209577; "Receivable from the Tenant"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Receivable from the Tenant';
         }
 
-        field(50103; "Payment Processed"; Decimal)
+        field(73209578; "Payment Processed"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Processed';
         }
-        field(50104; "Balance Receivable"; Decimal)
+        field(73209579; "Balance Receivable"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Balance Receivable';
         }
 
-        field(50105; "PaymentStatus"; Option)
+        field(73209580; "PaymentStatus"; Option)
         {
             OptionMembers = "Pending","Received";
             Caption = 'Payment Status';
         }
 
 
-        field(50106; "Receivable Total Amount"; Decimal)
+        field(73209581; "Receivable Total Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Amount';
         }
-        field(50107; "Receivable Due Date"; Date)
+        field(73209582; "Receivable Due Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Due Date';
         }
-        field(50108; "Receivable Payment mode"; Text[300])
+        field(73209583; "Receivable Payment mode"; Text[300])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment mode';
             TableRelation = "Payment Type"."Payment Method";
         }
-        field(50109; "Receivable Payment Status"; Enum "Payment Status")
+        field(73209584; "Receivable Payment Status"; Enum "Payment Status")
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Status';
@@ -127,13 +127,13 @@ table 50922 "FinalSettlement"
             end;
         }
 
-        field(50110; "Receivable Cheque No."; Text[300])
+        field(73209585; "Receivable Cheque No."; Text[300])
         {
             DataClassification = ToBeClassified;
             Caption = 'Cheque No.';
         }
 
-        field(50111; "Deposit Bank"; Text[300])
+        field(73209586; "Deposit Bank"; Text[300])
         {
             DataClassification = ToBeClassified;
             Caption = 'Deposit Bank';
@@ -150,55 +150,55 @@ table 50922 "FinalSettlement"
             end;
         }
 
-        field(50112; "Deposit Status"; Option)
+        field(73209587; "Deposit Status"; Option)
         {
             Caption = 'Deposit Status';
             OptionMembers = "-","N","Y";
         }
 
-        field(50113; "Payment Receipt"; Text[250])
+        field(73209588; "Payment Receipt"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Receipt';
             Editable = false;
 
         }
-        field(50114; "Payment Receipt document URL"; Text[250])
+        field(73209589; "Payment Receipt document URL"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Receipt Document URL';
         }
-        field(50117; "Tenant ID"; Code[20])
+        field(73209590; "Tenant ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Receivable Tenant ID';
         }
-        field(50120; "Tenant Email"; Text[50])
+        field(73209591; "Tenant Email"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Email';
         }
-        field(50122; "Tenant Name"; Text[100])
+        field(73209592; "Tenant Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant Name';
         }
-        field(50118; "Invoiced"; Boolean)
+        field(73209593; "Invoiced"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Invoiced';
         }
-        field(50119; "Invoice ID"; Code[100])
+        field(73209594; "Invoice ID"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Invoice ID';
         }
-        field(50121; "View Reciept document URL"; Text[250])
+        field(73209595; "View Reciept document URL"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Invoice ID';
         }
-        field(50123; "receivablePaymentStatuss"; Text[50])
+        field(73209596; "receivablePaymentStatuss"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'receivablePaymentStatus';

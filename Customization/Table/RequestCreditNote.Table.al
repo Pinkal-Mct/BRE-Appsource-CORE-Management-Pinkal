@@ -1,102 +1,102 @@
-table 50967 "Request Credit Note"
+table 73209667 "Request Credit Note"
 {
     DataClassification = ToBeClassified;
     Caption = 'Request Credit Note';
     fields
     {
-        field(50958; "Request No."; Code[20])
+        field(73209575; "Request No."; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Request No.';
         }
-        field(50960; "Contract ID"; Integer)
+        field(73209576; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
-        field(50961; "Property Name"; Text[100])
+        field(73209577; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Name';
         }
-        field(50962; "Tenant No."; Code[20])
+        field(73209578; "Tenant No."; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant No.';
         }
-        field(50963; "Customer Name"; Text[100])
+        field(73209579; "Customer Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Customer Name';
         }
-        field(50964; "Request Date"; Date)
+        field(73209580; "Request Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Request Date';
         }
-        field(50965; "Credit Note Start Month"; Date)
+        field(73209581; "Credit Note Start Month"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Note Start Month';
         }
-        field(50966; "Credit Note End Month"; Date)
+        field(73209582; "Credit Note End Month"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Note End Month';
         }
-        field(50967; "Payment Frequency"; Text[50])
+        field(73209583; "Payment Frequency"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Frequency';
         }
-        field(50968; "Monthly Reduction"; Decimal)
+        field(73209584; "Monthly Reduction"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Monthly Reduction';
         }
-        field(50969; "Reason"; Text[1000])
+        field(73209585; "Reason"; Text[1000])
         {
             DataClassification = ToBeClassified;
             Caption = 'Reason';
         }
-        field(50970; "Status"; Option)
+        field(73209586; "Status"; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = " ",Pending,Approved,Rejected;
             Caption = 'Status';
         }
-        field(50971; "Request Source"; Option)
+        field(73209587; "Request Source"; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = " ",Email,Phone,WalkIn,Other;
             Caption = 'Request Source';
         }
-        field(50972; "Total Reduction"; Decimal)
+        field(73209588; "Total Reduction"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Total Reduction';
         }
-        field(50973; "Payment Series"; Code[20])
+        field(73209589; "Payment Series"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Series';
         }
-        field(50974; "Current Rent Amount"; Decimal)
+        field(73209590; "Current Rent Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Current Rent Amount';
         }
-        field(50975; "Reason for Rejection"; Text[1000])
+        field(73209591; "Reason for Rejection"; Text[1000])
         {
             DataClassification = ToBeClassified;
             Caption = 'Reason for Rejection';
         }
-        field(50976; "Property Classification"; Text[50])
+        field(73209592; "Property Classification"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Classification';
         }
-        field(50977; "Adjust with Invoice"; Option)
+        field(73209593; "Adjust with Invoice"; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = Pending,Adjusted;

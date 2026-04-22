@@ -1,14 +1,14 @@
-table 50328 "TC Merge DifferentSq SubPage"
+table 73209696 "TC Merge DifferentSq SubPage"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(50101; "MD_Merged Unit ID"; Code[100])
+        field(73209576; "MD_Merged Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
 
@@ -28,80 +28,80 @@ table 50328 "TC Merge DifferentSq SubPage"
                     Error('No matching Lease Proposal found for the selected Unit ID.');
             end;
         }
-        field(50102; "MD_Unit ID"; Code[100])
+        field(73209577; "MD_Unit ID"; Code[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50103; "MD_Year"; Integer)
+        field(73209578; "MD_Year"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(50104; "MD_Start Date"; Date)
+        field(73209579; "MD_Start Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50105; "MD_End Date"; Date)
+        field(73209580; "MD_End Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(50106; "MD_Number of Days"; Integer)
+        field(73209581; "MD_Number of Days"; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(50107; "MD_Unit Sq Ft"; Decimal)
+        field(73209582; "MD_Unit Sq Ft"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50108; "MD_Rate per Sq.Ft"; Decimal)
+        field(73209583; "MD_Rate per Sq.Ft"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50109; "MD_Rent Increase %"; Decimal)
+        field(73209584; "MD_Rent Increase %"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50110; "MD_Annual Amount"; Decimal)
+        field(73209585; "MD_Annual Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50111; "MD_Round off"; Decimal)
+        field(73209586; "MD_Round off"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50112; "MD_Final Annual Amount"; Decimal)
+        field(73209587; "MD_Final Annual Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50113; "MD_Per Day Rent"; Decimal)
+        field(73209588; "MD_Per Day Rent"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50114; "Merge DifferentSqure Rent1"; Code[100])
+        field(73209589; "Merge DifferentSqure Rent1"; Code[100])
         {
             DataClassification = ToBeClassified;
             InitValue = 'Click Here For Get Data.';
             Caption = 'Click Here For Get Data.';
         }
 
-        field(50115; "MD_Line No."; Integer)
+        field(73209590; "MD_Line No."; Integer)
         {
             DataClassification = ToBeClassified;
         }
 
 
-        field(50117; "TotalFinalAmount"; Decimal)
+        field(73209591; "TotalFinalAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Merge DifferentSq SubPage"."MD_Final Annual Amount" where("Id" = field("Id")));
 
         }
-        field(50118; "TotalAnnualAmount"; Decimal)
+        field(73209592; "TotalAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Merge DifferentSq SubPage"."MD_Annual Amount" where("Id" = field("Id")));
 
         }
-        field(50119; "TotalRoundOff"; Decimal)
+        field(73209593; "TotalRoundOff"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Merge DifferentSq SubPage"."MD_Round off" where("Id" = field("Id")));
@@ -109,13 +109,13 @@ table 50328 "TC Merge DifferentSq SubPage"
         }
 
 
-        field(50120; "TotalFirstAnnualAmount"; Decimal)
+        field(73209594; "TotalFirstAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum("TC Merge DifferentSq SubPage"."MD_Final Annual Amount" where("Id" = field(ID), MD_Year = const(1)));
 
         }
-        field(50121; "Contract Id"; Integer)
+        field(73209595; "Contract Id"; Integer)
         {
             DataClassification = ToBeClassified;
         }

@@ -1,22 +1,22 @@
-table 50104 "Community"
+table 73209597 "Community"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50101; "Sl No."; Integer)
+        field(73209576; "Sl No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Sl No.';
             Editable = false;
         }
-        field(50102; "Emirate Name"; Text[50])
+        field(73209577; "Emirate Name"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = '"Emirate Name"';
@@ -35,12 +35,12 @@ table 50104 "Community"
                     Error('Invalid Emirate Name: %1', "Emirate Name");
             end;
         }
-        field(50103; "Community Code"; Code[30])
+        field(73209578; "Community Code"; Code[30])
         {
             DataClassification = ToBeClassified;
             Caption = 'Community Code';
         }
-        field(50104; "Community Name"; Text[100])
+        field(73209579; "Community Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Community Name';

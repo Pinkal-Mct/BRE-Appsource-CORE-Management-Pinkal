@@ -1,16 +1,16 @@
-table 50111 "Adjustment Security Deposit"
+table 73209577 "Adjustment Security Deposit"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50101; "Contract ID"; Integer)
+        field(73209576; "Contract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
@@ -33,32 +33,32 @@ table 50111 "Adjustment Security Deposit"
                 end;
             end;
         }
-        field(50102; "Security Deposit"; Decimal)
+        field(73209577; "Security Deposit"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Security Deposit';
             Editable = false;
         }
-        field(50103; "Contract Start Date"; Date)
+        field(73209578; "Contract Start Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Start Date';
             Editable = false;
         }
-        field(50104; "Contract End Date"; Date)
+        field(73209579; "Contract End Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract End Date';
             Editable = false;
         }
-        field(50105; "Status"; Option)
+        field(73209580; "Status"; Option)
         {
             DataClassification = ToBeClassified;
             OptionCaption = 'Pending,Approved';
             OptionMembers = Pending,Approved;
             Editable = false;
         }
-        field(50106; "Security Amount Status"; Option)
+        field(73209581; "Security Amount Status"; Option)
         {
             DataClassification = ToBeClassified;
             OptionCaption = 'Termination Charges';
@@ -92,32 +92,32 @@ table 50111 "Adjustment Security Deposit"
                 end;
             end;
         }
-        field(50107; "Payment Series"; Text[250])
+        field(73209582; "Payment Series"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Payment Series';
         }
-        field(50108; "Amount"; Decimal)
+        field(73209583; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
         }
-        field(50109; "VAT Amount"; Decimal)
+        field(73209584; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
         }
-        field(50110; "Amount Including VAT"; Decimal)
+        field(73209585; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount Including VAT';
         }
-        field(50111; "Due Date"; Date)
+        field(73209586; "Due Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Due Date';
         }
-        field(50112; "Main Security Deposit"; Decimal)
+        field(73209587; "Main Security Deposit"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Main Security Deposit';

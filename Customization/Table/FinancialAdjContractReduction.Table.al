@@ -1,19 +1,19 @@
-table 53765 "FinancialAdjContractReduction"
+table 73209624 "FinancialAdjContractReduction"
 {
     DataClassification = ToBeClassified;
     fields
     {
 
-        field(53700; "Entry No."; Integer)
+        field(73209575; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(53701; "Contract No."; Integer)
+        field(73209576; "Contract No."; Integer)
         {
             DataClassification = ToBeClassified;
         }
-        field(53702; "Revenue Description"; Text[100])
+        field(73209577; "Revenue Description"; Text[100])
         {
             DataClassification = ToBeClassified;
             TableRelation = Item WHERE("Item type template" = const("Item Type Template Enum"::"Secondary Item"));
@@ -33,7 +33,7 @@ table 53765 "FinancialAdjContractReduction"
             end;
 
         }
-        field(53703; Amount; Decimal)
+        field(73209578; Amount; Decimal)
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 0 : 2;
@@ -42,7 +42,7 @@ table 53765 "FinancialAdjContractReduction"
                 CalcVATAndTotal();
             end;
         }
-        field(53704; "VAT %"; Option)
+        field(73209579; "VAT %"; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = "0%","5%";
@@ -53,33 +53,33 @@ table 53765 "FinancialAdjContractReduction"
                 CalcVATAndTotal();
             end;
         }
-        field(53705; "Amount Incl. VAT"; Decimal)
+        field(73209580; "Amount Incl. VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
             DecimalPlaces = 0 : 2;
         }
-        field(53706; "Description"; Text[100])
+        field(73209581; "Description"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(53707; Total; Decimal)
+        field(73209582; Total; Decimal)
         {
             FieldClass = FlowField;
             DecimalPlaces = 0 : 2;
             CalcFormula = sum(FinancialAdjContractReduction."Amount" where("Contract No." = field("Contract No.")));
         }
-        field(53708; "Total VAT"; Decimal)
+        field(73209583; "Total VAT"; Decimal)
         {
             FieldClass = FlowField;
             CalcFormula = sum(FinancialAdjContractReduction."VAT Amount" where("Contract No." = field("Contract No.")));
         }
-        field(53709; "Total Amount Incl.VAT"; Decimal)
+        field(73209584; "Total Amount Incl.VAT"; Decimal)
         {
             FieldClass = FlowField;
             DecimalPlaces = 0 : 2;
             CalcFormula = sum(FinancialAdjContractReduction."Amount Incl. VAT" where("Contract No." = field("Contract No.")));
         }
-        field(53710; "VAT Amount"; Decimal)
+        field(73209585; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'VAT Amount';
@@ -97,7 +97,7 @@ table 53765 "FinancialAdjContractReduction"
                 "VAT Amount" := Amount * (vatPer / 100);
             end;
         }
-        field(53711; "Credit Note ID"; Code[50])
+        field(73209586; "Credit Note ID"; Code[50])
         {
             DataClassification = ToBeClassified;
         }

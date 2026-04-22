@@ -1,22 +1,22 @@
-table 50103 "Emirate"
+table 73209614 "Emirate"
 {
     DataClassification = ToBeClassified;
     DataCaptionFields = ID;
     fields
     {
-        field(50100; "ID"; Integer)
+        field(73209575; "ID"; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
             Editable = false;
         }
-        field(50101; "Sl No."; Integer)
+        field(73209576; "Sl No."; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Sl No.';
             Editable = false;
         }
-        field(50102; "Country Code"; Code[30])
+        field(73209577; "Country Code"; Code[30])
         {
             DataClassification = ToBeClassified;
             Caption = 'Country Code';
@@ -30,7 +30,7 @@ table 50103 "Emirate"
                     "Country Code" := country."Country Code";
             end;
         }
-        field(50103; "Emirate Name"; Enum Emirates)
+        field(73209578; "Emirate Name"; Enum Emirates)
         {
             DataClassification = ToBeClassified;
             Caption = 'Emirate Name';

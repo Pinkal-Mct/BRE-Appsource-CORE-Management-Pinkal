@@ -1,104 +1,104 @@
-table 50943 "Rent Calculation Subpage"
+table 73209665 "Rent Calculation Subpage"
 {
     DataClassification = ToBeClassified;
     fields
     {
-        field(50100; "Year"; Integer)
+        field(73209575; "Year"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Year';
             Editable = false;
         }
-        field(50101; "Period Start Date"; Date)
+        field(73209576; "Period Start Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'Start Date';
             Editable = false;
         }
-        field(50102; "Period End Date"; Date)
+        field(73209577; "Period End Date"; Date)
         {
             DataClassification = ToBeClassified;
             Caption = 'End Date';
             Editable = false;
         }
-        field(50103; "Number of Days"; Integer)
+        field(73209578; "Number of Days"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Number of Days';
             Editable = false;
         }
-        field(50104; "Final Annual Amount"; Decimal)
+        field(73209579; "Final Annual Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Final Annual Amount';
         }
-        field(50105; "Yearly No. of Installment"; Integer)
+        field(73209580; "Yearly No. of Installment"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Yearly No. of Instalment';
         }
-        field(50106; "Entry No."; Integer)
+        field(73209581; "Entry No."; Integer)
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
         }
-        field(50107; "RC ID"; Integer)
+        field(73209582; "RC ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'RC ID';
         }
-        field(50109; "Tenant Id"; Code[20])
+        field(73209583; "Tenant Id"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Tenant ID';
         }
-        field(50110; "Total Amount"; Decimal)
+        field(73209584; "Total Amount"; Decimal)
         {
             Caption = 'Total Amount';
             Editable = false;
             FieldClass = FlowField;
             CalcFormula = sum("Rent Calculation Subpage"."Final Annual Amount" where("Contract ID" = field("Contract Id"), "RC ID" = field("RC ID")));
         }
-        field(50111; "Link"; Text[50])
+        field(73209585; "Link"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Update Data';
             InitValue = 'Update Data';
         }
-        field(50113; "VAT Amount"; Decimal)
+        field(73209586; "VAT Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50114; "Amount Including VAT"; Decimal)
+        field(73209587; "Amount Including VAT"; Decimal)
         {
             DataClassification = ToBeClassified;
         }
-        field(50115; "Secondary Item Type"; Text[100])
+        field(73209588; "Secondary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50116; "VAT %"; Option)
+        field(73209589; "VAT %"; Option)
         {
             OptionMembers = "0","5";
             Caption = 'VAT %';
             Editable = false;
         }
-        field(50117; "Contract ID"; Integer)
+        field(73209590; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
-        field(50118; "Per Day Rent"; Decimal)
+        field(73209591; "Per Day Rent"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Per Day Rent';
         }
-        field(50119; "Propety Classification"; Text[100])
+        field(73209592; "Propety Classification"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Proeprty Classifcation';
         }
-        field(50120; "Unit ID"; Code[20])
+        field(73209593; "Unit ID"; Code[20])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit ID';
