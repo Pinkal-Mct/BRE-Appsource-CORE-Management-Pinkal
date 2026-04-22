@@ -1,4 +1,4 @@
-pageextension 50101 "Item Card Ext" extends "Item Card"
+pageextension 73209575 "Item Card Ext" extends "Item Card"
 {
     Caption = 'Unit Card';
 

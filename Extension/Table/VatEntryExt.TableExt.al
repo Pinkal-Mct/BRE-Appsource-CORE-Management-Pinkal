@@ -1,8 +1,8 @@
-tableextension 50514 "VAT Entry Ext." extends "VAT Entry"
+tableextension 73209591 "VAT Entry Ext." extends "VAT Entry"
 {
     fields
     {
-        field(50000; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
             DataClassification = CustomerContent;

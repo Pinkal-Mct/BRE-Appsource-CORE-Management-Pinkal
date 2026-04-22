@@ -1,19 +1,19 @@
-tableextension 50509 "Gen. Journal Line Ext." extends "Gen. Journal Line"
+tableextension 73209579 "Gen. Journal Line Ext." extends "Gen. Journal Line"
 
 {
     fields
     {
-        field(50000; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
             DataClassification = CustomerContent;
         }
-        field(50001; "Item Description"; Enum "Deposit Type")
+        field(73209576; "Item Description"; Enum "Deposit Type")
         {
             Caption = 'Item Description';
             DataClassification = CustomerContent;
         }
-        field(50002; "Transaction Type"; Option)
+        field(73209577; "Transaction Type"; Option)
         {
             Caption = 'Transaction Type';
             DataClassification = CustomerContent;

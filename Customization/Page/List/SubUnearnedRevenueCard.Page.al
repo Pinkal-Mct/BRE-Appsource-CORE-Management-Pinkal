@@ -150,7 +150,7 @@ page 73209663 "Sub Unearned Revenue Card"
                 var
                     createExcelReport: Codeunit "Create Excel Report";
                 begin
-                    createExcelReport.GenerateExcelReportForAnyTable(50117, 50119, Rec."Header No.");
+                    createExcelReport.GenerateExcelReportForAnyTable(73209694, 73209576, Rec."Header No.");
                 end;
             }
         }

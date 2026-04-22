@@ -1,8 +1,8 @@
-tableextension 50512 "Value Entry Ext." extends "Value Entry"
+tableextension 73209590 "Value Entry Ext." extends "Value Entry"
 {
     fields
     {
-        field(50000; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
             DataClassification = CustomerContent;

@@ -1,12 +1,12 @@
-tableextension 50503 "Sales Line Ext" extends "Sales Line"
+tableextension 73209589 "Sales Line Ext" extends "Sales Line"
 {
     fields
     {
-        field(50101; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
         }
-        field(50102; "FC ID"; Integer)
+        field(73209576; "FC ID"; Integer)
         {
             Caption = 'FC ID';
             DataClassification = ToBeClassified;

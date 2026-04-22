@@ -1,4 +1,4 @@
-pageextension 51252 "Item Templ. Card Ext" extends "Item Templ. Card"
+pageextension 73209576 "Item Templ. Card Ext" extends "Item Templ. Card"
 {
     layout
     {

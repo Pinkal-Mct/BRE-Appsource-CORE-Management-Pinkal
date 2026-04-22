@@ -1,9 +1,9 @@
-tableextension 50511 "Cust. Ledger Entry Ext." extends "Cust. Ledger Entry"
+tableextension 73209576 "Cust. Ledger Entry Ext." extends "Cust. Ledger Entry"
 
 {
     fields
     {
-        field(50000; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
             DataClassification = CustomerContent;

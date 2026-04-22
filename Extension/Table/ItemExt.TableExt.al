@@ -1,16 +1,16 @@
-tableextension 50102 "Item Ext" extends Item
+tableextension 73209581 "Item Ext" extends Item
 {
     Caption = 'Unit';
     DataCaptionFields = "No.";
 
     fields
     {
-        field(50100; "UnitID"; code[100])
+        field(73209575; "UnitID"; code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'UnitID';
         }
-        field(50101; "Property ID"; Code[20])
+        field(73209576; "Property ID"; Code[20])
         {
             Caption = 'Property ID';
             DataClassification = ToBeClassified;
@@ -35,14 +35,14 @@ tableextension 50102 "Item Ext" extends Item
                 end;
             end;
         }
-        field(50118; "Property Name"; Text[100])
+        field(73209577; "Property Name"; Text[100])
         {
             Caption = 'Property Name';
             DataClassification = ToBeClassified;
             ValidateTableRelation = false;
             TableRelation = "Property Registration"."Property Name";
         }
-        field(50102; "Unit Number"; Text[50])
+        field(73209578; "Unit Number"; Text[50])
         {
             Caption = 'Actual Unit Number';
             DataClassification = ToBeClassified;
@@ -60,19 +60,19 @@ tableextension 50102 "Item Ext" extends Item
                     Error('Unit Number %1 already exists for Property %2.', "Unit Number", "Property ID");
             end;
         }
-        field(50103; "Floor Number"; Integer)
+        field(73209579; "Floor Number"; Integer)
         {
             Caption = 'Floor Number';
             DataClassification = ToBeClassified;
         }
-        field(50104; "Usage Type"; Text[100])
+        field(73209580; "Usage Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Usage Type';
             TableRelation = "Primary Classification"."Classification Name";
             NotBlank = true;
         }
-        field(50105; "Unit Type"; Text[100])
+        field(73209581; "Unit Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Type';
@@ -88,7 +88,7 @@ tableextension 50102 "Item Ext" extends Item
                     Rec."Unit Type" := secondaryClassification."Property Type";
             end;
         }
-        field(50108; "Unit Status"; Option)
+        field(73209582; "Unit Status"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Status';
@@ -96,64 +96,64 @@ tableextension 50102 "Item Ext" extends Item
             OptionCaption = ' ,Free,Selected,Occupied';
             Editable = true;
         }
-        field(50123; "Selected"; Boolean)
+        field(73209583; "Selected"; Boolean)
         {
             Caption = 'Selected';
             DataClassification = ToBeClassified;
             Editable = true;
         }
-        field(50124; "MergeSplitOption"; Option)
+        field(73209584; "MergeSplitOption"; Option)
         {
             Caption = 'Unit Classification';
             OptionMembers = "Single","Merge";
             DataClassification = ToBeClassified;
         }
-        field(50110; "Unit Name"; Code[100])
+        field(73209585; "Unit Name"; Code[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Name';
         }
-        field(50111; "Floor plans"; Text[250])
+        field(73209586; "Floor plans"; Text[250])
         {
             Caption = 'Floor plans';
             DataClassification = ToBeClassified;
         }
-        field(50112; "Inspection certificates"; Text[250])
+        field(73209587; "Inspection certificates"; Text[250])
         {
             Caption = 'Inspection certificates';
             DataClassification = ToBeClassified;
         }
-        field(50122; "Other Documents"; Text[250])
+        field(73209588; "Other Documents"; Text[250])
         {
             Caption = 'Other Documents';
             DataClassification = ToBeClassified;
         }
-        field(50113; "GTIN_"; Code[100])
+        field(73209589; "GTIN_"; Code[100])
         {
             Caption = 'GTIN';
             DataClassification = ToBeClassified;
         }
-        field(50114; "Country"; Text[100])
+        field(73209590; "Country"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Country';
         }
-        field(50115; "Emirate Name"; Text[50])
+        field(73209591; "Emirate Name"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Emirate';
         }
-        field(50116; "Community"; Text[100])
+        field(73209592; "Community"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Community';
         }
-        field(50117; "Unit Address"; Text[250])
+        field(73209593; "Unit Address"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Address';
         }
-        field(50106; "Market Rate per Sq. Ft."; Decimal)
+        field(73209594; "Market Rate per Sq. Ft."; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Market Rate per Sq. Ft.';
@@ -162,7 +162,7 @@ tableextension 50102 "Item Ext" extends Item
                 CalculateAmount();
             end;
         }
-        field(50119; "Unit Size"; Decimal)
+        field(73209595; "Unit Size"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Size (sq. ft./meters)';
@@ -171,50 +171,50 @@ tableextension 50102 "Item Ext" extends Item
                 CalculateAmount();
             end;
         }
-        field(50120; "Amount"; Decimal)
+        field(73209596; "Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Amount';
             Editable = false;
         }
-        field(50121; "FixedNumber"; Code[100])
+        field(73209597; "FixedNumber"; Code[100])
         {
             DataClassification = ToBeClassified;
         }
-        field(50125; "Merged Unit ID"; Integer)
+        field(73209598; "Merged Unit ID"; Integer)
         {
             Caption = 'Merged Unit ID';
             DataClassification = ToBeClassified;
         }
-        field(50126; "Primary Classification Type"; Text[100])
+        field(73209599; "Primary Classification Type"; Text[100])
         {
             Caption = 'Primary Classification Type';
             DataClassification = ToBeClassified;
             TableRelation = "Primary Classification"."Classification Name";
         }
-        field(50140; "Item Type"; Enum "Module Enum")
+        field(73209600; "Item Type"; Enum "Module Enum")
         {
             Caption = 'Item Type';
             DataClassification = ToBeClassified;
         }
-        field(50142; "Item Template"; Enum "Item Template Enum")
+        field(73209601; "Item Template"; Enum "Item Template Enum")
         {
             Caption = 'Item Template';
             DataClassification = ToBeClassified;
         }
-        field(50144; "Item type template"; Enum "Item Type Template Enum")
+        field(73209602; "Item type template"; Enum "Item Type Template Enum")
         {
             Caption = 'Item type template';
             DataClassification = ToBeClassified;
         }
-        field(50145; "Primary Item Type"; Text[100])
+        field(73209603; "Primary Item Type"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Primary Item';
             TableRelation = "Primary Item"."Primary Item Type";
             Editable = false;
         }
-        field(50146; "Category Types"; Text[100])
+        field(73209604; "Category Types"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Category';
@@ -229,7 +229,7 @@ tableextension 50102 "Item Ext" extends Item
                 end;
             end;
         }
-        field(50147; "VAT Type"; Option)
+        field(73209605; "VAT Type"; Option)
         {
             Caption = 'VAT Type';
             OptionMembers = "Zero-0%","Standard-5%";
@@ -245,18 +245,18 @@ tableextension 50102 "Item Ext" extends Item
                 end;
             end;
         }
-        field(50148; "VAT %"; Option)
+        field(73209606; "VAT %"; Option)
         {
             OptionMembers = "0","5";
             Caption = 'VAT %';
             Editable = false;
         }
-        field(50149; "Charges Status"; Option)
+        field(73209607; "Charges Status"; Option)
         {
             OptionMembers = " ","Regular Charges","Additional Charges";
             Caption = 'Charges Status';
         }
-        field(50150; "Inventory Unit Status"; Option)
+        field(73209608; "Inventory Unit Status"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Status';

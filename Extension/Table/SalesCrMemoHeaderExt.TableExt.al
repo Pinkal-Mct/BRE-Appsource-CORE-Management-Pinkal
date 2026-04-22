@@ -1,72 +1,72 @@
-tableextension 50506 "Sales Cr. Memo Header Ext" extends "Sales Cr.Memo Header"
+tableextension 73209585 "Sales Cr. Memo Header Ext" extends "Sales Cr.Memo Header"
 {
     fields
     {
-        field(50101; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract ID';
         }
 
-        field(50102; "Property Name"; Text[100])
+        field(73209576; "Property Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Name';
 
         }
-        field(50103; "Unit Name"; Text[100])
+        field(73209577; "Unit Name"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Unit Name';
         }
-        field(50104; "Contract Tenure"; Text[50])
+        field(73209578; "Contract Tenure"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Tenure';
         }
 
-        field(50109; "Contract Period"; Text[100])
+        field(73209579; "Contract Period"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Period';
         }
-        field(50111; "View Invoice"; Text[250])
+        field(73209580; "View Invoice"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'View Invoice';
         }
-        field(50115; "Property Classification"; Text[40])
+        field(73209581; "Property Classification"; Text[40])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Classification';
         }
-        field(50116; "Approval Status for CreditNote"; Option)
+        field(73209582; "Approval Status for CreditNote"; Option)
         {
             DataClassification = ToBeClassified;
             OptionMembers = " ",Approved,Rejected;
             Caption = 'Approval Status for CreditNote';
         }
-        field(50117; "Rejection Reason CreditNote"; Text[1000])
+        field(73209583; "Rejection Reason CreditNote"; Text[1000])
         {
             DataClassification = ToBeClassified;
             Caption = 'Rejection Reason CreditNote';
         }
-        field(50118; "Credit Memo Document"; Text[250])
+        field(73209584; "Credit Memo Document"; Text[250])
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Memo Document';
         }
-        field(50119; "Credit Memo URL"; Text[1000])
+        field(73209585; "Credit Memo URL"; Text[1000])
         {
             DataClassification = ToBeClassified;
             Caption = 'Credit Memo No';
         }
-        field(50120; "Contract Amount"; Decimal)
+        field(73209586; "Contract Amount"; Decimal)
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Amount';
         }
-        field(50121; "Terminated Credit Note"; Boolean)
+        field(73209587; "Terminated Credit Note"; Boolean)
         {
             DataClassification = ToBeClassified;
             Caption = 'Terminated Credit Note';

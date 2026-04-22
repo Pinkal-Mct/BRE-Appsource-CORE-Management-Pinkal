@@ -1,8 +1,8 @@
-tableextension 50301 "Vendor Ext" extends Vendor
+tableextension 73209592 "Vendor Ext" extends Vendor
 {
     fields
     {
-        field(50114; "Country"; Text[100])
+        field(73209575; "Country"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Country';
@@ -15,7 +15,7 @@ tableextension 50301 "Vendor Ext" extends Vendor
                     Rec.Country := country."Country Code";
             end;
         }
-        field(50115; "Emirate Name"; Text[50])
+        field(73209576; "Emirate Name"; Text[50])
         {
             DataClassification = ToBeClassified;
             Caption = 'Emirate';
@@ -35,7 +35,7 @@ tableextension 50301 "Vendor Ext" extends Vendor
                     Error('Invalid Emirate Name: %1', "Emirate Name");
             end;
         }
-        field(50116; "Community"; Text[100])
+        field(73209577; "Community"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Community';
@@ -49,7 +49,7 @@ tableextension 50301 "Vendor Ext" extends Vendor
                     Community := communityRec."Community Name";
             end;
         }
-        field(50100; "Vendor Category"; Text[100])
+        field(73209578; "Vendor Category"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Vendor Category';

@@ -1,8 +1,8 @@
-tableextension 50507 "Item Journal Line Ext." extends "Item Journal Line"
+tableextension 73209582 "Item Journal Line Ext." extends "Item Journal Line"
 {
     fields
     {
-        field(50000; "Contract ID"; Integer)
+        field(73209575; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
             DataClassification = CustomerContent;

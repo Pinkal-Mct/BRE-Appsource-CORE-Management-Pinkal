@@ -84,7 +84,7 @@ page 73209650 "Owner Document Subpage"
                     begin
                         // Find the attachment record
                         AttachmentRec.SetRange("No.", Format(Rec.OwnerId));
-                        AttachmentRec.SetRange("Table ID", 50500); // Adjust to match your table ID
+                        AttachmentRec.SetRange("Table ID", 73209613); // Adjust to match your table ID
                         AttachmentRec.SetRange("File Name", Rec."Upload Document");
 
                         if AttachmentRec.FindSet() then begin
