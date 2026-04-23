@@ -13,7 +13,7 @@ codeunit 73209607 "Send Contract Renewal Email"
         FileName: Text[250];
         ReportID: Integer;
     begin
-        ReportID := 50108;
+        ReportID := 73209579;
         ConsolidatedInvoiceHeader.SetRange(Id, Rec.Id);
         if ConsolidatedInvoiceHeader.FindSet() then begin
             RecRef.GetTable(ConsolidatedInvoiceHeader);

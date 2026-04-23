@@ -220,7 +220,7 @@ table 73209646 "Payment Mode2"
                             Email.SendEmail(Rec);
                             emailrec.SendEmail(Rec);
 
-                            ReportID := 50112;
+                            ReportID := 73209586;
                             paymentmode2Grid.Reset();
                             paymentmode2Grid.SetRange("Tenant ID", Rec."Tenant ID");
                             paymentmode2Grid.SetRange("Contract ID", Rec."Contract ID"); // Ensure filtering on unique ID

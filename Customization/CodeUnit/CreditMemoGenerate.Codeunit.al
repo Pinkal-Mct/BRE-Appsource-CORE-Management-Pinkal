@@ -150,7 +150,7 @@ codeunit 73209589 "Credit Memo Generate"
         ValidFormats.Add('.jpeg');
         SASUrlBase := ConfigRecord."SAS URL";
         FileExtension := '.pdf';
-        ReportID := 50116;
+        ReportID := 73209580;
         SalesHeader1.Reset();
         SalesHeader1.SetRange("No.", SalesheaderRec."No.");
         SalesHeader1.SetRange("Document Type", SalesheaderRec."Document Type"::"Credit Memo");

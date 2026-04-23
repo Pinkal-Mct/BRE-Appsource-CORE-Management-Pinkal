@@ -17,7 +17,7 @@ codeunit 73209611 "FS Refundable Payment Receipt"
     // NoSeriesManagement: Codeunit "No. Series";
     // ReceiptNo: Code[20];
     begin
-        ReportID := 50120;
+        ReportID := 73209582;
         ConsolidatedInvoiceHeader.SetRange("Contract ID", Rec."Contract ID");
 
         if ConsolidatedInvoiceHeader.FindSet() then begin

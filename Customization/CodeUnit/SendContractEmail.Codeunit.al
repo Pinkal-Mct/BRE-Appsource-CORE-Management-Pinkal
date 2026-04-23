@@ -18,9 +18,9 @@ codeunit 73209606 "Send Contract Email"
         if Evaluate(CurrentEmirateValue, Rec.Emirate) then
             case CurrentEmirateValue of
                 Emirate::Dubai, Emirate::"Abu Dhabi", Emirate::Sharjah, Emirate::Ajman, Emirate::Fujairah, Emirate::"Ras Al Khaimah":
-                    ReportID := 50101;
+                    ReportID := 73209591;
                 Emirate::"Umm Al Quwain":
-                    ReportID := 50115;
+                    ReportID := 73209594;
                 else
                     Error('Unsupported emirate: %1', Rec.Emirate);
             end

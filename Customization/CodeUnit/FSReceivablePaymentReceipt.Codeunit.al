@@ -13,7 +13,7 @@ codeunit 73209592 "FS_Receivable Payment Receipt"
         FileName: Text[250];
         ReportID: Integer;
     begin
-        ReportID := 50114;
+        ReportID := 73209581;
         ConsolidatedInvoiceHeader.SetRange("Contract ID", Rec."Contract ID");
         if ConsolidatedInvoiceHeader.FindSet() then begin
             RecRef.GetTable(ConsolidatedInvoiceHeader);

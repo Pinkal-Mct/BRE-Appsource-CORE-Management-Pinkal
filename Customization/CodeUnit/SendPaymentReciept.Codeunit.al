@@ -13,7 +13,7 @@ codeunit 73209616 "Send Payment Reciept"
         FileName: Text[250];
         ReportID: Integer;
     begin
-        ReportID := 50112;
+        ReportID := 73209586;
         Clear(paymentReceipt);
         paymentReceipt.SetRange("Document Type", paymentReceipt."Document Type"::Payment);
         paymentReceipt.SetRange("Document No.", CustLedgerEntry."Document No.");
@@ -47,7 +47,7 @@ codeunit 73209616 "Send Payment Reciept"
         FileName: Text[250];
         ReportID: Integer;
     begin
-        ReportId := 50112;
+        ReportId := 73209586;
         if RecipientEmail = '' then
             Error('Recipient email is missing. Cannot send receipt.');
         FileName := 'PaymentReceipt_' + DocumentNo + '.pdf';
@@ -71,7 +71,7 @@ codeunit 73209616 "Send Payment Reciept"
         FileName: Text[250];
         ReportID: Integer;
     begin
-        ReportID := 50112;
+        ReportID := 73209586;
         Clear(paymentReceipt);
         paymentReceipt.SetRange("Document Type", paymentReceipt."Document Type"::Payment);
         paymentReceipt.SetRange("Applies-to Doc. No.", CustLedgerEntry."Document No.");
@@ -107,7 +107,7 @@ codeunit 73209616 "Send Payment Reciept"
         FileName: Text[250];
         ReportID: Integer;
     begin
-        ReportID := 50112;
+        ReportID := 73209586;
         TempBlob.CreateOutStream(OutStr);
         Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStr);
         TempBlob.CreateInStream(InStream);

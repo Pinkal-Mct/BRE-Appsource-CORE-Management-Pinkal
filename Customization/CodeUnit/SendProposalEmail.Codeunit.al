@@ -21,8 +21,8 @@ codeunit 73209617 "Send Proposal Email"
         SecondReportID: Integer;
         Leaseamount: Decimal;
     begin
-        ReportID := 50102;
-        SecondReportID := 50110;
+        ReportID := 73209587;
+        SecondReportID := 73209585;
 
         ConsolidatedInvoiceHeader.SetRange("Proposal ID", Rec."Proposal ID");
         if ConsolidatedInvoiceHeader.FindSet() then begin

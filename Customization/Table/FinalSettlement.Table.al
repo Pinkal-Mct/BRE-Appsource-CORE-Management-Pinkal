@@ -100,7 +100,7 @@ table 73209622 "FinalSettlement"
                 if Confirm('Do you want to post journal lines?', true) then begin
                     FinalSettlementPosting.PostFinalSettlementAmount(Rec);
                     Email.SendEmail(Rec);
-                    ReportID := 50114;
+                    ReportID := 73209581;
                     paymentmode2Grid.Reset();
                     paymentmode2Grid.SetRange("Tenant ID", Rec."Tenant ID");
                     paymentmode2Grid.SetRange("Contract ID", Rec."Contract ID");

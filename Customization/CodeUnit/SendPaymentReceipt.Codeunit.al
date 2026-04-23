@@ -17,7 +17,7 @@ codeunit 73209615 "Send Payment Receipt"
         ReceiptNo: Code[20];
         EmailAddress: Text[250];
     begin
-        ReportID := 50112;
+        ReportID := 73209586;
         // Apply filters to fetch the specific record
         ConsolidatedInvoiceHeader.Reset();
         ConsolidatedInvoiceHeader.SetRange("Tenant ID", Rec."Tenant ID");
