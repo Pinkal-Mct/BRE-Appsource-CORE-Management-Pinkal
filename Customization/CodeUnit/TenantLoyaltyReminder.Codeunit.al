@@ -43,7 +43,7 @@ codeunit 73209620 "Tenant Loyalty Reminder"
                             ContractEndApproval.Insert();
                             Clear(ContractEndApproval);
                             LeaseManagerName := '';
-                            UserPersonalizationRec.SetRange("Profile ID", 'LEASE_MANAGER');
+                            UserPersonalizationRec.SetRange("Profile ID", 'LEASE MANAGER');
                             if UserPersonalizationRec.FindSet() then
                                 repeat
                                     if UserRec.Get(UserPersonalizationRec."User SID") then
@@ -56,7 +56,7 @@ codeunit 73209620 "Tenant Loyalty Reminder"
                                         end;
                                 until UserPersonalizationRec.Next() = 0;
                             if EmailList.Count = 0 then
-                                Error('No valid email addresses found for LEASE_MANAGER.');
+                                Error('No valid email addresses found for LEASE MANAGER.');
                             if CompanyInfo.Get() then begin
                                 EmailBody :=
                                       '<html><body>' +

@@ -182,7 +182,7 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
         GenJnlLine.Reset();
         GenJnlLine.SetRange("Journal Template Name", TemplateName);
         GenJnlLine.SetRange("Journal Batch Name", BatchName);
-        if not GenJnlLine.IsEmpty() then
+        if GenJnlLine.FindSet() then
             GenJnlLine.DeleteAll(true);
     end;
 

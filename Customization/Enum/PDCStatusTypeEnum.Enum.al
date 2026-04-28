@@ -8,13 +8,13 @@ enum 73209586 "PDC Status Type Enum"
     {
         Caption = 'Cheque Received';
     }
-    value(2; "Cleared")
-    {
-        Caption = 'Cleared';
-    }
-    value(3; "Deposited")
+    value(2; "Deposited")
     {
         Caption = 'Deposited';
+    }
+    value(3; "Cleared")
+    {
+        Caption = 'Cleared';
     }
     value(4; "Due cheque not deposited")
     {

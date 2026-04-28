@@ -14,7 +14,7 @@ codeunit 73209600 "Reject Credit Memo"
         TotalAmount: Decimal;
         Creditmemolink: Text;
     begin
-        UserPersonalizationRec.SetRange("Profile ID", 'LEASE_MANAGER');
+        UserPersonalizationRec.SetRange("Profile ID", 'LEASE MANAGER');
         if UserPersonalizationRec.FindSet() then
             repeat
                 if UserRec.Get(UserPersonalizationRec."User SID") then
@@ -22,7 +22,7 @@ codeunit 73209600 "Reject Credit Memo"
                         EmailAddress.Add(UserRec."Contact Email");
             until UserPersonalizationRec.Next() = 0;
         if EmailAddress.Count() = 0 then
-            Error('No users with the "LEASE_MANAGER" profile have a valid email address.');
+            Error('No users with the "LEASE MANAGER" profile have a valid email address.');
         SalesHeader.SetRange("No.", Rec."No.");
         SalesHeader.SetRange("Document Type", Rec."Document Type"::"Credit Memo");
         if SalesHeader.FindSet(true) then

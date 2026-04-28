@@ -26,7 +26,7 @@ codeunit 73209595 LeaseManagerSendMail
         if EmailAddress.Count() = 0 then
             Error('No users with the "Finance Manager" profile have a valid email address.');
 
-        UserPersonalizationRec1.SetRange("Profile ID", 'LEASE_MANAGER');
+        UserPersonalizationRec1.SetRange("Profile ID", 'LEASE MANAGER');
         if UserPersonalizationRec1.FindSet() then
             repeat
                 if UserRec.Get(UserPersonalizationRec1."User SID") then

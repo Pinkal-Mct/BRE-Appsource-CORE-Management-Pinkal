@@ -14,7 +14,7 @@ codeunit 73209601 RejectSalesInvoice
         TotalAmount: Decimal;
         InvoiceLink: Text;
     begin
-        UserPersonalizationRec.SetRange("Profile ID", 'LEASE_MANAGER');
+        UserPersonalizationRec.SetRange("Profile ID", 'LEASE MANAGER');
         if UserPersonalizationRec.FindSet() then
             repeat
                 if UserRec.Get(UserPersonalizationRec."User SID") then

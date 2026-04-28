@@ -25,7 +25,7 @@ tableextension 73209585 "Sales Cr. Memo Header Ext" extends "Sales Cr.Memo Heade
             Caption = 'Contract Tenure';
         }
 
-        field(73209579; "Contract Period"; Text[100])
+        field(73209583; "Contract Period"; Text[100])
         {
             DataClassification = ToBeClassified;
             Caption = 'Contract Period';
@@ -33,9 +33,9 @@ tableextension 73209585 "Sales Cr. Memo Header Ext" extends "Sales Cr.Memo Heade
         field(73209580; "View Invoice"; Text[250])
         {
             DataClassification = ToBeClassified;
-            Caption = 'View Invoice';
+            Caption = 'View Credit Note';
         }
-        field(73209581; "Property Classification"; Text[40])
+        field(73209589; "Property Classification"; Text[40])
         {
             DataClassification = ToBeClassified;
             Caption = 'Property Classification';
@@ -46,11 +46,7 @@ tableextension 73209585 "Sales Cr. Memo Header Ext" extends "Sales Cr.Memo Heade
             OptionMembers = " ",Approved,Rejected;
             Caption = 'Approval Status for CreditNote';
         }
-        field(73209583; "Rejection Reason CreditNote"; Text[1000])
-        {
-            DataClassification = ToBeClassified;
-            Caption = 'Rejection Reason CreditNote';
-        }
+
         field(73209584; "Credit Memo Document"; Text[250])
         {
             DataClassification = ToBeClassified;
@@ -70,6 +66,11 @@ tableextension 73209585 "Sales Cr. Memo Header Ext" extends "Sales Cr.Memo Heade
         {
             DataClassification = ToBeClassified;
             Caption = 'Terminated Credit Note';
+        }
+        field(73209588; "Rejection Reason CreditNote"; Text[1000])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Rejection Reason CreditNote';
         }
     }
 

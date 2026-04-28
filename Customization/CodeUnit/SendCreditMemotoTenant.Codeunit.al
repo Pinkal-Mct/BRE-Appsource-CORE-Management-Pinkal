@@ -22,7 +22,7 @@ codeunit 73209608 "Send Credit Memo to Tenant"
         ConfirmationResult: Boolean;
     begin
 
-        UserPersonalizationRec.SetRange("Profile ID", 'LEASE_MANAGER'); // Accounting Manager
+        UserPersonalizationRec.SetRange("Profile ID", 'LEASE MANAGER'); // Accounting Manager
         // if UserPersonalizationRec.FindFirst() then begin
         //     UserRec.Get(UserPersonalizationRec."User SID");
         //     EmailAddress.Add(UserRec."Contact Email");
@@ -37,7 +37,7 @@ codeunit 73209608 "Send Credit Memo to Tenant"
                         EmailAddress.Add(UserRec."Contact Email");
             until UserPersonalizationRec.Next() = 0;
         if EmailAddress.Count() = 0 then
-            Error('No users with the "LEASE_MANAGER" profile have a valid email address.');
+            Error('No users with the "LEASE MANAGER" profile have a valid email address.');
 
 
 

@@ -337,7 +337,7 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
             PostedSalesInvoice.SetRange("No.", PaymentSeriesRec."Invoice #");
             PostedSalesInvoice.SetFilter("Posting Date", '>%1', postingDate);
-            if PostedSalesInvoice.FindFirst() then
+            if not PostedSalesInvoice.IsEmpty() then
                 Message('Please apply the entries (Receipt with Invoice) manually in the system as there are posted invoices with posting date later than Receipt date.')
             else begin
 
