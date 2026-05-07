@@ -1,68 +1,68 @@
 table 73209616 "Final Billing Calculation Grid"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     Caption = 'Final Billing Calculation Grid';
     fields
     {
         field(73209575; RevenueDescription; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revenue Description';
         }
         field(73209576; InvoicedAmount; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Invoiced Amount';
         }
         field(73209577; InvoicedVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Invoiced VAT';
         }
         field(73209578; InvoicedAmountInclVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Invoiced Amount Incl. VAT';
         }
         field(73209579; RevisedAmount; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revised Amount';
         }
         field(73209580; RevisedVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revised VAT';
         }
         field(73209581; RevisedAmountInclVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revised Amount Incl. VAT';
         }
         field(73209582; DifferenceAmount; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Difference Amount';
         }
         field(73209583; DifferenceVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Difference VAT';
         }
         field(73209584; DifferenceAmountInclVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Difference Amount Incl. VAT';
         }
         field(73209585; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209586; "Entry No"; Integer)
         {
             Caption = 'Entry No';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209587; "Total Invoiced Amount"; Decimal)
@@ -128,97 +128,97 @@ table 73209616 "Final Billing Calculation Grid"
         field(73209596; "Termination Date"; Date)
         {
             Caption = 'Termination Date';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209597; "Invoice To Be Raised"; Decimal)
         {
             Caption = 'Invoice To Be Raised';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209598; "Credit Note To Be Raised"; Decimal)
         {
             Caption = 'Credit To Be Raised';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209599; "Payment Type"; Text[250])
         {
             Caption = 'Payment Type';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209600; "Property Classification"; Text[20])
         {
             Caption = 'Property Classification';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209601; "Invoiced"; Boolean)
         {
             Caption = 'Invoiced';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209602; "Tenant ID"; Code[50])
         {
             Caption = 'Tenant ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209603; "Invoice ID"; Text[20])
         {
             Caption = 'Invoice ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209604; "Posted Invoice ID"; Code[20])
         {
             Caption = 'Posted Invoice ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209605; "Invoice Document"; Text[250])
         {
             Caption = 'Invoice Document';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209606; "Invoice Document URL"; Text[250])
         {
             Caption = 'Invoice Document URL';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209607; "VAT %"; Integer)
         {
             Caption = 'VAT %';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209608; "Creditnote"; Boolean)
         {
             Caption = 'Creditnote';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209609; "Credit Note Amount"; Decimal)
         {
             Caption = 'Credit Note Amount';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209610; "Invoice Amount"; Decimal)
         {
             Caption = 'Invoice Amount';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209611; "Credit Note ID"; Code[1000])
         {
             Caption = 'Credit Note ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209612; "Credit Note Document"; Text[250])
         {
             Caption = 'Credit Note Document';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209613; "Credit Note Document URL"; Text[250])
         {
             Caption = 'Credit Note Document URL';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209614; "Line"; Code[50])
         {
             Caption = 'Credit Note Posted ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
     keys

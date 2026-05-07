@@ -1,6 +1,6 @@
 table 73209592 "Category Type"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = SystemMetadata;
     DataCaptionFields = ID;
 
     fields
@@ -9,19 +9,19 @@ table 73209592 "Category Type"
 
         field(73209575; "ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
         field(73209576; "Primary Item Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Primary Item';
             TableRelation = "Primary Item"."Primary Item Type";
         }
         field(73209577; "Category Types"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Category';
         }
     }

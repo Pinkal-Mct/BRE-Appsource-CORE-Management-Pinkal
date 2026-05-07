@@ -45,8 +45,6 @@ codeunit 73209617 "Send Proposal Email"
             end else
                 Error('No data found for the second report.');
 
-            Message('Preparing to send email to: %1', ConsolidatedInvoiceHeader."Tenant Contact Email");
-
             Leaseamount := Round(ConsolidatedInvoiceHeader."Annual Rent Amount", 0.01);
 
             if CompanyInfo.Get() then

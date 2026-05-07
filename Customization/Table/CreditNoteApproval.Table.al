@@ -1,59 +1,59 @@
 table 73209604 "Credit Note Approval"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'ID';
             Editable = false;
         }
         field(73209576; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
         field(73209577; "Tenant ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
         field(73209578; "Contract Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Start Date';
         }
         field(73209579; "Contract End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract End Date';
         }
         field(73209580; "Credit Note Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Credit Note Amount';
         }
         field(73209581; "Tenant Name"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Tenant Name';
         }
         field(73209582; "Credit Note Type"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Credit Note Type';
             OptionMembers = " ","Standard Credit Note","Termination Credit Note";
         }
         field(73209583; "Status"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Status';
             OptionMembers = "Pending","Approved","Reject";
         }
         field(73209584; "FC ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'FC ID';
         }
     }

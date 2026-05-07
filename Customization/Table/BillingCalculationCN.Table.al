@@ -1,48 +1,48 @@
 table 73209586 "Billing Calculation CN"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
         field(73209576; "Tenant ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
         field(73209577; "Item"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Item';
         }
         field(73209578; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount';
         }
         field(73209579; "VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'VAT Amount';
         }
         field(73209580; "Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
         }
         field(73209581; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Entry No.';
             AutoIncrement = true;
             Editable = false;
         }
         field(73209582; "VAT %"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'VAT %';
         }
         field(73209583; "Total Amount"; Decimal)
@@ -54,7 +54,7 @@ table 73209586 "Billing Calculation CN"
         }
         field(73209584; "Credit Note ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Credit Note ID';
         }
     }

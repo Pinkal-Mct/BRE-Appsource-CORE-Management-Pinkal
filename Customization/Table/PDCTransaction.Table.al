@@ -1,12 +1,12 @@
 table 73209654 "PDC Transaction"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = "PDC ID";
     fields
     {
         field(73209575; "PDC ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209576; "Tenant Id"; Text[20])
         {
@@ -22,12 +22,12 @@ table 73209654 "PDC Transaction"
 
         field(73209578; "Cheque Number"; Text[100])
         {
-            DataClassification = CustomerContent;
+            DataClassification = AccountData;
 
         }
         field(73209579; "Cheque Date"; Date)
         {
-            DataClassification = CustomerContent;
+            DataClassification = AccountData;
         }
         field(73209580; "Amount"; Decimal)
         {
@@ -36,7 +36,7 @@ table 73209654 "PDC Transaction"
 
         field(73209581; "Cheque Status"; Enum "PDC Status Type Enum")
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             trigger OnValidate()
             var
                 CashReceiptJournalCodeunit: Codeunit "Cash Receipt Journal Entry";
@@ -49,21 +49,22 @@ table 73209654 "PDC Transaction"
         }
         field(73209582; "Contract ID"; Integer)
         {
+            DataClassification = CustomerContent;
             TableRelation = "Tenancy Contract";
         }
 
         field(73209583; "Reason"; text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209584; "Old Cheque#"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
         }
 
         field(73209585; "Bank Name"; code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Bank Account";
 
             trigger OnValidate()
@@ -78,50 +79,52 @@ table 73209654 "PDC Transaction"
 
         field(73209586; "Approval Status"; Enum "Approval Status Enum")
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209587; "View Document URL"; Text[2048])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209588; View; text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             InitValue = 'View Document';
         }
 
         field(73209589; Selected; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209590; "payment Series"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209591; "Transaction Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209592; "Payment Mode"; Text[100])
         {
+            DataClassification = CustomerContent;
             Caption = 'Payment Mode';
             TableRelation = "Payment Type"."Payment Method";
         }
         field(73209593; "Due Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Due Date';
         }
         field(73209594; "New Cheque Number"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Cheque Number';
         }
         field(73209595; "Deposit Bank"; Code[100])
         {
+            DataClassification = AccountData;
             Caption = 'Deposit Bank';
             TableRelation = "Bank Account";
 
@@ -136,22 +139,22 @@ table 73209654 "PDC Transaction"
         }
         field(73209596; Inserted; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209597; "Upload Cheque"; Text[2048])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Upload Cheque';
             InitValue = 'Upload Cheque';
         }
         field(73209598; "New View Document URL"; Text[2048])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209599; "New View"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             InitValue = 'View Document';
         }
     }

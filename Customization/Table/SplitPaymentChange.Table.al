@@ -1,63 +1,63 @@
 table 73209689 "Split Payment Change"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
 
         field(73209575; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
 
         }
         field(73209576; "Split Payment Series"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209577; "Secondary Item Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209578; "Split Due Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209579; "Split Payment Mode"; Text[150])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Payment Type"."Payment Method";
         }
 
         field(73209580; "Split Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209581; "Split VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209582; "Split Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209583; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209584; "Tenant Id"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
         field(73209585; "Deposit Bank Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             TableRelation = "Bank Account";
 
             trigger OnValidate()
@@ -71,7 +71,7 @@ table 73209689 "Split Payment Change"
         }
         field(73209586; "Cheque Number"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Cheque Number';
         }
     }

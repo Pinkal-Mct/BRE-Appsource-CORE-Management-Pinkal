@@ -1,17 +1,17 @@
 table 73209612 "Customer Payment Receipt"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
             Editable = false;
         }
         field(73209576; "Posing Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Editable = false;
         }
         field(73209577; "Account Type"; Enum "Gen. Journal Account Type")

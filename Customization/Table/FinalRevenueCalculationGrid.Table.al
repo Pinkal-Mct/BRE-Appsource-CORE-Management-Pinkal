@@ -1,106 +1,106 @@
 table 73209621 "Final Revenue Calculation Grid"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     Caption = 'Final Revenue Calculation Grid';
     fields
     {
         field(73209575; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
         field(73209576; "Revenue Description"; Text[500])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revenue Description';
         }
         field(73209577; "Original Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount';
             DecimalPlaces = 2 : 2;
         }
         field(73209578; "Original VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'VAT';
             DecimalPlaces = 2 : 2;
         }
         field(73209579; "Original Amount Incl."; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount incl.';
             DecimalPlaces = 2 : 2;
         }
         field(73209580; "Revised Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revised Amount';
             DecimalPlaces = 2 : 2;
         }
         field(73209581; "Revised VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revised VAT';
             DecimalPlaces = 2 : 2;
         }
         field(73209582; "Revised Amount Incl."; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revised Amount Incl.';
             DecimalPlaces = 2 : 2;
         }
         field(73209583; "Difference Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Difference Amount';
             DecimalPlaces = 2 : 2;
         }
         field(73209584; "Difference VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Difference VAT';
             DecimalPlaces = 2 : 2;
         }
         field(73209585; "Difference Amount Incl."; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Difference Amount Incl.';
             DecimalPlaces = 2 : 2;
         }
         field(73209586; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209587; "Actual Contract Tenure"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Actual Contract Tenure';
         }
         field(73209588; "Per Day Rent"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Per Day Rent';
         }
         field(73209589; "Revised VAT %"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revised VAT %';
         }
         field(73209590; "ContractYear(Termination Date)"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Year On Termination Date';
         }
         field(73209591; "Annual Rent Amount TermiYear"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Annual Rent Amount of Termination Year';
         }
         field(73209592; "Total No. Of Days"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total No. Of Days(Termination Year)';
         }
         field(73209593; "Total Original Amount"; Decimal)
@@ -168,7 +168,7 @@ table 73209621 "Final Revenue Calculation Grid"
         field(73209602; "Payment Type"; Text[250])
         {
             Caption = 'Payment Type';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
     keys

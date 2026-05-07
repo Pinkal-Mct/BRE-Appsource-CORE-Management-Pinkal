@@ -1,19 +1,19 @@
 table 73209581 "Availability Status"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = SystemMetadata;
     DataCaptionFields = "ID";
 
     fields
     {
         field(73209575; "ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             AutoIncrement = true; // Automatically increment the ID
             Editable = false; // Make it read-only for the user
         }
         field(73209576; "Status"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Status Name';
 
         }

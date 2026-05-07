@@ -1,33 +1,33 @@
 table 73209680 "Revenue Structure"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
         field(73209575; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
             TableRelation = "Tenancy Contract"."Contract ID";
         }
 
         field(73209576; "RS ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
             Editable = false;
         }
 
         field(73209577; "Secondary Item Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Secondary Item Type';
             Editable = false;
         }
 
         field(73209578; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount';
             Editable = false;
             DecimalPlaces = 2 : 2;
@@ -36,26 +36,27 @@ table 73209680 "Revenue Structure"
 
         field(73209579; "Contract Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Start Date';
             Editable = false;
         }
 
         field(73209580; "Contract End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract End Date';
             Editable = false;
         }
 
         field(73209581; "Number of Installments"; Integer)
         {
+            DataClassification = CustomerContent;
             Caption = 'Number of Installments';
         }
 
         field(73209582; "VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'VAT Amount';
             Editable = false;
             DecimalPlaces = 2 : 2;
@@ -64,7 +65,7 @@ table 73209680 "Revenue Structure"
 
         field(73209583; "Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
             Editable = false;
             DecimalPlaces = 2 : 2;
@@ -73,20 +74,21 @@ table 73209680 "Revenue Structure"
 
         field(73209584; "Tenant ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
             Editable = false;
             TableRelation = "Lease Proposal Details"."Tenant ID";
         }
         field(73209585; "VAT %"; Option)
         {
+            DataClassification = CustomerContent;
             OptionMembers = "0","5";
             Caption = 'VAT %';
             Editable = false;
         }
         field(73209586; "Entry No"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Editable = false;
         }
     }

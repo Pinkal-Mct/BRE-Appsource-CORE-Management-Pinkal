@@ -34,7 +34,6 @@ codeunit 73209606 "Send Contract Email"
             Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
             TempBlob.CreateInStream(InStream);
             FileName := 'Contract_' + Format(Rec."Tenant ID") + '.pdf';
-            Message('Preparing to send email to: %1', Rec."Email Address");
 
             Leaseamount := Round(Rec."Annual Rent Amount", 0.01);
 
@@ -65,7 +64,6 @@ codeunit 73209606 "Send Contract Email"
                 Message('Email sent successfully to: %1', Rec."Email Address")
             else
                 Error('Failed to send email. Please verify SMTP settings and email addresses.');
-            exit('Email sent successfully.');
         end else
             Error('No tenancy contract details found for Tenant ID: %1', Rec."Tenant ID");
     end;

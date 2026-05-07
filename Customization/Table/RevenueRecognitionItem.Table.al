@@ -1,17 +1,17 @@
 table 73209677 "Revenue Recognition Item"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "RR_No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'No.';
             Editable = false;
         }
         field(73209576; "Item Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Item Type';
             TableRelation = Item WHERE("Item type template" = const("Item Type Template Enum"::"Secondary Item"), "Charges Status" = CONST("Regular Charges"));
             trigger OnValidate()
@@ -25,7 +25,7 @@ table 73209677 "Revenue Recognition Item"
         }
         field(73209577; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Entry No.';
             AutoIncrement = true;
         }

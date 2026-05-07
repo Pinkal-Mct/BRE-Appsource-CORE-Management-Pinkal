@@ -1,18 +1,18 @@
 table 73209632 "Management Fee MasterData"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = "Vendor ID";
     fields
     {
         field(73209575; "Management Fee Number"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Management Fee Number';
 
         }
         field(73209576; "Vendor ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Vendor ID';
 
             trigger OnValidate()
@@ -26,7 +26,7 @@ table 73209632 "Management Fee MasterData"
         }
         field(73209577; "Vendor Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Vendor Name';
         }
     }

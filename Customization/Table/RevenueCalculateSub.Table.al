@@ -1,68 +1,68 @@
 table 73209673 "Revenue Calculate Sub"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
 
         field(73209575; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
 
         field(73209576; "RS ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
             Editable = false;
         }
 
         field(73209577; "Secondary Item Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Secondary Item Type';
             Editable = false;
         }
 
         field(73209578; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount';
             Editable = false;
         }
 
         field(73209579; "Installment Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Installment Start Date';
             Editable = false;
         }
 
         field(73209580; "Installment End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Installment End Date';
             Editable = false;
         }
 
         field(73209581; "VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'VAT Amount';
             Editable = false;
         }
 
         field(73209582; "Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
             Editable = false;
         }
 
         field(73209583; "Tenant ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
             Editable = false;
         }

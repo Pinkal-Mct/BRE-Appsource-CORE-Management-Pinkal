@@ -1,19 +1,19 @@
 table 73209706 "Unearned Revenue Report"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = "No.";
     fields
     {
         field(73209575; "No."; Integer)
         {
-            DataClassification = SystemMetadata;
+            DataClassification = CustomerContent;
             Editable = false;
             AutoIncrement = true;
             Caption = 'ID';
         }
         field(73209576; "Starting Date Year"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Starting Date Year';
 
             trigger OnValidate()
@@ -28,7 +28,7 @@ table 73209706 "Unearned Revenue Report"
         }
         field(73209577; "Ending Date Year"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Ending Date Year';
 
             trigger OnValidate()
@@ -40,49 +40,49 @@ table 73209706 "Unearned Revenue Report"
 
         field(73209578; "R_Total Contract Value"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Contract Value';
             Editable = false;
         }
 
         field(73209579; "R_Total Opening Balance"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Opening Balance';
             Editable = false;
         }
 
         field(73209580; "R_T_Invoice Raised During Year"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Invoice Raised During Year';
             Editable = false;
         }
 
         field(73209581; "R_T_Revenue Allocated During Y"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Revenue Allocated During Year';
             Editable = false;
         }
 
         field(73209582; "R_T_Unearned Revenue Balance"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Unearned Revenue Balance';
             Editable = false;
         }
 
         field(73209583; "R_T_Cal Unearned RevBalance"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Calculated Unearned Rev Balance';
             Editable = false;
         }
 
         field(73209584; "R_Total Shortfall Excess"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Shortfall/Excess';
             Editable = false;
         }

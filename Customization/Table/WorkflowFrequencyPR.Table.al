@@ -1,17 +1,17 @@
 table 73209715 "Workflow Frequency PR"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = SystemMetadata;
     fields
     {
         field(73209575; "Company ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Company ID';
             TableRelation = "Company Data"."Company ID";
         }
         field(73209576; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
@@ -19,19 +19,21 @@ table 73209715 "Workflow Frequency PR"
         {
             OptionMembers = " ","Payment Reminder","Invoice","Renewal Notification to Tenant","Tenant Loyalty Check Reminder";
             Caption = 'Workflow';
+            DataClassification = SystemMetadata;
         }
         field(73209578; "frequncy Status"; Option)
         {
             OptionMembers = " ","Company","Property";
             Caption = 'frequncy Status';
+            DataClassification = SystemMetadata;
         }
         field(73209579; "No. of Days"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
         }
         field(73209580; "Property ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             TableRelation = "Property Registration"."Property ID";
         }
     }

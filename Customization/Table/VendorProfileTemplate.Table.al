@@ -2,24 +2,24 @@ table 73209713 "Vendor Profile Template"
 {
     Caption = 'Vendor Profile Template';
     TableType = Normal;
-    DataClassification = ToBeClassified;
+    DataClassification = SystemMetadata;
     fields
     {
         field(73209575; Code; Code[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
         }
         field(73209576; Description; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
         }
         field(73209577; Module; Enum "Module Enum")
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
         }
         field(73209578; "No. Series"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'No. Series';
             TableRelation = "No. Series";
         }

@@ -1,21 +1,21 @@
 table 73209629 "Management Fee Calc. Header"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
         field(73209575; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209576; "Report Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209577; "Owner ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Owner Profile"."Owner ID";
 
             trigger OnValidate()
@@ -30,11 +30,11 @@ table 73209629 "Management Fee Calc. Header"
         }
         field(73209579; "Property"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209580; "Financial Year"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
             trigger OnLookup()
             var
@@ -60,7 +60,7 @@ table 73209629 "Management Fee Calc. Header"
         }
         field(73209581; "Period From"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
             trigger OnValidate()
             var
@@ -79,7 +79,7 @@ table 73209629 "Management Fee Calc. Header"
         }
         field(73209582; "Period To"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
             trigger OnValidate()
             var
@@ -100,7 +100,7 @@ table 73209629 "Management Fee Calc. Header"
         }
         field(73209583; "All Owners"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
             trigger OnValidate()
             begin
@@ -113,7 +113,7 @@ table 73209629 "Management Fee Calc. Header"
         }
         field(73209584; "All Properties"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
             trigger OnValidate()
             begin

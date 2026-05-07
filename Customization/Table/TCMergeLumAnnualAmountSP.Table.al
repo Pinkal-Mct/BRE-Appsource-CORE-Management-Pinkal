@@ -1,16 +1,16 @@
 table 73209697 "TC Merge LumAnnualAmount SP"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
         field(73209575; "ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209576; "ML_Merged Unit ID"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             var
                 LeaseProposal: Record "Contract Renewal";
@@ -29,61 +29,61 @@ table 73209697 "TC Merge LumAnnualAmount SP"
         }
         field(73209577; "ML_Unit ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209578; "ML_Year"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209579; "ML_Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209580; "ML_End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209581; "ML_Number of Days"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209582; "ML_Unit Sq Ft"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209583; "ML_Rate per Sq.Ft"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209584; "ML_Rent Increase %"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209585; "ML_Annual Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209586; "ML_Round off"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209587; "ML_Final Annual Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209588; "ML_Per Day Rent"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209589; "Merge Lumpsum Rent1"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             InitValue = 'Click Here For Get Data.';
             Caption = 'Click Here For Get Data.';
         }
         field(73209590; "ML_Line No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
 
@@ -116,7 +116,7 @@ table 73209697 "TC Merge LumAnnualAmount SP"
         }
         field(73209595; "Contract Id"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
     }

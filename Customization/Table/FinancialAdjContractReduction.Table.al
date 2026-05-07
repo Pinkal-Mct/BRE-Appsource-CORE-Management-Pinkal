@@ -1,21 +1,21 @@
 table 73209624 "FinancialAdjContractReduction"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
 
         field(73209575; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209576; "Contract No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209577; "Revenue Description"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = Item WHERE("Item type template" = const("Item Type Template Enum"::"Secondary Item"));
             trigger OnValidate()
             var
@@ -35,7 +35,7 @@ table 73209624 "FinancialAdjContractReduction"
         }
         field(73209578; Amount; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             DecimalPlaces = 0 : 2;
             trigger OnValidate()
             begin
@@ -44,7 +44,7 @@ table 73209624 "FinancialAdjContractReduction"
         }
         field(73209579; "VAT %"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             OptionMembers = "0%","5%";
             Caption = 'VAT';
             Editable = false;
@@ -55,12 +55,12 @@ table 73209624 "FinancialAdjContractReduction"
         }
         field(73209580; "Amount Incl. VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             DecimalPlaces = 0 : 2;
         }
         field(73209581; "Description"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209582; Total; Decimal)
         {
@@ -81,7 +81,7 @@ table 73209624 "FinancialAdjContractReduction"
         }
         field(73209585; "VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'VAT Amount';
             Editable = false;
 
@@ -99,7 +99,7 @@ table 73209624 "FinancialAdjContractReduction"
         }
         field(73209586; "Credit Note ID"; Code[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
     keys

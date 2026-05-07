@@ -1,12 +1,12 @@
 table 73209595 "COA Setup Line"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = SystemMetadata;
 
     fields
     {
         field(73209575; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             AutoIncrement = true;
         }
         field(73209576; "Primary Key"; Code[10])
@@ -16,7 +16,7 @@ table 73209595 "COA Setup Line"
         }
         field(73209577; "Secondary Item"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             TableRelation = Item where("Item Type Template" = const("Item Type Template Enum"::"Secondary Item"));
 
             trigger onValidate()
@@ -26,22 +26,22 @@ table 73209595 "COA Setup Line"
         }
         field(73209578; Residential; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             TableRelation = "G/L Account"."No.";
         }
         field(73209579; Commercial; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             TableRelation = "G/L Account"."No.";
         }
         field(73209580; "Residential-Unearned"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             TableRelation = "G/L Account"."No.";
         }
         field(73209581; "Commercial-Unearned"; code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             TableRelation = "G/L Account"."No.";
         }
     }

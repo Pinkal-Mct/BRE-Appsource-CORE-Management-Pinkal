@@ -4,13 +4,13 @@ tableextension 73209588 "Sales Invoice Line Ext" extends "Sales Invoice Line"
     {
         field(73209575; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
         field(73209576; "FC ID"; Integer)
         {
             Caption = 'FC ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
 }

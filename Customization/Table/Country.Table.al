@@ -1,30 +1,30 @@
 table 73209602 "Country"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = SystemMetadata;
     DataCaptionFields = ID;
     fields
     {
         field(73209575; "ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
             NotBlank = false;
         }
         field(73209576; "Sl No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Sl No.';
             Editable = false;
         }
         field(73209577; "Country Code"; Code[30])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Country Code';
         }
         field(73209578; "Country Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Country Name';
         }
     }

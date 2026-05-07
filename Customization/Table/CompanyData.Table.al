@@ -1,60 +1,60 @@
 table 73209598 "Company Data"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = "Company ID";
 
     fields
     {
         field(73209575; "Company ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
 
         field(73209576; "Company Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Editable = false;
         }
 
         field(73209577; "Company Logo"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
 
         field(73209578; "Logo URL"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Logo URL';
         }
         field(73209579; "View Document URL"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'View Document URL';
         }
         field(73209580; "Tenant id"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'View Document URL';
             Editable = false;
         }
         field(73209581; "Environment Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Environment Name';
             Editable = false;
         }
 
         field(73209582; "Access Validity"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Access Validity (Days)';
             Editable = true;
         }
         field(73209583; "API URL"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'API URL';
             Editable = true;
         }
@@ -62,6 +62,7 @@ table 73209598 "Company Data"
         {
             OptionMembers = " ","Fixed Monthly Rent","Per Day Rent";
             Caption = 'Revenue Methods';
+            DataClassification = CustomerContent;
         }
     }
 

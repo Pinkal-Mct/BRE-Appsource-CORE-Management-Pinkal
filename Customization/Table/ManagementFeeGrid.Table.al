@@ -1,21 +1,21 @@
 table 73209631 "Management Fee Grid"
 {
 
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209576; "Management Fee Number"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209577; "Vendor ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209578; "Company/Owner Name"; Text[100])
         {
@@ -26,7 +26,7 @@ table 73209631 "Management Fee Grid"
 
         field(73209579; "Property Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Property Registration"."Property Name" where("Owner ID" = field("Owner ID"));
             ValidateTableRelation = false;
 
@@ -43,13 +43,13 @@ table 73209631 "Management Fee Grid"
 
         field(73209580; "Property Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         // 4. Calculation Method
         field(73209581; "Calculation Method"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             OptionMembers =
                 " ","Percentage of Monthly Revenue","Percentage of Annual Rent","Percentage of Collections","Per Unit Fee",Hybrid;
             trigger OnValidate()
@@ -62,27 +62,27 @@ table 73209631 "Management Fee Grid"
         // 5. Calculation Sub-Type
         field(73209582; "Calculation Sub-Type"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             OptionMembers = " ","Percentage Based","Fixed Amount";
         }
 
         // 6. Percentage Type
         field(73209583; "Percentage Type"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             OptionMembers = "",Fixed,Variable;
         }
 
         // 7. Percentage / Amount
         field(73209584; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         // 8. Base Amount Source
         field(73209585; "Base Amount Source"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             OptionMembers = Revenue,Collections,"Annual Rent","Number of Units";
 
             trigger OnValidate()
@@ -98,14 +98,14 @@ table 73209631 "Management Fee Grid"
         // 9. Payment Frequency
         field(73209586; "Payment Frequency"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             OptionMembers = Monthly,Quarterly,"Half-Yearly",Yearly;
         }
 
         // 10. Validity Period
         field(73209587; "Valid From"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             begin
                 if (Rec."Valid From" <= Today()) and (Rec."Valid To" >= Today()) then
@@ -116,7 +116,7 @@ table 73209631 "Management Fee Grid"
 
         field(73209588; "Valid To"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             begin
                 if (Rec."Valid From" <= Today()) and (Rec."Valid To" >= Today()) then
@@ -128,30 +128,30 @@ table 73209631 "Management Fee Grid"
         field(73209589; "Contract Status"; Option)
         {
             OptionMembers = Active,Expired;
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
 
         // Document
         field(73209590; "Contract Document"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209591; "View Document"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209592; "URL Document"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209593; Percentage; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209594; "Owner ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Owner Profile"."Owner ID";
 
             trigger OnValidate()
@@ -161,11 +161,11 @@ table 73209631 "Management Fee Grid"
         }
         field(73209595; "Validity Period"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209596; "Property Management Company"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
         }
     }
     keys

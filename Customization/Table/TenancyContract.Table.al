@@ -1,13 +1,13 @@
 table 73209702 "Tenancy Contract"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = "Contract ID";
 
     fields
     {
         field(73209575; "Owner's Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Owner Name';
             TableRelation = "Owner Profile";
             trigger OnValidate()
@@ -28,43 +28,43 @@ table 73209702 "Tenancy Contract"
         }
         field(73209576; "Lessor's Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Lessor Name';
         }
         field(73209577; "Lessor's Emirates ID"; Code[15])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Lessor Emirates ID';
         }
         field(73209578; "License No."; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
             Caption = 'License No.';
         }
         field(73209579; "Licensing Authority"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Licensing Authority';
         }
         field(73209580; "Lessor's Email"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Lessor Email';
         }
         field(73209581; "Lessor's Phone"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Lessor Phone';
         }
         field(73209582; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
             AutoIncrement = true;
         }
         field(73209583; "Proposal ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Proposal ID';
             TableRelation = "Lease Proposal Details"."Proposal ID" WHERE("Proposal Status" = CONST(Approved));
 
@@ -148,35 +148,35 @@ table 73209702 "Tenancy Contract"
         }
         field(73209584; "Property Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property Name';
         }
         field(73209585; "Customer Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Tenant Name';
             TableRelation = Customer.Name;
         }
         field(73209586; "Unit Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit Name';
         }
         field(73209587; "Ejari Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Ejari Name';
         }
         field(73209588; "Property Classification"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property Classification';
             TableRelation = "Primary Classification"."Classification Name";
             NotBlank = true;
         }
         field(73209589; "Property Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property Type';
             TableRelation = "Secondary Classification" where("Classification Name" = field("Property Classification"));
 
@@ -190,12 +190,12 @@ table 73209702 "Tenancy Contract"
         }
         field(73209590; "Annual Rent Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Amount ';
         }
         field(73209591; "Contract Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Date';
             trigger OnValidate()
             var
@@ -206,37 +206,37 @@ table 73209702 "Tenancy Contract"
         }
         field(73209592; "Contract Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Start Date';
         }
         field(73209593; "Contract End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract End Date';
         }
         field(73209594; "Contract Tenor"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Period (Months)';
         }
         field(73209595; "Base Unit of Measure"; Code[10])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Base Unit of Measure';
         }
         field(73209596; "Unit Sq. Feet"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit Size';
         }
         field(73209597; "Grace Period"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Grace Period (Days)';
         }
         field(73209598; "Grace Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Grace Start Date';
             trigger OnValidate()
             begin
@@ -245,7 +245,7 @@ table 73209702 "Tenancy Contract"
         }
         field(73209599; "Grace End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Grace End Date';
             trigger OnValidate()
             begin
@@ -254,56 +254,56 @@ table 73209702 "Tenancy Contract"
         }
         field(73209600; "Tenant ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
             TableRelation = Customer."No.";
         }
         field(73209601; "Property ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property ID';
             TableRelation = "Property Registration"."Property ID";
         }
         field(73209602; "Unit ID"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Single Unit ID';
             TableRelation = "Item"."No." where("Property ID" = field("Property ID"));
         }
         field(73209603; "Emirates ID"; Code[25])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Emirates ID';
         }
         field(73209604; "Contact Number"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Contact Number';
         }
         field(73209605; "Email Address"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Email Address';
         }
         field(73209606; "Payment Frequency"; Option)
         {
             OptionMembers = " ",Monthly,Quarterly,"Half-Yearly",Yearly;
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209607; "Payment Method"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209608; "Update Contract Status"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Update Contract Status';
             OptionMembers = " ","Initiate Activation Process","Initiate Suspension Process","Initiate Termination Process","Initiate Under Suspension-Unit Released";
         }
         field(73209609; "Tenant Contract Status"; Option)
         {
             Editable = true;
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant Contract Status';
             OptionMembers = " ",Active,Terminated,Suspended,Inactive,"Under Suspension-Unit Released","Active-Contract Renewed","Contract Renewed";
 
@@ -431,123 +431,124 @@ table 73209702 "Tenancy Contract"
         }
         field(73209610; "UnitID"; code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Uniq Unit ID';
         }
         field(73209611; "Created By"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Created By';
         }
         field(73209612; "Handover is Completed"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Handover is Completed';
         }
         field(73209613; "Handover of PDC"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Handover of PDC';
         }
         field(73209614; "Signed TC Document"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Signed TC Document';
         }
         field(73209615; "Handover Unit"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Handover Unit';
         }
         field(73209616; "Merge Unit ID"; Code[10])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Merge Unit ID';
         }
         field(73209617; "Rent Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Annual Rent Amount ';
         }
         field(73209618; "Tenant_License No."; Code[20])
         {
             Caption = 'Tenant Trade License No.';
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
         }
         field(73209619; "Tenant_Licensing Authority"; Text[100])
         {
             Caption = 'Tenant_Licensing Authority';
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
         }
         field(73209620; "Security Deposit Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209621; "Unit Number"; Code[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209622; "Makani Number"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
         }
         field(73209623; "Emirate"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209624; "Community"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209625; "DEWA Number"; Text[50])
         {
             Caption = 'DEWA Number';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209626; "Property Size"; Code[30])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property Size';
         }
         field(73209627; "ID"; Integer)
         {
             Caption = 'Suspended Reason ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209628; "Suspended Reason list"; Text[250])
         {
             Caption = 'Suspended Reason list';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209629; "No of Installments"; Integer)
         {
+            DataClassification = CustomerContent;
             Caption = 'No of Installments';
             Editable = false;
         }
         field(73209630; "Upload Document"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Upload Document';
         }
         field(73209631; "view Document"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'view Document';
         }
         field(73209632; "document URL"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Logo URL';
         }
         field(73209633; "Renewal Contract Status"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Renewal Contract Status';
             OptionMembers = "N/A","Notify Tenant For Renewal";
         }
         field(73209634; "Contract Type"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Type';
             OptionMembers = " ","New Contract","Renewal Contract";
 
@@ -558,7 +559,7 @@ table 73209702 "Tenancy Contract"
         }
         field(73209635; "Renewal Proposal ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Renewal Proposal ID';
             TableRelation = "Contract Renewal".Id WHERE("Final Status" = CONST(Approved));
 
@@ -620,46 +621,46 @@ table 73209702 "Tenancy Contract"
         }
         field(73209636; "Yes/No"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Yes/No';
         }
         field(73209637; "Praposal Type Selected"; Option)
         {
             OptionMembers = " ","Single Unit","Merge Unit";
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209638; "Unit Address"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
         }
         field(73209639; "Usage Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Usage Type';
             NotBlank = true;
         }
         field(73209640; "Unit Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit Type';
         }
         field(73209641; "Single Unit Name"; Text[500])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Single Unit Names';
         }
         field(73209642; "Market Rate per Sq. Ft."; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Market Rate per Sq. Ft. ';
         }
         field(73209643; "Facilities/Amenities"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209644; "Security Deposit Amt. Received"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             begin
                 "Security Amount Pending" := "Security Deposit Amount" - "Security Deposit Amt. Received";
@@ -668,48 +669,49 @@ table 73209702 "Tenancy Contract"
         }
         field(73209645; "Single Rent Calculation"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Single Unit Rent Calculation Type';
             Editable = false;
             OptionMembers = " ","Single Unit with square feet rate","Single Unit with lumpsum square feet rate";
         }
         field(73209646; "Merge Rent Calculation"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Merge Unit Rent Calculation Type';
             OptionMembers = " ","Merged Unit with same square feet","Merged Unit with differential square feet rate","Merged Unit with lumpsum annual amount";
         }
         field(73209647; "Update Data"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Rent Calculation';
             InitValue = 'Update Data';
         }
         field(73209648; "Final Calculation"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Final Calculation';
             InitValue = 'Final Calculation';
             Editable = false;
         }
         field(73209649; "Contract VAT %"; Option)
         {
+            DataClassification = CustomerContent;
             OptionMembers = "0%","5%";
             Editable = false;
         }
         field(73209650; "Contract VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Editable = false;
         }
         field(73209651; "Contract Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Editable = false;
         }
         field(73209652; "Security Amount Pending"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Editable = false;
 
             trigger OnValidate()
@@ -719,179 +721,180 @@ table 73209702 "Tenancy Contract"
         }
         field(73209653; "Security Balanced Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Editable = false;
         }
         field(73209654; "Termination Of Contract"; Option)
         {
+            DataClassification = CustomerContent;
             OptionMembers = " ","Regular Termination","Early Termination","Suspension to Termination";
             Editable = true;
         }
         field(73209655; "Termination Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209656; "Unpaid Rent Due"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209657; "Penalty Charges"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209658; "Damage Charges"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209659; "Service Charges Due"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209660; "Final Refundable Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209661; "Approval Required"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209662; "Approval Stauts"; Enum "Approval Status Enum")
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209663; "Approved By"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209664; "Final Settlement Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209665; "Rent Calculation Link"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Rent Calculation Link';
             Editable = false;
         }
         field(73209666; "Link"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Final Calculation Link';
             Editable = false;
         }
         field(73209667; "Renewal Notification to Tenant"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Renewal Notification to Tenant';
             Editable = true;
         }
         field(73209668; "Tenant Loyalty Check Reminder"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant Loyalty Check Reminder';
             Editable = true;
         }
         field(73209669; "Payment Reminder"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Payment Reminder';
             Editable = false;
         }
         field(73209670; "Previous Status"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Previous Status';
             Editable = true;
         }
         field(73209671; "Vendor ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Vendor ID';
         }
         field(73209672; "Vendor Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Vendor Name';
         }
         field(73209673; "Percentage"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Percentage';
         }
         field(73209674; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount';
         }
         field(73209675; "Calculation Method"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Calculation Method';
             TableRelation = "Calculation Type"."Calculation Type";
         }
 
         field(73209676; "Percentage Type"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Percentage Type';
             OptionMembers = " ","Fixed","Variable";
         }
         field(73209677; "Base Amount Type"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Base Amount Type';
             OptionMembers = " ","Revenue","Collection","Annual Rent","Monthly Rent";
         }
         field(73209678; "Frequency Of Payment"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Frequency Of Payment';
             OptionMembers = " ","Monthly","Quaterly","Half Yearly","Yearly";
         }
 
         field(73209679; "Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Start Date';
             //  Editable = false;
         }
         field(73209680; "End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'End Date';
             //  Editable = false;
         }
 
         field(73209681; "Contract Status"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Status';
             OptionMembers = " ","Active","Terminate";
         }
         field(73209682; "Owner ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Owner ID';
             Editable = false;
             TableRelation = "Owner Profile"."Owner ID";
         }
         field(73209683; "Lessor's Nationality"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Nationality';
         }
         field(73209684; "Lessor's Address"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Address';
         }
         field(73209685; IsCarryForwarded; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209686; "Carry Forward In"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Carry Forward In';
 
             trigger OnValidate()
@@ -908,7 +911,7 @@ table 73209702 "Tenancy Contract"
         }
         field(73209687; "Carry Forward Out"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Carry Forward Out';
             trigger OnValidate()
             begin
@@ -917,7 +920,7 @@ table 73209702 "Tenancy Contract"
         }
         field(73209688; Adjustments; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Adjustments';
 
             trigger OnValidate()
@@ -927,7 +930,7 @@ table 73209702 "Tenancy Contract"
         }
         field(73209689; Refund; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Refund';
 
             trigger OnValidate()
@@ -1054,14 +1057,14 @@ table 73209702 "Tenancy Contract"
 
         if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with square feet rate" then begin
 
-            // ✅ **Delete Existing Records Before Insert**
+            // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
             TCSingleUnitRent.Reset();
             TCSingleUnitRent.SetRange("ID", "Proposal ID");
 
             if TCSingleUnitRent.FindSet() then
                 TCSingleUnitRent.DeleteAll();
 
-            // ✅ **Fetch Data from Single Unit Rent SubPage where Proposal ID = Proposal ID**
+            // Ã¢Å“â€¦ **Fetch Data from Single Unit Rent SubPage where Proposal ID = Proposal ID**
             CRSingleUnitRent.Reset();
             CRSingleUnitRent.SetRange("Proposal ID", "Proposal ID"); // Correct condition
 
@@ -1095,13 +1098,13 @@ table 73209702 "Tenancy Contract"
         else
             if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
 
-                // ✅ Delete Existing Records Before Insert in TC Single LumAnnualAmnt SP
+                // Ã¢Å“â€¦ Delete Existing Records Before Insert in TC Single LumAnnualAmnt SP
                 TCLumpsumUnitRate.Reset();
                 TCLumpsumUnitRate.SetRange("ID", "Proposal ID");
                 if TCLumpsumUnitRate.FindSet() then
                     TCLumpsumUnitRate.DeleteAll();
 
-                // ✅ Fetch Data from CR Single LumAnnualAmnt SP and Insert into TC Single LumAnnualAmnt SP
+                // Ã¢Å“â€¦ Fetch Data from CR Single LumAnnualAmnt SP and Insert into TC Single LumAnnualAmnt SP
                 CRLumpsumUnitRent.Reset();
                 CRLumpsumUnitRent.SetRange("Proposal ID", "Proposal ID");
 
@@ -1141,14 +1144,14 @@ table 73209702 "Tenancy Contract"
             else
                 if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with same square feet" then begin
 
-                    // ✅ **Delete Existing Records Before Insert**
+                    // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                     TCMergeUnitRate.Reset();
                     TCMergeUnitRate.SetRange("ID", "Proposal ID");
 
                     if TCMergeUnitRate.FindSet() then
                         TCMergeUnitRate.DeleteAll();
 
-                    // ✅ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
+                    // Ã¢Å“â€¦ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
                     CRMergeUnitRent.Reset();
                     CRMergeUnitRent.SetRange("Proposal ID", "Proposal ID");
 
@@ -1187,14 +1190,14 @@ table 73209702 "Tenancy Contract"
                 else
                     if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with differential square feet rate" then begin
 
-                        // ✅ **Delete Existing Records Before Insert**
+                        // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                         TCMergediffUnitRate.Reset();
                         TCMergediffUnitRate.SetRange("ID", "Proposal ID");
 
                         if TCMergediffUnitRate.FindSet() then
                             TCMergediffUnitRate.DeleteAll();
 
-                        // ✅ **Fetch Data from CR Merge Diff Unit Rent SubPage and Insert into TC Merge Diff Unit Rent SubPage**
+                        // Ã¢Å“â€¦ **Fetch Data from CR Merge Diff Unit Rent SubPage and Insert into TC Merge Diff Unit Rent SubPage**
                         CRMergediffUnitRent.Reset();
                         CRMergediffUnitRent.SetRange("Proposal ID", "Proposal ID");
 
@@ -1247,14 +1250,14 @@ table 73209702 "Tenancy Contract"
                     else
                         if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with lumpsum annual amount" then begin
 
-                            // ✅ **Delete Existing Records Before Insert**
+                            // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                             TCMergeLumpsumUnitRate.Reset();
                             TCMergeLumpsumUnitRate.SetRange("ID", "Proposal ID");
 
                             if TCMergeLumpsumUnitRate.FindSet() then
                                 TCMergeLumpsumUnitRate.DeleteAll();
 
-                            // ✅ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
+                            // Ã¢Å“â€¦ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
                             CRMergeLumpsumUnitRent.Reset();
                             CRMergeLumpsumUnitRent.SetRange("Proposal ID", "Proposal ID");
 
@@ -1291,14 +1294,14 @@ table 73209702 "Tenancy Contract"
 
                         end;
 
-        // ✅ **Delete Existing Records Before Insert (TC Per Day Rent for Revenue)**
+        // Ã¢Å“â€¦ **Delete Existing Records Before Insert (TC Per Day Rent for Revenue)**
         TCPerDayRevenewUnitRate.Reset();
         TCPerDayRevenewUnitRate.SetRange("Proposal Id", "Proposal ID");
 
         if TCPerDayRevenewUnitRate.FindSet() then
             TCPerDayRevenewUnitRate.DeleteAll();
 
-        // ✅ **Fetch Data from CR Per Day Rent for Revenue and Insert into TC Per Day Rent for Revenue**
+        // Ã¢Å“â€¦ **Fetch Data from CR Per Day Rent for Revenue and Insert into TC Per Day Rent for Revenue**
         CRPerDayRevenewUnitRate.Reset();
         CRPerDayRevenewUnitRate.SetRange("Proposal Id", "Proposal ID");
 
@@ -1307,7 +1310,7 @@ table 73209702 "Tenancy Contract"
             repeat
                 TCPerDayRevenewUnitRate.Init();
 
-                // ✅ Assign a unique primary key if ID is part of the primary key
+                // Ã¢Å“â€¦ Assign a unique primary key if ID is part of the primary key
                 TCPerDayRevenewUnitRate."Proposal Id" := CRPerDayRevenewUnitRate."Proposal Id";
                 TCPerDayRevenewUnitRate."Merge Unit Id" := CRPerDayRevenewUnitRate."Merge Unit Id";
                 TCPerDayRevenewUnitRate."Year" := CRPerDayRevenewUnitRate."Year";
@@ -1353,14 +1356,14 @@ table 73209702 "Tenancy Contract"
 
         if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with square feet rate" then begin
 
-            // ✅ **Delete Existing Records Before Insert**
+            // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
             TCSingleUnitRent.Reset();
             TCSingleUnitRent.SetRange("ID", "Renewal Proposal ID");
 
             if TCSingleUnitRent.FindSet() then
                 TCSingleUnitRent.DeleteAll();
 
-            // ✅ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
+            // Ã¢Å“â€¦ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
             CRSingleUnitRent.Reset();
             CRSingleUnitRent.SetRange("ID", "Renewal Proposal ID");
 
@@ -1400,13 +1403,13 @@ table 73209702 "Tenancy Contract"
 
         else
             if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
-                // ✅ Delete Existing Records Before Insert in TC Single LumAnnualAmnt SP
+                // Ã¢Å“â€¦ Delete Existing Records Before Insert in TC Single LumAnnualAmnt SP
                 TCLumpsumUnitRate.Reset();
                 TCLumpsumUnitRate.SetRange("ID", "Renewal Proposal ID");
                 if TCLumpsumUnitRate.FindSet() then
                     TCLumpsumUnitRate.DeleteAll();
 
-                // ✅ Fetch Data from CR Single LumAnnualAmnt SP and Insert into TC Single LumAnnualAmnt SP
+                // Ã¢Å“â€¦ Fetch Data from CR Single LumAnnualAmnt SP and Insert into TC Single LumAnnualAmnt SP
                 CRLumpsumUnitRent.Reset();
                 CRLumpsumUnitRent.SetRange("ID", "Renewal Proposal ID");
 
@@ -1448,14 +1451,14 @@ table 73209702 "Tenancy Contract"
             else
                 if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with same square feet" then begin
 
-                    // ✅ **Delete Existing Records Before Insert**
+                    // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                     TCMergeUnitRate.Reset();
                     TCMergeUnitRate.SetRange("ID", "Renewal Proposal ID");
 
                     if TCMergeUnitRate.FindSet() then
                         TCMergeUnitRate.DeleteAll();
 
-                    // ✅ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
+                    // Ã¢Å“â€¦ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
                     CRMergeUnitRent.Reset();
                     CRMergeUnitRent.SetRange("ID", "Renewal Proposal ID");
 
@@ -1495,14 +1498,14 @@ table 73209702 "Tenancy Contract"
                 else
                     if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with differential square feet rate" then begin
 
-                        // ✅ **Delete Existing Records Before Insert**
+                        // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                         TCMergediffUnitRate.Reset();
                         TCMergediffUnitRate.SetRange("ID", "Renewal Proposal ID");
 
                         if TCMergediffUnitRate.FindSet() then
                             TCMergediffUnitRate.DeleteAll();
 
-                        // ✅ **Fetch Data from CR Merge Diff Unit Rent SubPage and Insert into TC Merge Diff Unit Rent SubPage**
+                        // Ã¢Å“â€¦ **Fetch Data from CR Merge Diff Unit Rent SubPage and Insert into TC Merge Diff Unit Rent SubPage**
                         CRMergediffUnitRent.Reset();
                         CRMergediffUnitRent.SetRange("ID", "Renewal Proposal ID");
 
@@ -1542,14 +1545,14 @@ table 73209702 "Tenancy Contract"
                     else
                         if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with lumpsum annual amount" then begin
 
-                            // ✅ **Delete Existing Records Before Insert**
+                            // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                             TCMergeLumpsumUnitRate.Reset();
                             TCMergeLumpsumUnitRate.SetRange("ID", "Renewal Proposal ID");
 
                             if TCMergeLumpsumUnitRate.FindSet() then
                                 TCMergeLumpsumUnitRate.DeleteAll();
 
-                            // ✅ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
+                            // Ã¢Å“â€¦ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
                             CRMergeLumpsumUnitRent.Reset();
                             CRMergeLumpsumUnitRent.SetRange("ID", "Renewal Proposal ID");
 
@@ -1597,7 +1600,7 @@ table 73209702 "Tenancy Contract"
             TCPerDayRevenewUnitRate.DeleteAll();
 
 
-        // ✅ **Fetch Data from CR Per Day Rent for Revenue and Insert into TC Per Day Rent for Revenue**
+        // Ã¢Å“â€¦ **Fetch Data from CR Per Day Rent for Revenue and Insert into TC Per Day Rent for Revenue**
         CRPerDayRevenewUnitRate.Reset();
         CRPerDayRevenewUnitRate.SetRange("Contract Renewal Id", "Renewal Proposal ID");
 
@@ -1606,7 +1609,7 @@ table 73209702 "Tenancy Contract"
             repeat
                 TCPerDayRevenewUnitRate.Init();
 
-                // ✅ Assign a unique primary key if ID is part of the primary key
+                // Ã¢Å“â€¦ Assign a unique primary key if ID is part of the primary key
                 TCPerDayRevenewUnitRate."Contract Renewal Id" := CRPerDayRevenewUnitRate."Contract Renewal Id";
                 TCPerDayRevenewUnitRate."Merge Unit Id" := CRPerDayRevenewUnitRate."Merge Unit Id";
                 TCPerDayRevenewUnitRate."Year" := CRPerDayRevenewUnitRate."Year";
@@ -1614,7 +1617,7 @@ table 73209702 "Tenancy Contract"
                 TCPerDayRevenewUnitRate."Sq.Ft" := CRPerDayRevenewUnitRate."Sq.Ft";
                 TCPerDayRevenewUnitRate."Per Day Rent Per Unit" := CRPerDayRevenewUnitRate."Per Day Rent Per Unit";
 
-                // ✅ Ensure unique Line No. to avoid duplicates
+                // Ã¢Å“â€¦ Ensure unique Line No. to avoid duplicates
                 // TCPerDayRevenewUnitRate."Line No." := LineNoCounter;
 
                 TCPerDayRevenewUnitRate.Insert();

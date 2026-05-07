@@ -1,11 +1,11 @@
 table 73209645 "Payment Mode"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Payment Schedule"."Contract ID";
             Caption = 'Contract ID';
             trigger OnValidate()
@@ -38,22 +38,23 @@ table 73209645 "Payment Mode"
         field(73209576; "Contract Start date"; Date)
         {
             Caption = 'Contract Start date';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209577; "Contract End date"; Date)
         {
             Caption = 'Contract End date';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209578; "Tenant Id"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant Id';
             TableRelation = "Payment Schedule"."Contract ID";
             Editable = false;
         }
         field(73209579; "Approval Status"; Option)
         {
+            DataClassification = CustomerContent;
             OptionMembers = " ","Pending","Approved","On-Hold","Rejected";
             trigger OnValidate()
             var
@@ -114,67 +115,71 @@ table 73209645 "Payment Mode"
         field(73209580; "On-hold"; Option)
         {
             OptionMembers = " ","True","False";
+            DataClassification = CustomerContent;
         }
         field(73209581; "Isupdated"; Option)
         {
             OptionMembers = " ","True","False";
+            DataClassification = CustomerContent;
         }
         field(73209582; "Tenant Name"; Text[100])
         {
             Caption = 'Tenant Name';
+            DataClassification = EndUserIdentifiableInformation;
         }
         field(73209583; "Tenant Email"; Text[100])
         {
             Caption = 'Tenant Email';
+            DataClassification = EndUserIdentifiableInformation;
         }
         field(73209584; "Combine Payment Series"; Text[150])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209585; "Combine Due Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209586; "Combine Payment Mode"; Text[150])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Payment Type"."Payment Method";
         }
         field(73209587; "Combine Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209588; "Combine VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209589; "Combine Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209590; "Change Payment Mode"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Payment Type"."Payment Method";
         }
         field(73209591; "Change Payment Series"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209592; "Payment Reminder"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Payment Reminder';
             Editable = false;
         }
         field(73209593; "C_Cheque_Number"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Cheque Number';
         }
         field(73209594; "C_Deposit_Bank"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Deposit Bank';
             TableRelation = "Bank Account";
 
@@ -190,12 +195,12 @@ table 73209645 "Payment Mode"
         }
         field(73209595; "CP_Cheque_Number"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Cheque Number';
         }
         field(73209596; "CP_Deposit_Bank"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Deposit Bank';
             TableRelation = "Bank Account";
 

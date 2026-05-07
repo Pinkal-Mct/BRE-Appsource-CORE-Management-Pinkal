@@ -1,17 +1,17 @@
 table 73209634 "Merged Units"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "Merged Unit ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Merged Unit ID';
             AutoIncrement = true;
         }
         field(73209576; "Property ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property ID';
             TableRelation = "Property Registration"."Property ID";
             trigger OnValidate()
@@ -33,48 +33,48 @@ table 73209634 "Merged Units"
         field(73209577; "Property Name"; Text[100])
         {
             Caption = 'Property Name';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209578; "Unit ID"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit ID';
             TableRelation = "Item"."No."
         where("Property ID" = field("Property ID"));
         }
         field(73209579; "Unit Name"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit Name';
         }
         field(73209580; "Merged Unit Name"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Merged Unit Name';
         }
         field(73209581; "Unit Size"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Unit Size';
         }
         field(73209582; "Market Rate per Square"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Market Rate per Square';
         }
         field(73209583; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Amount';
         }
         field(73209584; "Property Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property Type';
         }
         field(73209585; "Status"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Merge Unit Status';
             OptionMembers = "Free","Occupied","Selected","N/A";
 
@@ -86,27 +86,27 @@ table 73209634 "Merged Units"
         }
         field(73209586; "FixedNumber"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209587; "Spliting Status"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Splitting  Status';
             OptionMembers = " ","Merge","Unmerge";
         }
         field(73209588; "Base Unit of Measure"; Code[10])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Base Unit of Measure';
         }
         field(73209589; "Single Unit Name"; Text[500])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Single Unit Names';
         }
         field(73209590; "Unit Number"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit Number';
         }
     }
@@ -175,7 +175,7 @@ table 73209634 "Merged Units"
         if UnitIdTxt = '' then
             exit;
 
-        // Replace '.' → '|'
+        // Replace '.' Ã¢â€ â€™ '|'
         CleanText := ConvertStr(UnitIdTxt, '.', '|');
 
         UnitList := CleanText.Split('|');
@@ -191,7 +191,7 @@ table 73209634 "Merged Units"
 
             if UnitRec.FindFirst() then begin
 
-                // ✅ SAFE mapping
+                // Ã¢Å“â€¦ SAFE mapping
                 case Rec.Status of
                     Rec.Status::Free:
                         UnitRec."Unit Status" := UnitRec."Unit Status"::Free;

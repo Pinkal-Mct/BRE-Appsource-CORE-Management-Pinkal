@@ -1,35 +1,35 @@
 table 73209681 "Revenue Structure Subpage"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "Year"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Year';
             Editable = false;
         }
         field(73209576; "Period Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Start Date';
             Editable = false;
         }
         field(73209577; "Period End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'End Date';
             Editable = false;
         }
         field(73209578; "Number of Days"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Number of Days';
             Editable = false;
         }
         field(73209579; "Final Annual Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Final Annual Amount';
             Editable = true;
             DecimalPlaces = 2 : 2;
@@ -37,7 +37,7 @@ table 73209681 "Revenue Structure Subpage"
         }
         field(73209580; "Yearly No. of Installment"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Yearly No. of Instalment';
             Editable = true;
 
@@ -51,17 +51,17 @@ table 73209681 "Revenue Structure Subpage"
         }
         field(73209581; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209582; "RS ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'RS ID';
         }
         field(73209583; "Tenant Id"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
         field(73209584; "Total Amount"; Decimal)
@@ -75,43 +75,44 @@ table 73209681 "Revenue Structure Subpage"
         }
         field(73209585; "Link"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Update Data';
             InitValue = 'Update Data';
         }
         field(73209586; "VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'VAT Amount';
             DecimalPlaces = 2 : 2;
 
         }
         field(73209587; "Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
             DecimalPlaces = 2 : 2;
         }
         field(73209588; "Secondary Item Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Secondary Item Type';
         }
         field(73209589; "VAT %"; Option)
         {
+            DataClassification = CustomerContent;
             OptionMembers = "0","5";
             Caption = 'VAT %';
             Editable = false;
         }
         field(73209590; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
         field(73209591; "Payment Frequency"; Option)
         {
             OptionMembers = " ",Monthly,Quarterly,"Half-Yearly",Yearly;
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
             trigger OnValidate()
             var

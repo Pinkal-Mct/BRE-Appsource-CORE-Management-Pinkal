@@ -1,24 +1,24 @@
 table 73209628 "Lease Proposal Details"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = "Proposal ID";
 
     fields
     {
         field(73209575; "Proposal ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209576; "Unit Address"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             TableRelation = "Item"."Unit Address";
         }
 
         field(73209577; "Property ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property ID';
             TableRelation = "Property Registration"."Property ID";
 
@@ -43,13 +43,13 @@ table 73209628 "Lease Proposal Details"
 
         field(73209578; "Property Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property Name';
         }
 
         field(73209579; "Unit ID"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Single Unit ID';
             TableRelation = Item."No."
     where("Property ID" = field("Property ID"), "Unit Status" = const(Free), "MergeSplitOption" = const(Single));
@@ -95,42 +95,42 @@ table 73209628 "Lease Proposal Details"
 
         field(73209580; "Unit Number"; Code[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = Item."Unit Number";
         }
         field(73209581; "Usage Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Usage Type';
             TableRelation = "Item"."Usage Type";
             NotBlank = true;
         }
         field(73209582; "Unit Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit Type';
             TableRelation = "Item"."Unit Type";
         }
         field(73209583; "Unit Size"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit Size';
             TableRelation = "Item"."Unit Size";
         }
         field(73209584; "Facilities/Amenities"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209585; "Tenant Full Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             TableRelation = Customer.Name;
         }
 
         field(73209586; "Tenant ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Customer"."No." WHERE("Approve" = const(true));
             ValidateTableRelation = true;
             trigger OnValidate()
@@ -157,22 +157,22 @@ table 73209628 "Lease Proposal Details"
         }
         field(73209587; "Tenant Contact Phone"; Text[30])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             TableRelation = Customer."Phone No.";
         }
         field(73209588; "Tenant Contact Email"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             TableRelation = Customer."E-Mail";
 
         }
         field(73209589; "Trade License"; Code[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209590; "Legal Representative"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             // trigger OnValidate()
             // var
             //     emailrec: Codeunit "Send Proposal Email";
@@ -184,7 +184,7 @@ table 73209628 "Lease Proposal Details"
         // Lease Terms Group
         field(73209591; "Lease Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             begin
                 CalculateLeaseDuration();
@@ -194,7 +194,7 @@ table 73209628 "Lease Proposal Details"
 
         field(73209592; "Lease End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             // Trasfer from Table Start  
             // trigger OnValidate()
             // var
@@ -209,24 +209,24 @@ table 73209628 "Lease Proposal Details"
 
         field(73209593; "Lease Duration"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Lease Duration';
         }
         field(73209594; "Rent Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = ' Annual Rent Amount';
 
         }
         field(73209595; "Payment Frequency"; Option)
         {
             OptionMembers = " ",Monthly,Quarterly,"Half-Yearly",Yearly;
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209596; "Payment Method"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Payment Type"."Payment Method";
         }
         // field(50122; "Grace Period"; Integer)
@@ -238,59 +238,59 @@ table 73209628 "Lease Proposal Details"
         // Deposit and Fees Group
         field(73209597; "Security Deposit Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
         field(73209598; "Other Fees"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Other Fees ';
         }
         field(73209599; "Refund Conditions"; Text[1000])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         // Responsibilities Group
         field(73209600; "Maintenance Responsibilities"; Option)
         {
             OptionMembers = Tenant,Landlord;
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209601; "Utility Bills Responsibility"; Option)
         {
             OptionMembers = Tenant,Landlord;
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209602; "Insurance Requirements"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         // Conditions for Renewal Group
 
         field(73209603; "Rent Escalation Clause"; Text[1000])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         // Special Conditions Group
         field(73209604; "Early Termination Conditions"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209605; "Restrictions"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209606; "Legal Jurisdiction"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Legal Jurisdiction (e.g., Dubai Courts)';
         }
         field(73209607; "Proposal Status"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Proposal Status';
             OptionMembers = "    ",ProposalSharedtoTenant,Approved,Declined,Completed;
             OptionCaption = '   ,Proposal Shared to Tenant, Approved, Declined, Completed';
@@ -306,7 +306,6 @@ table 73209628 "Lease Proposal Details"
                         case "Proposal Status" of
                             "Proposal Status"::ProposalSharedtoTenant:
                                 begin
-                                    Message('Sending Email for Approval');
                                     emailrec.SendEmail(Rec); // Call your email codeunit
                                 end;
                             "Proposal Status"::Approved:
@@ -343,7 +342,6 @@ table 73209628 "Lease Proposal Details"
                                     if ItemRec.FindSet() then
                                         repeat
                                             ItemRec."Unit Status" := ItemRec."Unit Status"::Selected;
-                                            // Set Unit Status to Selected
                                             ItemRec.Modify();
                                         until ItemRec.Next() = 0;
                                 end;
@@ -378,33 +376,33 @@ table 73209628 "Lease Proposal Details"
         }
         field(73209608; "Emirates ID"; Code[25])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Emirates ID';
         }
 
         field(73209609; "Unit Name"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit Name';
 
         }
 
         field(73209610; "UnitID"; code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'UnitID';
 
         }
 
         field(73209611; "Base Unit of Measure"; Code[10])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Base Unit of Measure';
         }
 
         field(73209612; "Merge Unit ID"; Code[10])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Merge Unit ID';
             TableRelation = "Merged Units"."Merged Unit ID"
     where("Property ID" = field("Property ID"), "Status" = const(Free)); // Filter only "Free" status records
@@ -488,7 +486,7 @@ table 73209628 "Lease Proposal Details"
         }
         field(73209613; "Annual Rent Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Amount ';
             Editable = false;
         }
@@ -496,43 +494,44 @@ table 73209628 "Lease Proposal Details"
         field(73209614; "Praposal Type Selected"; Option)
         {
             OptionMembers = " ","Single Unit","Merge Unit";
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
 
         field(73209615; "Chiller Deposit Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Chiller Deposit Amount';
         }
 
 
         field(73209616; "Electricity Deposit Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Electricity Deposit Amount';
         }
 
         field(73209617; "Renewal Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Renewal Amount';
         }
 
         field(73209618; "Rera Fees"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Rera Fees';
         }
 
         field(73209619; "Ejari Processing Fees"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Ejari Processing Fees';
         }
 
         field(73209620; "Renewal Amount VAT %"; Option)
         {
+            DataClassification = CustomerContent;
             OptionMembers = "0%","5%";
             Caption = 'Renewal Amount VAT %';
             Editable = false;
@@ -540,7 +539,7 @@ table 73209628 "Lease Proposal Details"
 
         field(73209621; "Renewal Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Renewal Amount Including VAT';
 
             trigger OnValidate()
@@ -551,6 +550,7 @@ table 73209628 "Lease Proposal Details"
 
         field(73209622; "Rent Amount VAT %"; Option)
         {
+            DataClassification = CustomerContent;
             OptionMembers = "0%","5%";
             Caption = 'Contract Amount VAT %';
             Editable = false;
@@ -558,13 +558,14 @@ table 73209628 "Lease Proposal Details"
 
         field(73209623; "Rent Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Amount Including VAT';
             Editable = false;
         }
 
         field(73209624; "Ejari Fees VAT %"; Option)
         {
+            DataClassification = OrganizationIdentifiableInformation;
             OptionMembers = "0%","5%";
             Caption = 'Ejari Fees VAT %';
             Editable = false;
@@ -572,7 +573,7 @@ table 73209628 "Lease Proposal Details"
 
         field(73209625; "Ejari Fees Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Ejari Fees Including VAT';
             trigger OnValidate()
             begin
@@ -581,7 +582,7 @@ table 73209628 "Lease Proposal Details"
         }
         field(73209626; "Ejari VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Ejari VAT Amount';
             trigger OnValidate()
             begin
@@ -591,14 +592,14 @@ table 73209628 "Lease Proposal Details"
 
         field(73209627; "Rent VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract VAT Amount';
             Editable = false;
         }
 
         field(73209628; "Renewal VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Renewal VAT Amount';
 
             trigger OnValidate()
@@ -609,50 +610,51 @@ table 73209628 "Lease Proposal Details"
         field(73209629; "License No."; Code[20])
         {
             Caption = 'License No.';
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
         }
 
         field(73209630; "Licensing Authority"; Text[100])
         {
             Caption = 'Licensing Authority';
-            DataClassification = ToBeClassified;
+            DataClassification = OrganizationIdentifiableInformation;
         }
 
         field(73209631; "Makani Number"; Text[50])
         {
             Caption = 'Makani Number';
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
 
         }
         field(73209632; "Emirate"; Code[50])
         {
             Caption = 'Emirate';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
         field(73209633; "Community"; Text[100])
         {
             Caption = 'Community';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209634; "DEWA Number"; Text[50])
         {
             Caption = 'DEWA Number';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209635; "Property Size"; Code[30])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property Size';
         }
         field(73209636; "No of Installments"; Integer)
         {
+            DataClassification = CustomerContent;
             Caption = 'No of Installments';
             Editable = false;
         }
         field(73209637; "Single Rent Calculation"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Single Unit Rent Calculation Type';
             OptionMembers = " ","Single Unit with square feet rate","Single Unit with lumpsum square feet rate";
 
@@ -770,7 +772,7 @@ table 73209628 "Lease Proposal Details"
         }
         field(73209638; "Merge Rent Calculation"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Merge Unit Rent Calculation Type';
             OptionMembers = " ","Merged Unit with same square feet","Merged Unit with differential square feet rate","Merged Unit with lumpsum annual amount";
             trigger OnValidate()
@@ -951,35 +953,35 @@ table 73209628 "Lease Proposal Details"
         }
         field(73209639; "Market Rate per Sq. Ft."; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Market Rate per Sq. Ft. ';
         }
 
         field(73209640; "Single Unit Name"; Text[500])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Single Unit Names';
         }
 
         field(73209641; "TotalFinalAmount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
         field(73209642; "TotalAnnualAmount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
         field(73209643; "TotalRoundOff"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
 
         field(73209644; "Update Data"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Update Data';
             InitValue = 'Update Data';
 
@@ -987,75 +989,75 @@ table 73209628 "Lease Proposal Details"
 
         field(73209645; "Vendor ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Vendor ID';
         }
 
         field(73209646; "Vendor Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Vendor Name';
             Editable = false;
         }
         field(73209647; "Percentage"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Percentage';
         }
         field(73209648; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount';
         }
         field(73209649; "Calculation Method"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Calculation Method';
             TableRelation = "Calculation Type"."Calculation Type";
         }
 
         field(73209650; "Percentage Type"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Percentage Type';
             OptionMembers = " ","Fixed","Variable";
         }
         field(73209651; "Base Amount Type"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Base Amount Type';
             OptionMembers = " ","Revenue","Collection","Annual Rent","Monthly Rent";
         }
         field(73209652; "Frequency Of Payment"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Frequency Of Payment';
             OptionMembers = " ","Monthly","Quaterly","Half Yearly","Yearly";
         }
 
         field(73209653; "Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Start Date';
             Editable = false;
         }
         field(73209654; "End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'End Date';
             Editable = false;
         }
 
         field(73209655; "Contract Status"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Status';
             OptionMembers = " ","Active","Terminate";
         }
 
         field(73209656; "Is any Broker Involved?"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Is any Broker Involved?';
         }
     }

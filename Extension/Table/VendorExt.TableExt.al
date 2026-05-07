@@ -4,7 +4,7 @@ tableextension 73209592 "Vendor Ext" extends Vendor
     {
         field(73209575; "Country"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Country';
             TableRelation = Country;
             trigger OnValidate()
@@ -17,7 +17,7 @@ tableextension 73209592 "Vendor Ext" extends Vendor
         }
         field(73209576; "Emirate Name"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Emirate';
             TableRelation = Emirate.ID
                  where("Country Code" = field(Country));
@@ -37,7 +37,7 @@ tableextension 73209592 "Vendor Ext" extends Vendor
         }
         field(73209577; "Community"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Community';
             TableRelation = Community where("Emirate Name" = field("Emirate Name"));
 
@@ -51,7 +51,7 @@ tableextension 73209592 "Vendor Ext" extends Vendor
         }
         field(73209578; "Vendor Category"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Vendor Category';
             TableRelation = "Vendor Category"."Vendor Category Type";
         }

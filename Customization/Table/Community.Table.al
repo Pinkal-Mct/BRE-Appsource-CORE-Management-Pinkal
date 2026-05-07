@@ -1,24 +1,24 @@
 table 73209597 "Community"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = SystemMetadata;
     DataCaptionFields = ID;
     fields
     {
         field(73209575; "ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
         field(73209576; "Sl No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Sl No.';
             Editable = false;
         }
         field(73209577; "Emirate Name"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = '"Emirate Name"';
             TableRelation = Emirate.ID;
 
@@ -37,12 +37,12 @@ table 73209597 "Community"
         }
         field(73209578; "Community Code"; Code[30])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Community Code';
         }
         field(73209579; "Community Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Community Name';
         }
     }

@@ -51,6 +51,7 @@ page 73209660 "Revenue Recognition Item Sub"
                     revenueAllocation: Record "Revenue Allocation Details";
                     companydata: Record "Company Data";
                     ConfirmFetch: Boolean;
+                    RevenueStartDate: Date;
                 begin
                     if companydata.FindFirst() then
                         if companydata."Revenue Methods" = companydata."Revenue Methods"::"Per Day Rent" then begin
@@ -59,6 +60,7 @@ page 73209660 "Revenue Recognition Item Sub"
                                 Message('Unable to get Revenue Allocation details. Please ensure you are on a valid record.');
                                 exit;
                             end;
+                            RevenueStartDate := DMY2Date(1, RevenueAllocation.Month, RevenueAllocation."Financial Year");
 
                             // Confirm before fetching details
                             ConfirmFetch := Confirm('Do you want to fetch revenue details for the selected Item Type(s) for %1 %2?',
@@ -66,7 +68,7 @@ page 73209660 "Revenue Recognition Item Sub"
 
                             if ConfirmFetch then begin
                                 // Call the fetch procedure with current allocation details
-                                FetchContractDetails(RevenueAllocation);
+                                FetchContractDetails(RevenueAllocation, RevenueStartDate);
 
                                 // Show message about fetched details
                                 Message('Revenue details have been fetched successfully.');
@@ -77,6 +79,7 @@ page 73209660 "Revenue Recognition Item Sub"
                                     Message('Unable to get Revenue Allocation details. Please ensure you are on a valid record.');
                                     exit;
                                 end;
+                                RevenueStartDate := DMY2Date(1, RevenueAllocation.Month, RevenueAllocation."Financial Year");
 
                                 // Confirm before fetching details
                                 ConfirmFetch := Confirm('Do you want to fetch revenue details for the selected Item Type(s) for %1 %2?',
@@ -84,7 +87,7 @@ page 73209660 "Revenue Recognition Item Sub"
 
                                 if ConfirmFetch then begin
                                     // Call the fetch procedure with current allocation details
-                                    FetchContractDetailss(RevenueAllocation);
+                                    FetchContractDetailss(RevenueAllocation, RevenueStartDate);
 
                                     // Show message about fetched details
                                     Message('Revenue details have been fetched successfully.');
@@ -126,7 +129,7 @@ page 73209660 "Revenue Recognition Item Sub"
         RevenueItemDetail.DeleteAll(true);
     end;
 
-    procedure FetchContractDetails(RevenueAllocation: Record "Revenue Allocation Details")
+    procedure FetchContractDetails(RevenueAllocation: Record "Revenue Allocation Details"; RevenueStartdate: Date)
     var
         TenancyContract: Record "Tenancy Contract";
         RevenueStructure: Record "Revenue Structure";
@@ -179,7 +182,7 @@ page 73209660 "Revenue Recognition Item Sub"
                         if RevenueStructure.FindSet() then
                             repeat
                                 // Create Revenue Recognition Detail directly from Revenue Structure
-                                CreateRevenueRecognitionDetailDirect(TenancyContract, RevenueStructure, RevenueAllocation);
+                                CreateRevenueRecognitionDetailDirect(TenancyContract, RevenueStructure, RevenueAllocation, RevenueStartdate);
 
                                 // Mark contract as processed
                                 ContractProcessed := true;
@@ -193,7 +196,7 @@ page 73209660 "Revenue Recognition Item Sub"
         // Process MISSED REVENUE for contracts that started in previous month
         ProcessAllMissedRevenueAllocations(RevenueAllocation);
 
-        ProcessCreditNoteEntries(RevenueAllocationStartDate, RevenueAllocationEndDate, RevenueAllocation.Month, RevenueAllocation."Financial Year");
+        ProcessCreditNoteEntries(RevenueAllocationStartDate, RevenueAllocationEndDate, RevenueAllocation.Month, RevenueAllocation."Financial Year", RevenueStartDate);
 
         // Refresh the page to show new details
         CurrPage.Update(false);
@@ -479,6 +482,7 @@ page 73209660 "Revenue Recognition Item Sub"
 
                 RevenueRecognitionDetails."Total Value" := RevenueRecognitionDetails."No Of Days" * RevenueRecognitionDetails."Per Day Rent";
                 RevenueRecognitionDetails."Owner Share" := RevenueRecognitionDetails."Total Value";
+                RevenueRecognitionDetails."Revenue Start Date" := DMY2Date(1, RevenueRecognitionDetails."Posting Month", RevenueRecognitionDetails."Posting Year");
 
                 // Insert the missed revenue record
                 RevenueRecognitionDetails.Insert(true);
@@ -876,7 +880,7 @@ page 73209660 "Revenue Recognition Item Sub"
     local procedure CreateRevenueRecognitionDetailDirect(
            pTenancyContract: Record "Tenancy Contract";
            pRevenueStructure: Record "Revenue Structure";
-           pRevenueAllocation: Record "Revenue Allocation Details"
+           pRevenueAllocation: Record "Revenue Allocation Details"; RevenueStartDate: Date
        )
     var
         revenuestructuredetails: Record "Revenue Structure Subpage";
@@ -953,6 +957,7 @@ page 73209660 "Revenue Recognition Item Sub"
                     pRevenueAllocation,
                     revenuestructuredetails,
                     SuspendedPeriodDays,
+                  RevenueStartDate,
                     true);
 
             if SuspendedActivePeriodDays > 0 then
@@ -962,6 +967,7 @@ page 73209660 "Revenue Recognition Item Sub"
                     pRevenueAllocation,
                     revenuestructuredetails,
                     SuspendedActivePeriodDays,
+                    RevenueStartDate,
                     true);
 
         end else
@@ -972,6 +978,7 @@ page 73209660 "Revenue Recognition Item Sub"
                     pRevenueAllocation,
                     revenuestructuredetails,
                     NoOfDays,
+                    RevenueStartDate,
                     IsContractSuspended);
 
     end;
@@ -983,6 +990,7 @@ page 73209660 "Revenue Recognition Item Sub"
         pRevenueAllocation: Record "Revenue Allocation Details";
         var revenuestructuredetails: Record "Revenue Structure Subpage";
         NoOfDays: Integer;
+        RevenueStartDate: Date;
         IsSuspendedPeriodAllocation: Boolean
     )
     var
@@ -1022,6 +1030,7 @@ page 73209660 "Revenue Recognition Item Sub"
         RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
         RevenueRecognitionDetails."Unit Type" := pTenancyContract."Usage Type";
         RevenueRecognitionDetails."Item Type" := pRevenueStructure."Secondary Item Type";
+        RevenueRecognitionDetails."Revenue Start Date" := RevenueStartDate;
         RevenueRecognitionDetails."Description" := 'Regular';
 
         case
@@ -1104,7 +1113,7 @@ page 73209660 "Revenue Recognition Item Sub"
 
 
     // New procedure to process credit note entries with debugging
-    procedure ProcessCreditNoteEntries(SelectedMonthStart: Date; SelectedMonthEnd: Date; MonthNo: Integer; FinancialYear: Integer)
+    procedure ProcessCreditNoteEntries(SelectedMonthStart: Date; SelectedMonthEnd: Date; MonthNo: Integer; FinancialYear: Integer; RevenueStartDate: Date)
     var
         RequestCreditNotegrid: Record "Request Credit Note Grid";
         RequestCreditNote: Record "Request Credit Note";
@@ -1182,6 +1191,7 @@ page 73209660 "Revenue Recognition Item Sub"
                             RevenueRecognitionDetails."Grace Start Date" := ContractRec."Grace Start Date";
                             RevenueRecognitionDetails."Grace End Date" := ContractRec."Grace End Date";
                             RevenueRecognitionDetails."Owner Name" := ContractRec."Owner's Name";
+                            RevenueRecognitionDetails."Revenue Start Date" := RevenueStartDate;
 
                             case
                             ContractRec."Praposal Type Selected" of
@@ -1257,7 +1267,7 @@ page 73209660 "Revenue Recognition Item Sub"
         end;
     end;
 
-    procedure FetchContractDetailss(RevenueAllocation: Record "Revenue Allocation Details")
+    procedure FetchContractDetailss(RevenueAllocation: Record "Revenue Allocation Details"; RevenueStartDate: Date)
     var
         TenancyContract: Record "Tenancy Contract";
         RevenueStructure: Record "Revenue Structure";
@@ -1299,7 +1309,7 @@ page 73209660 "Revenue Recognition Item Sub"
                         if RevenueStructure.FindSet() then
                             repeat
                                 // Create Revenue Recognition Detail directly from Revenue Structure
-                                CreateRevenueRecognitionDetailDirects(TenancyContract, RevenueStructure, RevenueAllocation);
+                                CreateRevenueRecognitionDetailDirects(TenancyContract, RevenueStructure, RevenueAllocation, RevenueStartDate);
 
                             until RevenueStructure.Next() = 0;
                     end;
@@ -1308,7 +1318,7 @@ page 73209660 "Revenue Recognition Item Sub"
         // Process MISSED REVENUE for contracts that started in previous month
         ProcessAllMissedRevenueAllocationss(RevenueAllocation);
 
-        ProcessCreditNoteEntriess(RevenueAllocationStartDate, RevenueAllocationEndDate, RevenueAllocation.Month, RevenueAllocation."Financial Year");
+        ProcessCreditNoteEntriess(RevenueAllocationStartDate, RevenueAllocationEndDate, RevenueAllocation.Month, RevenueAllocation."Financial Year", RevenueStartDate);
 
         // Refresh the page to show new details
         CurrPage.Update(false);
@@ -1582,7 +1592,7 @@ page 73209660 "Revenue Recognition Item Sub"
 
                 RevenueRecognitionDetails."Total Value" := RevenueRecognitionDetails."No Of Days" * RevenueRecognitionDetails."Per Day Rent";
                 RevenueRecognitionDetails."Owner Share" := RevenueRecognitionDetails."Total Value";
-
+                RevenueRecognitionDetails."Revenue Start Date" := DMY2Date(1, RevenueRecognitionDetails."Posting Month", RevenueRecognitionDetails."Posting Year");
                 // Insert the missed revenue record
                 RevenueRecognitionDetails.Insert(true);
             end;
@@ -1944,7 +1954,8 @@ page 73209660 "Revenue Recognition Item Sub"
     local procedure CreateRevenueRecognitionDetailDirects(
         pTenancyContract: Record "Tenancy Contract";
         pRevenueStructure: Record "Revenue Structure";
-        pRevenueAllocation: Record "Revenue Allocation Details"
+        pRevenueAllocation: Record "Revenue Allocation Details";
+         RevenueStartDate: Date
     )
     var
         FinalCalculation: Record "Final Calculation";
@@ -2029,6 +2040,7 @@ page 73209660 "Revenue Recognition Item Sub"
                     revenuestructuredetails,
                     PostingDate,
                     SuspendedPeriodDays,
+                     RevenueStartDate,
                     true);
 
             if SuspendedActivePeriodDays > 0 then
@@ -2039,6 +2051,7 @@ page 73209660 "Revenue Recognition Item Sub"
                     revenuestructuredetails,
                     PostingDate,
                     SuspendedActivePeriodDays,
+                    RevenueStartDate,
                     true);
 
         end else
@@ -2050,6 +2063,7 @@ page 73209660 "Revenue Recognition Item Sub"
                     revenuestructuredetails,
                     PostingDate,
                     NoOfDays,
+                   RevenueStartDate,
                     IsContractSuspended);
     end;
 
@@ -2061,6 +2075,7 @@ page 73209660 "Revenue Recognition Item Sub"
         var revenuestructuredetails: Record "Revenue Structure Subpage";
         PostingDate: Date;
         NoOfDays: Integer;
+         RevenueStartDate: Date;
         IsSuspendedPeriodAllocation: Boolean
     )
     var
@@ -2102,6 +2117,8 @@ page 73209660 "Revenue Recognition Item Sub"
         RevenueRecognitionDetails."Unit Type" := pTenancyContract."Usage Type";
         RevenueRecognitionDetails."Item Type" := pRevenueStructure."Secondary Item Type";
         RevenueRecognitionDetails."Description" := 'Regular';
+        RevenueRecognitionDetails."Revenue Start Date" := RevenueStartDate;
+
 
         case
                     pTenancyContract."Praposal Type Selected" of
@@ -2177,7 +2194,8 @@ page 73209660 "Revenue Recognition Item Sub"
         RevenueRecognitionDetails.Insert(true);
     end;
 
-    procedure ProcessCreditNoteEntriess(SelectedMonthStart: Date; SelectedMonthEnd: Date; MonthNo: Integer; FinancialYear: Integer)
+    procedure ProcessCreditNoteEntriess(SelectedMonthStart: Date; SelectedMonthEnd: Date; MonthNo: Integer; FinancialYear: Integer;
+            RevenueStartDate: Date)
     var
         RequestCreditNotegrid: Record "Request Credit Note Grid";
         RequestCreditNote: Record "Request Credit Note";
@@ -2256,6 +2274,7 @@ page 73209660 "Revenue Recognition Item Sub"
                             RevenueRecognitionDetails."Grace Start Date" := ContractRec."Grace Start Date";
                             RevenueRecognitionDetails."Grace End Date" := ContractRec."Grace End Date";
                             RevenueRecognitionDetails."Owner Name" := ContractRec."Owner's Name";
+                            RevenueRecognitionDetails."Revenue Start Date" := RevenueStartDate;
 
                             case
                             ContractRec."Praposal Type Selected" of

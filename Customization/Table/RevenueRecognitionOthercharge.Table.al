@@ -1,53 +1,53 @@
 table 73209678 "RevenueRecognition Othercharge"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
             Caption = 'Entry No.';
         }
         field(73209576; "RS Id"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'RS Id';
         }
         field(73209577; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Tenancy Contract"."Contract ID";
             Editable = false;
         }
         field(73209578; "Tenant Id"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant Id';
             TableRelation = "Tenancy Contract"."Tenant ID";
             Editable = false;
         }
         field(73209579; "Month"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Month';
             Editable = false;
         }
         field(73209580; "No. of Days"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'No. of Days';
             Editable = false;
         }
         field(73209581; "RR - Method 1 (Day)"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'RR - Method 1 (Day)';
             Editable = false;
         }
         field(73209582; "RR - Method 2 (Month)"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'RR - Method 2 (Month)';
             Editable = false;
         }

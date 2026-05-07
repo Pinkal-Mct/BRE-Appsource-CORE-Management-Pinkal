@@ -50,7 +50,7 @@ codeunit 73209603 "Revenue Allocation Posting"
                 LineNumber := GenJournalLineRec."Line No." + 10000;
                 GenJournalLineRec.Init();
                 GenJournalLineRec."Journal Template Name" := 'GENERAL';
-                GenJournalLineRec."Journal Batch Name" := 'REVENUE';
+                GenJournalLineRec."Journal Batch Name" := 'DEFAULT';
                 GenJournalLineRec."Line No." := LineNumber;
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::"G/L Account";
                 GenJournalLineRec."Document No." := RevenueAllocationGrid.Description;
@@ -90,7 +90,7 @@ codeunit 73209603 "Revenue Allocation Posting"
                 LineNumber := GenJournalLineRec."Line No." + 10000;
                 GenJournalLineRec.Init();
                 GenJournalLineRec."Journal Template Name" := 'GENERAL';
-                GenJournalLineRec."Journal Batch Name" := 'REVENUE';
+                GenJournalLineRec."Journal Batch Name" := 'DEFAULT';
                 GenJournalLineRec."Line No." := LineNumber;
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::"G/L Account";
                 GenJournalLineRec."Document No." := OtherChargesAllocationGrid.Description;

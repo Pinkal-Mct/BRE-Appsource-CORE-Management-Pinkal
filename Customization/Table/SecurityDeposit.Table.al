@@ -1,19 +1,19 @@
 table 73209684 "Security Deposit"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = "Security Deposit ID";
 
     fields
     {
         field(73209575; "Security Deposit ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Security Deposit ID';
             AutoIncrement = true;
         }
         field(73209576; "Tenant Full Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Tenant Full Name';
             TableRelation = Customer.Name;
 
@@ -42,7 +42,7 @@ table 73209684 "Security Deposit"
         }
         field(73209577; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
 
             trigger OnValidate()
@@ -55,103 +55,103 @@ table 73209684 "Security Deposit"
         }
         field(73209578; "Contract Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Start Date';
         }
         field(73209579; "Contract End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract End Date';
         }
 
         field(73209580; "Security Deposit Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Security Deposit Amount';
         }
 
         field(73209581; "New_Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'New Contract ID';
             TableRelation = "Tenancy Contract"."Contract ID";
         }
 
         field(73209582; "New_Tenant Full Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'New Tenant Full Name';
         }
 
         field(73209583; "New_Contract Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'New Contract Start Date';
         }
 
         field(73209584; "New_Contract End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'New Contract End Date';
         }
 
         field(73209585; "Carry Forward Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Enter Amount';
         }
 
         field(73209586; "Security Deposit Amt. Pending"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Security Deposit Amount Pending';
             Editable = false; // Make it non-editable since it's auto-calculated
         }
 
         field(73209587; "Narration"; Text[500])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Narration';
         }
         field(73209588; "Balance Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Available Security Deposit Amount';
         }
 
         field(73209589; "New Security Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Security Deposit Amount';
 
         }
 
         field(73209590; "Security Deposit Amt. Received"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Security Deposit Amount Received';
         }
         field(73209591; "Property Classification"; Text[30])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property Classification';
             tableRelation = "Tenancy Contract"."Property Classification";
         }
         field(73209592; Status; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Status';
             OptionMembers = Open,Posted;
         }
         field(73209593; "Tenant ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
             Editable = false;
         }
         field(73209594; "Posting Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Posting Date';
         }
     }

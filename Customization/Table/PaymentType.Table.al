@@ -1,18 +1,18 @@
 table 73209652 "Payment Type"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = SystemMetadata;
     DataCaptionFields = "Payment ID";
     fields
     {
         field(73209575; "Payment ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
         field(73209576; "Payment Method"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'Payment Method';
         }
     }

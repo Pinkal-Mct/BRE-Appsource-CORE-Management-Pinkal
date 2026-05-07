@@ -1,12 +1,12 @@
 table 73209577 "Adjustment Security Deposit"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = ID;
     fields
     {
         field(73209575; "ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
             Editable = false;
         }
@@ -53,14 +53,14 @@ table 73209577 "Adjustment Security Deposit"
         }
         field(73209580; "Status"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             OptionCaption = 'Pending,Approved';
             OptionMembers = Pending,Approved;
             Editable = false;
         }
         field(73209581; "Security Amount Status"; Option)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             OptionCaption = 'Termination Charges';
             OptionMembers = "Termination Charges";
             Editable = false;
@@ -94,32 +94,32 @@ table 73209577 "Adjustment Security Deposit"
         }
         field(73209582; "Payment Series"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Payment Series';
         }
         field(73209583; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount';
         }
         field(73209584; "VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'VAT Amount';
         }
         field(73209585; "Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
         }
         field(73209586; "Due Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Due Date';
         }
         field(73209587; "Main Security Deposit"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Main Security Deposit';
             Editable = false;
         }

@@ -1,17 +1,17 @@
 table 73209686 "Security Deposit Entry"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
             Editable = false;
         }
         field(73209576; "Security Deposit ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Adjustment Security Deposit".ID;
         }
         field(73209577; "Contract ID"; Integer)

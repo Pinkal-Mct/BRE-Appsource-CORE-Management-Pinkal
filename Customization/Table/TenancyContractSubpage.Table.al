@@ -1,16 +1,16 @@
 table 73209703 "Tenancy Contract Subpage"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "ContractID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
         field(73209576; "Secondary Item Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Secondary Item';
             TableRelation = Item where("Item Type Template" = const("Item Type Template Enum"::"Secondary Item"));
             Editable = false;
@@ -28,7 +28,7 @@ table 73209703 "Tenancy Contract Subpage"
         }
         field(73209577; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount';
             trigger OnValidate()
             begin
@@ -40,6 +40,7 @@ table 73209703 "Tenancy Contract Subpage"
             OptionMembers = "0%","5%";
             Caption = 'VAT %';
             Editable = false;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             begin
                 CalcVATAndTotal();
@@ -47,7 +48,7 @@ table 73209703 "Tenancy Contract Subpage"
         }
         field(73209579; "VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'VAT Amount';
             Editable = false;
             trigger OnValidate()
@@ -63,7 +64,7 @@ table 73209703 "Tenancy Contract Subpage"
         }
         field(73209580; "Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
             Editable = false;
             trigger OnValidate()
@@ -74,62 +75,63 @@ table 73209703 "Tenancy Contract Subpage"
         }
         field(73209581; "Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Start Date';
             Editable = false;
         }
         field(73209582; "End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'End Date';
             Editable = false;
         }
         field(73209583; "Generate Payment Schedule"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Generate Payment Schedule';
             InitValue = 'Generate Payment Schedule';
             Editable = false;
         }
         field(73209584; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209585; "Payment Type"; Option)
         {
             OptionMembers = "","One Time Payment","Installment";
             Caption = 'Payment Type';
+            DataClassification = CustomerContent;
         }
         field(73209586; Invoiced; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Invoiced';
         }
         field(73209587; "Link"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revenue Structure Link';
             Editable = false;
         }
         field(73209588; "TenantID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
         field(73209589; "ProposalID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Proposal ID';
         }
         field(73209590; "Contract Renewal ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Renewal ID';
         }
         field(73209591; "Invoiced and Paid"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Invoiced and Paid';
 
             trigger OnValidate()

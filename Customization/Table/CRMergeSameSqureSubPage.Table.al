@@ -1,16 +1,16 @@
 table 73209607 "CR Merge SameSqure SubPage"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
         field(73209575; "ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209576; "MS_Merged Unit ID"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             var
                 LeaseProposal: Record "Contract Renewal";
@@ -29,67 +29,67 @@ table 73209607 "CR Merge SameSqure SubPage"
         }
         field(73209577; "MS_Unit ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209578; "MS_Year"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209579; "MS_Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209580; "MS_End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209581; "MS_Number of Days"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209582; "MS_Unit Sq Ft"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209583; "MS_Rate per Sq.Ft"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209584; "MS_Rent Increase %"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209585; "MS_Annual Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209586; "MS_Round off"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209587; "MS_Final Annual Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209588; "MS_Per Day Rent"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209589; "Merge SameSqure Rent1"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             InitValue = 'Click Here For Get Data.';
             Caption = 'Click Here For Get Data.';
         }
         field(73209590; "MS_Line No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209591; "PDR Revenue Allocation Link"; Code[20])
         {
             Caption = 'PDR Revenue Allocation Link';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209592; "TotalFinalAmount"; Decimal)
         {

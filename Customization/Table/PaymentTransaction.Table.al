@@ -1,18 +1,18 @@
 table 73209651 "Payment Transaction"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = "PT Id";
     fields
     {
         field(73209575; "PT Id"; Code[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
 
         field(73209576; "Tenant Id"; code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = Customer."No.";
         }
         field(73209577; "Tenant Name"; Text[100])
@@ -26,11 +26,12 @@ table 73209651 "Payment Transaction"
         {
 
             TableRelation = "Tenancy Contract";
+            DataClassification = CustomerContent;
         }
 
         field(73209579; "Approval Status"; Enum "Approval Status Enum")
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
 

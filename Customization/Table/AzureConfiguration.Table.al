@@ -1,46 +1,46 @@
 table 73209582 "AzureConfiguration"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = SystemMetadata;
     fields
     {
         field(73209575; Id; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             AutoIncrement = true;
         }
         field(73209576; "SAS URL"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = SystemMetadata;
             Caption = 'SAS URL';
             Editable = true;
         }
         field(73209577; "Storage Account Name"; Text[50])
         {
-            DataClassification = CustomerContent;
+            DataClassification = SystemMetadata;
             Caption = 'Storage Account Name';
             Editable = true;
         }
         field(73209578; "Client ID"; Text[50])
         {
-            DataClassification = CustomerContent;
+            DataClassification = SystemMetadata;
             Caption = 'Client ID (Application ID)';
             Editable = true;
         }
         field(73209579; "Client Secret"; Text[100])
         {
-            DataClassification = CustomerContent;
+            DataClassification = SystemMetadata;
             Caption = 'Client Secret';
             Editable = true;
         }
         field(73209580; "Tenant ID"; Text[50])
         {
-            DataClassification = CustomerContent;
+            DataClassification = SystemMetadata;
             Caption = 'Tenant ID';
             Editable = true;
         }
         field(73209581; "Default Container"; Text[50])
         {
-            DataClassification = CustomerContent;
+            DataClassification = SystemMetadata;
             Caption = 'Default Container';
             Editable = true;
         }

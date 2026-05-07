@@ -1,60 +1,60 @@
 table 73209692 "Sub Merged Units"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
         field(73209575; "Merged Unit ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Merged Unit ID';
 
         }
         field(73209576; "Property ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Property ID';
         }
         field(73209577; "Unit ID"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit ID';
 
         }
         field(73209578; "Unit Name"; Code[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit Name';
 
         }
         field(73209579; "Unit Size"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Unit Size';
         }
 
         field(73209580; "Market Rate per Square"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Market Rate per Square';
         }
 
         field(73209581; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Total Amount';
         }
 
         field(73209582; "Base Unit of Measure"; Code[10])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Base Unit of Measure';
 
         }
 
         field(73209583; "Single Unit Name"; Text[500])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Single Unit Names';
         }
     }

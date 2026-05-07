@@ -1,84 +1,84 @@
 table 73209656 "Pending Receviable Grid"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     Caption = 'Pending Receviable Grid';
     fields
     {
         field(73209575; RevenueDescription; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revenue Description';
         }
         field(73209576; RevisedAmount; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revised Amount';
         }
         field(73209577; RevisedVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revised VAT';
         }
         field(73209578; RevisedAmountInclVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revised Amount Incl. VAT';
         }
         field(73209579; ReceiptsAmount; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Receipts Amount';
         }
         field(73209580; ReceiptsVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Receipts VAT';
         }
         field(73209581; ReceiptsAmountInclVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Receipts Amount Incl. VAT';
         }
         field(73209582; DifferenceAmount; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Difference Amount';
         }
         field(73209583; DifferenceVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Difference VAT';
         }
         field(73209584; DifferenceAmountInclVAT; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Difference Amount Incl. VAT';
         }
         field(73209585; "Contract ID"; Integer)
         {
             Caption = 'Contract ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209586; "Entry No"; Integer)
         {
             Caption = 'Entry No';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209587; "Termination Date"; Date)
         {
             Caption = 'Termination Date';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209588; "Total Refundable"; Decimal)
         {
             Caption = 'Total Refundable';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209589; "Total Receivable"; Decimal)
         {
             Caption = 'Total Receivable';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209590; "Total Revised Amount"; Decimal)
         {
@@ -119,27 +119,27 @@ table 73209656 "Pending Receviable Grid"
         field(73209596; "Payment Type"; Text[250])
         {
             Caption = 'Payment Type';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209597; "Tenant ID"; Code[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
         field(73209598; "Unit Type"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Unit Type';
         }
         field(73209599; "GeneratedCRMemoSD"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Generated CR Memo Security Deposit';
             InitValue = false;
         }
         field(73209600; "CrditNoteID Security Deposit"; Code[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Credit Note ID Security Deposit';
         }
     }

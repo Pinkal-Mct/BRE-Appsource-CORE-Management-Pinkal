@@ -1,17 +1,17 @@
 table 73209627 ItemSubPageTable
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
         field(73209575; Id; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = Item;
         }
         field(73209576; UnitName; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
 

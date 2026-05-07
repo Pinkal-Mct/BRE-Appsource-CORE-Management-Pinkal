@@ -1,13 +1,13 @@
 table 73209648 "Payment Schedule"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = "Contract ID";
 
     fields
     {
         field(73209575; "Tenant Id"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant Id';
             TableRelation = "Lease Proposal Details"."Tenant ID";
             Editable = false;
@@ -15,7 +15,7 @@ table 73209648 "Payment Schedule"
 
         field(73209576; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Tenancy Contract"."Contract ID" WHERE("Tenant Contract Status" = CONST(Active));
             Caption = 'Contract ID';
 
@@ -67,7 +67,7 @@ table 73209648 "Payment Schedule"
         field(73209579; "Contract End date"; Date)
         {
             Caption = 'Contract End date';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209580; "Total VAT Amount"; Decimal)
         {
@@ -78,29 +78,30 @@ table 73209648 "Payment Schedule"
         }
         field(73209581; "Tenant Name"; Text[100])
         {
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Tenant Name';
 
         }
         field(73209582; "Property Classification"; Text[100])
         {
             Caption = 'Property Classification';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209583; "Contract Status"; Text[100])
         {
             Caption = 'Contract Status';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209584; "Contract Start date"; Date)
         {
             Caption = 'Contract Start date';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209585; "Property ID"; Code[40])
         {
             Caption = 'Property ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
 

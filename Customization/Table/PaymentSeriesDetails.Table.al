@@ -1,27 +1,27 @@
 table 73209650 "Payment Series Details"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
         field(73209575; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209576; "payment Series"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Payment Series';
         }
         field(73209577; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount';
         }
         field(73209578; "Due Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Due Date';
         }
 
@@ -30,65 +30,68 @@ table 73209650 "Payment Series Details"
 
             TableRelation = "Payment Type"."Payment Method";
             Caption = 'Payment Mode';
+            DataClassification = CustomerContent;
         }
 
         field(73209580; "Cheque Number"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Cheque Number';
         }
         field(73209581; "Deposite Bank"; Code[100])
         {
             Caption = 'Deposite Bank';
             TableRelation = "Bank Account"."No.";
+            DataClassification = CustomerContent;
         }
         field(73209582; "Deposite Status"; Option)
         {
             OptionMembers = "-","N","Y";
             Caption = 'Deposit Status';
+            DataClassification = CustomerContent;
         }
         field(73209583; "Payment Status"; Enum "Payment Status")
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Payment Status';
         }
         field(73209584; "Cheque Status"; Enum "PDC Status Type Enum")
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Cheque Status';
         }
         field(73209585; "Old Cheque"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Old Cheque';
         }
         field(73209586; "View"; Text[2048])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'View';
             InitValue = 'View';
         }
         field(73209587; "View Document URL"; Text[2048])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'View Document URL';
         }
 
         field(73209588; "Approval Status"; Enum "Approval Status Enum")
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209589; "Payment Transaction Id"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209590; "Contract Id"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209591; "Tenant Id"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
 

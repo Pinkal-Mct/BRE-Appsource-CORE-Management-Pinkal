@@ -254,23 +254,25 @@ page 73209636 "Unearned Revenue Report Card"
         unearnedRevenueBuffer: Record "Sub Unearned Revenue Report"; // your buffer table
         SuspendedReasonRec: Record SuspendReasonTable; // Replace with actual table name
         FinalCalculationRec: Record "Final Calculation"; // Replace with actual table name
-        paymentSchedule: Record "Payment Schedule2"; // Assumed name
+        paymentSchedule: Record "Payment Schedule2";
+        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
+        SalesCreditMemoLines: Record "Sales Cr.Memo Line";
+        PostedSalesInvoiceHeader: Record "Sales Invoice Header";
+        SalesInvoiceLines: Record "Sales Invoice Line";    // Assumed name
         NewLineNo: Integer;
         StartDate, EndDate : Date;
         SuspendedDate: Date;
         TerminationDate: Date;
-        TotalPaidAmount: Decimal;
+        TotalInvoiceRentAmount: Decimal;
         TotalInvoicedAmount: Decimal;
         TotalNoofDays: Integer;
         UnearnedNoofday: Integer;
         PerDayrent: Decimal;
         TotalMonthlyRevenue: Decimal;
         RevenueAllocatedDuringYear: Decimal;
-        RevenueAllocation: Decimal;
         TotalEarnedAmount: Decimal;
-        TotalCreditnode: Decimal;
+        TotalCreditNote: Decimal;
         TotalCreditAmountIssued: Decimal;
-        UnearnedRevenueAllocation: Decimal;
     begin
         ClearSubgridData(); // Always clear before inserting
 
@@ -286,75 +288,108 @@ page 73209636 "Unearned Revenue Report Card"
             tenancyContract."Tenant Contract Status"::"Contract Renewed");
 
         // ✅ Filter contracts that fall within OR span the date range
-        tenancyContract.SetFilter("Contract Start Date", '..%1', EndDate); // starts on or before end date
-        tenancyContract.SetFilter("Contract End Date", '%1..', StartDate); // ends on or after start date
+        // tenancyContract.SetFilter("Contract Start Date", '..%1', EndDate); // starts on or before end date
+        // tenancyContract.SetFilter("Contract End Date", '%1..', StartDate); // ends on or after start date
 
         if tenancyContract.FindSet() then
             repeat
                 Clear(unearnedRevenueBuffer);
                 Clear(SuspendedReasonRec);
                 Clear(FinalCalculationRec);
-                TotalPaidAmount := 0;
+                TotalInvoiceRentAmount := 0;
                 TotalInvoicedAmount := 0;
                 TotalMonthlyRevenue := 0;
                 RevenueAllocatedDuringYear := 0;
+                TotalEarnedAmount := 0;
+                TotalCreditNote := 0;
+                TotalCreditAmountIssued := 0;
+                TotalNoofDays := 0;
+                PerDayrent := 0;
+                UnearnedNoofday := 0;
 
-
-                // 🔹1. Calculate Total Paid before Start Date
-                paymentSchedule.Reset();
-                paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
-                paymentSchedule.SetRange("Secondary Item Type", 'Rent');
-                paymentSchedule.SetRange("Due Date", tenancyContract."Contract Start Date", StartDate - 1);
-                paymentSchedule.SetRange("Invoiced", true);
-
-                if paymentSchedule.FindSet() then
+                //////////////////////////////// Totatl Invoiced Amount //////////////////////////////
+                PostedSalesInvoiceHeader.Reset();
+                PostedSalesInvoiceHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                PostedSalesInvoiceHeader.SetFilter("Posting Date", '<%1', StartDate);
+                if PostedSalesInvoiceHeader.FindSet() then
                     repeat
-                        TotalPaidAmount += paymentSchedule."Amount Including VAT";
-                    until paymentSchedule.Next() = 0;
+                        paymentSchedule.Reset();
+                        paymentSchedule.SetRange("Invoice ID", PostedSalesInvoiceHeader."No.");
+                        paymentSchedule.SetRange("Contract ID", PostedSalesInvoiceHeader."Contract ID");
+                        paymentSchedule.SetRange("Secondary Item Type", 'Rent');
+                        paymentSchedule.SetRange(Invoiced, true);
+                        paymentSchedule.SetLoadFields("Invoice ID", "Contract ID", "Secondary Item Type", Amount);
+                        if paymentSchedule.FindSet() then
+                            repeat
+                                TotalInvoiceRentAmount += paymentSchedule.Amount;
+                            until paymentSchedule.Next() = 0;
+
+                    until PostedSalesInvoiceHeader.Next() = 0;
+                //////////////////////////////// END Total Invoiced Amount ///////////////////////////////////
 
 
-                paymentSchedule.Reset();
-                paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
-                paymentSchedule.SetRange("Secondary Item Type", 'Rent');
-                paymentSchedule.SetRange("Due Date", tenancyContract."Contract Start Date", StartDate - 1);
-                paymentSchedule.SetRange("Payment Status", 'Received');
 
-                if paymentSchedule.FindSet() then
+                ///////////////////////////  TOTAL CREDITNOTE AMOUNT /////////////////////////
+                SalesCrMemoHeader.Reset();
+                SalesCrMemoHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                SalesCrMemoHeader.SetFilter("Posting Date", '<%1', StartDate);
+                if SalesCrMemoHeader.FindSet() then
                     repeat
-                        TotalEarnedAmount += paymentSchedule."Amount Including VAT";
-                    until paymentSchedule.Next() = 0;
+                        SalesCreditMemoLines.Reset();
+                        SalesCreditMemoLines.SetRange("Document No.", SalesCrMemoHeader."No.");
+                        SalesCreditMemoLines.SetRange(Description, 'Rent');
+                        SalesCreditMemoLines.SetLoadFields("Document No.", Description, "Unit Price");
+                        if SalesCreditMemoLines.FindSet() then
+                            repeat
+                                TotalCreditNote += SalesCreditMemoLines."Unit Price";
+                            until SalesCreditMemoLines.Next() = 0;
+                    // TotalCreditAmountIssued += SalesCrMemoHeader.Amount;
+                    until SalesCrMemoHeader.Next() = 0;
 
-                paymentSchedule.Reset();
-                paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
-                paymentSchedule.SetRange("Secondary Item Type", 'Rent');
-                paymentSchedule.SetRange("Due Date", tenancyContract."Contract Start Date", StartDate - 1);
+                /////////////////////////// END  TOTAL CREDITNOTE AMOUNT /////////////////////////
 
-                if paymentSchedule.FindSet() then
+                ///////////////////////////  TOTAL INVOICED AMOUNT /////////////////////////
+
+
+                PostedSalesInvoiceHeader.Reset();
+                PostedSalesInvoiceHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                PostedSalesInvoiceHeader.SetRange("Posting Date", StartDate, EndDate);
+                if PostedSalesInvoiceHeader.FindSet() then
                     repeat
-                        TotalCreditnode += paymentSchedule."Credit Note Amount";
-                    until paymentSchedule.Next() = 0;
+                        paymentSchedule.Reset();
+                        paymentSchedule.SetRange("Invoice ID", PostedSalesInvoiceHeader."No.");
+                        paymentSchedule.SetRange("Contract ID", PostedSalesInvoiceHeader."Contract ID");
+                        paymentSchedule.SetRange("Secondary Item Type", 'Rent');
+                        paymentSchedule.SetRange(Invoiced, true);
+                        paymentSchedule.SetLoadFields("Invoice ID", "Contract ID", "Secondary Item Type", Amount);
+                        if paymentSchedule.FindSet() then
+                            repeat
+                                TotalInvoicedAmount += paymentSchedule.Amount;
+                            until paymentSchedule.Next() = 0;
 
-                paymentSchedule.Reset();
-                paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
-                paymentSchedule.SetRange("Secondary Item Type", 'Rent');
-                paymentSchedule.SetRange("Due Date", StartDate, EndDate);
-                paymentSchedule.SetRange("Invoiced", true);
+                    until PostedSalesInvoiceHeader.Next() = 0;
 
-                if paymentSchedule.FindSet() then
+                /////////////////////////// END TOTAL INVOICED AMOUNT /////////////////////////
+
+
+                ///////////////////////////  TOTAL Credit AMOUNT issued /////////////////////////
+                SalesCrMemoHeader.Reset();
+                SalesCrMemoHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                SalesCrMemoHeader.SetRange("Posting Date", StartDate, EndDate);
+                if SalesCrMemoHeader.FindSet() then
                     repeat
-                        TotalInvoicedAmount += paymentSchedule."Amount Including VAT";
-                    until paymentSchedule.Next() = 0;
+                        SalesCreditMemoLines.Reset();
+                        SalesCreditMemoLines.SetRange("Document No.", SalesCrMemoHeader."No.");
+                        SalesCreditMemoLines.SetRange(Description, 'Rent');
+                        SalesCreditMemoLines.SetLoadFields("Document No.", Description, "Unit Price");
+                        if SalesCreditMemoLines.FindSet() then
+                            repeat
+                                TotalCreditAmountIssued += SalesCreditMemoLines."Unit Price";
+                            until SalesCreditMemoLines.Next() = 0;
+                    // TotalCreditAmountIssued += SalesCrMemoHeader.Amount;
+                    until SalesCrMemoHeader.Next() = 0;
 
-                paymentSchedule.Reset();
-                paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
-                paymentSchedule.SetRange("Secondary Item Type", 'Rent');
-                paymentSchedule.SetRange("Due Date", StartDate, EndDate);
-                paymentSchedule.SetRange("Invoiced", true);
 
-                if paymentSchedule.FindSet() then
-                    repeat
-                        TotalCreditAmountIssued += paymentSchedule."Credit Note Amount";
-                    until paymentSchedule.Next() = 0;
 
                 NewLineNo := GetNextLineNo();
 
@@ -385,19 +420,18 @@ page 73209636 "Unearned Revenue Report Card"
                 unearnedRevenueBuffer."Owner Name" := tenancyContract."Owner's Name";
                 unearnedRevenueBuffer."Contract Value" := tenancyContract."Annual Rent Amount";
                 unearnedRevenueBuffer."Contract Status" := Format(tenancyContract."Tenant Contract Status");
-                unearnedRevenueBuffer."Opening Balance" := (TotalPaidAmount + TotalCreditnode) - TotalEarnedAmount;
+                TotalEarnedAmount := CalculateRevenueAllocation(tenancyContract."Contract ID", Rec."Starting Date Year", Rec."Ending Date Year");
+                unearnedRevenueBuffer."Opening Balance" := (TotalInvoiceRentAmount + TotalCreditNote) - TotalEarnedAmount;
                 unearnedRevenueBuffer."Invoice Raised During the Year" := TotalInvoicedAmount + TotalCreditAmountIssued;
                 unearnedRevenueBuffer."Suspension Date" := SuspendedDate;
                 unearnedRevenueBuffer."Termination Date" := TerminationDate;
 
-                if (tenancyContract."Tenant Contract Status" <> tenancyContract."Tenant Contract Status"::Terminated) and (tenancyContract."Tenant Contract Status" <> tenancyContract."Tenant Contract Status"::"Contract Renewed") then begin
 
-                    TotalNoofDays := unearnedRevenueBuffer."End Date" - unearnedRevenueBuffer."Start Date" + 1;
-                    PerDayrent := unearnedRevenueBuffer."Contract Value" / TotalNoofDays;
-                    UnearnedNoofday := unearnedRevenueBuffer."End Date" - EndDate;
-                    unearnedRevenueBuffer.CalculatedUnearnedRevBalance := PerDayrent * UnearnedNoofday;
-                end else
-                    unearnedRevenueBuffer.CalculatedUnearnedRevBalance := 0;
+                TotalNoofDays := unearnedRevenueBuffer."End Date" - unearnedRevenueBuffer."Start Date" + 1;
+                PerDayrent := unearnedRevenueBuffer."Contract Value" / TotalNoofDays;
+                UnearnedNoofday := unearnedRevenueBuffer."End Date" - EndDate;
+                unearnedRevenueBuffer.CalculatedUnearnedRevBalance := PerDayrent * UnearnedNoofday;
+
 
                 case tenancyContract."Praposal Type Selected" of
                     tenancyContract."Praposal Type Selected"::"Single Unit":
@@ -408,10 +442,10 @@ page 73209636 "Unearned Revenue Report Card"
                         unearnedRevenueBuffer."Unit Name" := '';
                 end;
 
-                RevenueAllocation := CalculateRevenueAllocation(tenancyContract."Contract ID", Rec."Starting Date Year");
-                UnearnedRevenueAllocation := CalculateUnearnedRevenueAllocation(tenancyContract."Contract ID");
-                unearnedRevenueBuffer."RevenueAllocated DuringtheYear" := RevenueAllocation;
-                unearnedRevenueBuffer."Unearned Revenue Balance" := UnearnedRevenueAllocation;
+                unearnedRevenueBuffer."RevenueAllocated DuringtheYear" := CalculateRevenueAllocationdurngyear(tenancyContract."Contract ID", Rec."Starting Date Year", Rec."Ending Date Year");
+
+                unearnedRevenueBuffer."Unearned Revenue Balance" := unearnedRevenueBuffer."Opening Balance" + unearnedRevenueBuffer."Invoice Raised During the Year" - unearnedRevenueBuffer."RevenueAllocated DuringtheYear";
+
                 unearnedRevenueBuffer."Shortfall/Excess" := unearnedRevenueBuffer."Unearned Revenue Balance" - unearnedRevenueBuffer.CalculatedUnearnedRevBalance;
                 unearnedRevenueBuffer."Report Period" := Format(Rec."Starting Date Year") + ' - ' + Format(Rec."Ending Date Year");
 
@@ -419,59 +453,56 @@ page 73209636 "Unearned Revenue Report Card"
             until tenancyContract.Next() = 0;
     end;
 
-    local procedure CalculateRevenueAllocation(ContractID: Integer; StartDate: Date): Decimal
+    local procedure CalculateRevenueAllocation(ContractID: Integer; StartDate: Date; EndDate: Date): Decimal
     var
         RevenueAllocationRec: Record "Revenue Allocation SubGrid";
+        RevenueallocationHeader: Record "Revenue Allocation Details"; // Replace with your actual table name
         TotalRevenueAllocated: Decimal;
         StartYear: Integer;
     begin
         TotalRevenueAllocated := 0;
 
-        StartYear := Date2DMY(StartDate, 3);
-
-        RevenueAllocationRec.Reset();
-        RevenueAllocationRec.SetRange("Contract ID", ContractID);
-        RevenueAllocationRec.SetRange("Posting Year", StartYear);
-        RevenueAllocationRec.SetFilter(Description, '(%1|%2)', 'Regular', 'Credit Note');
-        RevenueAllocationRec.SetFilter("Posting Month", GetMonthFilter(Rec."Starting Date Year", Rec."Ending Date Year"));
-
-        if RevenueAllocationRec.FindSet() then
+        RevenueallocationHeader.Reset();
+        RevenueallocationHeader.SetRange(Status, RevenueallocationHeader.Status::Approve);
+        if RevenueallocationHeader.FindSet() then
             repeat
+                RevenueAllocationRec.Reset();
+                RevenueAllocationRec.SetRange("Header No.", RevenueallocationHeader."No.");
+                RevenueAllocationRec.SetRange("Contract ID", ContractID); // Assuming this field exists
+                RevenueAllocationRec.SetFilter("Revenue Start Date", '<%1', StartDate);
+                RevenueAllocationRec.SetLoadFields("Header No.", "Contract Id", "Revenue Start Date", "Total Value");
+                RevenueAllocationRec.CalcSums("Total Value");
                 TotalRevenueAllocated += RevenueAllocationRec."Total Value";
-            until RevenueAllocationRec.Next() = 0;
-
+            until RevenueallocationHeader.Next() = 0;
+        // Method 1: If Revenue Allocation table has Contract ID field
         exit(TotalRevenueAllocated);
     end;
 
-    local procedure CalculateUnearnedRevenueAllocation(ContractID: Integer): Decimal
+    local procedure CalculateRevenueAllocationdurngyear(ContractID: Integer; StartDate: Date; EndDate: Date): Decimal
     var
         RevenueAllocationRec: Record "Revenue Allocation SubGrid";
-        RevenueAllocation: Record "Revenue Allocation Details";
-        TotalEarnedRevenueAllocated: Decimal;
+        RevenueallocationHeader: Record "Revenue Allocation Details"; // Replace with your actual table name
+        TotalRevenueAllocatedDuringYear: Decimal;
+        StartMonth: Integer;
+        StartYear: Integer;
+        EndMonth: Integer;
+        EndYear: Integer;
     begin
-        TotalEarnedRevenueAllocated := 0;
-
-        RevenueAllocation.Reset();
-        RevenueAllocation.SetRange("Status", RevenueAllocation."Status"::Pending);
-
-        if RevenueAllocation.FindSet() then
+        TotalRevenueAllocatedDuringYear := 0;
+        RevenueallocationHeader.Reset();
+        RevenueallocationHeader.SetRange(Status, RevenueallocationHeader.Status::Approve);
+        if RevenueallocationHeader.FindSet() then
             repeat
                 RevenueAllocationRec.Reset();
-                RevenueAllocationRec.SetRange("Header No.", RevenueAllocation."No.");
-                RevenueAllocationRec.SetRange("Contract ID", ContractID);
-                RevenueAllocationRec.SetFilter(Description, '(%1|%2)', 'Regular', 'Credit Note');
-                if RevenueAllocationRec.FindSet() then
-                    repeat
-                        if (Rec."Starting Date Year" >= RevenueAllocationRec."Contract Start Date") and
-                           (Rec."Starting Date Year" <= RevenueAllocationRec."Contract End Date") or
-                           (Rec."Ending Date Year" >= RevenueAllocationRec."Contract Start Date") and
-                           (Rec."Ending Date Year" <= RevenueAllocationRec."Contract End Date") then
-                            TotalEarnedRevenueAllocated += RevenueAllocationRec."Total Value";
-
-                    until RevenueAllocationRec.Next() = 0;
-            until RevenueAllocation.Next() = 0;
-
-        exit(TotalEarnedRevenueAllocated);
+                RevenueAllocationRec.SetRange("Header No.", RevenueallocationHeader."No.");
+                RevenueAllocationRec.SetRange("Contract ID", ContractID); // Assuming this field exists
+                RevenueAllocationRec.SetFilter("Revenue Start Date", '%1..%2', StartDate, EndDate);
+                RevenueAllocationRec.SetLoadFields("Header No.", "Contract Id", "Revenue Start Date", "Total Value");
+                RevenueAllocationRec.CalcSums("Total Value");
+                TotalRevenueAllocatedDuringYear += RevenueAllocationRec."Total Value";
+            until RevenueallocationHeader.Next() = 0;
+        // Method 1: If Revenue Allocation table has Contract ID field
+        exit(TotalRevenueAllocatedDuringYear);
     end;
 
 
@@ -536,6 +567,9 @@ page 73209636 "Unearned Revenue Report Card"
     var
         tenancyContract: Record "Tenancy Contract";
         unearnedRevenueBuffer: Record "Sub Unearned Charges";
+        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
+        SalesCreditMemoLines: Record "Sales Cr.Memo Line";// your buffer table
+        PostedSalesInvoiceHeader: Record "Sales Invoice Header";
         SuspendedReasonRec: Record SuspendReasonTable;
         FinalCalculationRec: Record "Final Calculation";
         paymentSchedule: Record "Payment Schedule2";
@@ -554,9 +588,9 @@ page 73209636 "Unearned Revenue Report Card"
         RevenueAllocatedDuringYear: Decimal;
         RevenueAllocation: Decimal;
         TotalEarnedAmount: Decimal;
-        TotalCreditnode: Decimal;
+        TotalCreditNote: Decimal;
         TotalCreditAmountIssued: Decimal;
-        UnearnedRevenueAllocations: Decimal;
+        TotalInvoicedAmountCharges: Decimal;
     begin
         ClearSubgridDataParking();
 
@@ -578,8 +612,8 @@ page 73209636 "Unearned Revenue Report Card"
             tenancyContract."Tenant Contract Status"::"Active-Contract Renewed",
             tenancyContract."Tenant Contract Status"::"Contract Renewed");
 
-        tenancyContract.SetFilter("Contract Start Date", '..%1', EndDate);
-        tenancyContract.SetFilter("Contract End Date", '%1..', StartDate);
+        // tenancyContract.SetFilter("Contract Start Date", '..%1', EndDate);
+        // tenancyContract.SetFilter("Contract End Date", '%1..', StartDate);
 
         if tenancyContract.FindSet() then
             repeat
@@ -592,6 +626,12 @@ page 73209636 "Unearned Revenue Report Card"
                 RevenueAllocatedDuringYear := 0;
                 otherchargesvalue := 0;
                 HasMatchingData := false;
+                UnearnedNoofday := 0;
+                TotalInvoicedAmountCharges := 0;
+                TotalCreditAmountIssued := 0;
+                TotalCreditNote := 0;
+                TotalNoofDays := 0;
+                PerDayrent := 0;
 
                 // 🔹 If not found in payment schedule, check Revenue Structure
                 if not HasMatchingData then begin
@@ -607,68 +647,87 @@ page 73209636 "Unearned Revenue Report Card"
                     continue;
 
                 // 🔹 Sum Revenue Structure
-                revenueStructure.Reset();
-                revenueStructure.SetRange("Contract ID", tenancyContract."Contract ID");
-                revenueStructure.SetFilter("Secondary Item Type", ItemTypeFilter);
-                if revenueStructure.FindSet() then
+                PostedSalesInvoiceHeader.Reset();
+                PostedSalesInvoiceHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                PostedSalesInvoiceHeader.SetFilter("Posting Date", '<%1', StartDate);
+                if PostedSalesInvoiceHeader.FindSet() then
                     repeat
-                        otherchargesvalue := revenueStructure."Amount Including VAT";
-                    until revenueStructure.Next() = 0;
+                        paymentSchedule.Reset();
+                        paymentSchedule.SetRange("Invoice ID", PostedSalesInvoiceHeader."No.");
+                        paymentSchedule.SetRange("Contract ID", PostedSalesInvoiceHeader."Contract ID");
+                        paymentSchedule.SetRange("Secondary Item Type", ItemTypeFilter);
+                        paymentSchedule.SetRange(Invoiced, true);
+                        paymentSchedule.SetLoadFields("Invoice ID", "Contract ID", "Secondary Item Type", Amount);
+                        if paymentSchedule.FindSet() then
+                            repeat
+                                TotalInvoicedAmountCharges += paymentSchedule.Amount;
+                            until paymentSchedule.Next() = 0;
 
-                // 🔹 Sum Paid Amount before Start Date
-                paymentSchedule.Reset();
-                paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
-                paymentSchedule.SetFilter("Secondary Item Type", ItemTypeFilter);
-                paymentSchedule.SetRange("Due Date", tenancyContract."Contract Start Date", StartDate - 1);
-                paymentSchedule.SetRange("Invoiced", true);
-                if paymentSchedule.FindSet() then
+                    until PostedSalesInvoiceHeader.Next() = 0;
+                //////////////////////////////// END Total Invoiced Amount ///////////////////////////////////
+
+
+
+                ///////////////////////////  TOTAL CREDITNOTE AMOUNT /////////////////////////
+                SalesCrMemoHeader.Reset();
+                SalesCrMemoHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                SalesCrMemoHeader.SetFilter("Posting Date", '<%1', StartDate);
+                if SalesCrMemoHeader.FindSet() then
                     repeat
-                        TotalPaidAmount += paymentSchedule."Amount Including VAT";
-                    until paymentSchedule.Next() = 0;
+                        SalesCreditMemoLines.Reset();
+                        SalesCreditMemoLines.SetRange("Document No.", SalesCrMemoHeader."No.");
+                        SalesCreditMemoLines.SetRange(Description, ItemTypeFilter);
+                        SalesCreditMemoLines.SetLoadFields("Document No.", Description, "Unit Price");
+                        if SalesCreditMemoLines.FindSet() then
+                            repeat
+                                TotalCreditNote += SalesCreditMemoLines."Unit Price";
+                            until SalesCreditMemoLines.Next() = 0;
+                    // TotalCreditAmountIssued += SalesCrMemoHeader.Amount;
+                    until SalesCrMemoHeader.Next() = 0;
+
+                /////////////////////////// END  TOTAL CREDITNOTE AMOUNT /////////////////////////
+
+                ///////////////////////////  TOTAL INVOICED AMOUNT /////////////////////////
 
 
-
-                paymentSchedule.Reset();
-                paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
-                paymentSchedule.SetFilter("Secondary Item Type", ItemTypeFilter);
-                paymentSchedule.SetRange("Due Date", tenancyContract."Contract Start Date", StartDate - 1);
-                paymentSchedule.SetRange("Payment Status", 'Received');
-                if paymentSchedule.FindSet() then
+                PostedSalesInvoiceHeader.Reset();
+                PostedSalesInvoiceHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                PostedSalesInvoiceHeader.SetRange("Posting Date", StartDate, EndDate);
+                if PostedSalesInvoiceHeader.FindSet() then
                     repeat
-                        TotalEarnedAmount += paymentSchedule."Amount Including VAT";
-                    until paymentSchedule.Next() = 0;
+                        paymentSchedule.Reset();
+                        paymentSchedule.SetRange("Invoice ID", PostedSalesInvoiceHeader."No.");
+                        paymentSchedule.SetRange("Contract ID", PostedSalesInvoiceHeader."Contract ID");
+                        paymentSchedule.SetRange("Secondary Item Type", ItemTypeFilter);
+                        paymentSchedule.SetRange(Invoiced, true);
+                        paymentSchedule.SetLoadFields("Invoice ID", "Contract ID", "Secondary Item Type", Amount);
+                        if paymentSchedule.FindSet() then
+                            repeat
+                                TotalInvoicedAmount += paymentSchedule.Amount;
+                            until paymentSchedule.Next() = 0;
 
-                paymentSchedule.Reset();
-                paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
-                paymentSchedule.SetFilter("Secondary Item Type", ItemTypeFilter);
-                paymentSchedule.SetRange("Due Date", tenancyContract."Contract Start Date", StartDate - 1);
-                if paymentSchedule.FindSet() then
+                    until PostedSalesInvoiceHeader.Next() = 0;
+
+                /////////////////////////// END TOTAL INVOICED AMOUNT /////////////////////////
+
+
+                ///////////////////////////  TOTAL Credit AMOUNT issued /////////////////////////
+                SalesCrMemoHeader.Reset();
+                SalesCrMemoHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                SalesCrMemoHeader.SetRange("Posting Date", StartDate, EndDate);
+                if SalesCrMemoHeader.FindSet() then
                     repeat
-                        TotalCreditnode += paymentSchedule."Credit Note Amount";
-                    until paymentSchedule.Next() = 0;
+                        SalesCreditMemoLines.Reset();
+                        SalesCreditMemoLines.SetRange("Document No.", SalesCrMemoHeader."No.");
+                        SalesCreditMemoLines.SetRange(Description, ItemTypeFilter);
+                        SalesCreditMemoLines.SetLoadFields("Document No.", Description, "Unit Price");
+                        if SalesCreditMemoLines.FindSet() then
+                            repeat
+                                TotalCreditAmountIssued += SalesCreditMemoLines."Unit Price";
+                            until SalesCreditMemoLines.Next() = 0;
+                    // TotalCreditAmountIssued += SalesCrMemoHeader.Amount;
+                    until SalesCrMemoHeader.Next() = 0;
 
-
-                // 🔹 Sum Invoiced Amount between StartDate and EndDate
-                paymentSchedule.Reset();
-                paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
-                paymentSchedule.SetFilter("Secondary Item Type", ItemTypeFilter);
-                paymentSchedule.SetRange("Due Date", StartDate, EndDate);
-                paymentSchedule.SetRange("Invoiced", true);
-                if paymentSchedule.FindSet() then
-                    repeat
-                        TotalInvoicedAmount += paymentSchedule."Amount Including VAT";
-                    until paymentSchedule.Next() = 0;
-
-
-                paymentSchedule.Reset();
-                paymentSchedule.SetRange("Contract ID", tenancyContract."Contract ID");
-                paymentSchedule.SetFilter("Secondary Item Type", ItemTypeFilter);
-                paymentSchedule.SetRange("Due Date", StartDate, EndDate);
-                paymentSchedule.SetRange("Invoiced", true);
-                if paymentSchedule.FindSet() then
-                    repeat
-                        TotalCreditAmountIssued += paymentSchedule."Credit Note Amount";
-                    until paymentSchedule.Next() = 0;
 
                 // 🔹 Suspension and Termination Logic
                 SuspendedDate := 0D;
@@ -699,8 +758,9 @@ page 73209636 "Unearned Revenue Report Card"
                 unearnedRevenueBuffer.Property := tenancyContract."Property Name";
                 unearnedRevenueBuffer."Owner Name" := tenancyContract."Owner's Name";
                 unearnedRevenueBuffer."Other Charges Value" := otherchargesvalue;
+                TotalEarnedAmount := CalculateRevenueAllocationothercharges(tenancyContract."Contract ID", Rec."Starting Date Year", Rec."Ending Date Year");
                 unearnedRevenueBuffer."Contract Status" := Format(tenancyContract."Tenant Contract Status");
-                unearnedRevenueBuffer."Opening Balance" := (TotalPaidAmount + TotalCreditnode) - TotalEarnedAmount;
+                unearnedRevenueBuffer."Opening Balance" := (TotalInvoicedAmountCharges + TotalCreditNote) - TotalEarnedAmount;
                 unearnedRevenueBuffer."Invoice Raised During the Year" := TotalInvoicedAmount + TotalCreditAmountIssued;
                 unearnedRevenueBuffer."Suspension Date" := SuspendedDate;
                 unearnedRevenueBuffer."Termination Date" := TerminationDate;
@@ -714,22 +774,20 @@ page 73209636 "Unearned Revenue Report Card"
                         unearnedRevenueBuffer."Unit Name" := '';
                 end;
 
-                RevenueAllocation := CalculateRevenueAllocations(tenancyContract."Contract ID", Rec."Starting Date Year");
-                unearnedRevenueBuffer."RevenueAllocated DuringtheYear" := RevenueAllocation;
+                unearnedRevenueBuffer."RevenueAllocated DuringtheYear" := CalculateRevenueAllocationdurngyearothercharges(tenancyContract."Contract ID", Rec."Starting Date Year", Rec."Ending Date Year");
 
-                UnearnedRevenueAllocations := CalculateUnearnedRevenueAllocations(tenancyContract."Contract ID");
-                unearnedRevenueBuffer."Unearned Revenue Balance" := UnearnedRevenueAllocations;
 
-                if (tenancyContract."Tenant Contract Status" <> tenancyContract."Tenant Contract Status"::Terminated) and
-   (tenancyContract."Tenant Contract Status" <> tenancyContract."Tenant Contract Status"::"Contract Renewed") then begin
+                unearnedRevenueBuffer."Unearned Revenue Balance" := (unearnedRevenueBuffer."Opening Balance" + unearnedRevenueBuffer."Invoice Raised During the Year") - unearnedRevenueBuffer."RevenueAllocated DuringtheYear";
 
-                    TotalNoofDays := unearnedRevenueBuffer."End Date" - unearnedRevenueBuffer."Start Date" + 1;
-                    PerDayrent := unearnedRevenueBuffer."Other Charges Value" / TotalNoofDays;
-                    UnearnedNoofday := unearnedRevenueBuffer."End Date" - EndDate;
-                    unearnedRevenueBuffer.CalculatedUnearnedRevBalance := PerDayrent * UnearnedNoofday;
 
-                end else
-                    unearnedRevenueBuffer.CalculatedUnearnedRevBalance := 0;
+
+
+                TotalNoofDays := unearnedRevenueBuffer."End Date" - unearnedRevenueBuffer."Start Date" + 1;
+                PerDayrent := unearnedRevenueBuffer."Other Charges Value" / TotalNoofDays;
+                UnearnedNoofday := unearnedRevenueBuffer."End Date" - EndDate;
+                unearnedRevenueBuffer.CalculatedUnearnedRevBalance := PerDayrent * UnearnedNoofday;
+
+
 
                 unearnedRevenueBuffer."Shortfall/Excess" := unearnedRevenueBuffer."Unearned Revenue Balance" - unearnedRevenueBuffer.CalculatedUnearnedRevBalance;
                 unearnedRevenueBuffer."Report Period" := Format(Rec."Starting Date Year") + ' - ' + Format(Rec."Ending Date Year");
@@ -738,81 +796,60 @@ page 73209636 "Unearned Revenue Report Card"
             until tenancyContract.Next() = 0;
     end;
 
-    local procedure CalculateRevenueAllocations(ContractID: Integer; StartDate: Date): Decimal
+    local procedure CalculateRevenueAllocationothercharges(ContractID: Integer; StartDate: Date; EndDate: Date): Decimal
     var
-        RevenueAllocationRec: Record "Revenue Recognition Details"; // Replace with your actual table name
+        RevenueAllocationchargesRec: Record "Revenue Recognition Details";
+        RevenueallocationHeader: Record "Revenue Allocation Details"; // Replace with your actual table name
         TotalRevenueAllocated: Decimal;
+        StartMonth: Integer;
         StartYear: Integer;
-        ItemTypes: List of [Text];
-        ItemTypeFilter: Text;
+        EndMonth: Integer;
+        EndYear: Integer;
     begin
         TotalRevenueAllocated := 0;
-
-        StartYear := Date2DMY(StartDate, 3);
-
-        GetSelectedItemTypes(ItemTypes);
-        ItemTypeFilter := GetItemTypeFilter(ItemTypes);
-
-
-        // Method 1: If Revenue Allocation table has Contract ID field
-        RevenueAllocationRec.Reset();
-        RevenueAllocationRec.SetRange("Contract ID", ContractID);
-        RevenueAllocationRec.SetRange("Posting Year", StartYear);
-        RevenueAllocationRec.SetFilter(Description, '(%1|%2)', 'Regular', 'Credit Note');
-
-        // Filter for months within the date range
-        RevenueAllocationRec.SetFilter("Posting Month", GetMonthFilters(Rec."Starting Date Year", Rec."Ending Date Year"));
-        RevenueAllocationRec.SetFilter("Item Type", ItemTypeFilter);
-        if RevenueAllocationRec.FindSet() then
+        RevenueallocationHeader.Reset();
+        RevenueallocationHeader.SetRange(Status, RevenueallocationHeader.Status::Approve);
+        if RevenueallocationHeader.FindSet() then
             repeat
-                TotalRevenueAllocated += RevenueAllocationRec."Total Value";
-            until RevenueAllocationRec.Next() = 0;
-
+                RevenueAllocationchargesRec.Reset();
+                RevenueAllocationchargesRec.SetRange("RR_No.", RevenueallocationHeader."No.");
+                RevenueAllocationchargesRec.SetRange("Contract ID", ContractID); // Assuming this field exists
+                RevenueAllocationchargesRec.SetFilter("Revenue Start Date", '<%1', StartDate);
+                RevenueAllocationchargesRec.SetLoadFields("RR_No.", "Contract Id", "Revenue Start Date", "Total Value");
+                RevenueAllocationchargesRec.CalcSums("Total Value");
+                TotalRevenueAllocated += RevenueAllocationchargesRec."Total Value";
+            until RevenueallocationHeader.Next() = 0;
+        // Method 1: If Revenue Allocation table has Contract ID field
         exit(TotalRevenueAllocated);
     end;
 
 
-    local procedure CalculateUnearnedRevenueAllocations(ContractID: Integer): Decimal
+
+    local procedure CalculateRevenueAllocationdurngyearothercharges(ContractID: Integer; StartDate: Date; EndDate: Date): Decimal
     var
-        RevenueAllocationRec: Record "Revenue Recognition Details";
-        RevenueAllocation: Record "Revenue Allocation Details";
-        TotalEarnedRevenueAllocateds: Decimal;
-        ItemTypes: List of [Text];
-        ItemTypeFilter: Text;
+        RevenueAllocationchargesRec: Record "Revenue Recognition Details";
+        RevenueallocationHeader: Record "Revenue Allocation Details"; // Replace with your actual table name
+        TotalRevenueAllocatedDuringYear: Decimal;
+        StartMonth: Integer;
+        StartYear: Integer;
+        EndMonth: Integer;
+        EndYear: Integer;
     begin
-        TotalEarnedRevenueAllocateds := 0;
-
-        GetSelectedItemTypes(ItemTypes);
-        ItemTypeFilter := GetItemTypeFilter(ItemTypes);
-
-        // Step 1: Loop through Revenue Allocation Details with Status = Approve
-        RevenueAllocation.Reset();
-        RevenueAllocation.SetRange("Status", RevenueAllocation."Status"::Pending);
-
-        if RevenueAllocation.FindSet() then
+        TotalRevenueAllocatedDuringYear := 0;
+        RevenueallocationHeader.Reset();
+        RevenueallocationHeader.SetRange(Status, RevenueallocationHeader.Status::Approve);
+        if RevenueallocationHeader.FindSet() then
             repeat
-                // Step 2: For each approved record, get related SubGrid records
-                RevenueAllocationRec.Reset();
-                RevenueAllocationRec.SetRange("RR_No.", RevenueAllocation."No."); // assuming this is the link
-                RevenueAllocationRec.SetRange("Contract ID", ContractID);
-                // RevenueAllocationRec.SetRange("Posting Year", StartYear);
-                // RevenueAllocationRec.SetFilter("Posting Month", GetMonthFilter(Rec."Starting Date Year", Rec."Ending Date Year"));
-                RevenueAllocationRec.SetFilter(Description, '(%1|%2)', 'Regular', 'Credit Note');
-
-
-                if RevenueAllocationRec.FindSet() then
-                    repeat
-                        // Compare against Contract Start and End Date stored in RevenueAllocationRec
-                        if (Rec."Starting Date Year" >= RevenueAllocationRec."Contract Start Date") and
-                           (Rec."Starting Date Year" <= RevenueAllocationRec."Contract End Date") or
-                           (Rec."Ending Date Year" >= RevenueAllocationRec."Contract Start Date") and
-                           (Rec."Ending Date Year" <= RevenueAllocationRec."Contract End Date") then
-                            TotalEarnedRevenueAllocateds += RevenueAllocationRec."Total Value";
-
-                    until RevenueAllocationRec.Next() = 0;
-            until RevenueAllocation.Next() = 0;
-
-        exit(TotalEarnedRevenueAllocateds);
+                RevenueAllocationchargesRec.Reset();
+                RevenueAllocationchargesRec.SetRange("RR_No.", RevenueallocationHeader."No.");
+                RevenueAllocationchargesRec.SetRange("Contract ID", ContractID); // Assuming this field exists
+                RevenueAllocationchargesRec.SetFilter("Revenue Start Date", '%1..%2', StartDate, EndDate);
+                RevenueAllocationchargesRec.SetLoadFields("RR_No.", "Contract Id", "Revenue Start Date", "Total Value");
+                RevenueAllocationchargesRec.CalcSums("Total Value");
+                TotalRevenueAllocatedDuringYear += RevenueAllocationchargesRec."Total Value";
+            until RevenueallocationHeader.Next() = 0;
+        // Method 1: If Revenue Allocation table has Contract ID field
+        exit(TotalRevenueAllocatedDuringYear);
     end;
 
     local procedure GetMonthFilters(StartDate: Date; EndDate: Date): Text

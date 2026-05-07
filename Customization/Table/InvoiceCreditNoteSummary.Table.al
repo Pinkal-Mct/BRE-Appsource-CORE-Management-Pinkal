@@ -1,30 +1,30 @@
 table 73209626 "InvoiceCreditNoteSummary"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
 
         field(73209575; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209576; "Contract No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209577; "Description"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209578; Invoice; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             DecimalPlaces = 0 : 2;
         }
         field(73209579; "Credit Note"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             DecimalPlaces = 0 : 2;
         }
         field(73209580; "Total Invoice"; Decimal)
@@ -42,23 +42,23 @@ table 73209626 "InvoiceCreditNoteSummary"
         }
         field(73209582; Invoiced; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209583; "Credit Noted"; Boolean)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209584; "Invoice ID"; Code[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209585; "Credit Note ID"; Code[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209586; "Revenue Description"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
 

@@ -1,63 +1,63 @@
 table 73209647 "PaymentModeChangeLog"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataCaptionFields = "ID";
 
     fields
     {
         field(73209575; "ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'ID';
             Editable = false;
         }
         field(73209576; "Approval Status"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Status';
             Editable = false;
         }
         field(73209577; "Request Type"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Request Type';
             Editable = false;
         }
 
         field(73209578; "Tenant ID"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
             Editable = false;
         }
         field(73209579; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
             Editable = false;
         }
         field(73209580; "Payment mode"; Text[300])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Payment mode';
             Editable = false;
         }
 
         field(73209581; "Payment Series"; Text[200])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Payment Series';
             Editable = false;
         }
         field(73209582; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
             Editable = false;
         }
         field(73209583; "Deposit Bank Name"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             TableRelation = "Bank Account";
 
             trigger OnValidate()
@@ -71,7 +71,7 @@ table 73209647 "PaymentModeChangeLog"
         }
         field(73209584; "Cheque Number"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Cheque Number';
         }
     }

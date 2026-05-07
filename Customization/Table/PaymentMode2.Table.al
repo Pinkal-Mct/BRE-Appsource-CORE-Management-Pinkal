@@ -1,41 +1,41 @@
 table 73209646 "Payment Mode2"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
 
         field(73209575; "Payment Series"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Payment Series';
 
         }
 
         field(73209576; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount';
 
         }
 
         field(73209577; "VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'VAT Amount';
 
         }
 
         field(73209578; "Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
 
         }
 
         field(73209579; "Due Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Due Date';
 
 
@@ -82,6 +82,7 @@ table 73209646 "Payment Mode2"
 
         field(73209580; "Payment Mode"; Text[100])
         {
+            DataClassification = CustomerContent;
             Caption = 'Payment Mode';
             TableRelation = "Payment Type"."Payment Method";
 
@@ -102,7 +103,7 @@ table 73209646 "Payment Mode2"
 
         field(73209581; "Cheque Number"; Text[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Cheque Number';
 
             trigger OnValidate()
@@ -136,6 +137,7 @@ table 73209646 "Payment Mode2"
 
         field(73209582; "Deposit Bank"; Code[100])
         {
+            DataClassification = AccountData;
             Caption = 'Deposit Bank';
             TableRelation = "Bank Account"; // You can add a TableRelation here if required
 
@@ -161,12 +163,14 @@ table 73209646 "Payment Mode2"
 
         field(73209583; "Deposit Status"; Option)
         {
+            DataClassification = CustomerContent;
             OptionMembers = "-","N","Y";
             Caption = 'Deposit Status';
         }
 
         field(73209584; "Payment Status"; Enum "Payment Status")
         {
+            DataClassification = CustomerContent;
             //OptionMembers = "Scheduled","Due","Received","Overdue","Cancelled";
             Caption = 'Payment Status';
 
@@ -269,6 +273,7 @@ table 73209646 "Payment Mode2"
 
         field(73209585; "Cheque Status"; Enum "PDC Status Type Enum")
         {
+            DataClassification = AccountData;
             // OptionMembers = "-","Cheque Received","Cleared","Deposited","Due & cheque not deposited","Retrieved","Returned","Replaced & Received","Deferred";
             Caption = 'Cheque Status';
 
@@ -291,25 +296,25 @@ table 73209646 "Payment Mode2"
 
         field(73209586; "Invoice #"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Invoice #';
         }
 
         field(73209587; "Receipt #"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Receipt #';
         }
 
         field(73209588; "Old Cheque #"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Old Cheque #';
         }
 
         field(73209589; "Upload Cheque"; Text[2048])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = AccountData;
             Caption = 'Upload Cheque';
             InitValue = 'Upload Cheque';
         }
@@ -317,27 +322,27 @@ table 73209646 "Payment Mode2"
 
         field(73209590; "Download"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Download';
             InitValue = 'Download';
         }
 
         field(73209591; "View"; Text[2048])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'View';
             InitValue = 'View';
         }
 
         field(73209592; "View Revenue Details"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'View Revenue Details';
             InitValue = 'View Revenue Details';
         }
         field(73209593; "View Document URL"; Text[2048])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'View Document URL';
             trigger OnValidate()
             var
@@ -384,29 +389,31 @@ table 73209646 "Payment Mode2"
 
         field(73209597; "Tenant Id"; Code[20])
         {
+            DataClassification = CustomerContent;
             Caption = 'Tenant Id';
         }
 
 
         field(73209598; "Contract ID"; Integer)
         {
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
 
         field(73209599; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
 
         field(73209600; "Id"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209601; "Approval Status"; Enum "Approval Status Enum")
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             var
                 paymentModeRec: Record "Payment Mode";
@@ -513,54 +520,57 @@ table 73209646 "Payment Mode2"
                                 end;
                     paymentModeRec.Modify();
                     if Rec."Approval Status" = Rec."Approval Status"::Approved then
-                        Rec."Deposit Status" := Rec."Deposit Status"::"N"   // ✅ Force N when approved
+                        Rec."Deposit Status" := Rec."Deposit Status"::"N"   // Ã¢Å“â€¦ Force N when approved
                 end;
             end;
         }
 
         field(73209602; "Reason"; Text[150])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209603; "IsUpdated"; Option)
         {
+            DataClassification = CustomerContent;
             // DataClassification = ToBeClassified;
             OptionMembers = " ","Yes","No";
         }
 
         field(73209604; "Approve/Decline Status"; Text[50])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
 
         field(73209605; "Tenant Name"; Text[100])
         {
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Tenant Name';
         }
 
         field(73209606; "Tenant Email"; Text[100])
         {
+            DataClassification = EndUserIdentifiableInformation;
             Caption = 'Tenant Email';
         }
 
         field(73209607; "Payment Received Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209608; "View Invoice"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'View Invoice';
         }
         field(73209609; "View Reciept document URL"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'View Document URL';
         }
 
         field(73209610; "Payment Reminder"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Payment Reminder';
             Editable = false;
 
@@ -568,36 +578,36 @@ table 73209646 "Payment Mode2"
         field(73209611; "Credit Note No."; Code[100])
         {
             //OptionMembers = "0%","5%";
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Credit Note No.';
         }
 
         field(73209612; "Credit Note Amount"; Decimal)
         {
             //OptionMembers = "0%","5%";
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Credit Note Amount';
         }
         field(73209613; "Final Rent Amount"; Decimal)
         {
             //OptionMembers = "0%","5%";
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Final Rent Amount';
         }
         field(73209614; "FinalRentAmountIncludingVAT"; Decimal)
         {
             //OptionMembers = "0%","5%";    
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Final Rent Amount Including VAT';
         }
         field(73209615; "PortalSidePaymentProcessing"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Portal Side Payment Processing';
         }
         field(73209616; "Receipt Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Receipt Date';
         }
 
@@ -626,7 +636,7 @@ table 73209646 "Payment Mode2"
     var
         emailrec: Codeunit "Send PaymentMode Email";
     begin
-        // ✅ Check if Payment Status has changed
+        // Ã¢Å“â€¦ Check if Payment Status has changed
         if Rec."Payment Status" <> xRec."Payment Status" then
             case Rec."Payment Status" of
                 Rec."Payment Status"::Received:

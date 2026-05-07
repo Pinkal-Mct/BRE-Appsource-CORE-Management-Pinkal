@@ -403,7 +403,8 @@ page 73209633 "Revenue Allocation Card"
      TerminationDate: Date;
      MonthNo: Integer;
      FinancialYear: Integer;
-         RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
+    RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent";
+    Revenuestartdate: Date)
 
     var
         FilteredContractRec: Record "Revenue Allocation SubGrid";
@@ -557,6 +558,8 @@ page 73209633 "Revenue Allocation Card"
         FilteredContractRec."Final Annual Amount" := pTotalAnnualAmount;
         FilteredContractRec."Posting Month" := MonthNo;
         FilteredContractRec."Posting Year" := FinancialYear;
+        FilteredContractRec."Revenue Start Date" := Revenuestartdate;
+
 
         if RevenueMethod = RevenueMethod::"Per Day Rent" then begin
             FilteredContractRec."Per Day Rent" := Round(PerDayRentWithoutGracePeriod); // Use the per day rent passed from the grid
@@ -631,6 +634,7 @@ page 73209633 "Revenue Allocation Card"
             FilteredContractRec."Final Annual Amount" := pTotalAnnualAmount;
             FilteredContractRec."Posting Month" := MonthNo;
             FilteredContractRec."Posting Year" := FinancialYear;
+            FilteredContractRec."Revenue Start Date" := Revenuestartdate;
             FilteredContractRec."Posting Period" := Format(FilteredContractRec."Posting Month") +
                 ' ' + Format(FilteredContractRec."Posting Year") + ' ' + '-' + ' ' +
                 Format(FilteredContractRec."Posting Month") + ' ' + Format(FilteredContractRec."Posting Year");
@@ -946,6 +950,8 @@ page 73209633 "Revenue Allocation Card"
 
         FilteredContractRec."Posting Month" := PreviousMonthNo;
         FilteredContractRec."Posting Year" := PreviousYearNo;
+        FilteredContractRec."Revenue Start Date" := DMY2Date(1, PreviousMonthNo, PreviousYearNo);
+
         FilteredContractRec."Posting Period" := FetchMonth.GetMonthName(PreviousMonthNo) + ' ' +
             Format(PreviousYearNo) + ' ' + '-' + ' ' + FetchMonth.GetMonthName(PreviousMonthNo) + ' ' + Format(PreviousYearNo);
         FilteredContractRec."Owner Name" := ContractRec."Owner's Name";
@@ -1010,6 +1016,7 @@ page 73209633 "Revenue Allocation Card"
             FilteredContractRec."Final Annual Amount" := pTotalAnnualAmount;
             FilteredContractRec."Posting Month" := PreviousMonthNo;
             FilteredContractRec."Posting Year" := PreviousYearNo;
+            FilteredContractRec."Revenue Start Date" := DMY2Date(1, PreviousMonthNo, PreviousYearNo);
             FilteredContractRec."Posting Period" := FetchMonth.GetMonthName(PreviousMonthNo) + ' ' +
                 Format(PreviousYearNo) + ' ' + '-' + ' ' + FetchMonth.GetMonthName(PreviousMonthNo) + ' ' + Format(PreviousYearNo);
             FilteredContractRec."Owner Name" := ContractRec."Owner's Name";
@@ -1034,13 +1041,15 @@ page 73209633 "Revenue Allocation Card"
         SpecialRent: Record "TC Merge LumAnnualAmount SP";          // Special rent records
 
         // Date and calculation variables
-        SelectedMonthStart: Date;                                   // First day of selected month
-        SelectedMonthEnd: Date;                                     // Last day of selected month
+        SelectedMonthStart: Date;
+        SelectedMonthEnd: Date;
+        Revenuestartdate: Date;                                       // First day of selected month                                  // Last day of selected month
         MonthNo: Integer;                                           // Selected month number
         FinancialYear: Integer;                                     // Line number for allocations
         TerminationDate: Date;                                      // Contract termination date
         SuspensionDate: Date;
-        ShouldProcessContract: Boolean;                             // Flag to determine if contract should be processed
+        ShouldProcessContract: Boolean;
+    // Flag to determine if contract should be processed
     begin
         // Clear any existing allocation data before processing
         ClearSubgridData();
@@ -1048,6 +1057,8 @@ page 73209633 "Revenue Allocation Card"
         // Get month and year from current record
         MonthNo := Rec.Month;
         FinancialYear := Rec."Financial Year";
+        Revenuestartdate := DMY2Date(1, Rec.Month, Rec."Financial Year");
+
 
         // Calculate date range for the selected month
         SelectedMonthStart := DMY2Date(01, MonthNo, FinancialYear);
@@ -1107,7 +1118,7 @@ page 73209633 "Revenue Allocation Card"
                         HandleMissedAllocation(ContractRec, MonthNo, FinancialYear, RevenueMethod);
 
                         // Handle suspension recovery allocation (new functionality)
-                        HandleSuspensionRecoveryAllocation(ContractRec, MonthNo, FinancialYear, RevenueMethod);
+                        HandleSuspensionRecoveryAllocation(ContractRec, MonthNo, FinancialYear, RevenueMethod, Revenuestartdate);
 
                         // Process Single Unit Rent records
                         SingleUnitRent.Reset();
@@ -1127,7 +1138,7 @@ page 73209633 "Revenue Allocation Card"
                                     // Use sequential number
                                     MonthNo,
                                     FinancialYear,
-                                    RevenueMethod);
+                                    RevenueMethod, Revenuestartdate);
                             // LineNo += 1;  // Increment by 1
                             until SingleUnitRent.Next() = 0;
 
@@ -1150,7 +1161,7 @@ page 73209633 "Revenue Allocation Card"
                                     // Use sequential number
                                     MonthNo,
                                     FinancialYear,
-                                    RevenueMethod);
+                                    RevenueMethod, Revenuestartdate);
                             // LineNo += 1;  // Increment by 1
                             until MultiUnitRent.Next() = 0;
 
@@ -1173,7 +1184,7 @@ page 73209633 "Revenue Allocation Card"
                                     // Use sequential number
                                     MonthNo,
                                     FinancialYear,
-                                    RevenueMethod);
+                                    RevenueMethod, Revenuestartdate);
                             // LineNo += 1;  // Increment by 1
                             until MergedSingleRent.Next() = 0;
 
@@ -1196,7 +1207,7 @@ page 73209633 "Revenue Allocation Card"
                                     // Use sequential number
                                     MonthNo,
                                     FinancialYear,
-                                    RevenueMethod);
+                                    RevenueMethod, Revenuestartdate);
                             // LineNo += 1;  // Increment by 1
                             until MergedMultiRent.Next() = 0;
 
@@ -1219,7 +1230,7 @@ page 73209633 "Revenue Allocation Card"
                                     // Use sequential number
                                     MonthNo,
                                     FinancialYear,
-                                    RevenueMethod);
+                                    RevenueMethod, Revenuestartdate);
                             // LineNo += 1;  // Increment by 1
                             until SpecialRent.Next() = 0;
 
@@ -1228,7 +1239,7 @@ page 73209633 "Revenue Allocation Card"
             until ContractRec.Next() = 0;
 
 
-        ProcessCreditNoteEntries(SelectedMonthStart, SelectedMonthEnd, MonthNo, FinancialYear, RevenueMethod);
+        ProcessCreditNoteEntries(SelectedMonthStart, SelectedMonthEnd, MonthNo, FinancialYear, RevenueMethod, Revenuestartdate);
 
         CalculateTotals();
     end;
@@ -1239,7 +1250,7 @@ page 73209633 "Revenue Allocation Card"
         SelectedMonthEnd: Date;
         MonthNo: Integer;
         FinancialYear: Integer;
-              RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
+        RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent"; Revenuestartdate: Date)
 
     var
         RequestCreditNotegrid: Record "Request Credit Note Grid";
@@ -1268,7 +1279,7 @@ page 73209633 "Revenue Allocation Card"
 
                     RentReductionAmount := 0;
                     RequestCreditNotegridFromCN.SetRange("Request No.", RequestCreditNote."Request No.");
-                    RequestCreditNotegridFromCN.SetFilter("Secondary Item Type", '%1', 'Rent');
+                    RequestCreditNotegridFromCN.SetFilter(Charges, '%1', 'Rent');
                     if RequestCreditNotegridFromCN.FindFirst() then
                         RentReductionAmount := RequestCreditNotegridFromCN."Total Reduction"
                     else
@@ -1347,6 +1358,7 @@ page 73209633 "Revenue Allocation Card"
                         FilteredContractRec."Contract Amount" := -RentReductionAmount;
                         FilteredContractRec."Annual Amount" := -RentReductionAmount;
                         FilteredContractRec."Final Annual Amount" := -RentReductionAmount;
+                        FilteredContractRec."Revenue Start Date" := Revenuestartdate;
 
                         if RevenueMethod = RevenueMethod::"Per Day Rent" then begin
                             FilteredContractRec."Per Day Rent" := Round(FilteredContractRec."Annual Amount" / CalculatedDays);
@@ -1369,7 +1381,7 @@ page 73209633 "Revenue Allocation Card"
     ContractRec: Record "Tenancy Contract";
     MonthNo: Integer;
     FinancialYear: Integer;
- RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
+    RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent"; Revenuestartdate: Date)
     var
         SuspensionRec: Record SuspendReasonTable;
         SingleUnitRent: Record "TC Single Unit Rent SubPage";
@@ -1429,7 +1441,7 @@ page 73209633 "Revenue Allocation Card"
                                 RecoveryStartDate,
                                 RecoveryEndDate,
                                 'Single Unit Rent Recovery',
-                                RevenueMethod);
+                                RevenueMethod, Revenuestartdate);
 
                     until SingleUnitRent.Next() = 0;
 
@@ -1452,7 +1464,7 @@ page 73209633 "Revenue Allocation Card"
                                 RecoveryStartDate,
                                 RecoveryEndDate,
                                 'Multi Unit Rent Recovery',
-                                RevenueMethod);
+                                RevenueMethod, Revenuestartdate);
 
                     until MultiUnitRent.Next() = 0;
 
@@ -1475,7 +1487,7 @@ page 73209633 "Revenue Allocation Card"
                                 RecoveryStartDate,
                                 RecoveryEndDate,
                                 'Merged Single Rent Recovery',
-                                RevenueMethod);
+                                RevenueMethod, Revenuestartdate);
 
                     until MergedSingleRent.Next() = 0;
 
@@ -1498,7 +1510,7 @@ page 73209633 "Revenue Allocation Card"
                                 RecoveryStartDate,
                                 RecoveryEndDate,
                                 'Merged Multi Rent Recovery',
-                                RevenueMethod);
+                                RevenueMethod, Revenuestartdate);
 
                     until MergedMultiRent.Next() = 0;
 
@@ -1521,7 +1533,7 @@ page 73209633 "Revenue Allocation Card"
                                 RecoveryStartDate,
                                 RecoveryEndDate,
                                 'Special Rent Recovery',
-                                RevenueMethod);
+                                RevenueMethod, Revenuestartdate);
 
                     until SpecialRent.Next() = 0;
             end;
@@ -1542,7 +1554,7 @@ page 73209633 "Revenue Allocation Card"
     RecoveryStartDate: Date;
     RecoveryEndDate: Date;
     RecoveryType: Text;
-    RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent")
+    RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent"; Revenuestartdate: Date)
     var
         FilteredContractRec: Record "Revenue Allocation SubGrid";
         SuspensionRec: Record SuspendReasonTable;
@@ -1635,6 +1647,7 @@ page 73209633 "Revenue Allocation Card"
 
             FilteredContractRec."Posting Month" := MonthNo;
             FilteredContractRec."Posting Year" := FinancialYear;
+            FilteredContractRec."Revenue Start Date" := Revenuestartdate;
             FilteredContractRec.Description := 'Suspension';
             FilteredContractRec."Posting Period" := 'Suspension Recovery - ' + Format(Date2DMY(EffectiveEndDate, 2)) + ' ' + Format(Date2DMY(EffectiveEndDate, 3));
             FilteredContractRec."Owner Name" := ContractRec."Owner's Name";

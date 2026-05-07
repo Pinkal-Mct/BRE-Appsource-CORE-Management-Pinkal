@@ -1,20 +1,20 @@
 table 73209675 "Revenue Recognition"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
 
         field(73209575; "RR Id"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
             Caption = 'RR Id';
         }
 
         field(73209576; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             TableRelation = "Tenancy Contract"."Contract ID";
             Caption = 'Contract ID';
 
@@ -44,7 +44,7 @@ table 73209675 "Revenue Recognition"
 
         field(73209577; "Tenant Id"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant Id';
             TableRelation = "Lease Proposal Details"."Tenant ID";
             Editable = false; // Make it read-only for the user
@@ -52,18 +52,18 @@ table 73209675 "Revenue Recognition"
         }
         field(73209578; "Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Start Date';
         }
         field(73209579; "End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'End Date';
         }
 
         field(73209580; "Contract Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract Amount';
         }
 

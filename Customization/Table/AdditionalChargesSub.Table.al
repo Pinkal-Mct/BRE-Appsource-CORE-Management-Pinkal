@@ -1,16 +1,16 @@
 table 73209575 "Additional Charges Sub"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     fields
     {
         field(73209575; "Contract ID"; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
         field(73209576; "Secondary Item Type"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Secondary Item';
             TableRelation = Item WHERE("Item type template" = const("Item Type Template Enum"::"Secondary Item"), "Charges Status" = CONST("Additional Charges"));
             trigger OnValidate()
@@ -27,7 +27,7 @@ table 73209575 "Additional Charges Sub"
         }
         field(73209577; "Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             DecimalPlaces = 0 : 2;
             Caption = 'Amount';
             trigger OnValidate()
@@ -40,6 +40,7 @@ table 73209575 "Additional Charges Sub"
             OptionMembers = "0%","5%";
             Caption = 'VAT %';
             Editable = false;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             begin
                 CalcVATAndTotal();
@@ -47,7 +48,7 @@ table 73209575 "Additional Charges Sub"
         }
         field(73209579; "VAT Amount"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             DecimalPlaces = 2 : 2;
             Caption = 'VAT Amount';
             Editable = false;
@@ -64,7 +65,7 @@ table 73209575 "Additional Charges Sub"
         }
         field(73209580; "Amount Including VAT"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             DecimalPlaces = 0 : 2;
             Caption = 'Amount Including VAT';
             Editable = false;
@@ -75,24 +76,24 @@ table 73209575 "Additional Charges Sub"
         }
         field(73209581; "Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Start Date';
             Editable = True;
         }
         field(73209582; "End Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'End Date';
             Editable = True;
         }
         field(73209583; "Entry No."; Integer)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             AutoIncrement = true;
         }
         field(73209584; "Tenant ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
         field(73209585; "Total Amount"; Decimal)
@@ -105,32 +106,32 @@ table 73209575 "Additional Charges Sub"
         field(73209586; "Invoiced"; Boolean)
         {
             Caption = 'Invoiced';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209587; "Invoiced ID"; Code[20])
         {
             Caption = 'Invoice ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209588; "Unit Type"; Text[20])
         {
             Caption = 'Unit Type';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209589; "Posted Invoice ID"; Code[20])
         {
             Caption = 'Invoice ID';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209590; "Invoice Document"; Text[250])
         {
             Caption = 'Invoice Document';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
         field(73209591; "Invoice Document URL"; Text[250])
         {
             Caption = 'Invoice Document URL';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
     keys
