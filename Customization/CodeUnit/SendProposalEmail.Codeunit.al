@@ -78,7 +78,7 @@ codeunit 73209617 "Send Proposal Email"
                 Message('Email sent successfully to: %1', ConsolidatedInvoiceHeader."Tenant Contact Email")
             else
                 Error('Failed to send email. Please verify SMTP settings and email addresses.');
-            exit('Email send successfully');
+
         end else
             Error('No lease proposal details found for Proposal ID: %1', Rec."Tenant ID");
     end;

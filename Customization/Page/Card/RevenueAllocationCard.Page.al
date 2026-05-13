@@ -1234,12 +1234,12 @@ page 73209633 "Revenue Allocation Card"
                             // LineNo += 1;  // Increment by 1
                             until SpecialRent.Next() = 0;
 
+                        ProcessCreditNoteEntries(SelectedMonthStart, SelectedMonthEnd, MonthNo, FinancialYear, RevenueMethod, Revenuestartdate, ContractRec);
                     end;
 
             until ContractRec.Next() = 0;
 
 
-        ProcessCreditNoteEntries(SelectedMonthStart, SelectedMonthEnd, MonthNo, FinancialYear, RevenueMethod, Revenuestartdate);
 
         CalculateTotals();
     end;
@@ -1250,131 +1250,121 @@ page 73209633 "Revenue Allocation Card"
         SelectedMonthEnd: Date;
         MonthNo: Integer;
         FinancialYear: Integer;
-        RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent"; Revenuestartdate: Date)
-
+        RevenueMethod: Option "","Fixed Monthly Rent","Per Day Rent"; Revenuestartdate: Date; ContractRec: Record "Tenancy Contract")
     var
-        RequestCreditNotegrid: Record "Request Credit Note Grid";
-        RequestCreditNotegridFromCN: Record "Request Credit Note Grid";
-        RequestCreditNote: Record "Request Credit Note";
-        ContractRec: Record "Tenancy Contract";
+        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
+        SalesCreditMemoLines: Record "Sales Cr.Memo Line";
         FilteredContractRec: Record "Revenue Allocation SubGrid";
         ExistingRevenueRec: Record "Revenue Allocation SubGrid";
-        paymentschedule: Record "Payment Schedule2";
         SuspensionRec: Record SuspendReasonTable;
-        ShouldProcessCreditNote: Boolean;
         NewLineNo: Integer;
         CalculatedDays: Integer;
         MultiYearStartDate: Date;
         MultiYearEndDate: Date;
         Noofdays: Integer;
-        RentReductionAmount: Decimal;
+        TotalCreditNote: Decimal;
     begin
         // Debug: Check if credit note table has records
-        RequestCreditNotegrid.Reset();
-        if RequestCreditNotegrid.FindSet() then
+        TotalCreditNote := 0;
+        SalesCrMemoHeader.Reset();
+        SalesCrMemoHeader.SetRange("Contract ID", ContractRec."Contract ID");
+        if SalesCrMemoHeader.FindSet() then
             repeat
-                if not RequestCreditNote.Get(RequestCreditNotegrid."Request No.") then
-                    exit;
-                if RequestCreditNote.Status = RequestCreditNote.Status::Approved then begin
+                SalesCreditMemoLines.Reset();
+                SalesCreditMemoLines.SetRange("Document No.", SalesCrMemoHeader."No.");
+                SalesCreditMemoLines.SetRange(Description, 'Rent');
+                SalesCreditMemoLines.SetLoadFields("Document No.", Description, "Unit Price");
+                if SalesCreditMemoLines.FindSet() then
+                    repeat
+                        TotalCreditNote += SalesCreditMemoLines."Unit Price";
 
-                    RentReductionAmount := 0;
-                    RequestCreditNotegridFromCN.SetRange("Request No.", RequestCreditNote."Request No.");
-                    RequestCreditNotegridFromCN.SetFilter(Charges, '%1', 'Rent');
-                    if RequestCreditNotegridFromCN.FindFirst() then
-                        RentReductionAmount := RequestCreditNotegridFromCN."Total Reduction"
-                    else
-                        exit;
+                    until SalesCreditMemoLines.Next() = 0;
+            // TotalCreditAmountIssued += SalesCrMemoHeader.Amount;
+            until SalesCrMemoHeader.Next() = 0;
+        NewLineNo := GetNextLineNo();
+        // If contract dates match the posting month/year duration, create negative revenue entry
+        if TotalCreditNote <> 0 then begin
 
-                    NewLineNo := GetNextLineNo();
+            // Initialize the record properly
+            FilteredContractRec.Reset();
+            FilteredContractRec.Init();
 
-                    ShouldProcessCreditNote := false;
+            // Set primary key fields first
+            FilteredContractRec."Line No." := NewLineNo;
+            FilteredContractRec."Header No." := Rec."No.";
+            FilteredContractRec."Contract ID" := ContractRec."Contract ID";
+            FilteredContractRec."Property Name" := ContractRec."Property Name";
+            FilteredContractRec."Contract Tenure" := ContractRec."Contract Tenor";
+            FilteredContractRec."Unit Type" := ContractRec."Usage Type";
+            FilteredContractRec."Customer Name" := ContractRec."Customer Name";
+            FilteredContractRec."Contract Start Date" := ContractRec."Contract Start Date";
+            FilteredContractRec."Contract End Date" := ContractRec."Contract End Date";
+            FilteredContractRec."Grace Days" := ContractRec."Grace Period";
+            FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
+            FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
 
-                    ContractRec.Reset();
-                    ContractRec.SetRange("Contract ID", RequestCreditNotegridFromCN."Contract ID");
-                    ContractRec.SetRange("Tenant Contract Status", ContractRec."Tenant Contract Status"::Active);
-                    if ContractRec.FindFirst() then
-                        paymentschedule.SetRange("Contract ID", ContractRec."Contract ID");
-                    paymentschedule.SetRange("Payment Series", RequestCreditNotegridFromCN."Payment Series");
-                    paymentschedule.SetRange("Secondary Item Type", 'Rent');
-                    if paymentschedule.FindFirst() then
-                        if ((ContractRec."Contract Start Date" <= SelectedMonthEnd) and
-                                (ContractRec."Contract End Date" >= SelectedMonthStart)) then
-                            ShouldProcessCreditNote := true;
+            case ContractRec."Praposal Type Selected" of
+                ContractRec."Praposal Type Selected"::"Single Unit":
+                    FilteredContractRec."Single Unit Names" := ContractRec."Unit Name";
+                ContractRec."Praposal Type Selected"::"Merge Unit":
+                    FilteredContractRec."Single Unit Names" := ContractRec."Single Unit Name";
+                else
+                    FilteredContractRec."Single Unit Names" := '';
+            end;
 
-                    if ShouldProcessCreditNote then begin
-                        FilteredContractRec.Reset();
-                        FilteredContractRec.Init();
+            FilteredContractRec."Termination Date" := 0D;
 
-                        FilteredContractRec."Line No." := NewLineNo;
-                        FilteredContractRec."Header No." := Rec."No.";
-                        FilteredContractRec."Contract ID" := RequestCreditNotegridFromCN."Contract ID";
-                        FilteredContractRec."Property Name" := ContractRec."Property Name";
-                        FilteredContractRec."Contract Tenure" := ContractRec."Contract Tenor";
-                        FilteredContractRec."Unit Type" := ContractRec."Usage Type";
-                        FilteredContractRec."Customer Name" := ContractRec."Customer Name";
-                        FilteredContractRec."Contract Start Date" := ContractRec."Contract Start Date";
-                        FilteredContractRec."Contract End Date" := ContractRec."Contract End Date";
-                        FilteredContractRec."Grace Days" := ContractRec."Grace Period";
-                        FilteredContractRec."Grace Start Date" := ContractRec."Grace Start Date";
-                        FilteredContractRec."Grace End Date" := ContractRec."Grace End Date";
+            // Add suspension information
+            SuspensionRec.Reset();
+            SuspensionRec.SetRange("Contract ID", ContractRec."Contract ID");
+            if SuspensionRec.FindFirst() then begin
+                FilteredContractRec."Suspension Start Date" := SuspensionRec.DateEffective;
+                FilteredContractRec."Suspension End Date" := SuspensionRec.SuspensionEndDate;
+            end;
 
-                        case ContractRec."Praposal Type Selected" of
-                            ContractRec."Praposal Type Selected"::"Single Unit":
-                                FilteredContractRec."Single Unit Names" := ContractRec."Unit Name";
-                            ContractRec."Praposal Type Selected"::"Merge Unit":
-                                FilteredContractRec."Single Unit Names" := ContractRec."Single Unit Name";
-                            else
-                                FilteredContractRec."Single Unit Names" := '';
-                        end;
+            ExistingRevenueRec.Reset();
+            ExistingRevenueRec.SetRange("Contract ID", FilteredContractRec."Contract ID");
+            if ExistingRevenueRec.FindFirst() then begin
+                MultiYearStartDate := ExistingRevenueRec."Multi Year Start Date";
+                MultiYearEndDate := ExistingRevenueRec."Multi Year End Date";
+                Noofdays := ExistingRevenueRec."No Of Days";
+            end;
 
-                        FilteredContractRec."Termination Date" := 0D;
+            FilteredContractRec."Multi Year Start Date" := MultiYearStartDate;
+            FilteredContractRec."Multi Year End Date" := MultiYearEndDate;
+            CalculatedDays := (FilteredContractRec."Multi Year End Date" - FilteredContractRec."Multi Year Start Date" + 1);
 
-                        SuspensionRec.Reset();
-                        SuspensionRec.SetRange("Contract ID", ContractRec."Contract ID");
-                        if SuspensionRec.FindFirst() then begin
-                            FilteredContractRec."Suspension Start Date" := SuspensionRec.DateEffective;
-                            FilteredContractRec."Suspension End Date" := SuspensionRec.SuspensionEndDate;
-                        end;
+            FilteredContractRec."No Of Days" := Noofdays;
+            FilteredContractRec."Posting Month" := MonthNo;
+            FilteredContractRec."Posting Year" := FinancialYear;
+            FilteredContractRec."Posting Period" := Format(FilteredContractRec."Posting Month") +
+                ' ' + Format(FilteredContractRec."Posting Year") + ' ' + '-' + ' ' +
+               Format(FilteredContractRec."Posting Month") + ' ' + Format(FilteredContractRec."Posting Year");
+            FilteredContractRec."Owner Name" := ContractRec."Owner's Name";
 
-                        ExistingRevenueRec.Reset();
-                        ExistingRevenueRec.SetRange("Contract ID", FilteredContractRec."Contract ID");
-                        if ExistingRevenueRec.FindFirst() then begin
-                            MultiYearStartDate := ExistingRevenueRec."Multi Year Start Date";
-                            MultiYearEndDate := ExistingRevenueRec."Multi Year End Date";
-                            Noofdays := ExistingRevenueRec."No Of Days";
-                        end;
 
-                        FilteredContractRec."Multi Year Start Date" := MultiYearStartDate;
-                        FilteredContractRec."Multi Year End Date" := MultiYearEndDate;
-                        CalculatedDays := (FilteredContractRec."Multi Year End Date" - FilteredContractRec."Multi Year Start Date" + 1);
+            FilteredContractRec."Contract Amount" := -TotalCreditNote;
+            FilteredContractRec."Annual Amount" := -TotalCreditNote;
+            FilteredContractRec."Final Annual Amount" := -TotalCreditNote;
+            FilteredContractRec."Revenue Start Date" := Revenuestartdate;
 
-                        FilteredContractRec."No Of Days" := Noofdays;
-                        FilteredContractRec."Posting Month" := MonthNo;
-                        FilteredContractRec."Posting Year" := FinancialYear;
-                        FilteredContractRec."Posting Period" := Format(FilteredContractRec."Posting Month") +
-              ' ' + Format(FilteredContractRec."Posting Year") + ' ' + '-' + ' ' +
-              Format(FilteredContractRec."Posting Month") + ' ' + Format(FilteredContractRec."Posting Year");
-                        FilteredContractRec."Owner Name" := ContractRec."Owner's Name";
-                        FilteredContractRec."Contract Amount" := -RentReductionAmount;
-                        FilteredContractRec."Annual Amount" := -RentReductionAmount;
-                        FilteredContractRec."Final Annual Amount" := -RentReductionAmount;
-                        FilteredContractRec."Revenue Start Date" := Revenuestartdate;
 
-                        if RevenueMethod = RevenueMethod::"Per Day Rent" then begin
-                            FilteredContractRec."Per Day Rent" := Round(FilteredContractRec."Annual Amount" / CalculatedDays);
-                            FilteredContractRec."Total Value" := FilteredContractRec."Per Day Rent" * Noofdays;
-                            FilteredContractRec."Owner Share" := FilteredContractRec."Per Day Rent" * Noofdays;
-                        end
-                        else begin
-                            FilteredContractRec."Per Month Rent" := CalculatePerMonthRent(FilteredContractRec."Final Annual Amount", Noofdays, MonthNo, FinancialYear, ContractRec, MultiYearStartDate, MultiYearEndDate);
-                            FilteredContractRec."Total Value" := FilteredContractRec."Per Month Rent";
-                            FilteredContractRec."Owner Share" := FilteredContractRec."Per Month Rent";
-                        end;
-                        FilteredContractRec."Description" := 'Credit Note';
-                        FilteredContractRec.Insert();
-                    end;
-                end;
-            until RequestCreditNotegrid.Next() = 0;
+            if RevenueMethod = RevenueMethod::"Per Day Rent" then begin
+                FilteredContractRec."Per Day Rent" := Round(FilteredContractRec."Annual Amount" / CalculatedDays);
+                FilteredContractRec."Total Value" := FilteredContractRec."Per Day Rent" * Noofdays;
+                FilteredContractRec."Owner Share" := FilteredContractRec."Per Day Rent" * Noofdays;
+            end
+            else begin
+                FilteredContractRec."Per Month Rent" := CalculatePerMonthRent(FilteredContractRec."Final Annual Amount", Noofdays, MonthNo, FinancialYear, ContractRec, MultiYearStartDate, MultiYearEndDate);
+                FilteredContractRec."Total Value" := FilteredContractRec."Per Month Rent";
+                FilteredContractRec."Owner Share" := FilteredContractRec."Per Month Rent";
+            end;
+            FilteredContractRec."Description" := 'Credit Note'; // Or whatever indicates this is a credit note entry
+            FilteredContractRec.Insert();
+        end;
+        //   end;
+        // until RequestCreditNotegrid.Next() = 0;
+
     end;
 
     procedure HandleSuspensionRecoveryAllocation(
