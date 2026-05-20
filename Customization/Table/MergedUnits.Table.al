@@ -109,6 +109,23 @@ table 73209634 "Merged Units"
             DataClassification = CustomerContent;
             Caption = 'Unit Number';
         }
+        field(73209591; "Makani Number"; Text[100])
+        {
+            Caption = 'Makani Number';
+            DataClassification = ToBeClassified;
+
+        }
+        field(73209592; "Municipality Number"; Text[100])
+        {
+            Caption = 'Municipality Number';
+            DataClassification = ToBeClassified;
+
+        }
+        field(73209593; "DEWA Number"; Text[100])
+        {
+            Caption = 'DEWA Number';
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {

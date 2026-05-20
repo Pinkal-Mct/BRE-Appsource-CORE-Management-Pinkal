@@ -267,6 +267,23 @@ tableextension 73209581 "Item Ext" extends Item
             OptionCaption = ' ,Free,Reserved,Sold';
             Editable = true;
         }
+        field(73209609; "Makani Number"; Text[100])
+        {
+            Caption = 'Makani Number';
+            DataClassification = ToBeClassified;
+
+        }
+        field(73209610; "Municipality Number"; Text[100])
+        {
+            Caption = 'Municipality Number';
+            DataClassification = ToBeClassified;
+
+        }
+        field(73209611; "DEWA Number"; Text[100])
+        {
+            Caption = 'DEWA Number';
+            DataClassification = ToBeClassified;
+        }
     }
     procedure CalculateAmount()
     var

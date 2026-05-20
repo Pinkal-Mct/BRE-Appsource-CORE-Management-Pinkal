@@ -2,7 +2,7 @@ codeunit 73209603 "Revenue Allocation Posting"
 {
     Subtype = Normal;
 
-    procedure PostRevenueAllocation(RevenueAllocationRec: Record "Revenue Allocation Details"; preview: Boolean)
+    procedure PostRevenueAllocation(RevenueAllocationRec: Record "Revenue Allocation Details"; preview: Boolean; LastDateOfMonth: Date)
     var
         RevenueAllocationGrid: Record "Revenue Allocation SubGrid";
         COASetup: Record "COA Setup";
@@ -54,7 +54,7 @@ codeunit 73209603 "Revenue Allocation Posting"
                 GenJournalLineRec."Line No." := LineNumber;
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::"G/L Account";
                 GenJournalLineRec."Document No." := RevenueAllocationGrid.Description;
-                GenJournalLineRec."Posting Date" := Today;
+                GenJournalLineRec."Posting Date" := LastDateOfMonth;
                 GenJournalLineRec."Contract ID" := RevenueAllocationGrid."Contract ID";
                 GenJournalLineRec.Description := 'Rent - ' + RevenueAllocationGrid."Posting Period";
                 // GenJournalLineRec.Amount := RevenueAllocationGrid."Total Value";
@@ -94,7 +94,7 @@ codeunit 73209603 "Revenue Allocation Posting"
                 GenJournalLineRec."Line No." := LineNumber;
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::"G/L Account";
                 GenJournalLineRec."Document No." := OtherChargesAllocationGrid.Description;
-                GenJournalLineRec."Posting Date" := Today;
+                GenJournalLineRec."Posting Date" := LastDateOfMonth;
                 GenJournalLineRec."Contract ID" := OtherChargesAllocationGrid."Contract ID";
                 GenJournalLineRec.Description := OtherChargesAllocationGrid."Item Type" + ' - ' + OtherChargesAllocationGrid."Posting Period";
                 // GenJournalLineRec.Amount := OtherChargesAllocationGrid.Amount;

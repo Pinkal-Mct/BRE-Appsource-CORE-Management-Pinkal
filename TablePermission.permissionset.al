@@ -426,5 +426,11 @@ permissionset 73209575 TablePermission
         tabledata "Base Amount Data Unit Wise" = RIMD,
         table "Base Amount Data Unit Wise" = X,
         codeunit "FS Refundable Payment Receipt" = X,
-        codeunit "Split Payment Handler" = X;
+        codeunit "Split Payment Handler" = X,
+        tabledata "Additional Terms" = RIMD,
+        tabledata "Renewal Additional Terms" = RIMD,
+        tabledata "TC Additional Terms" = RIMD,
+        table "Additional Terms" = X,
+        table "Renewal Additional Terms" = X,
+        table "TC Additional Terms" = X;
 }

@@ -41,7 +41,7 @@ codeunit 73209611 "FS Refundable Payment Receipt"
                                        '<html>' +
                                        '<body>' +
                                         '<p>Dear ' + customerRec.Name + ',</p>' +
-                                       '<p>Your payment has been received. Please find your receipt attached.</p>' +
+                                       '<p>Your payment has been processed. Please find your receipt attached.</p>' +
                                        '</body>' +
                                        '</html>',
                                        true // Ensure the email is sent as an HTML email
@@ -57,7 +57,6 @@ codeunit 73209611 "FS Refundable Payment Receipt"
             else
                 Error('Failed to send email. Please verify SMTP settings and email addresses.');
 
-            exit('Email send successfully');
         end else
             Error('No lease proposal details found for Proposal ID: %1', Rec."Contract ID");
     end;

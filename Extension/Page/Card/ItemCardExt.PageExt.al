@@ -260,6 +260,24 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                         AutoGenerateUnitName(Rec);
                     end;
                 }
+                field("Makani Number"; Rec."Makani Number")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Makani Number';
+                    ToolTip = 'Makani Number of the Unit';
+                }
+                field("Municipality Number"; Rec."Municipality Number")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Municipality Number';
+                    ToolTip = 'Municipality Number of the Unit';
+                }
+                field("DEWA Number"; Rec."DEWA Number")
+                {
+                    ApplicationArea = All;
+                    Caption = 'DEWA Number';
+                    ToolTip = 'DEWA Number of the Unit';
+                }
                 field("Floor Number"; Rec."Floor Number")
                 {
                     ApplicationArea = All;

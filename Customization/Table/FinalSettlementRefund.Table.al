@@ -103,6 +103,10 @@ table 73209623 "FinalSettlementRefund"
         {
             DataClassification = CustomerContent;
         }
+        field(73209593; "Receipt #"; Text[250])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
     keys
     {

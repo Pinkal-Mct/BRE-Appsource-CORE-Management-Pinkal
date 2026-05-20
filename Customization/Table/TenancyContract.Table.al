@@ -112,6 +112,7 @@ table 73209702 "Tenancy Contract"
                     "Security Amount Pending" := LeaseProposalRec."Security Deposit Amount";
                     "Unit Number" := LeaseProposalRec."Unit Number";
                     "Makani Number" := LeaseProposalRec."Makani Number";
+                    "Municipality Number" := LeaseProposalRec."Municipality Number";
                     Emirate := LeaseProposalRec.Emirate;
                     Community := LeaseProposalRec.Community;
                     "DEWA Number" := LeaseProposalRec."DEWA Number";
@@ -143,6 +144,8 @@ table 73209702 "Tenancy Contract"
                     TenancyContractSubpage();
                     rentdatafetch();
                     brokerdata();
+                    TCAdditionalTermFetch();
+
                 end;
             end;
         }
@@ -487,7 +490,7 @@ table 73209702 "Tenancy Contract"
         {
             DataClassification = CustomerContent;
         }
-        field(73209622; "Makani Number"; Text[50])
+        field(73209622; "Makani Number"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
         }
@@ -499,7 +502,7 @@ table 73209702 "Tenancy Contract"
         {
             DataClassification = CustomerContent;
         }
-        field(73209625; "DEWA Number"; Text[50])
+        field(73209625; "DEWA Number"; Text[100])
         {
             Caption = 'DEWA Number';
             DataClassification = CustomerContent;
@@ -601,6 +604,7 @@ table 73209702 "Tenancy Contract"
                     "Security Deposit Amount" := ContractRenewal."Security Deposit Amount";
                     "Unit Number" := ContractRenewal."Unit Number";
                     "Makani Number" := ContractRenewal."Makani Number";
+                    "Municipality Number" := ContractRenewal."Municipality Number";
                     Emirate := ContractRenewal.Emirate;
                     Community := ContractRenewal.Community;
                     "DEWA Number" := ContractRenewal."DEWA Number";
@@ -616,6 +620,8 @@ table 73209702 "Tenancy Contract"
                     TenancyContractSubpage2();
                     rentdatafetched();
                     renewalbrokerdata();
+                    RenewalAdditionalTermFetch();
+
                 end;
             end;
         }
@@ -938,6 +944,11 @@ table 73209702 "Tenancy Contract"
                 UpdateSecurityDepositBalance();
             end;
         }
+        field(73209690; "Municipality Number"; Text[100])
+        {
+            Caption = 'Municipality Number';
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
@@ -1028,6 +1039,49 @@ table 73209702 "Tenancy Contract"
 
     end;
 
+    procedure TCAdditionalTermFetch()
+    var
+        additionalTerm: Record "Additional Terms";
+        TCAdditionalTerm: Record "TC Additional Terms";
+    begin
+        if Rec."Contract Type" = Rec."Contract Type"::"New Contract"
+               then begin
+            TCAdditionalTerm.SetRange("Document No.", Rec."Contract ID");
+            if TCAdditionalTerm.FindSet() then
+                TCAdditionalTerm.DeleteAll();
+            additionalTerm.SetRange("Document No.", Rec."Proposal ID");
+            if additionalTerm.FindSet() then
+                repeat
+                    TCAdditionalTerm.Init();
+                    TCAdditionalTerm."Document No." := Rec."Contract ID";
+                    TCAdditionalTerm.Description := additionalTerm.Description;
+                    TCAdditionalTerm.Insert();
+                    Clear(TCAdditionalTerm);
+                until additionalTerm.Next() = 0;
+        end;
+    end;
+
+    procedure RenewalAdditionalTermFetch()
+    var
+        additionalTerm: Record "Renewal Additional Terms";
+        TCAdditionalTerm: Record "TC Additional Terms";
+    begin
+        if Rec."Contract Type" = Rec."Contract Type"::"Renewal Contract"
+               then begin
+            TCAdditionalTerm.SetRange("Document No.", Rec."Contract ID");
+            if TCAdditionalTerm.FindSet() then
+                TCAdditionalTerm.DeleteAll();
+            additionalTerm.SetRange("Document No.", Rec."Renewal Proposal ID");
+            if additionalTerm.FindSet() then
+                repeat
+                    TCAdditionalTerm.Init();
+                    TCAdditionalTerm."Document No." := Rec."Contract ID";
+                    TCAdditionalTerm.Description := additionalTerm.Description;
+                    TCAdditionalTerm.Insert();
+                    Clear(TCAdditionalTerm);
+                until additionalTerm.Next() = 0;
+        end;
+    end;
 
     procedure rentdatafetch()
     var
@@ -1654,6 +1708,8 @@ table 73209702 "Tenancy Contract"
     trigger OnDelete()
     begin
         Deletegriddata();
+        DeleteAdditionalTerms();
+
     end;
 
     procedure Deletegriddata()
@@ -1664,6 +1720,16 @@ table 73209702 "Tenancy Contract"
         if otherpayments.FindSet()
         then
             otherpayments.DeleteAll();
+    end;
+
+    procedure DeleteAdditionalTerms()
+    var
+        AdditionalTerms: Record "TC Additional Terms";
+    begin
+        AdditionalTerms.SetRange("Document No.", Rec."Contract ID");
+
+        if AdditionalTerms.FindSet() then
+            AdditionalTerms.DeleteAll();
     end;
 
     procedure brokerdata()

@@ -31,6 +31,12 @@ page 73209657 "Revenue Allocation List"
                     Caption = 'Financial Year';
                     ToolTip = 'The financial year associated with the revenue allocation.';
                 }
+                field(Status; Rec.Status)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Status';
+                    ToolTip = 'The status of the revenue allocation entry.';
+                }
             }
         }
     }

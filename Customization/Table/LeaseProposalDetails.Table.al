@@ -85,7 +85,9 @@ table 73209628 "Lease Proposal Details"
                     "Unit Name" := ItemRec."Unit Name";
                     "UnitID" := ItemRec."UnitID";
                     "Market Rate per Sq. Ft." := ItemRec."Market Rate per Sq. Ft.";
-
+                    "Makani Number" := ItemRec."Makani Number";
+                    "DEWA Number" := ItemRec."DEWA Number";
+                    "Municipality Number" := ItemRec."Municipality Number";
                     SetRentAmountVAT();
                     ItemRec."Unit Status" := ItemRec."Unit Status"::Selected;
                     ItemRec.Modify();
@@ -432,6 +434,9 @@ table 73209628 "Lease Proposal Details"
                         "Market Rate per Sq. Ft." := MergedUnitRec."Market Rate per Square";
                         "Single Unit Name" := MergedUnitRec."Single Unit Name";
                         "Unit Number" := MergedUnitRec."Unit Number";
+                        "Makani Number" := MergedUnitRec."Makani Number";
+                        "DEWA Number" := MergedUnitRec."DEWA Number";
+                        "Municipality Number" := MergedUnitRec."Municipality Number";
                         SetRentAmountVAT();
 
                         if MergedUnitRec."Status" = MergedUnitRec."Status"::Free then begin
@@ -619,7 +624,7 @@ table 73209628 "Lease Proposal Details"
             DataClassification = OrganizationIdentifiableInformation;
         }
 
-        field(73209631; "Makani Number"; Text[50])
+        field(73209631; "Makani Number"; Text[100])
         {
             Caption = 'Makani Number';
             DataClassification = EndUserIdentifiableInformation;
@@ -636,7 +641,7 @@ table 73209628 "Lease Proposal Details"
             Caption = 'Community';
             DataClassification = CustomerContent;
         }
-        field(73209634; "DEWA Number"; Text[50])
+        field(73209634; "DEWA Number"; Text[100])
         {
             Caption = 'DEWA Number';
             DataClassification = CustomerContent;
@@ -1060,6 +1065,11 @@ table 73209628 "Lease Proposal Details"
             DataClassification = CustomerContent;
             Caption = 'Is any Broker Involved?';
         }
+        field(73209657; "Municipality Number"; Text[100])
+        {
+            Caption = 'Municipality Number';
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
@@ -1138,6 +1148,7 @@ table 73209628 "Lease Proposal Details"
         DeleteMergeUnitDiffRate();
         DeleteSingleUnitLumpsumRate();
         DeleteMergeUnitLumpsumRate();
+        DeleteAdditionalTerms();
 
     end;
 
@@ -1161,6 +1172,16 @@ table 73209628 "Lease Proposal Details"
 
         if deleteMergeUnitRecords.FindSet() then
             deleteMergeUnitRecords.DeleteAll();
+    end;
+
+    procedure DeleteAdditionalTerms()
+    var
+        AdditionalTerms: Record "Additional Terms";
+    begin
+        AdditionalTerms.SetRange("Document No.", Rec."Proposal ID");
+
+        if AdditionalTerms.FindSet() then
+            AdditionalTerms.DeleteAll();
     end;
 
     procedure DeletePerDayRevenueUnitSameRate()

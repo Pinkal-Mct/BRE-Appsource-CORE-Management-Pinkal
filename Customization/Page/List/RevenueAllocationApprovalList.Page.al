@@ -81,12 +81,18 @@ page 73209656 "RevenueAllocationApproval List"
                 trigger OnAction()
                 var
                     revenueallocation: Record "Revenue Allocation Details";
+                    Fetchmonth: Codeunit "Fetch Month";
                     RevenueAllocationPosting: Codeunit "Revenue Allocation Posting";
                     Previewcheck: Boolean;
+                    GetMonthNo: Integer;
                 begin
                     Previewcheck := true;
+                    GetMonthNo := Fetchmonth.GetMonthNo(Format(Rec.Month));
+                    if GetMonthNo <> 0 then
+                        LastDateOfMonth := GetLastDateOfMonth(GetMonthNo, Rec."Financial Year");
+
                     if revenueallocation.Get(Rec."ID") then
-                        RevenueAllocationPosting.PostRevenueAllocation(revenueallocation, Previewcheck);
+                        RevenueAllocationPosting.PostRevenueAllocation(revenueallocation, Previewcheck, LastDateOfMonth);
                 end;
 
             }
@@ -104,6 +110,8 @@ page 73209656 "RevenueAllocationApproval List"
                     revenueallocation: Record "Revenue Allocation Details";
                     RevenueAllocationPosting: Codeunit "Revenue Allocation Posting";
                     approvalRevenuerequest: Codeunit "Approval Revenue Allocation";
+                    Fetchmonth: Codeunit "Fetch Month";
+                    GetMonthNo: Integer;
                     previewcheck: Boolean;
                 begin
                     if Rec.Status = Rec.Status::Approved then
@@ -111,11 +119,14 @@ page 73209656 "RevenueAllocationApproval List"
 
                     if Confirm('Do you want to approve this entry?') then begin
                         // Update entry status
+                        GetMonthNo := Fetchmonth.GetMonthNo(Format(Rec.Month));
+                        if GetMonthNo <> 0 then
+                            LastDateOfMonth := GetLastDateOfMonth(GetMonthNo, Rec."Financial Year");
 
 
                         if revenueallocation.Get(Rec."ID") then begin
                             previewcheck := false;
-                            RevenueAllocationPosting.PostRevenueAllocation(revenueallocation, previewcheck);
+                            RevenueAllocationPosting.PostRevenueAllocation(revenueallocation, previewcheck, LastDateOfMonth);
 
                             revenueallocation.Status := revenueallocation.Status::Approve;
                             approvalRevenuerequest.ApprovalRevenuerequest(Rec);
@@ -195,7 +206,19 @@ page 73209656 "RevenueAllocationApproval List"
         exit(false);
     end;
 
+    procedure GetLastDateOfMonth(MonthNo: Integer; Year: Integer): Date
+    var
+        MonthStartDate: Date;
+    begin
+        if MonthNo = 0 then
+            exit(0D);
+
+        MonthStartDate := DMY2DATE(1, MonthNo, Year);
+        exit(CALCDATE('<CM>', MonthStartDate));
+    end;
+
     var
         IsFinanceManager: Boolean;
 
+        LastDateOfMonth: Date;
 }

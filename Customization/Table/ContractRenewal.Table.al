@@ -96,6 +96,8 @@ table 73209600 "Contract Renewal"
                     "Security Deposit Amount" := TenancyContractRec."Security Deposit Amount";
                     "Unit Number" := TenancyContractRec."Unit Number";
                     "Makani Number" := TenancyContractRec."Makani Number";
+                    "Municipality Number" := TenancyContractRec."Municipality Number";
+
                     Emirate := TenancyContractRec.Emirate;
                     Community := TenancyContractRec.Community;
                     "Property Size" := TenancyContractRec."Property Size";
@@ -417,7 +419,7 @@ table 73209600 "Contract Renewal"
         {
             DataClassification = CustomerContent;
         }
-        field(73209621; "DEWA Number"; Text[50])
+        field(73209621; "DEWA Number"; Text[100])
         {
             Caption = 'DEWA Number';
             DataClassification = CustomerContent;
@@ -1054,6 +1056,12 @@ table 73209600 "Contract Renewal"
             DataClassification = CustomerContent;
             Caption = 'Usage Type';
         }
+        field(73209662; "Municipality Number"; Text[100])
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Municipality Number';
+
+        }
     }
     keys
     {
@@ -1138,6 +1146,7 @@ table 73209600 "Contract Renewal"
         DeleteMergeUnitDiffRate();
         DeleteSingleUnitLumpsumRate();
         DeleteMergeUnitLumpsumRate();
+        DeleteAdditionalTerms();
 
     end;
 
@@ -1151,6 +1160,17 @@ table 73209600 "Contract Renewal"
         if deleteSingleUnitRecords.FindSet() then
             deleteSingleUnitRecords.DeleteAll();
     end;
+
+    procedure DeleteAdditionalTerms()
+    var
+        RenewalAdditionalTerms: Record "Renewal Additional Terms";
+    begin
+        RenewalAdditionalTerms.SetRange("Document No.", Rec.Id);
+
+        if RenewalAdditionalTerms.FindSet() then
+            RenewalAdditionalTerms.DeleteAll();
+    end;
+
 
     procedure DeleteMergeUnitSameRate()
     var

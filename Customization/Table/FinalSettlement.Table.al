@@ -100,6 +100,8 @@ table 73209622 "FinalSettlement"
 
                 if Confirm('Do you want to post journal lines?', true) then begin
                     FinalSettlementPosting.PostFinalSettlementAmount(Rec);
+                    Rec."Payment Receipt" := 'Receipt_' + Format(Rec."Contract ID") + Format(Rec."FC ID");
+                    Rec.Modify();
                     Email.SendEmail(Rec);
                     ReportID := 73209581;
                     paymentmode2Grid.Reset();
@@ -116,7 +118,6 @@ table 73209622 "FinalSettlement"
                     folderName := 'Payment Receipt';
                     uploadResult := azureBlobUploader.UploadDocumentToBlob(inStream, fileName, folderName);
                     if fileName <> '' then begin
-                        Rec."Payment Receipt" := fileName;
                         Rec."Payment Receipt document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                         Rec.Modify();
                         Message('File uploaded successfully: %1', fileName);
