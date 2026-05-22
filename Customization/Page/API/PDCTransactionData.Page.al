@@ -10,7 +10,7 @@ page 73209606 "PDC Transaction Data"
     EntityName = 'pdcTransaction';
     EntitySetName = 'pdcTransactions';
     ODataKeyFields = SystemId;
-    SourceTable = "PDC Transaction";
+    SourceTable = "BLRPDCTransaction";
 
     layout
     {
@@ -18,17 +18,17 @@ page 73209606 "PDC Transaction Data"
         {
             repeater(Group)
             {
-                field("pdcID"; Rec."PDC ID") { }
+                field("pdcID"; Rec."BLRPDC ID") { }
                 field(systemId; Rec.SystemId) { }
-                field("tenantId"; Rec."Tenant Id") { }
-                field("contractID"; Rec."Contract ID") { }
-                field("bankName"; Rec."Bank Name") { }
-                field("chequeNumber"; Rec."Cheque Number") { }
-                field("chequeDate"; Rec."Cheque Date") { }
-                field(amount; Rec.Amount) { }
-                field("chequeStatus"; Rec."Cheque Status") { }
-                field("approvalStatus"; Rec."Approval Status") { }
-                field(view; Rec.View) { }
+                field("tenantId"; Rec."BLRTenant Id") { }
+                field("contractID"; Rec."BLRContract ID") { }
+                field("bankName"; Rec."BLRBank Name") { }
+                field("chequeNumber"; Rec."BLRCheque Number") { }
+                field("chequeDate"; Rec."BLRCheque Date") { }
+                field(amount; Rec."BLRAmount") { }
+                field("chequeStatus"; Rec."BLRCheque Status") { }
+                field("approvalStatus"; Rec."BLRApproval Status") { }
+                field(view; Rec."BLRView") { }
 
             }
         }

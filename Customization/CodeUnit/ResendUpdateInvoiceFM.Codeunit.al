@@ -43,8 +43,8 @@ codeunit 73209602 ResendUpdateInvoiceFM
                          '<h3>Updated Invoice Details</h3>' +
                          '<p>The following invoice has been Updated:</p>' +
                          '<p><b>Invoice ID:</b> ' + SalesHeader."No." + '<br/>' +
-                         '<b>Contract ID:</b> ' + Format(SalesHeader."Contract ID") + '<br/>' +
-                         '<b>Property Name:</b> ' + SalesHeader."Property Name" + '<br/>' +
+                         '<b>Contract ID:</b> ' + Format(SalesHeader."BLRContract ID") + '<br/>' +
+                         '<b>Property Name:</b> ' + SalesHeader."BLRProperty Name" + '<br/>' +
                          '<b>Total Amount:</b> ' + Format(TotalAmount) + '<br/>' +
                          '<p>Please review the updated details and provide your approval at your earliest convenience. If any adjustments are needed, kindly let us know.</p>' +
                        '<p><a href="' + InvoiceLink + '" target="_blank">Click here to view the invoice</a></p>' +

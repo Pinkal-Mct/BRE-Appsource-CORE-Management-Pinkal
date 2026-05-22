@@ -1,47 +1,47 @@
 codeunit 73209589 "Credit Memo Generate"
 {
     Subtype = Normal;
-    procedure GenerateCreditMemo(RequestCreditnoteGrid: Record "Request Credit Note Grid")
+    procedure GenerateCreditMemo(RequestCreditnoteGrid: Record "BLRRequestCreditNoteGrid")
     var
-        RequestGrid: Record "Request Credit Note Grid";
+        RequestGrid: Record "BLRRequestCreditNoteGrid";
         Customer: Record Customer;
         customercard: Record Customer;
         NewSalesHeader: Record "Sales Header";
-        GridPerSeries: Record "Request Credit Note Grid";
+        GridPerSeries: Record "BLRRequestCreditNoteGrid";
         SalesPost: Codeunit "Sales-Post";
         PaymentSeriesList: List of [Code[20]];
         CurrentSeries: Code[20];
     begin
-        Customer.SetRange("No.", RequestCreditnoteGrid."Tenant No.");
+        Customer.SetRange("No.", RequestCreditnoteGrid."BLRTenant No.");
         if Customer.IsEmpty() then
             Error('Customer not found for the given Sales Credit Memo.');
-        RequestGrid.SetRange("Request No.", RequestCreditnoteGrid."Request No.");
-        RequestGrid.SetRange("Contract ID", RequestCreditnoteGrid."Contract ID");
+        RequestGrid.SetRange("BLRRequest No.", RequestCreditnoteGrid."BLRRequest No.");
+        RequestGrid.SetRange("BLRContract ID", RequestCreditnoteGrid."BLRContract ID");
         if not RequestGrid.FindSet() then
             Error('No credit note lines found for the request.');
         repeat
-            if not PaymentSeriesList.Contains(RequestGrid."Payment Series") then
-                PaymentSeriesList.Add(RequestGrid."Payment Series");
+            if not PaymentSeriesList.Contains(RequestGrid."BLRPayment Series") then
+                PaymentSeriesList.Add(RequestGrid."BLRPayment Series");
         until RequestGrid.Next() = 0;
         foreach CurrentSeries in PaymentSeriesList do begin
             GridPerSeries.Reset();
-            GridPerSeries.SetRange("Request No.", RequestCreditnoteGrid."Request No.");
-            GridPerSeries.SetRange("Contract ID", RequestCreditnoteGrid."Contract ID");
-            GridPerSeries.SetRange("Payment Series", CurrentSeries);
-            GridPerSeries.SetFilter("Credit Memo Generated", '=false');
-            GridPerSeries.SetFilter(Invoiced, '=true');
+            GridPerSeries.SetRange("BLRRequest No.", RequestCreditnoteGrid."BLRRequest No.");
+            GridPerSeries.SetRange("BLRContract ID", RequestCreditnoteGrid."BLRContract ID");
+            GridPerSeries.SetRange("BLRPayment Series", CurrentSeries);
+            GridPerSeries.SetFilter("BLRCredit Memo Generated", '=false');
+            GridPerSeries.SetFilter("BLRInvoiced", '=true');
             if GridPerSeries.FindFirst() then begin
-                NewSalesHeader := CreateSalesHeader(GridPerSeries."Contract ID", GridPerSeries."Tenant No.", GridPerSeries."Property Classification", GridPerSeries."Invoice ID");
+                NewSalesHeader := CreateSalesHeader(GridPerSeries."BLRContract ID", GridPerSeries."BLRTenant No.", GridPerSeries."BLRProperty Classification", GridPerSeries."BLRInvoice ID");
                 customercard.SetRange("No.", NewSalesHeader."Sell-to Customer No.");
                 if customercard.FindFirst() then
-                    if NewSalesHeader."Property Classification" <> '' then begin
-                        customercard.Validate("Gen. Bus. Posting Group", NewSalesHeader."Property Classification");
-                        customercard.Validate("Customer Posting Group", NewSalesHeader."Property Classification");
+                    if NewSalesHeader."BLRProperty Classification" <> '' then begin
+                        customercard.Validate("Gen. Bus. Posting Group", NewSalesHeader."BLRProperty Classification");
+                        customercard.Validate("Customer Posting Group", NewSalesHeader."BLRProperty Classification");
                         customercard.Modify();
                     end;
-                if NewSalesHeader."Property Classification" <> '' then begin
-                    NewSalesHeader.Validate("Gen. Bus. Posting Group", NewSalesHeader."Property Classification");
-                    NewSalesHeader.Validate("Customer Posting Group", NewSalesHeader."Property Classification");
+                if NewSalesHeader."BLRProperty Classification" <> '' then begin
+                    NewSalesHeader.Validate("Gen. Bus. Posting Group", NewSalesHeader."BLRProperty Classification");
+                    NewSalesHeader.Validate("Customer Posting Group", NewSalesHeader."BLRProperty Classification");
                     NewSalesHeader.Modify();
                 end;
                 createSalesLines(NewSalesHeader, RequestCreditnoteGrid, CurrentSeries);
@@ -63,13 +63,13 @@ codeunit 73209589 "Credit Memo Generate"
             salesHeader."No." := noseries.GetNextNo(salesReciveable."Credit Memo Nos.", Today, true);
         salesHeader."Document Type" := SalesHeader."Document Type"::"Credit Memo";
         salesHeader.Validate("Sell-to Customer No.", pTenantID);
-        salesHeader.Validate("Contract ID", pContractID);
+        salesHeader.Validate("BLRContract ID", pContractID);
         salesHeader."Document Date" := Today;
         salesHeader."Posting Date" := Today;
         salesHeader."Due Date" := Today;
-        salesHeader."Property Classification" := pUnitType;
+        salesHeader."BLRProperty Classification" := pUnitType;
         salesHeader."Posting No. Series" := salesReciveable."Posted Credit Memo Nos.";
-        salesHeader."Approval Status for CreditNote" := SalesHeader."Approval Status for CreditNote"::Approved;
+        salesHeader."BLRApproval Status for CreditNote" := SalesHeader."BLRApproval Status for CreditNote"::Approved;
         SalesHeader.Validate("Applies-to Doc. Type", SalesHeader."Applies-to Doc. Type"::Invoice);
         SalesHeader.Validate("Applies-to Doc. No.", pInvoiceID);
         salesHeader.Insert();
@@ -78,20 +78,20 @@ codeunit 73209589 "Credit Memo Generate"
 
     procedure createSalesLines(
         var salesheader1: Record "Sales Header";
-        RequestCreditnoteGrid: Record "Request Credit Note Grid";
+        RequestCreditnoteGrid: Record "BLRRequestCreditNoteGrid";
         paymentSeries: Code[20]
     )
     var
         saleline: Record "Sales Line";
         newSaleslines: Record "Sales Line";
         item: Record Item;
-        requestcreditnotegridRec: Record "Request Credit Note Grid";
+        requestcreditnotegridRec: Record "BLRRequestCreditNoteGrid";
     begin
-        requestcreditnotegridRec.SetRange("Request No.", RequestCreditnoteGrid."Request No.");
-        requestcreditnotegridRec.SetRange("Contract ID", RequestCreditnoteGrid."Contract ID");
-        requestcreditnotegridRec.SetRange("Payment Series", paymentSeries);
-        requestcreditnotegridRec.SetFilter("Credit Memo Generated", '=false');
-        RequestCreditnoteGrid.SetFilter(Invoiced, '=true');
+        requestcreditnotegridRec.SetRange("BLRRequest No.", RequestCreditnoteGrid."BLRRequest No.");
+        requestcreditnotegridRec.SetRange("BLRContract ID", RequestCreditnoteGrid."BLRContract ID");
+        requestcreditnotegridRec.SetRange("BLRPayment Series", paymentSeries);
+        requestcreditnotegridRec.SetFilter("BLRCredit Memo Generated", '=false');
+        RequestCreditnoteGrid.SetFilter("BLRInvoiced", '=true');
         if requestcreditnotegridRec.FindSet() then
             repeat
                 saleline.Init();
@@ -99,34 +99,34 @@ codeunit 73209589 "Credit Memo Generate"
                 saleline.Validate("Document No.", salesheader1."No.");
                 newSaleslines.SetRange("Document No.", salesheader1."No.");
                 newSaleslines.SetRange("Document Type", Enum::"Sales Document Type"::"Credit Memo");
-                newSaleslines.SetRange("Contract ID", salesheader1."Contract ID");
+                newSaleslines.SetRange("BLRContract ID", salesheader1."BLRContract ID");
                 newSaleslines.SetCurrentKey("Line No.");
                 if newSaleslines.FindLast() then
                     saleline."Line No." := newSaleslines."Line No." + 1000
                 else
                     saleline."Line No." := 1000;
-                saleline.Validate("Contract ID", salesheader1."Contract ID");
+                saleline.Validate("BLRContract ID", salesheader1."BLRContract ID");
                 saleline.Type := saleline.Type::Item;
                 saleline.Validate("Sell-to Customer No.", salesheader1."Sell-to Customer No.");
-                item.SetRange(Description, requestcreditnotegridRec.Charges);
+                item.SetRange(Description, requestcreditnotegridRec."BLRCharges");
                 if item.FindFirst() then
                     saleline.Validate("No.", item."No.")
                 else
-                    Error('No item found with description "%1"', requestcreditnotegridRec.Charges);
+                    Error('No item found with description "%1"', requestcreditnotegridRec."BLRCharges");
                 saleline.Validate("Quantity (Base)", 1);
                 saleline.Validate(Quantity, 1);
-                saleline.Validate("Unit Price", Abs(requestcreditnotegridRec."Total Reduction"));
-                saleline."Contract ID" := requestcreditnotegridRec."Contract ID";
+                saleline.Validate("Unit Price", Abs(requestcreditnotegridRec."BLRTotal Reduction"));
+                saleline."BLRContract ID" := requestcreditnotegridRec."BLRContract ID";
                 saleline.Insert();
-                requestcreditnotegridRec.Validate("Credit Memo Generated", true);
-                requestcreditnotegridRec."Credit Note No." := salesheader1."No.";
+                requestcreditnotegridRec.Validate("BLRCredit Memo Generated", true);
+                requestcreditnotegridRec."BLRCredit Note No." := salesheader1."No.";
                 requestcreditnotegridRec.Modify();
             until requestcreditnotegridRec.Next() = 0;
     end;
 
     procedure Createdocument(var SalesheaderRec: Record "Sales Header")
     var
-        ConfigRecord: Record AzureConfiguration;
+        ConfigRecord: Record "BLRAzureConfiguration";
         SalesHeader1: Record "Sales Header";
         azureBlobUploader: Codeunit "Azure AD Blob Storage";
         TempBlob: Codeunit "Temp Blob";
@@ -141,14 +141,14 @@ codeunit 73209589 "Credit Memo Generate"
         OutStream: OutStream;
         folderName: Text;
     begin
-        if SalesheaderRec."Approval Status for CreditNote" <> SalesheaderRec."Approval Status for CreditNote"::Approved then
+        if SalesheaderRec."BLRApproval Status for CreditNote" <> SalesheaderRec."BLRApproval Status for CreditNote"::Approved then
             Error('The Sales Credit Memo cannot be posted because the approval status is not "Approved".');
         if not ConfigRecord.FindFirst() then
             Error('Azure configuration is missing. Please set up the SAS URL in the Azure Configuration table.');
         ValidFormats.Add('.png');
         ValidFormats.Add('.jpg');
         ValidFormats.Add('.jpeg');
-        SASUrlBase := ConfigRecord."SAS URL";
+        SASUrlBase := ConfigRecord."BLRSAS URL";
         FileExtension := '.pdf';
         ReportID := 73209580;
         SalesHeader1.Reset();
@@ -163,8 +163,8 @@ codeunit 73209589 "Credit Memo Generate"
         FileName := 'CreditNote' + SalesheaderRec."No." + FileExtension;
         folderName := 'SalesCreditMemoDocuments';
         UploadResult := azureBlobUploader.UploadDocumentToBlob(InStream, FileName, folderName);
-        SalesheaderRec."Credit Memo Document" := CopyStr(FileName, 1, StrLen(FileName));
-        SalesheaderRec."Credit Memo URL" := CopyStr(UploadResult, 1, StrLen(UploadResult));
+        SalesheaderRec."BLRCredit Memo Document" := CopyStr(FileName, 1, StrLen(FileName));
+        SalesheaderRec."BLRCredit Memo URL" := CopyStr(UploadResult, 1, StrLen(UploadResult));
         SalesheaderRec.Modify();
     end;
 }

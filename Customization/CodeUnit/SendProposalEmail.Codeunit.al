@@ -1,10 +1,10 @@
 codeunit 73209617 "Send Proposal Email"
 {
-    procedure SendEmail(Rec: Record "Lease Proposal Details"): Text;
+    procedure SendEmail(Rec: Record "BLRLeaseProposalDetails"): Text;
     var
         CompanyInfo: Record "Company Information";
-        ConsolidatedInvoiceHeader: Record "Lease Proposal Details";
-        AdditionalDetailsTable: Record "Revenue Item Subpage";
+        ConsolidatedInvoiceHeader: Record "BLRLeaseProposalDetails";
+        AdditionalDetailsTable: Record "BLRRevenueItemSubpage";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
         TempBlob: Codeunit "Temp Blob";
@@ -24,43 +24,43 @@ codeunit 73209617 "Send Proposal Email"
         ReportID := 73209587;
         SecondReportID := 73209585;
 
-        ConsolidatedInvoiceHeader.SetRange("Proposal ID", Rec."Proposal ID");
+        ConsolidatedInvoiceHeader.SetRange("BLRProposal ID", Rec."BLRProposal ID");
         if ConsolidatedInvoiceHeader.FindSet() then begin
 
-            if ConsolidatedInvoiceHeader."Tenant Contact Email" = '' then
+            if ConsolidatedInvoiceHeader."BLRTenant Contact Email" = '' then
                 Error('The email ID is blank. Please enter the email ID first.');
 
             RecRef.GetTable(ConsolidatedInvoiceHeader);
             TempBlob.CreateOutStream(OutStream);
             Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
             TempBlob.CreateInStream(InStream);
-            FileName := 'proposal_' + Format(ConsolidatedInvoiceHeader."Proposal ID") + '.pdf';
-            AdditionalDetailsTable.SetRange(ProposalID, Rec."Proposal ID");
+            FileName := 'proposal_' + Format(ConsolidatedInvoiceHeader."BLRProposal ID") + '.pdf';
+            AdditionalDetailsTable.SetRange("BLRProposalID", Rec."BLRProposal ID");
             if AdditionalDetailsTable.FindSet() then begin
                 SecondRecRef.GetTable(AdditionalDetailsTable);
                 SecondTempBlob.CreateOutStream(SecondOutStream);
                 Report.SaveAs(SecondReportID, '', ReportFormat::Pdf, SecondOutStream, SecondRecRef);
                 SecondTempBlob.CreateInStream(SecondInStream);
-                SecondFileName := 'additional_details_' + Format(AdditionalDetailsTable.ProposalID) + '.pdf';
+                SecondFileName := 'additional_details_' + Format(AdditionalDetailsTable."BLRProposalID") + '.pdf';
             end else
                 Error('No data found for the second report.');
 
-            Leaseamount := Round(ConsolidatedInvoiceHeader."Annual Rent Amount", 0.01);
+            Leaseamount := Round(ConsolidatedInvoiceHeader."BLRAnnual Rent Amount", 0.01);
 
             if CompanyInfo.Get() then
                 EmailMessage.Create(
-                    ConsolidatedInvoiceHeader."Tenant Contact Email",
-                    'Lease Proposal for Your Consideration_' + Format(ConsolidatedInvoiceHeader."Proposal ID"),
+                    ConsolidatedInvoiceHeader."BLRTenant Contact Email",
+                    'Lease Proposal for Your Consideration_' + Format(ConsolidatedInvoiceHeader."BLRProposal ID"),
                     '<html>' +
                     '<body>' +
-                    '<p>Dear ' + ConsolidatedInvoiceHeader."Tenant Full Name" + ',</p>' +
+                    '<p>Dear ' + ConsolidatedInvoiceHeader."BLRTenant Full Name" + ',</p>' +
                     '<p>Thank you for your interest in leasing one of our properties. We are pleased to share the lease proposal for your review.</p>' +
                     '<h3>Property Details:</h3>' +
-                    '<p><b>Property Name:</b> ' + ConsolidatedInvoiceHeader."Property Name" + '<br/>' +
-                    '<b>Unit Number:</b> ' + ConsolidatedInvoiceHeader."Unit Number" + '<br/>' +
-                    '<b>Area:</b> ' + Format(ConsolidatedInvoiceHeader."Unit Size") + '<br/>' +
+                    '<p><b>Property Name:</b> ' + ConsolidatedInvoiceHeader."BLRProperty Name" + '<br/>' +
+                    '<b>Unit Number:</b> ' + ConsolidatedInvoiceHeader."BLRUnit Number" + '<br/>' +
+                    '<b>Area:</b> ' + Format(ConsolidatedInvoiceHeader."BLRUnit Size") + '<br/>' +
                     '<b>Lease Amount:</b> ' + Format(Leaseamount) + '<br/>' +
-                    '<b>Lease Term:</b> ' + ConsolidatedInvoiceHeader."Lease Duration" + '</p>' +
+                    '<b>Lease Term:</b> ' + ConsolidatedInvoiceHeader."BLRLease Duration" + '</p>' +
                     '<h3>Terms and Conditions:</h3>' +
                     '<p>The tenancy contract will be renewable annually upon the successful completion of the yearly rental payment.<br/>' +
                     'Renewal options are available with 90 days prior notice in alignment with the RERA Calculator.<br/>' +
@@ -75,11 +75,11 @@ codeunit 73209617 "Send Proposal Email"
             EmailMessage.AddAttachment(FileName, '', InStream);
             EmailMessage.AddAttachment(SecondFileName, '', SecondInStream);
             if Email.Send(EmailMessage) then
-                Message('Email sent successfully to: %1', ConsolidatedInvoiceHeader."Tenant Contact Email")
+                Message('Email sent successfully to: %1', ConsolidatedInvoiceHeader."BLRTenant Contact Email")
             else
                 Error('Failed to send email. Please verify SMTP settings and email addresses.');
 
         end else
-            Error('No lease proposal details found for Proposal ID: %1', Rec."Tenant ID");
+            Error('No lease proposal details found for Proposal ID: %1', Rec."BLRTenant ID");
     end;
 }

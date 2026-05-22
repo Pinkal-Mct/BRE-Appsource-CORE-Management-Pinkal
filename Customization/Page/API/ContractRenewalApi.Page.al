@@ -2,7 +2,7 @@ page 73209583 "contractRenewalApi"
 {
     PageType = API;
     DelayedInsert = true;
-    SourceTable = "Contract Renewal";
+    SourceTable = "BLRContractRenewal";
     APIPublisher = 'realestate';
     APIGroup = 'contracts';
     APIVersion = 'v2.0';
@@ -21,58 +21,58 @@ page 73209583 "contractRenewalApi"
             {
                 Caption = 'System Identifier';
             }
-            field("id"; Rec.Id) { }
-            field("ownersName"; Rec."Owner's Name") { }
-            field("lessorsName"; Rec."Lessor's Name") { }
-            field("lessorsEmiratesID"; Rec."Lessor's Emirates ID") { }
-            field("licenseNo"; Rec."License No.") { }
-            field("licensingAuthority"; Rec."Licensing Authority") { }
-            field("lessorsEmail"; Rec."Lessor's Email") { }
-            field("lessorsPhone"; Rec."Lessor's Phone") { }
-            field("contractID"; Rec."Contract ID") { }
-            field("contractStartDate"; Rec."Contract Start Date") { }
-            field("contractEndDate"; Rec."Contract End Date") { }
-            field("contractAmount"; Rec."Contract Amount") { }
-            field("unitID"; Rec."Unit ID") { }
-            field("unitName"; Rec."Unit Name") { }
-            field("propertyID"; Rec."Property ID") { }
-            field("propertyName"; Rec."Property Name") { }
-            field("renewalContractStatus"; Rec."Renewal Contract Status") { }
-            field("tenantFullName"; Rec."Tenant Full Name") { }
-            field("contractTenor"; Rec."Contract Tenor") { }
-            field("approvalForRenewal"; Rec."Approval For Renewal") { }
-            field("proposalID"; Rec."Proposal ID") { }
-            field("ejariName"; Rec."Ejari Name") { }
-            field("propertyClassification"; Rec."Property Classification") { }
-            field("propertyType"; Rec."Property Type") { }
-            field("annualRentAmount"; Rec."Annual Rent Amount") { }
-            field("contractDate"; Rec."Contract Date") { }
-            field("baseUnitOfMeasure"; Rec."Base Unit of Measure") { }
-            field("unitSqFeet"; Rec."Unit Sq. Feet") { }
-            field("gracePeriod"; Rec."Grace Period") { }
-            field("graceStartDate"; Rec."Grace Start Date") { }
-            field("graceEndDate"; Rec."Grace End Date") { }
-            field("tenantID"; Rec."Tenant ID") { }
-            field("emiratesID"; Rec."Emirates ID") { }
-            field("contactNumber"; Rec."Contact Number") { }
-            field("emailAddress"; Rec."Email Address") { }
-            field("paymentFrequency"; Rec."Payment Frequency") { }
-            field("paymentMethod"; Rec."Payment Method") { }
-            field("createdBy"; Rec."Created By") { }
-            field("mergeUnitID"; Rec."Merge Unit ID") { }
-            field("rentAmount"; Rec."Rent Amount") { }
-            field("tenantLicenseNo"; Rec."Tenant_License No.") { }
-            field("tenantLicensingAuthority"; Rec."Tenant_Licensing Authority") { }
-            field("securityDepositAmount"; Rec."Security Deposit Amount") { }
-            field("unitNumber"; Rec."Unit Number") { }
-            field("makaniNumber"; Rec."Makani Number") { }
-            field(emirate; Rec.Emirate) { }
-            field(community; Rec.Community) { }
-            field("dewaNumber"; Rec."DEWA Number") { }
-            field("propertySize"; Rec."Property Size") { }
-            field("noOfInstallments"; Rec."No of Installments") { }
-            field(unitID1; Rec.UnitID) { }
-            field(originalContractID; Rec."Original Contract ID") { }
+            field("id"; Rec."BLRId") { }
+            field("ownersName"; Rec."BLROwner's Name") { }
+            field("lessorsName"; Rec."BLRLessor's Name") { }
+            field("lessorsEmiratesID"; Rec."BLRLessor's Emirates ID") { }
+            field("licenseNo"; Rec."BLRLicense No.") { }
+            field("licensingAuthority"; Rec."BLRLicensing Authority") { }
+            field("lessorsEmail"; Rec."BLRLessor's Email") { }
+            field("lessorsPhone"; Rec."BLRLessor's Phone") { }
+            field("contractID"; Rec."BLRContract ID") { }
+            field("contractStartDate"; Rec."BLRContract Start Date") { }
+            field("contractEndDate"; Rec."BLRContract End Date") { }
+            field("contractAmount"; Rec."BLRContract Amount") { }
+            field("unitID"; Rec."BLRUnit ID") { }
+            field("unitName"; Rec."BLRUnit Name") { }
+            field("propertyID"; Rec."BLRProperty ID") { }
+            field("propertyName"; Rec."BLRProperty Name") { }
+            field("renewalContractStatus"; Rec."BLRRenewal Contract Status") { }
+            field("tenantFullName"; Rec."BLRTenant Full Name") { }
+            field("contractTenor"; Rec."BLRContract Tenor") { }
+            field("approvalForRenewal"; Rec."BLRApproval For Renewal") { }
+            field("proposalID"; Rec."BLRProposal ID") { }
+            field("ejariName"; Rec."BLREjari Name") { }
+            field("propertyClassification"; Rec."BLRProperty Classification") { }
+            field("propertyType"; Rec."BLRProperty Type") { }
+            field("annualRentAmount"; Rec."BLRAnnual Rent Amount") { }
+            field("contractDate"; Rec."BLRContract Date") { }
+            field("baseUnitOfMeasure"; Rec."BLRBase Unit of Measure") { }
+            field("unitSqFeet"; Rec."BLRUnit Sq. Feet") { }
+            field("gracePeriod"; Rec."BLRGrace Period") { }
+            field("graceStartDate"; Rec."BLRGrace Start Date") { }
+            field("graceEndDate"; Rec."BLRGrace End Date") { }
+            field("tenantID"; Rec."BLRTenant ID") { }
+            field("emiratesID"; Rec."BLREmirates ID") { }
+            field("contactNumber"; Rec."BLRContact Number") { }
+            field("emailAddress"; Rec."BLREmail Address") { }
+            field("paymentFrequency"; Rec."BLRPayment Frequency") { }
+            field("paymentMethod"; Rec."BLRPayment Method") { }
+            field("createdBy"; Rec."BLRCreated By") { }
+            field("mergeUnitID"; Rec."BLRMerge Unit ID") { }
+            field("rentAmount"; Rec."BLRRent Amount") { }
+            field("tenantLicenseNo"; Rec."BLRTenant_License No.") { }
+            field("tenantLicensingAuthority"; Rec."BLRTenant_Licensing Authority") { }
+            field("securityDepositAmount"; Rec."BLRSecurity Deposit Amount") { }
+            field("unitNumber"; Rec."BLRUnit Number") { }
+            field("makaniNumber"; Rec."BLRMakani Number") { }
+            field(emirate; Rec."BLREmirate") { }
+            field(community; Rec."BLRCommunity") { }
+            field("dewaNumber"; Rec."BLRDEWA Number") { }
+            field("propertySize"; Rec."BLRProperty Size") { }
+            field("noOfInstallments"; Rec."BLRNo of Installments") { }
+            field(unitID1; Rec."BLRUnitID") { }
+            field(originalContractID; Rec."BLROriginal Contract ID") { }
         }
     }
 }

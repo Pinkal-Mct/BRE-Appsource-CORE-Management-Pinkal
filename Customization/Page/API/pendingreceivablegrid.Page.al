@@ -11,7 +11,7 @@ page 73209607 pendingreceivablegrid
     EntityName = 'pendingreceviablegrid';
     EntitySetName = 'pendingreceviablegrids';
     PageType = API;
-    SourceTable = "Pending Receviable Grid";
+    SourceTable = "BLRPendingReceviableGrid";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -22,51 +22,51 @@ page 73209607 pendingreceivablegrid
         {
             repeater(General)
             {
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(differenceAmount; Rec.DifferenceAmount)
+                field(differenceAmount; Rec."BLRDifferenceAmount")
                 {
                     Caption = 'Difference Amount';
                 }
-                field(differenceAmountInclVAT; Rec.DifferenceAmountInclVAT)
+                field(differenceAmountInclVAT; Rec."BLRDifferenceAmountInclVAT")
                 {
                     Caption = 'Difference Amount Incl. VAT';
                 }
-                field(differenceVAT; Rec.DifferenceVAT)
+                field(differenceVAT; Rec."BLRDifferenceVAT")
                 {
                     Caption = 'Difference VAT';
                 }
-                field(entryNo; Rec."Entry No")
+                field(entryNo; Rec."BLREntry No")
                 {
                     Caption = 'Entry No';
                 }
-                field(receiptsAmount; Rec.ReceiptsAmount)
+                field(receiptsAmount; Rec."BLRReceiptsAmount")
                 {
                     Caption = 'Receipts Amount';
                 }
-                field(receiptsAmountInclVAT; Rec.ReceiptsAmountInclVAT)
+                field(receiptsAmountInclVAT; Rec."BLRReceiptsAmountInclVAT")
                 {
                     Caption = 'Receipts Amount Incl. VAT';
                 }
-                field(receiptsVAT; Rec.ReceiptsVAT)
+                field(receiptsVAT; Rec."BLRReceiptsVAT")
                 {
                     Caption = 'Receipts VAT';
                 }
-                field(revenueDescription; Rec.RevenueDescription)
+                field(revenueDescription; Rec."BLRRevenueDescription")
                 {
                     Caption = 'Revenue Description';
                 }
-                field(revisedAmount; Rec.RevisedAmount)
+                field(revisedAmount; Rec."BLRRevisedAmount")
                 {
                     Caption = 'Revised Amount';
                 }
-                field(revisedAmountInclVAT; Rec.RevisedAmountInclVAT)
+                field(revisedAmountInclVAT; Rec."BLRRevisedAmountInclVAT")
                 {
                     Caption = 'Revised Amount Incl. VAT';
                 }
-                field(revisedVAT; Rec.RevisedVAT)
+                field(revisedVAT; Rec."BLRRevisedVAT")
                 {
                     Caption = 'Revised VAT';
                 }
@@ -90,7 +90,7 @@ page 73209607 pendingreceivablegrid
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(terminationDate; Rec."Termination Date")
+                field(terminationDate; Rec."BLRTermination Date")
                 {
                     Caption = 'Termination Date';
                 }

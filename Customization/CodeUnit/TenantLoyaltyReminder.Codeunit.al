@@ -8,8 +8,8 @@ codeunit 73209620 "Tenant Loyalty Reminder"
 
     local procedure ProcessLoyaltyReminders()
     var
-        TenantContract: Record "Tenancy Contract";
-        ContractEndApproval: Record ContractEndProcessApproval;
+        TenantContract: Record "BLRTenancyContract";
+        ContractEndApproval: Record "BLRContractEndProcessApproval";
         UserPersonalizationRec: Record "User Personalization";
         CompanyInfo: Record "Company Information";
         UserRec: Record User;
@@ -25,21 +25,21 @@ codeunit 73209620 "Tenant Loyalty Reminder"
         Today := Today();
         if TenantContract.FindSet() then
             repeat
-                ReminderDays := TenantContract."Tenant Loyalty Check Reminder";
-                if (ReminderDays > 0) and (TenantContract."Contract End Date" <> 0D) then begin
-                    ReminderTargetDate := TenantContract."Contract End Date" - ReminderDays;
+                ReminderDays := TenantContract."BLRTenantLoyaltyCheckReminder";
+                if (ReminderDays > 0) and (TenantContract."BLRContract End Date" <> 0D) then begin
+                    ReminderTargetDate := TenantContract."BLRContract End Date" - ReminderDays;
                     if Today = ReminderTargetDate then
-                        if TenantContract."Tenant Contract Status" = TenantContract."Tenant Contract Status"::Active then begin
+                        if TenantContract."BLRTenant Contract Status" = TenantContract."BLRTenant Contract Status"::Active then begin
                             ContractEndApproval.Init();
-                            ContractEndApproval."Contract ID" := TenantContract."Contract ID";
-                            ContractEndApproval."Tenant Id" := TenantContract."Tenant ID";
-                            ContractEndApproval."Tenant Name" := TenantContract."Customer Name";
-                            ContractEndApproval."Lease_M Status" := 'Pending';
-                            ContractEndApproval."Property_M Status" := 'Pending';
-                            ContractEndApproval."Start Date" := TenantContract."Contract Start Date";
-                            ContractEndApproval."End Date" := TenantContract."Contract End Date";
-                            ContractEndApproval."Tenant Email" := TenantContract."Email Address";
-                            ContractEndApproval."Renewal Notification to Tenant" := TenantContract."Renewal Notification to Tenant";
+                            ContractEndApproval."BLRContract Id" := TenantContract."BLRContract ID";
+                            ContractEndApproval."BLRTenant Id" := TenantContract."BLRTenant ID";
+                            ContractEndApproval."BLRTenant Name" := TenantContract."BLRCustomer Name";
+                            ContractEndApproval."BLRLease_M Status" := 'Pending';
+                            ContractEndApproval."BLRProperty_M Status" := 'Pending';
+                            ContractEndApproval."BLRStart Date" := TenantContract."BLRContract Start Date";
+                            ContractEndApproval."BLREnd Date" := TenantContract."BLRContract End Date";
+                            ContractEndApproval."BLRTenant Email" := TenantContract."BLREmail Address";
+                            ContractEndApproval."BLRRenewalNotiftoTenant" := TenantContract."BLRRenewalNotiftoTenant";
                             ContractEndApproval.Insert();
                             Clear(ContractEndApproval);
                             LeaseManagerName := '';
@@ -62,12 +62,12 @@ codeunit 73209620 "Tenant Loyalty Reminder"
                                       '<html><body>' +
                                       '<p>Dear Lease Manager,</p>' +
                                       '<p>This is an automated notification from the system.</p>' +
-                                      '<p>This is a reminder that <b>Contract ID: ' + Format(TenantContract."Contract ID") +
+                                      '<p>This is a reminder that <b>Contract ID: ' + Format(TenantContract."BLRContract ID") +
                                       '</b> has <b>' + Format(ReminderDays) + ' days remaining</b>. Please verify and approve the request for contract renewal.</p>' +
                                       '<p>Please review the <b>Contract End Process Approval List</b> and take the necessary action as required.</p>' +
                                       '<h3><u>Contract Details:</u></h3>' +
-                                      '<b>Contract Start Date:</b> ' + Format(TenantContract."Contract Start Date", 0, '<Day>/<Month>/<Year4>') + '<br/>' +
-                                      '<b>Contract End Date:</b> ' + Format(TenantContract."Contract End Date", 0, '<Day>/<Month>/<Year4>') + '<br/>' +
+                                      '<b>Contract Start Date:</b> ' + Format(TenantContract."BLRContract Start Date", 0, '<Day>/<Month>/<Year4>') + '<br/>' +
+                                      '<b>Contract End Date:</b> ' + Format(TenantContract."BLRContract End Date", 0, '<Day>/<Month>/<Year4>') + '<br/>' +
                                       '<b>Status:</b> Active<br/><br/>' +
                                       '<p>Best regards,<br/>' + CompanyInfo.Name +
                                        '</body></html>';

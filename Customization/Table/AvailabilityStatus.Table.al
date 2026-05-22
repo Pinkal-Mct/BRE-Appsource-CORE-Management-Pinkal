@@ -1,17 +1,17 @@
-table 73209581 "Availability Status"
+table 73209581 "BLRAvailabilityStatus"
 {
     DataClassification = SystemMetadata;
-    DataCaptionFields = "ID";
+    DataCaptionFields = "BLRID";
 
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = SystemMetadata;
             AutoIncrement = true; // Automatically increment the ID
             Editable = false; // Make it read-only for the user
         }
-        field(73209576; "Status"; Text[100])
+        field(73209576; "BLRStatus"; Text[100])
         {
             DataClassification = SystemMetadata;
             Caption = 'Status Name';
@@ -21,14 +21,14 @@ table 73209581 "Availability Status"
 
     keys
     {
-        key(PK; "ID", "Status")
+        key(PK;"BLRID", "BLRStatus")
         {
             Clustered = true;
         }
     }
     fieldgroups
     {
-        fieldgroup(DropDown; ID, "Status")
+        fieldgroup(DropDown;"BLRID", "BLRStatus")
         {
 
         }

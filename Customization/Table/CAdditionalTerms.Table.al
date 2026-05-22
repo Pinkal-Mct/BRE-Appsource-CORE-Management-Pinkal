@@ -1,30 +1,30 @@
-table 50974 "Renewal Additional Terms"
+table 73209717 "BLRTCAdditionalTerms"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(50980; "Entry No."; Integer)
+        field(73209575; "BLREntry No."; Integer)
         {
             AutoIncrement = true;
         }
 
-        field(50981; "Document No."; Integer)
+        field(73209576; "BLRDocument No."; Integer)
         {
         }
 
-        field(50982; "Point No."; Integer)
+        field(73209577; "BLRPoint No."; Integer)
         {
         }
 
-        field(50983; Description; Text[250])
+        field(73209578; "BLRDescription"; Text[250])
         {
         }
     }
 
     keys
     {
-        key(PK; "Entry No.", "Document No.")
+        key(PK; "BLREntry No.", "BLRDocument No.")
         {
             Clustered = true;
         }
@@ -32,10 +32,10 @@ table 50974 "Renewal Additional Terms"
     }
     trigger OnInsert()
     var
-        AdditionalTerms: Record "Renewal Additional Terms";
+        AdditionalTerms: Record "BLRTCAdditionalTerms";
     begin
         AdditionalTerms.Reset();
-        AdditionalTerms.SetRange("Document No.", "Document No.");
+        AdditionalTerms.SetRange("BLRDocument No.", "BLRDocument No.");
 
         if AdditionalTerms.Count >= 5 then
             Error('You can only enter maximum 5 Additional Terms.');

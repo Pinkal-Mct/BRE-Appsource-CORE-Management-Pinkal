@@ -5,15 +5,15 @@ codeunit 73209580 "Cash Receipt Journal Entry"
     begin
     end;
 
-    procedure CreateCashReceiptJournal(PDCTransRec: Record "PDC Transaction"; postingDate: Date)
+    procedure CreateCashReceiptJournal(PDCTransRec: Record "BLRPDCTransaction"; postingDate: Date)
     var
-        PaymentSeriesRec: Record "Payment Mode2"; // Your Payment Series Table
-        PaymentScheduleRec: Record "Payment Schedule2"; // Your Payment Schedule Table
-        COASetup: Record "COA Setup";
+        PaymentSeriesRec: Record "BLRPaymentMode2"; // Your Payment Series Table
+        PaymentScheduleRec: Record "BLRPaymentSchedule2"; // Your Payment Schedule Table
+        COASetup: Record "BLRCOASetup";
         BankAccountRec: Record "Bank Account";
         GenJournalLineRec: Record "Gen. Journal Line";
         CustRec: Record Customer;
-        ContractRec: Record "Tenancy Contract";
+        ContractRec: Record "BLRTenancyContract";
         // GenJournalBatchRec: Record "Gen. Journal Batch";
         GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
         LineNumber: Integer;
@@ -25,8 +25,8 @@ codeunit 73209580 "Cash Receipt Journal Entry"
     begin
         // Find the Payment Series Record
         PaymentSeriesRec.Reset();
-        PaymentSeriesRec.SetFilter("Payment Series", '%1', PDCTransRec."Payment Series");
-        PaymentSeriesRec.SetFilter("Contract ID", Format(PDCTransRec."Contract ID"));
+        PaymentSeriesRec.SetFilter("BLRPayment Series", '%1', PDCTransRec."BLRpayment Series");
+        PaymentSeriesRec.SetFilter("BLRContract ID", Format(PDCTransRec."BLRContract ID"));
         if PaymentSeriesRec.FindFirst() then begin
 
 
@@ -41,14 +41,14 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
             //  Get Contract Info
             ContractRec.Reset();
-            ContractRec.SetRange("Contract ID", PaymentSeriesRec."Contract ID");
+            ContractRec.SetRange("BLRContract ID", PaymentSeriesRec."BLRContract ID");
             if ContractRec.FindFirst() then
                 // update Customer as before
-                PropertyClassification := ContractRec."Property Classification";
-            if CustRec.Get(PaymentSeriesRec."Tenant Id") then
-                if ContractRec."Property Classification" <> '' then begin
-                    CustRec.Validate("Customer Posting Group", ContractRec."Property Classification");
-                    CustRec.Validate("Gen. Bus. Posting Group", ContractRec."Property Classification");
+                PropertyClassification := ContractRec."BLRProperty Classification";
+            if CustRec.Get(PaymentSeriesRec."BLRTenant Id") then
+                if ContractRec."BLRProperty Classification" <> '' then begin
+                    CustRec.Validate("Customer Posting Group", ContractRec."BLRProperty Classification");
+                    CustRec.Validate("Gen. Bus. Posting Group", ContractRec."BLRProperty Classification");
                     CustRec.Modify();
 
                 end;
@@ -58,21 +58,21 @@ codeunit 73209580 "Cash Receipt Journal Entry"
             ///////////////////////// COA Setup /////////////////////////////
 
             COASetup.Get();
-            if PaymentSeriesRec."Payment Mode" = 'Cheque' then begin
-                if COASetup."PDC Collection/Return" <> '' then
-                    PDCCollection := COASetup."PDC Collection/Return"
+            if PaymentSeriesRec."BLRPayment Mode" = 'Cheque' then begin
+                if COASetup."BLRPDC Collection/Return" <> '' then
+                    PDCCollection := COASetup."BLRPDC Collection/Return"
 
                 else
                     Error('COA Setup doest not exist for PDC Collection/Return account');
 
-                if COASetup."PDC Liabilities" <> '' then
-                    PDCLiabilities := COASetup."PDC Liabilities"
+                if COASetup."BLRPDC Liabilities" <> '' then
+                    PDCLiabilities := COASetup."BLRPDC Liabilities"
 
                 else
                     Error('COA Setup doest not exist for PDC Liabilities account');
 
                 BankAccountRec.Reset();
-                BankAccountRec.SetRange("Search Name", PaymentSeriesRec."Deposit Bank");
+                BankAccountRec.SetRange("Search Name", PaymentSeriesRec."BLRDeposit Bank");
                 if BankAccountRec.FindSet() then
                     if BankAccountRec."Bank Acc. Posting Group" <> ''
                     then
@@ -83,7 +83,7 @@ codeunit 73209580 "Cash Receipt Journal Entry"
             end else begin
 
                 BankAccountRec.Reset();
-                BankAccountRec.SetRange("Search Name", PaymentSeriesRec."Deposit Bank");
+                BankAccountRec.SetRange("Search Name", PaymentSeriesRec."BLRDeposit Bank");
                 if BankAccountRec.FindFirst() then
                     if BankAccountRec."Bank Acc. Posting Group" <> ''
                     then
@@ -93,8 +93,8 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
                 else
 
-                    if COASetup.Cash <> '' then
-                        CashAccount := COASetup.Cash
+                    if COASetup."BLRCash" <> '' then
+                        CashAccount := COASetup."BLRCash"
                     else
                         Error('COA Setup doest not exist for Cash account');
 
@@ -105,8 +105,8 @@ codeunit 73209580 "Cash Receipt Journal Entry"
             ////////////////////////////// END COA Setup /////////////////////////
 
             // Loop through Payment Schedule and create individual lines
-            PaymentScheduleRec.SetRange("Payment Series", PaymentSeriesRec."Payment Series");
-            PaymentScheduleRec.SetRange("Contract ID", PaymentSeriesRec."Contract ID");
+            PaymentScheduleRec.SetRange("BLRPayment Series", PaymentSeriesRec."BLRPayment Series");
+            PaymentScheduleRec.SetRange("BLRContract ID", PaymentSeriesRec."BLRContract ID");
             if not PaymentScheduleRec.IsEmpty() then begin
                 LineNumber := 0;
 
@@ -117,17 +117,17 @@ codeunit 73209580 "Cash Receipt Journal Entry"
                 GenJournalLineRec.Init();
                 GenJournalLineRec."Journal Template Name" := 'CASH RECE';
                 GenJournalLineRec."Journal Batch Name" := 'DEFAULT';
-                GenJournalLineRec."Document No." := Format(PaymentSeriesRec."Entry No.");
+                GenJournalLineRec."Document No." := Format(PaymentSeriesRec."BLREntry No.");
                 GenJournalLineRec."Posting Date" := postingDate;
                 GenJournalLineRec."Line No." := LineNumber;
-                GenJournalLineRec."Contract ID" := PaymentSeriesRec."Contract ID";
+                GenJournalLineRec."BLRContract ID" := PaymentSeriesRec."BLRContract ID";
                 GenJournalLineRec."Document Type" := GenJournalLineRec."Document Type"::Payment;
 
 
                 GenJournalLineRec.Validate("Account Type", GenJournalLineRec."Account Type"::"G/L Account");
                 GenJournalLineRec.Validate("Account No.", PDCCollection);
-                GenJournalLineRec.Description := 'Cheque Clearnace - ' + PaymentSeriesRec."Cheque Number"; // Customer from Payment Series
-                GenJournalLineRec.Validate(Amount, Round(-PaymentSeriesRec."Amount Including VAT"));
+                GenJournalLineRec.Description := 'Cheque Clearnace - ' + PaymentSeriesRec."BLRCheque Number"; // Customer from Payment Series
+                GenJournalLineRec.Validate(Amount, Round(-PaymentSeriesRec."BLRAmount Including VAT"));
                 GenJournalLineRec.Validate("Bal. Account Type", GenJournalLineRec."Bal. Account Type"::"Bank Account");
                 GenJournalLineRec.Validate("Bal. Account No.", BankaccountNo);
 
@@ -151,13 +151,13 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         end;
     end;
 
-    procedure PDCClearanceLiabilities(PDCTransRec: Record "PDC Transaction"; postingDate: Date; PDCLiabilities: Code[20])
+    procedure PDCClearanceLiabilities(PDCTransRec: Record "BLRPDCTransaction"; postingDate: Date; PDCLiabilities: Code[20])
     var
-        PaymentSeriesRec: Record "Payment Mode2"; // Your Payment Series Table
-        PaymentScheduleRec: Record "Payment Schedule2"; // Your Payment Schedule Table
+        PaymentSeriesRec: Record "BLRPaymentMode2"; // Your Payment Series Table
+        PaymentScheduleRec: Record "BLRPaymentSchedule2"; // Your Payment Schedule Table
         GenJournalLineRec: Record "Gen. Journal Line";
         PostedSalesInvoice: Record "Sales Invoice Header";
-        ContractRec: Record "Tenancy Contract";
+        ContractRec: Record "BLRTenancyContract";
 
         CustRec: Record Customer;
         GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
@@ -167,8 +167,8 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
     begin
         PaymentSeriesRec.Reset();
-        PaymentSeriesRec.SetFilter("Payment Series", '%1', PDCTransRec."Payment Series");
-        PaymentSeriesRec.SetFilter("Contract ID", Format(PDCTransRec."Contract ID"));
+        PaymentSeriesRec.SetFilter("BLRPayment Series", '%1', PDCTransRec."BLRpayment Series");
+        PaymentSeriesRec.SetFilter("BLRContract ID", Format(PDCTransRec."BLRContract ID"));
         if PaymentSeriesRec.FindFirst() then begin
 
 
@@ -183,19 +183,19 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
             //  Get Contract Info
             ContractRec.Reset();
-            ContractRec.SetRange("Contract ID", PaymentSeriesRec."Contract ID");
+            ContractRec.SetRange("BLRContract ID", PaymentSeriesRec."BLRContract ID");
             if ContractRec.FindFirst() then
                 // update Customer as before
-                PropertyClassification := ContractRec."Property Classification";
-            if CustRec.Get(PaymentSeriesRec."Tenant Id") then
-                if ContractRec."Property Classification" <> '' then begin
-                    CustRec.Validate("Customer Posting Group", ContractRec."Property Classification");
-                    CustRec.Validate("Gen. Bus. Posting Group", ContractRec."Property Classification");
+                PropertyClassification := ContractRec."BLRProperty Classification";
+            if CustRec.Get(PaymentSeriesRec."BLRTenant Id") then
+                if ContractRec."BLRProperty Classification" <> '' then begin
+                    CustRec.Validate("Customer Posting Group", ContractRec."BLRProperty Classification");
+                    CustRec.Validate("Gen. Bus. Posting Group", ContractRec."BLRProperty Classification");
                     CustRec.Modify();
                 end;
 
-            PaymentScheduleRec.SetRange("Payment Series", PaymentSeriesRec."Payment Series");
-            PaymentScheduleRec.SetRange("Contract ID", PaymentSeriesRec."Contract ID");
+            PaymentScheduleRec.SetRange("BLRPayment Series", PaymentSeriesRec."BLRPayment Series");
+            PaymentScheduleRec.SetRange("BLRContract ID", PaymentSeriesRec."BLRContract ID");
             if not PaymentScheduleRec.IsEmpty() then begin
                 LineNumber := 0;
 
@@ -205,28 +205,28 @@ codeunit 73209580 "Cash Receipt Journal Entry"
                 GenJournalLineRec.Init();
                 GenJournalLineRec."Journal Template Name" := 'CASH RECE';
                 GenJournalLineRec."Journal Batch Name" := 'DEFAULT';
-                GenJournalLineRec."Document No." := Format(PaymentSeriesRec."Entry No.");
+                GenJournalLineRec."Document No." := Format(PaymentSeriesRec."BLREntry No.");
                 GenJournalLineRec."Posting Date" := postingDate;
                 GenJournalLineRec."Line No." := LineNumber;
-                GenJournalLineRec."Contract ID" := PaymentSeriesRec."Contract ID";
+                GenJournalLineRec."BLRContract ID" := PaymentSeriesRec."BLRContract ID";
                 GenJournalLineRec."Document Type" := GenJournalLineRec."Document Type"::Payment;
 
 
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::Customer;
                 GenJournalLineRec.Validate("Account Type", GenJournalLineRec."Account Type"::Customer);
-                GenJournalLineRec.Validate("Account No.", PaymentSeriesRec."Tenant Id"); // Customer from Payment Series
-                GenJournalLineRec.Description := 'Cheque Clearnace - ' + PaymentSeriesRec."Cheque Number"; // Customer from Payment Series
-                GenJournalLineRec.Validate(Amount, Round(-PaymentSeriesRec."Amount Including VAT"));
+                GenJournalLineRec.Validate("Account No.", PaymentSeriesRec."BLRTenant Id"); // Customer from Payment Series
+                GenJournalLineRec.Description := 'Cheque Clearnace - ' + PaymentSeriesRec."BLRCheque Number"; // Customer from Payment Series
+                GenJournalLineRec.Validate(Amount, Round(-PaymentSeriesRec."BLRAmount Including VAT"));
                 GenJournalLineRec."Bal. Account Type" := GenJournalLineRec."Bal. Account Type"::"G/L Account";
                 GenJournalLineRec."Bal. Account No." := PDCLiabilities;
 
-                PostedSalesInvoice.SetRange("No.", PaymentSeriesRec."Invoice #");
+                PostedSalesInvoice.SetRange("No.", PaymentSeriesRec."BLRInvoice #");
                 PostedSalesInvoice.SetFilter("Posting Date", '>%1', postingDate);
                 if not PostedSalesInvoice.IsEmpty() then
                     Message('Please apply the entries (Receipt with Invoice) manually in the system as there are posted invoices with posting date later than Receipt date.')
                 else begin
                     GenJournalLineRec.Validate("Applies-to Doc. Type", GenJournalLineRec."Applies-to Doc. Type"::Invoice);
-                    GenJournalLineRec.Validate("Applies-to Doc. No.", PaymentSeriesRec."Invoice #");
+                    GenJournalLineRec.Validate("Applies-to Doc. No.", PaymentSeriesRec."BLRInvoice #");
                 end;
 
 
@@ -245,15 +245,15 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         end;
     end;
 
-    procedure PaymentReceivedTransaction(PaymentSeriesRec: Record "Payment Mode2"; postingDate: Date)
+    procedure PaymentReceivedTransaction(PaymentSeriesRec: Record "BLRPaymentMode2"; postingDate: Date)
     var
 
         GenJournalLineRec: Record "Gen. Journal Line";
         PostedSalesInvoice: Record "Sales Invoice Header";
-        COASetup: Record "COA Setup";
+        COASetup: Record "BLRCOASetup";
         // GenJournalBatchRec: Record "Gen. Journal Batch";
 
-        ContractRec: Record "Tenancy Contract";
+        ContractRec: Record "BLRTenancyContract";
         BankAccountRec: Record "Bank Account";
         CustRec: Record Customer;
         GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
@@ -266,29 +266,29 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
     begin
         LineNo := 0;
-        if PaymentSeriesRec."Contract ID" <> 0 then begin
+        if PaymentSeriesRec."BLRContract ID" <> 0 then begin
             ContractRec.Reset();
-            ContractRec.SetRange("Contract ID", PaymentSeriesRec."Contract ID"); // Use correct field name
+            ContractRec.SetRange("BLRContract ID", PaymentSeriesRec."BLRContract ID"); // Use correct field name
             if ContractRec.FindFirst() then begin
-                PropertyClassification := ContractRec."Property Classification";
+                PropertyClassification := ContractRec."BLRProperty Classification";
                 // update Customer as before
-                if CustRec.Get(PaymentSeriesRec."Tenant Id") then
-                    if ContractRec."Property Classification" <> '' then begin
-                        CustRec.Validate("Customer Posting Group", ContractRec."Property Classification");
-                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."Property Classification");
+                if CustRec.Get(PaymentSeriesRec."BLRTenant Id") then
+                    if ContractRec."BLRProperty Classification" <> '' then begin
+                        CustRec.Validate("Customer Posting Group", ContractRec."BLRProperty Classification");
+                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."BLRProperty Classification");
                         CustRec.Modify();
 
                     end
 
             end else
-                Error('No contract found with ID %1', PaymentSeriesRec."Contract ID");
+                Error('No contract found with ID %1', PaymentSeriesRec."BLRContract ID");
         end else
             Error('Contract ID is missing in Payment Mode record.');
 
         ///////////////////////// COA Setup /////////////////////////////
 
         BankAccountRec.Reset();
-        BankAccountRec.SetRange("Search Name", PaymentSeriesRec."Deposit Bank");
+        BankAccountRec.SetRange("Search Name", PaymentSeriesRec."BLRDeposit Bank");
         if BankAccountRec.FindSet() then begin
             if BankAccountRec."Bank Acc. Posting Group" <> ''
             then
@@ -298,8 +298,8 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         end
         else begin
             COASetup.Get();
-            if COASetup.Cash <> '' then
-                CashAccount := COASetup.Cash
+            if COASetup."BLRCash" <> '' then
+                CashAccount := COASetup."BLRCash"
             else
                 Error('COA Setup doest not exist for Cash account');
         end;
@@ -317,45 +317,45 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         GenJournalLineRec.Init();
         GenJournalLineRec."Journal Template Name" := 'CASH RECE';
         GenJournalLineRec."Journal Batch Name" := 'DEFAULT';
-        GenJournalLineRec."Document No." := Format(PaymentSeriesRec."Entry No.");
+        GenJournalLineRec."Document No." := Format(PaymentSeriesRec."BLREntry No.");
         GenJournalLineRec."Posting Date" := postingDate;
         GenJournalLineRec."Line No." := LineNo;
         GenJournalLineRec."Document Type" := GenJournalLineRec."Document Type"::Payment;
         GenJournalLineRec.Validate("Account Type", GenJournalLineRec."Account Type"::Customer);
-        GenJournalLineRec.Validate("Account No.", PaymentSeriesRec."Tenant Id"); // Customer from Payment Series
-        GenJournalLineRec.Description := 'Payment Received - ' + PaymentSeriesRec."Invoice #";
+        GenJournalLineRec.Validate("Account No.", PaymentSeriesRec."BLRTenant Id"); // Customer from Payment Series
+        GenJournalLineRec.Description := 'Payment Received - ' + PaymentSeriesRec."BLRInvoice #";
 
-        GenJournalLineRec."Contract ID" := PaymentSeriesRec."Contract ID";
+        GenJournalLineRec."BLRContract ID" := PaymentSeriesRec."BLRContract ID";
 
-        GenJournalLineRec.Validate(Amount, Round(-PaymentSeriesRec."Amount Including VAT"));
+        GenJournalLineRec.Validate(Amount, Round(-PaymentSeriesRec."BLRAmount Including VAT"));
         // GenJournalLineRec."Amount (LCY)" := GenJournalLineRec.Amount;
         BankAccountRec.Reset();
-        BankAccountRec.SetRange("Search Name", PaymentSeriesRec."Deposit Bank");
+        BankAccountRec.SetRange("Search Name", PaymentSeriesRec."BLRDeposit Bank");
         if not BankAccountRec.IsEmpty() then begin
             GenJournalLineRec."Bal. Account Type" := GenJournalLineRec."Bal. Account Type"::"Bank Account";
             GenJournalLineRec."Bal. Account No." := BankaccountNo;
 
-            PostedSalesInvoice.SetRange("No.", PaymentSeriesRec."Invoice #");
+            PostedSalesInvoice.SetRange("No.", PaymentSeriesRec."BLRInvoice #");
             PostedSalesInvoice.SetFilter("Posting Date", '>%1', postingDate);
             if not PostedSalesInvoice.IsEmpty() then
                 Message('Please apply the entries (Receipt with Invoice) manually in the system as there are posted invoices with posting date later than Receipt date.')
             else begin
 
                 GenJournalLineRec.Validate("Applies-to Doc. Type", GenJournalLineRec."Applies-to Doc. Type"::Invoice);
-                GenJournalLineRec.Validate("Applies-to Doc. No.", PaymentSeriesRec."Invoice #");
+                GenJournalLineRec.Validate("Applies-to Doc. No.", PaymentSeriesRec."BLRInvoice #");
             end;
         end
         else begin
             GenJournalLineRec."Bal. Account Type" := GenJournalLineRec."Bal. Account Type"::"G/L Account";
             GenJournalLineRec."Bal. Account No." := CashAccount;
 
-            PostedSalesInvoice.SetRange("No.", PaymentSeriesRec."Invoice #");
+            PostedSalesInvoice.SetRange("No.", PaymentSeriesRec."BLRInvoice #");
             PostedSalesInvoice.SetFilter("Posting Date", '>%1', postingDate);
             if not PostedSalesInvoice.IsEmpty() then
                 Message('Please apply the entries (Receipt with Invoice) manually in the system as there are posted invoices with posting date later than Receipt date.')
             else begin
                 GenJournalLineRec.Validate("Applies-to Doc. Type", GenJournalLineRec."Applies-to Doc. Type"::Invoice);
-                GenJournalLineRec.Validate("Applies-to Doc. No.", PaymentSeriesRec."Invoice #");
+                GenJournalLineRec.Validate("Applies-to Doc. No.", PaymentSeriesRec."BLRInvoice #");
             end;
         end;
 
@@ -375,12 +375,12 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
 
 
-    procedure PDCReceivedTransaction(PDCTransactionRec: Record "PDC Transaction")
+    procedure PDCReceivedTransaction(PDCTransactionRec: Record "BLRPDCTransaction")
     var
         GenJournalLine: Record "Gen. Journal Line";
         CustRec: Record Customer;
-        ContractRec: Record "Tenancy Contract";
-        COASetup: Record "COA Setup";
+        ContractRec: Record "BLRTenancyContract";
+        COASetup: Record "BLRCOASetup";
         GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
         LineNo: Integer;
         PropertyClassification: Text[100];
@@ -389,36 +389,36 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
     begin
         LineNo := 0;
-        if PDCTransactionRec."Contract ID" <> 0 then begin
+        if PDCTransactionRec."BLRContract ID" <> 0 then begin
             ContractRec.Reset();
-            ContractRec.SetRange("Contract ID", PDCTransactionRec."Contract ID"); // Use correct field name
+            ContractRec.SetRange("BLRContract ID", PDCTransactionRec."BLRContract ID"); // Use correct field name
             if ContractRec.FindFirst() then begin
-                PropertyClassification := ContractRec."Property Classification";
+                PropertyClassification := ContractRec."BLRProperty Classification";
                 // update Customer as before
-                if CustRec.Get(PDCTransactionRec."Tenant Id") then
-                    if ContractRec."Property Classification" <> '' then begin
-                        CustRec.Validate("Customer Posting Group", ContractRec."Property Classification");
-                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."Property Classification");
+                if CustRec.Get(PDCTransactionRec."BLRTenant Id") then
+                    if ContractRec."BLRProperty Classification" <> '' then begin
+                        CustRec.Validate("Customer Posting Group", ContractRec."BLRProperty Classification");
+                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."BLRProperty Classification");
                         CustRec.Modify();
 
                     end;
 
             end else
-                Error('No contract found with ID %1', PDCTransactionRec."Contract ID");
+                Error('No contract found with ID %1', PDCTransactionRec."BLRContract ID");
         end else
             Error('Contract ID is missing in PDC record.');
 
         ///////////////////////// COA Setup /////////////////////////////
 
         COASetup.Get();
-        if COASetup."PDC Received" <> '' then
-            PDCReceived := COASetup."PDC Received"
+        if COASetup."BLRPDC Received" <> '' then
+            PDCReceived := COASetup."BLRPDC Received"
 
         else
             Error('COA Setup doest not exist for PDC Received account');
         COASetup.Get();
-        if COASetup."PDC Liabilities" <> '' then
-            PDCLiabilities := COASetup."PDC Liabilities"
+        if COASetup."BLRPDC Liabilities" <> '' then
+            PDCLiabilities := COASetup."BLRPDC Liabilities"
 
         else
             Error('COA Setup doest not exist for PDC Liabilities account');
@@ -438,15 +438,15 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         GenJournalLine.Init();
         GenJournalLine."Journal Template Name" := 'CASH RECE';
         GenJournalLine."Journal Batch Name" := 'DEFAULT';
-        GenJournalLine."Document No." := PDCTransactionRec."PDC ID";
-        GenJournalLine."Posting Date" := PDCTransactionRec."Transaction Date";
+        GenJournalLine."Document No." := PDCTransactionRec."BLRPDC ID";
+        GenJournalLine."Posting Date" := PDCTransactionRec."BLRTransaction Date";
         GenJournalLine."Line No." := LineNo;
         GenJournalLine."Document Type" := GenJournalLine."Document Type"::Payment;
         GenJournalLine."Account Type" := GenJournalLine."Account Type"::"G/L Account";
         GenJournalLine."Account No." := PDCLiabilities; // Customer from Payment Series
-        GenJournalLine."Contract ID" := PDCTransactionRec."Contract ID";
-        GenJournalLine.Description := 'PDC Received - Cheque No. ' + PDCTransactionRec."Cheque Number";
-        GenJournalLine.Validate(Amount, Round(-PDCTransactionRec.Amount));
+        GenJournalLine."BLRContract ID" := PDCTransactionRec."BLRContract ID";
+        GenJournalLine.Description := 'PDC Received - Cheque No. ' + PDCTransactionRec."BLRCheque Number";
+        GenJournalLine.Validate(Amount, Round(-PDCTransactionRec."BLRAmount"));
         // GenJournalLine."Amount (LCY)" := GenJournalLine.Amount;
         GenJournalLine."Bal. Account Type" := GenJournalLine."Bal. Account Type"::"G/L Account";
         GenJournalLine."Bal. Account No." := PDCReceived;
@@ -469,15 +469,15 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
 
 
-    procedure ReversePDCReceivedTransaction(PDCTransactionRec: Record "PDC Transaction"; SplitCombineMethod: Text[50]; TransactionDate: Date)
+    procedure ReversePDCReceivedTransaction(PDCTransactionRec: Record "BLRPDCTransaction"; SplitCombineMethod: Text[50]; TransactionDate: Date)
     var
 
         GenJournalLine: Record "Gen. Journal Line";
 
-        COASetup: Record "COA Setup";
+        COASetup: Record "BLRCOASetup";
 
         CustRec: Record Customer;
-        ContractRec: Record "Tenancy Contract";
+        ContractRec: Record "BLRTenancyContract";
         GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
 
         PropertyClassification: Text[100];
@@ -487,36 +487,36 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
     begin
         LineNo := 0;
-        if PDCTransactionRec."Contract ID" <> 0 then begin
+        if PDCTransactionRec."BLRContract ID" <> 0 then begin
             ContractRec.Reset();
-            ContractRec.SetRange("Contract ID", PDCTransactionRec."Contract ID"); // Use correct field name
+            ContractRec.SetRange("BLRContract ID", PDCTransactionRec."BLRContract ID"); // Use correct field name
             if ContractRec.FindFirst() then begin
-                PropertyClassification := ContractRec."Property Classification";
+                PropertyClassification := ContractRec."BLRProperty Classification";
                 // update Customer as before
-                if CustRec.Get(PDCTransactionRec."Tenant Id") then
-                    if ContractRec."Property Classification" <> '' then begin
-                        CustRec.Validate("Customer Posting Group", ContractRec."Property Classification");
-                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."Property Classification");
+                if CustRec.Get(PDCTransactionRec."BLRTenant Id") then
+                    if ContractRec."BLRProperty Classification" <> '' then begin
+                        CustRec.Validate("Customer Posting Group", ContractRec."BLRProperty Classification");
+                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."BLRProperty Classification");
                         CustRec.Modify();
 
                     end;
 
 
             end else
-                Error('No contract found with ID %1', PDCTransactionRec."Contract ID");
+                Error('No contract found with ID %1', PDCTransactionRec."BLRContract ID");
         end else
             Error('Contract ID is missing in PDC record.');
 
         ///////////////////////// COA Setup /////////////////////////////
 
         COASetup.Get();
-        if COASetup."PDC Received" <> '' then
-            PDCReceived := COASetup."PDC Received"
+        if COASetup."BLRPDC Received" <> '' then
+            PDCReceived := COASetup."BLRPDC Received"
         else
             Error('COA Setup doest not exist for PDC Received account');
         COASetup.Get();
-        if COASetup."PDC Liabilities" <> '' then
-            PDCLiabilities := COASetup."PDC Liabilities"
+        if COASetup."BLRPDC Liabilities" <> '' then
+            PDCLiabilities := COASetup."BLRPDC Liabilities"
 
         else
             Error('COA Setup doest not exist for PDC Liabilities account');
@@ -535,15 +535,15 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         GenJournalLine.Init();
         GenJournalLine."Journal Template Name" := 'CASH RECE';
         GenJournalLine."Journal Batch Name" := 'DEFAULT';
-        GenJournalLine."Document No." := PDCTransactionRec."PDC ID";
+        GenJournalLine."Document No." := PDCTransactionRec."BLRPDC ID";
         GenJournalLine."Posting Date" := TransactionDate;
         GenJournalLine."Line No." := LineNo;
         GenJournalLine."Document Type" := GenJournalLine."Document Type"::Payment;
         GenJournalLine."Account Type" := GenJournalLine."Account Type"::"G/L Account";
         GenJournalLine."Account No." := PDCReceived; // Customer from Payment Series
-        GenJournalLine."Contract ID" := PDCTransactionRec."Contract ID";
-        GenJournalLine.Description := 'Cheque #' + PDCTransactionRec."Cheque Number" + ' voided- ' + SplitCombineMethod;
-        GenJournalLine.Validate(Amount, Round(-PDCTransactionRec.Amount));
+        GenJournalLine."BLRContract ID" := PDCTransactionRec."BLRContract ID";
+        GenJournalLine.Description := 'Cheque #' + PDCTransactionRec."BLRCheque Number" + ' voided- ' + SplitCombineMethod;
+        GenJournalLine.Validate(Amount, Round(-PDCTransactionRec."BLRAmount"));
         // GenJournalLine."Amount (LCY)" := GenJournalLine.Amount;
         GenJournalLine."Bal. Account Type" := GenJournalLine."Bal. Account Type"::"G/L Account";
         GenJournalLine."Bal. Account No." := PDCLiabilities;
@@ -564,14 +564,14 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
 
 
-    procedure PDCDepositedTransaction(PDCTransactionRec: Record "PDC Transaction")
+    procedure PDCDepositedTransaction(PDCTransactionRec: Record "BLRPDCTransaction")
     var
 
         GenJournalLine: Record "Gen. Journal Line";
-        COASetup: Record "COA Setup";
+        COASetup: Record "BLRCOASetup";
 
         CustRec: Record Customer;
-        ContractRec: Record "Tenancy Contract";
+        ContractRec: Record "BLRTenancyContract";
 
         GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
         LineNo: Integer;
@@ -580,35 +580,35 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         PDCReceived: Code[20];
     begin
         LineNo := 0;
-        if PDCTransactionRec."Contract ID" <> 0 then begin
+        if PDCTransactionRec."BLRContract ID" <> 0 then begin
             ContractRec.Reset();
-            ContractRec.SetRange("Contract ID", PDCTransactionRec."Contract ID"); // Use correct field name
+            ContractRec.SetRange("BLRContract ID", PDCTransactionRec."BLRContract ID"); // Use correct field name
             if ContractRec.FindFirst() then begin
-                PropertyClassification := ContractRec."Property Classification";
+                PropertyClassification := ContractRec."BLRProperty Classification";
                 // update Customer as before
-                if CustRec.Get(PDCTransactionRec."Tenant Id") then
-                    if ContractRec."Property Classification" <> '' then begin
-                        CustRec.Validate("Customer Posting Group", ContractRec."Property Classification");
-                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."Property Classification");
+                if CustRec.Get(PDCTransactionRec."BLRTenant Id") then
+                    if ContractRec."BLRProperty Classification" <> '' then begin
+                        CustRec.Validate("Customer Posting Group", ContractRec."BLRProperty Classification");
+                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."BLRProperty Classification");
                         CustRec.Modify();
 
                     end;
 
 
             end else
-                Error('No contract found with ID %1', PDCTransactionRec."Contract ID");
+                Error('No contract found with ID %1', PDCTransactionRec."BLRContract ID");
         end else
             Error('Contract ID is missing in PDC record.');
 
         COASetup.Get();
-        if COASetup."PDC Collection/Return" <> '' then
-            PDCollection := COASetup."PDC Collection/Return"
+        if COASetup."BLRPDC Collection/Return" <> '' then
+            PDCollection := COASetup."BLRPDC Collection/Return"
 
         else
             Error('COA Setup doest not exist for PDC Collection/Return account');
 
-        if COASetup."PDC Received" <> '' then
-            PDCReceived := COASetup."PDC Received"
+        if COASetup."BLRPDC Received" <> '' then
+            PDCReceived := COASetup."BLRPDC Received"
 
         else
             Error('COA Setup doest not exist for PDC Received account');
@@ -627,15 +627,15 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         GenJournalLine.Init();
         GenJournalLine."Journal Template Name" := 'CASH RECE';
         GenJournalLine."Journal Batch Name" := 'DEFAULT';
-        GenJournalLine."Document No." := PDCTransactionRec."PDC ID";
-        GenJournalLine."Posting Date" := PDCTransactionRec."Transaction Date";
+        GenJournalLine."Document No." := PDCTransactionRec."BLRPDC ID";
+        GenJournalLine."Posting Date" := PDCTransactionRec."BLRTransaction Date";
         GenJournalLine."Line No." := LineNo;
         GenJournalLine."Document Type" := GenJournalLine."Document Type"::" ";
         GenJournalLine."Account Type" := GenJournalLine."Account Type"::"G/L Account";
         GenJournalLine."Account No." := PDCReceived; // Customer from Payment Series
-        GenJournalLine."Contract ID" := PDCTransactionRec."Contract ID";
-        GenJournalLine.Description := ' Cheque Deposit - Cheque No. ' + PDCTransactionRec."Cheque Number";
-        GenJournalLine.Validate(Amount, Round(-PDCTransactionRec.Amount));
+        GenJournalLine."BLRContract ID" := PDCTransactionRec."BLRContract ID";
+        GenJournalLine.Description := ' Cheque Deposit - Cheque No. ' + PDCTransactionRec."BLRCheque Number";
+        GenJournalLine.Validate(Amount, Round(-PDCTransactionRec."BLRAmount"));
         // GenJournalLine."Amount (LCY)" := GenJournalLine.Amount;
         GenJournalLine."Bal. Account Type" := GenJournalLine."Bal. Account Type"::"G/L Account";
         GenJournalLine."Bal. Account No." := PDCollection;
@@ -657,13 +657,13 @@ codeunit 73209580 "Cash Receipt Journal Entry"
     end;
 
 
-    procedure PDCReturnedTransaction(PDCTransactionRec: Record "PDC Transaction")
+    procedure PDCReturnedTransaction(PDCTransactionRec: Record "BLRPDCTransaction")
     var
 
         GenJournalLine: Record "Gen. Journal Line";
         CustRec: Record Customer;
-        COASetup: Record "COA Setup";
-        ContractRec: Record "Tenancy Contract";
+        COASetup: Record "BLRCOASetup";
+        ContractRec: Record "BLRTenancyContract";
         GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
         LineNo: Integer;
 
@@ -673,34 +673,34 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         PDCLiabilities: Code[20];
     begin
         LineNo := 0;
-        if PDCTransactionRec."Contract ID" <> 0 then begin
+        if PDCTransactionRec."BLRContract ID" <> 0 then begin
             ContractRec.Reset();
-            ContractRec.SetRange("Contract ID", PDCTransactionRec."Contract ID"); // Use correct field name
+            ContractRec.SetRange("BLRContract ID", PDCTransactionRec."BLRContract ID"); // Use correct field name
             if ContractRec.FindFirst() then begin
-                PropertyClassification := ContractRec."Property Classification";
+                PropertyClassification := ContractRec."BLRProperty Classification";
                 // update Customer as before
-                if CustRec.Get(PDCTransactionRec."Tenant Id") then
-                    if ContractRec."Property Classification" <> '' then begin
-                        CustRec.Validate("Customer Posting Group", ContractRec."Property Classification");
-                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."Property Classification");
+                if CustRec.Get(PDCTransactionRec."BLRTenant Id") then
+                    if ContractRec."BLRProperty Classification" <> '' then begin
+                        CustRec.Validate("Customer Posting Group", ContractRec."BLRProperty Classification");
+                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."BLRProperty Classification");
                         CustRec.Modify();
 
                     end;
 
             end else
-                Error('No contract found with ID %1', PDCTransactionRec."Contract ID");
+                Error('No contract found with ID %1', PDCTransactionRec."BLRContract ID");
         end else
             Error('Contract ID is missing in PDC record.');
 
         COASetup.Get();
-        if COASetup."PDC Collection/Return" <> '' then
-            PDCollection := COASetup."PDC Collection/Return"
+        if COASetup."BLRPDC Collection/Return" <> '' then
+            PDCollection := COASetup."BLRPDC Collection/Return"
 
         else
             Error('COA Setup doest not exist for PDC Collection/Return account');
 
-        if COASetup."PDC Liabilities" <> '' then
-            PDCLiabilities := COASetup."PDC Liabilities"
+        if COASetup."BLRPDC Liabilities" <> '' then
+            PDCLiabilities := COASetup."BLRPDC Liabilities"
 
         else
             Error('COA Setup doest not exist for PDC Liabilities account');
@@ -719,15 +719,15 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         GenJournalLine.Init();
         GenJournalLine."Journal Template Name" := 'CASH RECE';
         GenJournalLine."Journal Batch Name" := 'DEFAULT';
-        GenJournalLine."Document No." := PDCTransactionRec."PDC ID";
-        GenJournalLine."Posting Date" := PDCTransactionRec."Transaction Date";
+        GenJournalLine."Document No." := PDCTransactionRec."BLRPDC ID";
+        GenJournalLine."Posting Date" := PDCTransactionRec."BLRTransaction Date";
         GenJournalLine."Line No." := LineNo;
         GenJournalLine."Document Type" := GenJournalLine."Document Type"::" ";
         GenJournalLine."Account Type" := GenJournalLine."Account Type"::"G/L Account";
         GenJournalLine."Account No." := PDCollection; // Customer from Payment Series
-        GenJournalLine."Contract ID" := PDCTransactionRec."Contract ID";
-        GenJournalLine.Description := ' Cheque Return - Cheque No. ' + PDCTransactionRec."Cheque Number";
-        GenJournalLine.Validate(Amount, Round(-PDCTransactionRec.Amount));
+        GenJournalLine."BLRContract ID" := PDCTransactionRec."BLRContract ID";
+        GenJournalLine.Description := ' Cheque Return - Cheque No. ' + PDCTransactionRec."BLRCheque Number";
+        GenJournalLine.Validate(Amount, Round(-PDCTransactionRec."BLRAmount"));
         // GenJournalLine."Amount (LCY)" := GenJournalLine.Amount;
         GenJournalLine."Bal. Account Type" := GenJournalLine."Bal. Account Type"::"G/L Account";
         GenJournalLine."Bal. Account No." := PDCLiabilities;
@@ -748,14 +748,14 @@ codeunit 73209580 "Cash Receipt Journal Entry"
 
     end;
 
-    procedure PDCRetrivedTransaction(PDCTransactionRec: Record "PDC Transaction")
+    procedure PDCRetrivedTransaction(PDCTransactionRec: Record "BLRPDCTransaction")
     var
 
         GenJournalLine: Record "Gen. Journal Line";
-        COASetup: Record "COA Setup";
+        COASetup: Record "BLRCOASetup";
 
         CustRec: Record Customer;
-        ContractRec: Record "Tenancy Contract";
+        ContractRec: Record "BLRTenancyContract";
         GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
 
         LineNo: Integer;
@@ -764,35 +764,35 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         PDCLiabilities: Code[20];
     begin
         LineNo := 0;
-        if PDCTransactionRec."Contract ID" <> 0 then begin
+        if PDCTransactionRec."BLRContract ID" <> 0 then begin
             ContractRec.Reset();
-            ContractRec.SetRange("Contract ID", PDCTransactionRec."Contract ID"); // Use correct field name
+            ContractRec.SetRange("BLRContract ID", PDCTransactionRec."BLRContract ID"); // Use correct field name
             if ContractRec.FindFirst() then begin
-                PropertyClassification := ContractRec."Property Classification";
+                PropertyClassification := ContractRec."BLRProperty Classification";
                 // update Customer as before
-                if CustRec.Get(PDCTransactionRec."Tenant Id") then
-                    if ContractRec."Property Classification" <> '' then begin
-                        CustRec.Validate("Customer Posting Group", ContractRec."Property Classification");
-                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."Property Classification");
+                if CustRec.Get(PDCTransactionRec."BLRTenant Id") then
+                    if ContractRec."BLRProperty Classification" <> '' then begin
+                        CustRec.Validate("Customer Posting Group", ContractRec."BLRProperty Classification");
+                        CustRec.Validate("Gen. Bus. Posting Group", ContractRec."BLRProperty Classification");
                         CustRec.Modify();
 
                     end;
 
 
             end else
-                Error('No contract found with ID %1', PDCTransactionRec."Contract ID");
+                Error('No contract found with ID %1', PDCTransactionRec."BLRContract ID");
         end else
             Error('Contract ID is missing in PDC record.');
 
         COASetup.Get();
-        if COASetup."PDC Received" <> '' then
-            PDCReceived := COASetup."PDC Received"
+        if COASetup."BLRPDC Received" <> '' then
+            PDCReceived := COASetup."BLRPDC Received"
 
         else
             Error('COA Setup doest not exist for PDC Received account');
 
-        if COASetup."PDC Liabilities" <> '' then
-            PDCLiabilities := COASetup."PDC Liabilities"
+        if COASetup."BLRPDC Liabilities" <> '' then
+            PDCLiabilities := COASetup."BLRPDC Liabilities"
         else
             Error('COA Setup doest not exist for PDC Liabilities account');
 
@@ -809,15 +809,15 @@ codeunit 73209580 "Cash Receipt Journal Entry"
         GenJournalLine.Init();
         GenJournalLine."Journal Template Name" := 'CASH RECE';
         GenJournalLine."Journal Batch Name" := 'DEFAULT';
-        GenJournalLine."Document No." := PDCTransactionRec."PDC ID";
-        GenJournalLine."Posting Date" := PDCTransactionRec."Transaction Date";
+        GenJournalLine."Document No." := PDCTransactionRec."BLRPDC ID";
+        GenJournalLine."Posting Date" := PDCTransactionRec."BLRTransaction Date";
         GenJournalLine."Line No." := LineNo;
         GenJournalLine."Document Type" := GenJournalLine."Document Type"::" ";
         GenJournalLine."Account Type" := GenJournalLine."Account Type"::"G/L Account";
         GenJournalLine."Account No." := PDCReceived; // Customer from Payment Series
-        GenJournalLine."Contract ID" := PDCTransactionRec."Contract ID";
-        GenJournalLine.Description := ' PDC Retrieval - Cheque No. ' + PDCTransactionRec."Cheque Number";
-        GenJournalLine.Validate(Amount, Round(-PDCTransactionRec.Amount));
+        GenJournalLine."BLRContract ID" := PDCTransactionRec."BLRContract ID";
+        GenJournalLine.Description := ' PDC Retrieval - Cheque No. ' + PDCTransactionRec."BLRCheque Number";
+        GenJournalLine.Validate(Amount, Round(-PDCTransactionRec."BLRAmount"));
         // GenJournalLine."Amount (LCY)" := GenJournalLine.Amount;
         GenJournalLine."Bal. Account Type" := GenJournalLine."Bal. Account Type"::"G/L Account";
         GenJournalLine."Bal. Account No." := PDCLiabilities;

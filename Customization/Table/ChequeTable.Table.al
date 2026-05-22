@@ -1,30 +1,30 @@
-table 73209593 "Cheque Table"
+table 73209593 "BLRChequeTable"
 {
     DataClassification = CustomerContent;
 
     fields
     {
-        field(73209575; "ChequeID"; Code[20])
+        field(73209575; "BLRChequeID"; Code[20])
         {
             DataClassification = AccountData;
             Caption = 'Cheque ID';
         }
-        field(73209576; "LeaseID"; Code[20])
+        field(73209576; "BLRLeaseID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Lease ID';
         }
-        field(73209577; "ChequeDate"; Date)
+        field(73209577; "BLRChequeDate"; Date)
         {
             DataClassification = AccountData;
             Caption = 'Cheque Date';
         }
-        field(73209578; "ChequeAmount"; Decimal)
+        field(73209578; "BLRChequeAmount"; Decimal)
         {
             DataClassification = AccountData;
             Caption = 'Cheque Amount';
         }
-        field(73209579; "ChequeStatus"; Enum "PDC Status Type Enum")
+        field(73209579; "BLRChequeStatus"; Enum "PDC Status Type Enum")
         {
             DataClassification = AccountData;
             Caption = 'Cheque Status';
@@ -33,7 +33,7 @@ table 73209593 "Cheque Table"
 
     keys
     {
-        key(PK; "ChequeID")
+        key(PK;"BLRChequeID")
         {
             Clustered = true;
         }

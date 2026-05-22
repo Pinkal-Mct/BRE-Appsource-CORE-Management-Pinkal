@@ -11,7 +11,7 @@ page 73209580 CompanyData
     EntityName = 'companyData';
     EntitySetName = 'companyDatas';
     PageType = API;
-    SourceTable = "Company Data";
+    SourceTable = "BLRCompanyData";
     ODataKeyFields = SystemId;
 
     layout
@@ -20,19 +20,19 @@ page 73209580 CompanyData
         {
             repeater(General)
             {
-                field(companyID; Rec."Company ID")
+                field(companyID; Rec."BLRCompany ID")
                 {
                     Caption = 'Company ID';
                 }
-                field(companyLogo; Rec."Company Logo")
+                field(companyLogo; Rec."BLRCompany Logo")
                 {
                     Caption = 'Company Logo';
                 }
-                field("logoURL"; Rec."Logo URL")
+                field("logoURL"; Rec."BLRLogo URL")
                 {
                     Caption = 'Company Logo';
                 }
-                field(companyName; Rec."Company Name")
+                field(companyName; Rec."BLRCompany Name")
                 {
                     Caption = 'Company Name';
                 }
@@ -56,19 +56,19 @@ page 73209580 CompanyData
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field("tenantid"; Rec."Tenant id")
+                field("tenantid"; Rec."BLRTenant id")
                 {
                     Caption = 'Tenant id';
                 }
-                field("environmentName"; Rec."Environment Name")
+                field("environmentName"; Rec."BLREnvironment Name")
                 {
                     Caption = 'Environment Name';
                 }
-                field("accessValidity"; Rec."Access Validity")
+                field("accessValidity"; Rec."BLRAccess Validity")
                 {
                     Caption = 'Access Validity';
                 }
-                field("apiURL"; Rec."API URL")
+                field("apiURL"; Rec."BLRAPI URL")
                 {
                     Caption = 'API URL';
                 }

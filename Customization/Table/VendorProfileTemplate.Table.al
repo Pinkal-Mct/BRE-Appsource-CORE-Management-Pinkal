@@ -1,23 +1,23 @@
-table 73209713 "Vendor Profile Template"
+table 73209713 "BLRVendorProfileTemplate"
 {
     Caption = 'Vendor Profile Template';
     TableType = Normal;
     DataClassification = SystemMetadata;
     fields
     {
-        field(73209575; Code; Code[50])
+        field(73209575; "BLRCode"; Code[50])
         {
             DataClassification = SystemMetadata;
         }
-        field(73209576; Description; Text[100])
+        field(73209576; "BLRDescription"; Text[100])
         {
             DataClassification = SystemMetadata;
         }
-        field(73209577; Module; Enum "Module Enum")
+        field(73209577; "BLRModule"; Enum "Module Enum")
         {
             DataClassification = SystemMetadata;
         }
-        field(73209578; "No. Series"; Code[20])
+        field(73209578; "BLRNo. Series"; Code[20])
         {
             DataClassification = SystemMetadata;
             Caption = 'No. Series';
@@ -26,7 +26,7 @@ table 73209713 "Vendor Profile Template"
     }
     keys
     {
-        key(PK; Code)
+        key(PK;"BLRCode")
         {
             Clustered = true;
         }

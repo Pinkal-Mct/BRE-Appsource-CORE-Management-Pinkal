@@ -1,83 +1,83 @@
-table 73209691 "Sub Lease Merged Units"
+table 73209691 "BLRSubLeaseMergedUnits"
 {
     DataClassification = CustomerContent;
 
     fields
     {
-        field(73209575; "Merge Unit ID"; Code[10])
+        field(73209575; "BLRMerge Unit ID"; Code[10])
         {
             DataClassification = CustomerContent;
             Caption = 'Merge Unit ID';
 
         }
-        field(73209576; "Property ID"; Code[20])
+        field(73209576; "BLRProperty ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Property ID';
         }
-        field(73209577; "Unit ID"; Code[100])
+        field(73209577; "BLRUnit ID"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit ID';
 
         }
-        field(73209578; "Unit Name"; Code[100])
+        field(73209578; "BLRUnit Name"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Name';
 
         }
 
-        field(73209579; "Unit Size"; Decimal)
+        field(73209579; "BLRUnit Size"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Unit Size';
         }
 
-        field(73209580; "Market Rate per Square"; Decimal)
+        field(73209580; "BLRMarket Rate per Square"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Market Rate per Square';
         }
 
-        field(73209581; "Amount"; Decimal)
+        field(73209581; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Amount';
         }
 
-        field(73209582; "Base Unit of Measure"; Code[10])
+        field(73209582; "BLRBase Unit of Measure"; Code[10])
         {
             DataClassification = CustomerContent;
             Caption = 'Base Unit of Measure';
 
         }
 
-        field(73209583; "Single Unit Name"; Text[500])
+        field(73209583; "BLRSingle Unit Name"; Text[500])
         {
             DataClassification = CustomerContent;
             Caption = 'Single Unit Names';
         }
-        field(73209584; "Proposal ID"; Integer)
+        field(73209584; "BLRProposal ID"; Integer)
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209585; "Per Day Rent"; Decimal)
+        field(73209585; "BLRPer Day Rent"; Decimal)
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209586; "Year"; Integer)
+        field(73209586; "BLRYear"; Integer)
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209587; "Get Data"; Code[100])
+        field(73209587; "BLRGet Data"; Code[100])
         {
             DataClassification = CustomerContent;
-            InitValue = 'Click Here For Get Data.';
-            Caption = 'Click Here For Get Data.';
+            InitValue = 'Click Here For "BLRGet Data".';
+            Caption = 'Click Here For "BLRGet Data".';
 
 
         }
@@ -85,7 +85,7 @@ table 73209691 "Sub Lease Merged Units"
 
     keys
     {
-        key(PK; "Merge Unit ID", "Unit ID", "Proposal ID")
+        key(PK;"BLRMerge Unit ID", "BLRUnit ID", "BLRProposal ID")
         {
             Clustered = true;
         }

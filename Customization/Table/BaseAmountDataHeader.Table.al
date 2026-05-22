@@ -1,22 +1,22 @@
-table 73209584 "Base Amount Data Header"
+table 73209584 "BLRBaseAmountDataHeader"
 {
     DataClassification = CustomerContent;
 
     fields
     {
-        field(73209575; "Header No."; Integer)
+        field(73209575; "BLRHeader No."; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209576; "Line No."; Integer)
+        field(73209576; "BLRLine No."; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209577; "Base Amount Type"; Text[20])
+        field(73209577; "BLRBase Amount Type"; Text[20])
         {
             DataClassification = CustomerContent;
         }
-        field(73209578; "No."; Integer)
+        field(73209578; "BLRNo."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
@@ -24,23 +24,23 @@ table 73209584 "Base Amount Data Header"
     }
     keys
     {
-        key("PK"; "No.", "Header No.", "Line No.")
+        key("PK";"BLRNo.", "BLRHeader No.", "BLRLine No.")
         {
             Clustered = true;
         }
     }
     trigger OnDelete()
     var
-        baseAmountData: Record "Base Amount Data";
-        baseAmountDataUnitWise: Record "Base Amount Data Unit Wise";
+        baseAmountData: Record "BLRBaseAmountData";
+        baseAmountDataUnitWise: Record "BLRBaseAmountDataUnitWise";
     begin
-        baseAmountData.SetRange("Header No.", Rec."Header No.");
-        baseAmountData.SetRange("Line No.", Rec."Line No.");
+        baseAmountData.SetRange("BLRHeader No.", Rec."BLRHeader No.");
+        baseAmountData.SetRange("BLRLine No.", Rec."BLRLine No.");
         if baseAmountData.FindSet() then
             baseAmountData.DeleteAll(true);
 
-        baseAmountDataUnitWise.SetRange("Header No.", Rec."Header No.");
-        baseAmountDataUnitWise.SetRange("Line No.", Rec."Line No.");
+        baseAmountDataUnitWise.SetRange("BLRHeader No.", Rec."BLRHeader No.");
+        baseAmountDataUnitWise.SetRange("BLRLine No.", Rec."BLRLine No.");
         if baseAmountDataUnitWise.FindSet() then
             baseAmountDataUnitWise.DeleteAll(true);
     end;

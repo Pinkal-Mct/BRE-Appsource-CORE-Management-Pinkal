@@ -1,32 +1,32 @@
-table 73209703 "Tenancy Contract Subpage"
+table 73209703 "BLRTenancyContractSubpage"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "ContractID"; Integer)
+        field(73209575; "BLRContractID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
-        field(73209576; "Secondary Item Type"; Text[100])
+        field(73209576; "BLRSecondary Item Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Secondary Item';
-            TableRelation = Item where("Item Type Template" = const("Item Type Template Enum"::"Secondary Item"));
+            TableRelation = Item where("BLRItem Type Template" = const("Item Type Template Enum"::"Secondary Item"));
             Editable = false;
             trigger OnValidate()
             var
                 SecondaryItemRec: Record Item;
             begin
-                SecondaryItemRec.SetRange("No.", Rec."Secondary Item Type");
+                SecondaryItemRec.SetRange("No.", Rec."BLRSecondary Item Type");
                 if SecondaryItemRec.FindFirst() then begin
-                    "Secondary Item Type" := SecondaryItemRec.Description;
-                    "VAT %" := SecondaryItemRec."VAT %";
+                    "BLRSecondary Item Type" := SecondaryItemRec.Description;
+                    "BLRVAT %" := SecondaryItemRec."BLRVAT %";
                 end else
-                    "VAT %" := 0;
+                    "BLRVAT %" := 0;
             end;
         }
-        field(73209577; "Amount"; Decimal)
+        field(73209577; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Amount';
@@ -35,7 +35,7 @@ table 73209703 "Tenancy Contract Subpage"
                 CalcVATAndTotal();
             end;
         }
-        field(73209578; "VAT %"; Option)
+        field(73209578; "BLRVAT %"; Option)
         {
             OptionMembers = "0%","5%";
             Caption = 'VAT %';
@@ -46,7 +46,7 @@ table 73209703 "Tenancy Contract Subpage"
                 CalcVATAndTotal();
             end;
         }
-        field(73209579; "VAT Amount"; Decimal)
+        field(73209579; "BLRVAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'VAT Amount';
@@ -55,92 +55,92 @@ table 73209703 "Tenancy Contract Subpage"
             var
                 vatPer: Integer;
             begin
-                if "VAT %" = "VAT %"::"5%" then
+                if "BLRVAT %" = "BLRVAT %"::"5%" then
                     vatPer := 5
                 else
                     vatPer := 0;
-                "VAT Amount" := Amount * (vatPer / 100);
+                "BLRVAT Amount" := "BLRAmount" * (vatPer / 100);
             end;
         }
-        field(73209580; "Amount Including VAT"; Decimal)
+        field(73209580; "BLRAmount Including VAT"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
             Editable = false;
             trigger OnValidate()
             begin
-                "Amount Including VAT" := Amount + "VAT Amount";
+                "BLRAmount Including VAT" := "BLRAmount" + "BLRVAT Amount";
                 UpdatedPaymentRecords();
             end;
         }
-        field(73209581; "Start Date"; Date)
+        field(73209581; "BLRStart Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Start Date';
             Editable = false;
         }
-        field(73209582; "End Date"; Date)
+        field(73209582; "BLREnd Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'End Date';
             Editable = false;
         }
-        field(73209583; "Generate Payment Schedule"; Text[250])
+        field(73209583; "BLRGenerate Payment Schedule"; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'Generate Payment Schedule';
             InitValue = 'Generate Payment Schedule';
             Editable = false;
         }
-        field(73209584; "Entry No."; Integer)
+        field(73209584; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
         }
-        field(73209585; "Payment Type"; Option)
+        field(73209585; "BLRPayment Type"; Option)
         {
             OptionMembers = "","One Time Payment","Installment";
             Caption = 'Payment Type';
             DataClassification = CustomerContent;
         }
-        field(73209586; Invoiced; Decimal)
+        field(73209586; "BLRInvoiced"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Invoiced';
         }
-        field(73209587; "Link"; Integer)
+        field(73209587; "BLRLink"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Revenue Structure Link';
             Editable = false;
         }
-        field(73209588; "TenantID"; Code[20])
+        field(73209588; "BLRTenantID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
-        field(73209589; "ProposalID"; Integer)
+        field(73209589; "BLRProposalID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Proposal ID';
         }
-        field(73209590; "Contract Renewal ID"; Integer)
+        field(73209590; "BLRContract Renewal ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Renewal ID';
         }
-        field(73209591; "Invoiced and Paid"; Decimal)
+        field(73209591; "BLRInvoiced and Paid"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Invoiced and Paid';
 
             trigger OnValidate()
             var
-                tenancyContractRec: Record "Tenancy Contract";
+                tenancyContractRec: Record "BLRTenancyContract";
             begin
-                if Rec."Secondary Item Type" = 'Security Deposit' then
-                    if tenancyContractRec.Get("ContractID") then begin
-                        tenancyContractRec.Validate("Security Deposit Amt. Received", tenancyContractRec."Carry Forward In" + "Invoiced and Paid");
+                if Rec."BLRSecondary Item Type" = 'Security Deposit' then
+                    if tenancyContractRec.Get("BLRContractID") then begin
+                        tenancyContractRec.Validate("BLRSecDepAmtReceived", tenancyContractRec."BLRCarry Forward In" + "BLRInvoiced and Paid");
                         tenancyContractRec.Modify();
                     end;
             end;
@@ -148,7 +148,7 @@ table 73209703 "Tenancy Contract Subpage"
     }
     keys
     {
-        key(Key1; "Entry No.", ContractID)
+        key(Key1; "BLREntry No.", "BLRContractID")
         {
             Clustered = true;
         }
@@ -158,40 +158,40 @@ table 73209703 "Tenancy Contract Subpage"
     var
         vatPer: Integer;
     begin
-        if "VAT %" = "VAT %"::"5%" then
+        if "BLRVAT %" = "BLRVAT %"::"5%" then
             vatPer := 5
         else
             vatPer := 0;
-        "VAT Amount" := Amount * (vatPer / 100);
-        "Amount Including VAT" := Amount + "VAT Amount";
+        "BLRVAT Amount" := "BLRAmount" * (vatPer / 100);
+        "BLRAmount Including VAT" := "BLRAmount" + "BLRVAT Amount";
     end;
 
     procedure UpdatedPaymentRecords()
     var
-        paymentScheduleSub: Record "Payment Schedule2";
-        paymentMode2: Record "Payment Mode2";
+        paymentScheduleSub: Record "BLRPaymentSchedule2";
+        paymentMode2: Record "BLRPaymentMode2";
         differenceAmount: Decimal;
     begin
-        paymentScheduleSub.SetRange("Contract ID", Rec.ContractID);
-        paymentScheduleSub.SetRange("Secondary Item Type", Rec."Secondary Item Type");
+        paymentScheduleSub.SetRange("BLRContract ID", Rec."BLRContractID");
+        paymentScheduleSub.SetRange("BLRSecondary Item Type", Rec."BLRSecondary Item Type");
         if paymentScheduleSub.FindFirst() then
-            if Rec.Amount = 0 then begin
-                differenceAmount := paymentScheduleSub.Amount;
+            if Rec."BLRAmount" = 0 then begin
+                differenceAmount := paymentScheduleSub."BLRAmount";
                 paymentScheduleSub.Delete()
             end
             else begin
-                differenceAmount := paymentScheduleSub.Amount - Rec.Amount;
-                paymentScheduleSub.Amount := Rec.Amount;
-                paymentScheduleSub."VAT Amount" := Rec."VAT Amount";
-                paymentScheduleSub."Amount Including VAT" := Rec."Amount Including VAT";
+                differenceAmount := paymentScheduleSub."BLRAmount" - Rec."BLRAmount";
+                paymentScheduleSub."BLRAmount" := Rec."BLRAmount";
+                paymentScheduleSub."BLRVAT Amount" := Rec."BLRVAT Amount";
+                paymentScheduleSub."BLRAmount Including VAT" := Rec."BLRAmount Including VAT";
                 paymentScheduleSub.Modify(true);
             end;
 
-        paymentMode2.SetRange("Contract ID", Rec.ContractID);
-        paymentMode2.SetRange("Payment Series", 'PAY01');
+        paymentMode2.SetRange("BLRContract ID", Rec."BLRContractID");
+        paymentMode2.SetRange("BLRPayment Series", 'PAY01');
         if paymentMode2.FindFirst() then begin
-            paymentMode2.Amount -= differenceAmount;
-            paymentMode2."Amount Including VAT" := paymentMode2.Amount + paymentMode2."VAT Amount";
+            paymentMode2."BLRAmount" -= differenceAmount;
+            paymentMode2."BLRAmount Including VAT" := paymentMode2."BLRAmount" + paymentMode2."BLRVAT Amount";
             paymentMode2.Modify(true);
         end;
     end;

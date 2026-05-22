@@ -56,7 +56,7 @@ page 73209613 "Terminated credit note"
                 {
                     Caption = 'Applies-to Doc. Type';
                 }
-                field(approvalStatus; Rec."Approval Status for CreditNote")
+                field(approvalStatus; Rec."BLRApproval Status for CreditNote")
                 {
                     Caption = 'Approval Status';
                 }
@@ -132,11 +132,11 @@ page 73209613 "Terminated credit note"
                 {
                     Caption = 'Company Bank Account Code';
                 }
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(contractTenure; Rec."Contract Tenure")
+                field(contractTenure; Rec."BLRContract Tenure")
                 {
                     Caption = 'Contract Tenure';
                 }
@@ -316,7 +316,7 @@ page 73209613 "Terminated credit note"
                 {
                     Caption = 'Prices Including VAT';
                 }
-                field(propertyName; Rec."Property Name")
+                field(propertyName; Rec."BLRProperty Name")
                 {
                     Caption = 'Property Name';
                 }
@@ -516,7 +516,7 @@ page 73209613 "Terminated credit note"
                 {
                     Caption = 'Transport Method';
                 }
-                field(unitName; Rec."Unit Name")
+                field(unitName; Rec."BLRUnit Name")
                 {
                     Caption = 'Unit Name';
                 }
@@ -544,11 +544,11 @@ page 73209613 "Terminated credit note"
                 {
                     Caption = 'VAT Date';
                 }
-                field(viewDocumentURL; Rec."Credit Memo URL")
+                field(viewDocumentURL; Rec."BLRCredit Memo URL")
                 {
                     Caption = 'Credit Memo Document URL';
                 }
-                field(viewInvoice; Rec."View Invoice")
+                field(viewInvoice; Rec."BLRView Invoice")
                 {
                     Caption = 'View Invoice';
                 }
@@ -560,11 +560,11 @@ page 73209613 "Terminated credit note"
                 {
                     Caption = 'Your Reference';
                 }
-                field("contractAmount"; Rec."Contract Amount")
+                field("contractAmount"; Rec."BLRContract Amount")
                 {
                     Caption = 'Contract Amount';
                 }
-                field("terminatedCreditNote"; Rec."Terminated Credit Note")
+                field("terminatedCreditNote"; Rec."BLRTerminated Credit Note")
                 {
                     Caption = 'Terminated Credit Note';
                 }

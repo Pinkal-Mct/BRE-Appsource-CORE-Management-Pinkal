@@ -1,7 +1,7 @@
 page 73209624 "Emirate Card"
 {
     PageType = Card;
-    SourceTable = Emirate;
+    SourceTable = "BLREmirate";
     ApplicationArea = All;
     Caption = 'Emirate Card';
     UsageCategory = None;
@@ -13,24 +13,24 @@ page 73209624 "Emirate Card"
             group(Group)
             {
                 Caption = 'Emirate Details';
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the unique identifier for the emirate.';
                 }
-                field("Sl No."; Rec."Sl No.")
+                field("Sl No."; Rec."BLRSl No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the serial number for the emirate.';
                 }
-                field("Country Code"; Rec."Country Code")
+                field("Country Code"; Rec."BLRCountry Code")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the country code associated with the emirate.';
                     ShowMandatory = true;
                     NotBlank = true;
                 }
-                field("Emirate Name"; Rec."Emirate Name")
+                field("Emirate Name"; Rec."BLREmirate Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the emirate.';
@@ -47,7 +47,7 @@ page 73209624 "Emirate Card"
     }
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.TestField("Country Code");
-        Rec.TestField("Emirate Name");
+        Rec.TestField("BLRCountry Code");
+        Rec.TestField("BLREmirate Name");
     end;
 }

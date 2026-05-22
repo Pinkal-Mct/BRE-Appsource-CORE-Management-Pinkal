@@ -96,7 +96,7 @@ codeunit 73209616 "Send Payment Reciept"
             Error('No payment receipt found for Document No.: %1', CustLedgerEntry."Document No.");
     end;
 
-    procedure SendPaymentReceiptEmail(PaymentEntry: Record "Payment Mode2")
+    procedure SendPaymentReceiptEmail(PaymentEntry: Record "BLRPaymentMode2")
     var
         Tenant: Record Customer;
         TempBlob: Codeunit "Temp Blob";
@@ -111,10 +111,10 @@ codeunit 73209616 "Send Payment Reciept"
         TempBlob.CreateOutStream(OutStr);
         Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStr);
         TempBlob.CreateInStream(InStream);
-        if Tenant.Get(PaymentEntry."Tenant ID") then begin
+        if Tenant.Get(PaymentEntry."BLRTenant Id") then begin
             if Tenant."E-Mail" = '' then
                 Error('Tenant does not have an email address.');
-            FileName := 'PaymentReceipt_' + Format(PaymentEntry."Contract ID") + '.pdf';
+            FileName := 'PaymentReceipt_' + Format(PaymentEntry."BLRContract ID") + '.pdf';
             EmailMessage.Create(Tenant."E-Mail", 'Payment Receipt',
                 'Dear ' + Tenant.Name + ', your payment has been received. Please find your receipt attached.');
             EmailMessage.AddAttachment(FileName, '', InStream);
@@ -123,6 +123,6 @@ codeunit 73209616 "Send Payment Reciept"
             else
                 Error('Failed to send email. Please verify SMTP settings and email addresses.');
         end else
-            Error('Tenant record not found for Tenant ID %1.', PaymentEntry."Tenant ID");
+            Error('Tenant record not found for Tenant ID %1.', PaymentEntry."BLRTenant Id");
     end;
 }

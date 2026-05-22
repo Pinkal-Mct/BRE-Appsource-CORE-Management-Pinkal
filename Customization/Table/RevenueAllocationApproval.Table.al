@@ -1,32 +1,32 @@
-table 73209670 "Revenue Allocation Approval"
+table 73209670 "BLRRevenueAllocationApproval"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "RA_ID"; Integer)
+        field(73209575; "BLRRA_ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'RA_ID';
             Editable = false;
             AutoIncrement = true;
         }
-        field(73209576; "ID"; Integer)
+        field(73209576; "BLRID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
-        field(73209577; "Financial Year"; Integer)
+        field(73209577; "BLRFinancial Year"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Financial Year';
         }
-        field(73209578; "Month"; Option)
+        field(73209578; "BLRMonth"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = " ",January,February,March,April,May,June,July,August,September,October,November,December;
             Caption = 'Month';
         }
-        field(73209579; "Status"; Option)
+        field(73209579; "BLRStatus"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Status';
@@ -35,7 +35,7 @@ table 73209670 "Revenue Allocation Approval"
     }
     keys
     {
-        key(PK; "RA_ID")
+        key(PK;"BLRRA_ID")
         {
             Clustered = false;
         }

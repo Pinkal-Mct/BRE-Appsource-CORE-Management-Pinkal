@@ -1,7 +1,7 @@
 page 73209647 "Emirate List"
 {
     PageType = List;
-    SourceTable = Emirate;
+    SourceTable = "BLREmirate";
     ApplicationArea = All;
     Caption = 'Emirate List';
     UsageCategory = Lists;
@@ -13,27 +13,27 @@ page 73209647 "Emirate List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'Specifies the unique identifier for the emirate.';
                 }
-                field("Sl No."; Rec."Sl No.")
+                field("Sl No."; Rec."BLRSl No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Sl No.';
                     ToolTip = 'Specifies the serial number for the emirate.';
                 }
-                field("Country Code"; Rec."Country Code")
+                field("Country Code"; Rec."BLRCountry Code")
                 {
                     ApplicationArea = All;
                     Caption = 'Country Code';
-                    TableRelation = Country;
+                    TableRelation = "BLRCountry";
                     Lookup = true;
                     ToolTip = 'Specifies the country code associated with the emirate.';
                 }
-                field("Emirate Name"; Rec."Emirate Name")
+                field("Emirate Name"; Rec."BLREmirate Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Emirate Name';

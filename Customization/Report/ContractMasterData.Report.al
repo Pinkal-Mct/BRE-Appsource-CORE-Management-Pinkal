@@ -9,18 +9,18 @@ report 73209575 ContractMasterData
     DefaultLayout = Excel;
     dataset
     {
-        dataitem(TenancyContract; "Tenancy Contract")
+        dataitem(TenancyContract; "BLRTenancyContract")
         {
             column(Report_Period; CustomDateRangeText)
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Owner_s_Name; "Owner's Name")
+            column(Owner_s_Name; "BLROwner's Name")
             {
             }
-            column(Customer_Name; "Customer Name")
+            column(Customer_Name; "BLRCustomer Name")
             {
             }
             column(Contract_Start_Date; ContractStartDateText)
@@ -35,37 +35,37 @@ report 73209575 ContractMasterData
             column(Proposal_ID; ProposalInfoText)
             {
             }
-            column(Contract_Tenor; "Contract Tenor")
+            column(Contract_Tenor; "BLRContract Tenor")
             {
             }
             column(Tenant_Contract_Status; TenantStatusFormatted)
             {
             }
-            column(Contract_Amount; "Annual Rent Amount")
+            column(Contract_Amount; "BLRAnnual Rent Amount")
             {
             }
-            column(Annual_Rent_Amount; "Rent Amount")
+            column(Annual_Rent_Amount; "BLRRent Amount")
             {
             }
-            column(Security_Deposit_Amount; "Security Deposit Amount")
+            column(Security_Deposit_Amount; "BLRSecurity Deposit Amount")
             {
             }
-            column(Property_Name; "Property Name")
+            column(Property_Name; "BLRProperty Name")
             {
             }
-            column(Unit_Name; "Unit Name")
+            column(Unit_Name; "BLRUnit Name")
             {
             }
             column(UnitID; UnitIDFormatted)
             {
             }
-            column(Unit_Number; "Unit Number")
+            column(Unit_Number; "BLRUnit Number")
             {
             }
-            column(UnitArea_Sq_Feet; "Unit Sq. Feet")
+            column(UnitArea_Sq_Feet; "BLRUnit Sq. Feet")
             {
             }
-            column(Unit_Usage_Type; "Usage Type")
+            column(Unit_Usage_Type; "BLRUsage Type")
             {
             }
             column(Suspension_Date; SuspensionDateText)
@@ -83,18 +83,18 @@ report 73209575 ContractMasterData
             column(Grace_End_Date; GraceEndDateText)
             {
             }
-            column(Grace_Period; "Grace Period")
+            column(Grace_Period; "BLRGrace Period")
             {
             }
-            dataitem("Final Calculation"; "Final Calculation")
+            dataitem("Final Calculation"; "BLRFinalCalculation")
             {
-                DataItemLink = "Contract ID" = field("Contract ID");
+                DataItemLink = "BLRContract ID" = field("BLRContract ID");
                 trigger OnAfterGetRecord()
                 begin
-                    if "Termination Date" = 0D then
+                    if "BLRTermination Date" = 0D then
                         TerminationDateText := '-'
                     else
-                        TerminationDateText := Format("Termination Date", 0, '<Day,2>/<Month,2>/<Year4>');
+                        TerminationDateText := Format("BLRTermination Date", 0, '<Day,2>/<Month,2>/<Year4>');
                 end;
 
                 trigger OnPreDataItem()
@@ -105,8 +105,8 @@ report 73209575 ContractMasterData
             }
             trigger OnAfterGetRecord()
             var
-                SuspensionReasonRec: Record SuspendReasonTable;
-                FinalCalc: Record "Final Calculation";
+                SuspensionReasonRec: Record "BLRSuspendReasonTable";
+                FinalCalc: Record "BLRFinalCalculation";
                 StartDateIsInRange: Boolean;
                 EndDateIsInRange: Boolean;
             begin
@@ -114,93 +114,93 @@ report 73209575 ContractMasterData
                 CustomDateRangeText :=
                     Format(CustomStartDatevar, 0, '<Day,2>/<Month,2>/<Year4>') + ' - ' +
                     Format(CustomEndDatevar, 0, '<Day,2>/<Month,2>/<Year4>');
-                StartDateIsInRange := ("Contract Start Date" >= CustomStartDatevar) and ("Contract Start Date" <= CustomEndDatevar);
-                EndDateIsInRange := ("Contract End Date" >= CustomStartDatevar) and ("Contract End Date" <= CustomEndDatevar);
+                StartDateIsInRange := ("BLRContract Start Date" >= CustomStartDatevar) and ("BLRContract Start Date" <= CustomEndDatevar);
+                EndDateIsInRange := ("BLRContract End Date" >= CustomStartDatevar) and ("BLRContract End Date" <= CustomEndDatevar);
                 if not (StartDateIsInRange or EndDateIsInRange) then
                     CurrReport.SKIP();
                 FinalCalc.Reset();
-                FinalCalc.SetRange("Contract ID", "Contract ID");
+                FinalCalc.SetRange("BLRContract ID", "BLRContract ID");
                 if FinalCalc.FindFirst() then
-                    if FinalCalc."Termination Date" = 0D then
+                    if FinalCalc."BLRTermination Date" = 0D then
                         TerminationDateText := '-'
                     else
-                        TerminationDateText := Format(FinalCalc."Termination Date", 0, '<Day,2>/<Month,2>/<Year4>');
+                        TerminationDateText := Format(FinalCalc."BLRTermination Date", 0, '<Day,2>/<Month,2>/<Year4>');
                 SuspensionStartDate := 0D;
                 SuspensionReasonText := '';
                 SuspensionReasonRec.Reset();
-                SuspensionReasonRec.SetRange("Contract ID", "Contract ID");
+                SuspensionReasonRec.SetRange("BLRContract ID", "BLRContract ID");
                 if SuspensionReasonRec.FindFirst() then begin
-                    SuspensionStartDate := SuspensionReasonRec.DateEffective;
-                    SuspensionReasonText := Format(SuspensionReasonRec.Reason);
+                    SuspensionStartDate := SuspensionReasonRec."BLRDateEffective";
+                    SuspensionReasonText := Format(SuspensionReasonRec."BLRReason");
                 end;
-                case "Contract Type" of
-                    "Contract Type"::"New Contract":
-                        ProposalInfoText := 'Proposal ID: ' + Format("Proposal ID");
-                    "Contract Type"::"Renewal Contract":
-                        ProposalInfoText := 'ContractRenewal ID: ' + Format("Renewal Proposal ID");
+                case "BLRContract Type" of
+                    "BLRContract Type"::"New Contract":
+                        ProposalInfoText := '"BLRProposal ID": ' + Format("BLRProposal ID");
+                    "BLRContract Type"::"Renewal Contract":
+                        ProposalInfoText := 'ContractRenewal ID: ' + Format("BLRRenewal Proposal ID");
                     else
                         ProposalInfoText := '-';
                 end;
-                if Format("Contract ID") = '' then
-                    "Contract ID" := '-';
-                if Format("Owner's Name") = '' then
-                    "Owner's Name" := '-';
-                if Format("Customer Name") = '' then
-                    "Customer Name" := '-';
-                if "Contract Start Date" = 0D then
+                if Format("BLRContract ID") = '' then
+                    "BLRContract ID" := '-';
+                if Format("BLROwner's Name") = '' then
+                    "BLROwner's Name" := '-';
+                if Format("BLRCustomer Name") = '' then
+                    "BLRCustomer Name" := '-';
+                if "BLRContract Start Date" = 0D then
                     ContractStartDateText := '-'
                 else
-                    ContractStartDateText := Format("Contract Start Date", 0, '<Day,2>/<Month,2>/<Year4>');
-                if "Contract End Date" = 0D then
+                    ContractStartDateText := Format("BLRContract Start Date", 0, '<Day,2>/<Month,2>/<Year4>');
+                if "BLRContract End Date" = 0D then
                     ContractEndDateText := '-'
                 else
-                    ContractEndDateText := Format("Contract End Date", 0, '<Day,2>/<Month,2>/<Year4>');
-                if "Contract Type" = "Contract Type"::" " then
+                    ContractEndDateText := Format("BLRContract End Date", 0, '<Day,2>/<Month,2>/<Year4>');
+                if "BLRContract Type" = "BLRContract Type"::" " then
                     ContractTypeFormatted := '-'
                 else
-                    ContractTypeFormatted := Format("Contract Type");
-                if Format("Contract Tenor") = '' then
-                    "Contract Tenor" := '-';
-                if "Tenant Contract Status" = "Tenant Contract Status"::" " then
+                    ContractTypeFormatted := Format("BLRContract Type");
+                if Format("BLRContract Tenor") = '' then
+                    "BLRContract Tenor" := '-';
+                if "BLRTenant Contract Status" = "BLRTenant Contract Status"::" " then
                     TenantStatusFormatted := '-'
                 else
-                    TenantStatusFormatted := Format("Tenant Contract Status");
-                if "Annual Rent Amount" = 0 then
-                    "Annual Rent Amount" := 0;
-                if "Rent Amount" = 0 then
-                    "Rent Amount" := 0;
-                if "Security Deposit Amount" = 0 then
-                    "Security Deposit Amount" := 0;
-                if Format("Property Name") = '' then
-                    "Property Name" := '-';
-                if Format("Unit Name") = '' then
-                    "Unit Name" := '-';
-                if "Unit ID" = '' then
+                    TenantStatusFormatted := Format("BLRTenant Contract Status");
+                if "BLRAnnual Rent Amount" = 0 then
+                    "BLRAnnual Rent Amount" := 0;
+                if "BLRRent Amount" = 0 then
+                    "BLRRent Amount" := 0;
+                if "BLRSecurity Deposit Amount" = 0 then
+                    "BLRSecurity Deposit Amount" := 0;
+                if Format("BLRProperty Name") = '' then
+                    "BLRProperty Name" := '-';
+                if Format("BLRUnit Name") = '' then
+                    "BLRUnit Name" := '-';
+                if "BLRUnit ID" = '' then
                     UnitIDFormatted := '-'
                 else
-                    UnitIDFormatted := "Unit ID";
-                if Format("Unit Number") = '' then
-                    "Unit Number" := '-';
-                if Format("Unit Sq. Feet") = '' then
-                    "Unit Sq. Feet" := '-';
-                if Format("Usage Type") = '' then
-                    "Usage Type" := '-';
+                    UnitIDFormatted := "BLRUnit ID";
+                if Format("BLRUnit Number") = '' then
+                    "BLRUnit Number" := '-';
+                if Format("BLRUnit Sq. Feet") = '' then
+                    "BLRUnit Sq. Feet" := '-';
+                if Format("BLRUsage Type") = '' then
+                    "BLRUsage Type" := '-';
                 if SuspensionStartDate = 0D then
                     SuspensionDateText := '-'
                 else
                     SuspensionDateText := Format(SuspensionStartDate, 0, '<Day,2>/<Month,2>/<Year4>');
                 if SuspensionReasonText = '' then
                     SuspensionReasonText := '-';
-                if "Grace Start Date" = 0D then
+                if "BLRGrace Start Date" = 0D then
                     GraceStartDateText := '-'
                 else
-                    GraceStartDateText := Format("Grace Start Date", 0, '<Day,2>/<Month,2>/<Year4>');
-                if "Grace End Date" = 0D then
+                    GraceStartDateText := Format("BLRGrace Start Date", 0, '<Day,2>/<Month,2>/<Year4>');
+                if "BLRGrace End Date" = 0D then
                     GraceEndDateText := '-'
                 else
-                    GraceEndDateText := Format("Grace End Date", 0, '<Day,2>/<Month,2>/<Year4>');
-                if "Grace Period" = 0 then
-                    "Grace Period" := 0;
+                    GraceEndDateText := Format("BLRGrace End Date", 0, '<Day,2>/<Month,2>/<Year4>');
+                if "BLRGrace Period" = 0 then
+                    "BLRGrace Period" := 0;
             end;
         }
     }

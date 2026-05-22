@@ -26,7 +26,7 @@ codeunit 73209594 "Item Temaplate Management"
             exit;
         end;
 
-        ItemTempl.SetRange(Types, itemCategory);
+        ItemTempl.SetRange(BLRTypes, itemCategory);
         if ItemTempl.Count = 1 then begin
             ItemTempl.FindFirst();
             IsHandled := true;
@@ -45,7 +45,7 @@ codeunit 73209594 "Item Temaplate Management"
         end;
         item.Init();
         InitItemNo(item, ItemTempl);
-        item."Item Template" := ItemTempl.Types;
+        item."BLRItem Template" := ItemTempl.BLRTypes;
         item.Insert(true);
         ItemRec := item;
         itemTemplMgt.ApplyItemTemplate(item, ItemTempl, true);

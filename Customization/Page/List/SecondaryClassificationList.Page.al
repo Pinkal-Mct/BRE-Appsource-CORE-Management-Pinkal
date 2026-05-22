@@ -1,7 +1,7 @@
 page 73209661 "Secondary Classification List"
 {
     PageType = List;
-    SourceTable = "Secondary Classification";
+    SourceTable = "BLRSecondaryClassification";
     ApplicationArea = All;
     Caption = 'Unit Type List';
     UsageCategory = Lists;
@@ -13,22 +13,22 @@ page 73209661 "Secondary Classification List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'Unique identifier for the secondary classification.';
                 }
-                field("Classification Name"; Rec."Classification Name")
+                field("Classification Name"; Rec."BLRClassification Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Classification';
-                    TableRelation = "Primary Classification";
+                    TableRelation = "BLRPrimaryClassification";
                     // Display the Primary Classification description
                     Lookup = true; // Enable lookup to Primary Classification
                     ToolTip = 'Name of the primary classification associated with the secondary classification.';
                 }
-                field("Property Type"; Rec."Property Type")
+                field("Property Type"; Rec."BLRProperty Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Type';

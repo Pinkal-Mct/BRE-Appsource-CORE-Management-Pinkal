@@ -47,8 +47,8 @@ codeunit 73209613 "Send Mail to FM Credit Note"
                             '<b>Customer No.:</b> ' + SalesHeader."Sell-to Customer No." + '<br/>' +
                             '<b>Posting Date:</b> ' + Format(SalesHeader."Posting Date") + '<br/>' +
                             '<b>Original Invoice No.:</b> ' + SalesHeader."Applies-to Doc. No." + '<br/>' +
-                         '<b>Contract ID:</b> ' + Format(SalesHeader."Contract ID") + '<br/>' +
-                         '<b>Property Name:</b> ' + SalesHeader."Property Name" + '<br/>' +
+                         '<b>Contract ID:</b> ' + Format(SalesHeader."BLRContract ID") + '<br/>' +
+                         '<b>Property Name:</b> ' + SalesHeader."BLRProperty Name" + '<br/>' +
                          '<b>Total Amount:</b> ' + Format(TotalAmount) + '<br/>' +
                          '<p>Please review the updated details and provide your approval at your earliest convenience. If any adjustments are needed, kindly let us know.</p>' +
                        '<p><a href="' + InvoiceLink + '" target="_blank">Click here to view the Credit Note</a></p>' +

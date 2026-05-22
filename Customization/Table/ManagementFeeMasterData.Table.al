@@ -1,16 +1,16 @@
-table 73209632 "Management Fee MasterData"
+table 73209632 "BLRManagementFeeMasterData"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "Vendor ID";
+    DataCaptionFields = "BLRVendor ID";
     fields
     {
-        field(73209575; "Management Fee Number"; Code[20])
+        field(73209575; "BLRManagement Fee Number"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Management Fee Number';
 
         }
-        field(73209576; "Vendor ID"; Code[20])
+        field(73209576; "BLRVendor ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Vendor ID';
@@ -19,12 +19,12 @@ table 73209632 "Management Fee MasterData"
             var
                 vendorrec: Record Vendor;
             begin
-                vendorrec.Get(Rec."Vendor ID");
-                Rec."Vendor Name" := vendorrec.Name;
+                vendorrec.Get(Rec."BLRVendor ID");
+                Rec."BLRVendor Name" := vendorrec.Name;
             end;
 
         }
-        field(73209577; "Vendor Name"; Text[100])
+        field(73209577; "BLRVendor Name"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Vendor Name';
@@ -32,14 +32,14 @@ table 73209632 "Management Fee MasterData"
     }
     keys
     {
-        key(PK; "Management Fee Number", "Vendor ID")
+        key(PK;"BLRManagement Fee Number", "BLRVendor ID")
         {
             Clustered = true;
         }
     }
     fieldgroups
     {
-        fieldgroup(DropDown; "Vendor ID", "Vendor Name")
+        fieldgroup(DropDown;"BLRVendor ID", "BLRVendor Name")
         {
 
         }
@@ -47,20 +47,20 @@ table 73209632 "Management Fee MasterData"
 
     trigger OnInsert()
     var
-        noSeriesSetup: Record "No. Series Setup";
+        noSeriesSetup: Record "BLRNoSeriesSetup";
         noseries: Codeunit "No. Series";
     begin
         if noSeriesSetup.Get() then
-            Rec."Management Fee Number" := noseries.GetNextNo(noSeriesSetup."Management Fee Master")
+            Rec."BLRManagement Fee Number" := noseries.GetNextNo(noSeriesSetup."BLRManagement Fee Master")
         else
             Error('No. Series Setup not found for Management fee Nos.');
     end;
 
     trigger OnDelete()
     var
-        ManagementFeeGrid: Record "Management Fee Grid";
+        ManagementFeeGrid: Record "BLRManagementFeeGrid";
     begin
-        ManagementFeeGrid.SetRange("Management Fee Number", Rec."Management Fee Number");
+        ManagementFeeGrid.SetRange("BLRManagement Fee Number", Rec."BLRManagement Fee Number");
         if ManagementFeeGrid.FindSet() then
             ManagementFeeGrid.DeleteAll();
     end;

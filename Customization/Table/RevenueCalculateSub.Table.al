@@ -1,66 +1,66 @@
-table 73209673 "Revenue Calculate Sub"
+table 73209673 "BLRRevenueCalculateSub"
 {
     DataClassification = CustomerContent;
 
     fields
     {
 
-        field(73209575; "Contract ID"; Integer)
+        field(73209575; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
 
-        field(73209576; "RS ID"; Integer)
+        field(73209576; "BLRRS ID"; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
             Editable = false;
         }
 
-        field(73209577; "Secondary Item Type"; Text[100])
+        field(73209577; "BLRSecondary Item Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Secondary Item Type';
             Editable = false;
         }
 
-        field(73209578; "Amount"; Decimal)
+        field(73209578; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Amount';
             Editable = false;
         }
 
-        field(73209579; "Installment Start Date"; Date)
+        field(73209579; "BLRInstallment Start Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Installment Start Date';
             Editable = false;
         }
 
-        field(73209580; "Installment End Date"; Date)
+        field(73209580; "BLRInstallment End Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Installment End Date';
             Editable = false;
         }
 
-        field(73209581; "VAT Amount"; Decimal)
+        field(73209581; "BLRVAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'VAT Amount';
             Editable = false;
         }
 
-        field(73209582; "Amount Including VAT"; Decimal)
+        field(73209582; "BLRAmount Including VAT"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
             Editable = false;
         }
 
-        field(73209583; "Tenant ID"; Code[20])
+        field(73209583; "BLRTenant ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
@@ -68,31 +68,31 @@ table 73209673 "Revenue Calculate Sub"
         }
 
 
-        field(73209584; "Total Amount"; Decimal)
+        field(73209584; "BLRTotal Amount"; Decimal)
         {
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Revenue Calculate Sub"."Amount" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
+            CalcFormula = sum("BLRRevenueCalculateSub"."BLRAmount" where("BLRContract ID" = field("BLRContract ID"), "BLRTenant ID" = field("BLRTenant ID")));
         }
 
-        field(73209585; "Total VAT Amount"; Decimal)
+        field(73209585; "BLRTotal VAT Amount"; Decimal)
         {
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Revenue Calculate Sub"."VAT Amount" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
+            CalcFormula = sum("BLRRevenueCalculateSub"."BLRVAT Amount" where("BLRContract ID" = field("BLRContract ID"), "BLRTenant ID" = field("BLRTenant ID")));
         }
 
-        field(73209586; "Total Amount Including VAT"; Decimal)
+        field(73209586; "BLRTotal Amount Including VAT"; Decimal)
         {
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Revenue Calculate Sub"."Amount Including VAT" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
+            CalcFormula = sum("BLRRevenueCalculateSub"."BLRAmount Including VAT" where("BLRContract ID" = field("BLRContract ID"), "BLRTenant ID" = field("BLRTenant ID")));
         }
 
     }
     keys
     {
-        key(PK; "RS ID")
+        key(PK;"BLRRS ID")
         {
             Clustered = true;
         }
@@ -100,7 +100,7 @@ table 73209673 "Revenue Calculate Sub"
 
     fieldgroups
     {
-        fieldgroup(DropDown; "Contract ID")
+        fieldgroup(DropDown;"BLRContract ID")
         {
 
         }

@@ -2,7 +2,7 @@ page 73209643 "COA Setup List"
 {
     PageType = ListPart;
     ApplicationArea = All;
-    SourceTable = "COA Setup Line";
+    SourceTable = "BLRCOASetupLine";
 
     layout
     {
@@ -10,15 +10,15 @@ page 73209643 "COA Setup List"
         {
             repeater(Group)
             {
-                field(Item; Rec."Secondary Item")
+                field(Item; Rec."BLRSecondary Item")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Secondary Item';
                 }
-                field(Residential; Rec.Residential) { ApplicationArea = All; ToolTip = 'Residential Property'; }
-                field(Commercial; Rec.Commercial) { ApplicationArea = All; ToolTip = 'Commercial Property'; }
-                field("Residential-Unearned"; Rec."Residential-Unearned") { ApplicationArea = All; ToolTip = 'Residential-Unearned'; }
-                field("Commercial-Unearned"; Rec."Commercial-Unearned") { ApplicationArea = All; ToolTip = 'Commercial-Unearned'; }
+                field(Residential; Rec."BLRResidential") { ApplicationArea = All; ToolTip = 'Residential Property'; }
+                field(Commercial; Rec."BLRCommercial") { ApplicationArea = All; ToolTip = 'Commercial Property'; }
+                field("Residential-Unearned"; Rec."BLRResidential-Unearned") { ApplicationArea = All; ToolTip = 'Residential-Unearned'; }
+                field("Commercial-Unearned"; Rec."BLRCommercial-Unearned") { ApplicationArea = All; ToolTip = 'Commercial-Unearned'; }
 
             }
         }

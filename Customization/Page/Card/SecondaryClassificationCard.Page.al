@@ -1,7 +1,7 @@
 page 73209634 "Secondary Classification Card"
 {
     PageType = Card;
-    SourceTable = "Secondary Classification";
+    SourceTable = "BLRSecondaryClassification";
     ApplicationArea = All;
     Caption = 'Unit Type';
     UsageCategory = None;
@@ -13,13 +13,13 @@ page 73209634 "Secondary Classification Card"
             group(Group)
             {
                 Caption = 'Unit Type Details';
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the secondary classification.';
                 }
-                field("Classification Name"; Rec."Classification Name")
+                field("Classification Name"; Rec."BLRClassification Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Classification';
@@ -27,7 +27,7 @@ page 73209634 "Secondary Classification Card"
                     ShowMandatory = true;
                     NotBlank = true;
                 }
-                field("Property Type"; Rec."Property Type")
+                field("Property Type"; Rec."BLRProperty Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Type';
@@ -46,8 +46,8 @@ page 73209634 "Secondary Classification Card"
     }
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.TestField("Classification Name");
-        Rec.TestField("Property Type");
+        Rec.TestField("BLRClassification Name");
+        Rec.TestField("BLRProperty Type");
     end;
 
 }

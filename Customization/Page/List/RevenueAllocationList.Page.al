@@ -1,7 +1,7 @@
 page 73209657 "Revenue Allocation List"
 {
     PageType = List;
-    SourceTable = "Revenue Allocation Details";
+    SourceTable = "BLRRevenueAllocationDetails";
     ApplicationArea = All;
     Caption = 'Revenue Allocation List';
     UsageCategory = Lists;
@@ -13,25 +13,25 @@ page 73209657 "Revenue Allocation List"
         {
             repeater(Group)
             {
-                field("No."; Rec."No.")
+                field("No."; Rec."BLRNo.")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'The unique identifier for the revenue allocation entry.';
                 }
-                field(Month; Rec.Month)
+                field(Month; Rec."BLRMonth")
                 {
                     ApplicationArea = All;
                     Caption = 'Month';
                     ToolTip = 'The month for which the revenue allocation is applicable.';
                 }
-                field("Financial Year"; Rec."Financial Year")
+                field("Financial Year"; Rec."BLRFinancial Year")
                 {
                     ApplicationArea = All;
                     Caption = 'Financial Year';
                     ToolTip = 'The financial year associated with the revenue allocation.';
                 }
-                field(Status; Rec.Status)
+                field(Status; Rec."BLRStatus")
                 {
                     ApplicationArea = All;
                     Caption = 'Status';

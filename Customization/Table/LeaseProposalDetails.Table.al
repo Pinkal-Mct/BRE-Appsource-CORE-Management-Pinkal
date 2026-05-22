@@ -1,178 +1,178 @@
-table 73209628 "Lease Proposal Details"
+table 73209628 "BLRLeaseProposalDetails"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "Proposal ID";
+    DataCaptionFields = "BLRProposal ID";
 
     fields
     {
-        field(73209575; "Proposal ID"; Integer)
+        field(73209575; "BLRProposal ID"; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
         }
-        field(73209576; "Unit Address"; Text[100])
+        field(73209576; "BLRUnit Address"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
-            TableRelation = "Item"."Unit Address";
+            TableRelation = "Item"."BLRUnit Address";
         }
 
-        field(73209577; "Property ID"; Code[20])
+        field(73209577; "BLRProperty ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Property ID';
-            TableRelation = "Property Registration"."Property ID";
+            TableRelation = "BLRPropertyRegistration"."BLRProperty ID";
 
             trigger OnValidate()
             var
-                PropertyRec: Record "Property Registration";
+                PropertyRec: Record "BLRPropertyRegistration";
             begin
-                PropertyRec.SetRange("Property ID", Rec."Property ID");
+                PropertyRec.SetRange("BLRProperty ID", Rec."BLRProperty ID");
                 if PropertyRec.FindFirst() then begin
-                    "Property Name" := PropertyRec."Property Name";
-                    "Makani Number" := PropertyRec."Makani Number";
-                    Emirate := CopyStr(PropertyRec."Emirate Name", 1, StrLen(PropertyRec."Emirate Name"));
-                    Community := PropertyRec.Community;
-                    "DEWA Number" := PropertyRec."DEWA Number";
-                    "Property Size" := PropertyRec."Property Size";
-                    "Market Rate per Sq. Ft." := PropertyRec."Market Rate per Sq. Ft.";
+                    "BLRProperty Name" := PropertyRec."BLRProperty Name";
+                    "BLRMakani Number" := PropertyRec."BLRMakani Number";
+                    "BLREmirate" := CopyStr(PropertyRec."BLREmirate Name", 1, StrLen(PropertyRec."BLREmirate Name"));
+                    "BLRCommunity" := PropertyRec."BLRCommunity";
+                    "BLRDEWA Number" := PropertyRec."BLRDEWA Number";
+                    "BLRProperty Size" := PropertyRec."BLRProperty Size";
+                    "BLRMarket Rate per Sq. Ft." := PropertyRec."BLRMarket Rate per Sq. Ft.";
 
                 end else
-                    "Property Name" := '';
+                    "BLRProperty Name" := '';
             end;
         }
 
-        field(73209578; "Property Name"; Text[100])
+        field(73209578; "BLRProperty Name"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Property Name';
         }
 
-        field(73209579; "Unit ID"; Code[100])
+        field(73209579; "BLRUnit ID"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Single Unit ID';
             TableRelation = Item."No."
-    where("Property ID" = field("Property ID"), "Unit Status" = const(Free), "MergeSplitOption" = const(Single));
+    where("BLRProperty ID" = field("BLRProperty ID"), "BLRUnit Status" = const(Free), "BLRMergeSplitOption" = const(Single));
 
             trigger OnValidate()
             var
-                LeaseProposalRec: Record "Lease Proposal Details";
+                LeaseProposalRec: Record "BLRLeaseProposalDetails";
                 ItemRec: Record Item;
             begin
-                if "Merge Unit ID" <> '' then
-                    Error('You can only select either Single Unit ID or Merge Unit ID, not both.');
-                if "Unit ID" <> '' then
-                    if not Confirm('Once you select this Single Unit ID, the status of the associated units will change from "Free" to "Selected". Do you wish to proceed?', false) then begin
-                        Validate("Unit ID", '');
+                if "BLRMerge Unit ID" <> '' then
+                    Error('You can only select either Single "BLRUnit ID" or "BLRMerge Unit ID", not both.');
+                if "BLRUnit ID" <> '' then
+                    if not Confirm('Once you select this Single "BLRUnit ID", the status of the associated units will change from "Free" to "Selected". Do you wish to proceed?', false) then begin
+                        Validate("BLRUnit ID", '');
                         exit;
                     end;
                 LeaseProposalRec.Reset();
-                LeaseProposalRec.SetRange("Property ID", "Property ID");
-                LeaseProposalRec.SetRange("Unit ID", "Unit ID");
-                LeaseProposalRec.SetFilter("Proposal ID", '<>%1', "Proposal ID"); // Exclude the current record
+                LeaseProposalRec.SetRange("BLRProperty ID", "BLRProperty ID");
+                LeaseProposalRec.SetRange("BLRUnit ID", "BLRUnit ID");
+                LeaseProposalRec.SetFilter("BLRProposal ID", '<>%1', "BLRProposal ID"); // Exclude the current record
                 if LeaseProposalRec.FindSet() then
                     repeat
-                        if LeaseProposalRec."Proposal Status" = LeaseProposalRec."Proposal Status"::Approved then
+                        if LeaseProposalRec."BLRProposal Status" = LeaseProposalRec."BLRProposal Status"::Approved then
                             Error('This property and unit combination is already used in another proposal with an approved status.');
                     until LeaseProposalRec.Next() = 0;
-                if ItemRec.Get("Unit ID") then begin
-                    "Base Unit of Measure" := ItemRec."Base Unit of Measure";
-                    "Unit Number" := ItemRec."Unit Number";
-                    "Usage Type" := ItemRec."Usage Type";
-                    "Unit Type" := ItemRec."Unit Type";
-                    "Unit Size" := ItemRec."Unit Size";
-                    "Unit Address" := CopyStr(ItemRec."Unit Address", 1, strlen(ItemRec."Unit Address"));
-                    "Unit Name" := ItemRec."Unit Name";
-                    "UnitID" := ItemRec."UnitID";
-                    "Market Rate per Sq. Ft." := ItemRec."Market Rate per Sq. Ft.";
-                    "Makani Number" := ItemRec."Makani Number";
-                    "DEWA Number" := ItemRec."DEWA Number";
-                    "Municipality Number" := ItemRec."Municipality Number";
+                if ItemRec.Get("BLRUnit ID") then begin
+                    "BLRBase Unit of Measure" := ItemRec."Base Unit of Measure";
+                    "BLRUnit Number" := ItemRec."BLRUnit Number";
+                    "BLRUsage Type" := ItemRec."BLRUsage Type";
+                    "BLRUnit Type" := ItemRec."BLRUnit Type";
+                    "BLRUnit Size" := ItemRec."BLRUnit Size";
+                    "BLRUnit Address" := CopyStr(ItemRec."BLRUnit Address", 1, strlen(ItemRec."BLRUnit Address"));
+                    "BLRUnit Name" := ItemRec."BLRUnit Name";
+                    "BLRUnitID" := ItemRec."BLRUnitID";
+                    "BLRMarket Rate per Sq. Ft." := ItemRec."BLRMarket Rate per Sq. Ft.";
+                    "BLRMakani Number" := ItemRec."BLRMakani Number";
+                    "BLRDEWA Number" := ItemRec."BLRDEWA Number";
+                    "BLRMunicipality Number" := ItemRec."BLRMunicipality Number";
                     SetRentAmountVAT();
-                    ItemRec."Unit Status" := ItemRec."Unit Status"::Selected;
+                    ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Selected;
                     ItemRec.Modify();
                 end;
             end;
         }
 
-        field(73209580; "Unit Number"; Code[50])
+        field(73209580; "BLRUnit Number"; Code[50])
         {
             DataClassification = CustomerContent;
-            TableRelation = Item."Unit Number";
+            TableRelation = Item."BLRUnit Number";
         }
-        field(73209581; "Usage Type"; Text[100])
+        field(73209581; "BLRUsage Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Usage Type';
-            TableRelation = "Item"."Usage Type";
+            TableRelation = "Item"."BLRUsage Type";
             NotBlank = true;
         }
-        field(73209582; "Unit Type"; Text[100])
+        field(73209582; "BLRUnit Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Type';
-            TableRelation = "Item"."Unit Type";
+            TableRelation = "Item"."BLRUnit Type";
         }
-        field(73209583; "Unit Size"; Decimal)
+        field(73209583; "BLRUnit Size"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Size';
-            TableRelation = "Item"."Unit Size";
+            TableRelation = "Item"."BLRUnit Size";
         }
-        field(73209584; "Facilities/Amenities"; Text[250])
+        field(73209584; "BLRFacilities/Amenities"; Text[250])
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209585; "Tenant Full Name"; Text[100])
+        field(73209585; "BLRTenant Full Name"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             TableRelation = Customer.Name;
         }
 
-        field(73209586; "Tenant ID"; Code[20])
+        field(73209586; "BLRTenant ID"; Code[20])
         {
             DataClassification = CustomerContent;
-            TableRelation = "Customer"."No." WHERE("Approve" = const(true));
+            TableRelation = "Customer"."No." WHERE("BLRApprove" = const(true));
             ValidateTableRelation = true;
             trigger OnValidate()
             var
                 TenantRec: Record "Customer";
             begin
-                TenantRec.SetRange("No.", Rec."Tenant ID");
+                TenantRec.SetRange("No.", Rec."BLRTenant ID");
                 if TenantRec.FindFirst() then begin
-                    "Tenant Full Name" := TenantRec."Name";
-                    "Tenant Contact Phone" := TenantRec."Phone No."; // Convert Integer to Text
-                    "Tenant Contact Email" := TenantRec."E-Mail";
-                    "Emirates ID" := "TenantRec"."Emirates ID";
-                    "License No." := "TenantRec"."License No.";
-                    "Licensing Authority" := TenantRec."Licensing Authority";
+                    "BLRTenant Full Name" := TenantRec."Name";
+                    "BLRTenant Contact Phone" := TenantRec."Phone No."; // Convert Integer to Text
+                    "BLRTenant Contact Email" := TenantRec."E-Mail";
+                    "BLREmirates ID" := TenantRec."BLREmirates ID";
+                    "BLRLicense No." := TenantRec."BLRLicense No.";
+                    "BLRLicensing Authority" := TenantRec."BLRLicensing Authority";
                 end else begin // Clear the fields if no record is found
-                    "Tenant Full Name" := '';
-                    "Tenant Contact Phone" := '';
-                    "Tenant Contact Email" := '';
-                    "Emirates ID" := '';
-                    "License No." := '';
-                    "Licensing Authority" := '';
+                    "BLRTenant Full Name" := '';
+                    "BLRTenant Contact Phone" := '';
+                    "BLRTenant Contact Email" := '';
+                    "BLREmirates ID" := '';
+                    "BLRLicense No." := '';
+                    "BLRLicensing Authority" := '';
                 end;
             end;
         }
-        field(73209587; "Tenant Contact Phone"; Text[30])
+        field(73209587; "BLRTenant Contact Phone"; Text[30])
         {
             DataClassification = EndUserIdentifiableInformation;
             TableRelation = Customer."Phone No.";
         }
-        field(73209588; "Tenant Contact Email"; Text[100])
+        field(73209588; "BLRTenant Contact Email"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             TableRelation = Customer."E-Mail";
 
         }
-        field(73209589; "Trade License"; Code[50])
+        field(73209589; "BLRTrade License"; Code[50])
         {
             DataClassification = CustomerContent;
         }
-        field(73209590; "Legal Representative"; Text[100])
+        field(73209590; "BLRLegal Representative"; Text[100])
         {
             DataClassification = CustomerContent;
             // trigger OnValidate()
@@ -184,7 +184,7 @@ table 73209628 "Lease Proposal Details"
         }
 
         // Lease Terms Group
-        field(73209591; "Lease Start Date"; Date)
+        field(73209591; "BLRLease Start Date"; Date)
         {
             DataClassification = CustomerContent;
             trigger OnValidate()
@@ -194,7 +194,7 @@ table 73209628 "Lease Proposal Details"
             end;
         }
 
-        field(73209592; "Lease End Date"; Date)
+        field(73209592; "BLRLease End Date"; Date)
         {
             DataClassification = CustomerContent;
             // Trasfer from Table Start  
@@ -203,33 +203,33 @@ table 73209628 "Lease Proposal Details"
             //     docAttach: Page "Revenue Item Subpage Card";
             // begin
             //     CalculateLeaseDuration();
-            //     docAttach.SetStartEndDate(Rec."Lease Start Date", Rec."Lease End Date", Rec."Unit Name", Rec."Property Name", Rec."Unit Size", Rec."Tenant Full Name");
+            //     docAttach.SetStartEndDate(Rec."BLRLease Start Date", Rec."BLRLease End Date", Rec."BLRUnit Name", Rec."BLRProperty Name", Rec."BLRUnit Size", Rec."BLRTenant Full Name");
             // end;
             // Trasfer from Table End
         }
 
 
-        field(73209593; "Lease Duration"; Text[50])
+        field(73209593; "BLRLease Duration"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Lease Duration';
         }
-        field(73209594; "Rent Amount"; Decimal)
+        field(73209594; "BLRRent Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = ' Annual Rent Amount';
 
         }
-        field(73209595; "Payment Frequency"; Option)
+        field(73209595; "BLRPayment Frequency"; Option)
         {
             OptionMembers = " ",Monthly,Quarterly,"Half-Yearly",Yearly;
             DataClassification = CustomerContent;
         }
 
-        field(73209596; "Payment Method"; Text[100])
+        field(73209596; "BLRPayment Method"; Text[100])
         {
             DataClassification = CustomerContent;
-            TableRelation = "Payment Type"."Payment Method";
+            TableRelation = "BLRPaymentType"."BLRPayment Method";
         }
         // field(50122; "Grace Period"; Integer)
         // {
@@ -238,59 +238,59 @@ table 73209628 "Lease Proposal Details"
         // }
 
         // Deposit and Fees Group
-        field(73209597; "Security Deposit Amount"; Decimal)
+        field(73209597; "BLRSecurity Deposit Amount"; Decimal)
         {
             DataClassification = CustomerContent;
 
         }
-        field(73209598; "Other Fees"; Text[100])
+        field(73209598; "BLROther Fees"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Other Fees ';
         }
-        field(73209599; "Refund Conditions"; Text[1000])
+        field(73209599; "BLRRefund Conditions"; Text[1000])
         {
             DataClassification = CustomerContent;
         }
 
         // Responsibilities Group
-        field(73209600; "Maintenance Responsibilities"; Option)
+        field(73209600; "BLRMaintResp"; Option)
         {
             OptionMembers = Tenant,Landlord;
             DataClassification = CustomerContent;
         }
-        field(73209601; "Utility Bills Responsibility"; Option)
+        field(73209601; "BLRUtilityBillsResp"; Option)
         {
             OptionMembers = Tenant,Landlord;
             DataClassification = CustomerContent;
         }
-        field(73209602; "Insurance Requirements"; Text[250])
+        field(73209602; "BLRInsurance Requirements"; Text[250])
         {
             DataClassification = CustomerContent;
         }
 
         // Conditions for Renewal Group
 
-        field(73209603; "Rent Escalation Clause"; Text[1000])
+        field(73209603; "BLRRent Escalation Clause"; Text[1000])
         {
             DataClassification = CustomerContent;
         }
 
         // Special Conditions Group
-        field(73209604; "Early Termination Conditions"; Text[250])
+        field(73209604; "BLREarlyTermCond"; Text[250])
         {
             DataClassification = CustomerContent;
         }
-        field(73209605; "Restrictions"; Text[250])
+        field(73209605; "BLRRestrictions"; Text[250])
         {
             DataClassification = CustomerContent;
         }
-        field(73209606; "Legal Jurisdiction"; Text[50])
+        field(73209606; "BLRLegal Jurisdiction"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Legal Jurisdiction (e.g., Dubai Courts)';
         }
-        field(73209607; "Proposal Status"; Option)
+        field(73209607; "BLRProposal Status"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Proposal Status';
@@ -299,25 +299,25 @@ table 73209628 "Lease Proposal Details"
             trigger OnValidate()
             var
                 ItemRec: Record Item;
-                MergeUnitRec: Record "Merged Units";
-                MergeUnitLeaseGrid: Record "Sub Lease Merged Units";
+                MergeUnitRec: Record "BLRMergedUnits";
+                MergeUnitLeaseGrid: Record "BLRSubLeaseMergedUnits";
                 emailrec: Codeunit "Send Proposal Email";
             begin
-                if "Unit ID" <> '' then begin
-                    if ItemRec.Get("Unit ID") then
-                        case "Proposal Status" of
-                            "Proposal Status"::ProposalSharedtoTenant:
+                if "BLRUnit ID" <> '' then begin
+                    if ItemRec.Get("BLRUnit ID") then
+                        case "BLRProposal Status" of
+                            "BLRProposal Status"::ProposalSharedtoTenant:
+
+                                emailrec.SendEmail(Rec); // Call your email codeunit
+
+                            "BLRProposal Status"::Approved:
                                 begin
-                                    emailrec.SendEmail(Rec); // Call your email codeunit
-                                end;
-                            "Proposal Status"::Approved:
-                                begin
-                                    ItemRec."Unit Status" := ItemRec."Unit Status"::Selected;
+                                    ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Selected;
                                     ItemRec.Modify();
                                 end;
-                            "Proposal Status"::Declined:
+                            "BLRProposal Status"::Declined:
                                 begin
-                                    ItemRec."Unit Status" := ItemRec."Unit Status"::Free;
+                                    ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Free;
                                     ItemRec.Modify();
                                 end;
                         end;
@@ -325,36 +325,36 @@ table 73209628 "Lease Proposal Details"
                     Message('Unit ID not found in Item Record');
 
 
-                // Handle logic for Merge Unit ID
-                if "Merge Unit ID" <> '' then
-                    if MergeUnitRec.Get("Merge Unit ID") then
-                        case "Proposal Status" of
-                            "Proposal Status"::ProposalSharedtoTenant:
+                // Handle logic for "BLRMerge Unit ID"
+                if "BLRMerge Unit ID" <> '' then
+                    if MergeUnitRec.Get("BLRMerge Unit ID") then
+                        case "BLRProposal Status" of
+                            "BLRProposal Status"::ProposalSharedtoTenant:
                                 begin
                                     Message('Sending Email for Merge Unit Approval');
                                     emailrec.SendEmail(Rec); // Call your email codeunit
                                 end;
-                            "Proposal Status"::Approved:
+                            "BLRProposal Status"::Approved:
                                 begin
-                                    MergeUnitRec."Status" := MergeUnitRec."Status"::Selected;
+                                    MergeUnitRec."BLRStatus" := MergeUnitRec."BLRStatus"::Selected;
                                     MergeUnitRec.Modify();
 
                                     ItemRec.Reset();
-                                    ItemRec.SetRange("Merged Unit ID", MergeUnitRec."Merged Unit ID");
+                                    ItemRec.SetRange("BLRMerged Unit ID", MergeUnitRec."BLRMerged Unit ID");
                                     if ItemRec.FindSet() then
                                         repeat
-                                            ItemRec."Unit Status" := ItemRec."Unit Status"::Selected;
+                                            ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Selected;
                                             ItemRec.Modify();
                                         until ItemRec.Next() = 0;
                                 end;
-                            "Proposal Status"::Declined:
+                            "BLRProposal Status"::Declined:
                                 begin
                                     // Set Merge Unit Status to Free
-                                    MergeUnitRec."Status" := MergeUnitRec."Status"::Free;
+                                    MergeUnitRec."BLRStatus" := MergeUnitRec."BLRStatus"::Free;
                                     MergeUnitRec.Modify();
 
                                     // Delete associated records from Sub Lease Merged Units table
-                                    MergeUnitLeaseGrid."Merge Unit ID" := FORMAT(MergeUnitRec."Merged Unit ID");
+                                    MergeUnitLeaseGrid."BLRMerge Unit ID" := FORMAT(MergeUnitRec."BLRMerged Unit ID");
 
                                     if MergeUnitLeaseGrid.FindSet() then
                                         repeat
@@ -363,178 +363,178 @@ table 73209628 "Lease Proposal Details"
 
                                     // Update all associated Unit IDs in the Item table
                                     ItemRec.Reset();
-                                    ItemRec.SetRange("Merged Unit ID", MergeUnitRec."Merged Unit ID");
+                                    ItemRec.SetRange("BLRMerged Unit ID", MergeUnitRec."BLRMerged Unit ID");
                                     if ItemRec.FindSet() then
                                         repeat
-                                            ItemRec."Unit Status" := ItemRec."Unit Status"::Free;
+                                            ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Free;
                                             // Set Unit Status to Free
                                             ItemRec.Modify();
                                         until ItemRec.Next() = 0;
                                 end;
                         end
                     else
-                        Message('Merge Unit ID not found in Merge Unit Record');
+                        Message('Merge "BLRUnit ID" not found in Merge Unit Record');
             end;
         }
-        field(73209608; "Emirates ID"; Code[25])
+        field(73209608; "BLREmirates ID"; Code[25])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Emirates ID';
         }
 
-        field(73209609; "Unit Name"; Code[100])
+        field(73209609; "BLRUnit Name"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Name';
 
         }
 
-        field(73209610; "UnitID"; code[100])
+        field(73209610; "BLRUnitID"; code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'UnitID';
 
         }
 
-        field(73209611; "Base Unit of Measure"; Code[10])
+        field(73209611; "BLRBase Unit of Measure"; Code[10])
         {
             DataClassification = CustomerContent;
             Caption = 'Base Unit of Measure';
         }
 
-        field(73209612; "Merge Unit ID"; Code[10])
+        field(73209612; "BLRMerge Unit ID"; Code[10])
         {
             DataClassification = CustomerContent;
             Caption = 'Merge Unit ID';
-            TableRelation = "Merged Units"."Merged Unit ID"
-    where("Property ID" = field("Property ID"), "Status" = const(Free)); // Filter only "Free" status records
+            TableRelation = "BLRMergedUnits"."BLRMerged Unit ID"
+    where("BLRProperty ID" = field("BLRProperty ID"), "BLRStatus" = const(Free)); // Filter only "Free" status records
 
             trigger OnValidate()
             var
-                MergedUnitRec: Record "Merged Units";
-                MergeUnitGrid: Record "Sub Merged Units";
-                MergeUnitLeaseGrid: Record "Sub Lease Merged Units";
+                MergedUnitRec: Record "BLRMergedUnits";
+                MergeUnitGrid: Record "BLRSubMergedUnits";
+                MergeUnitLeaseGrid: Record "BLRSubLeaseMergedUnits";
                 ItemRec: Record Item;
                 SelectedUnits: Text[1024];
                 mergeUnitId: Integer;
             begin
-                if "Unit ID" <> '' then
-                    Error('You can only select either Merge Unit ID or Unit ID, not both.');
-                if "Merge Unit ID" <> '' then begin
-                    if not Confirm('Once you select this Merge Unit ID, the status of the associated units will change from "Free" to "Selected". Do you wish to proceed?', false) then begin
-                        Validate("Merge Unit ID", '');
+                if "BLRUnit ID" <> '' then
+                    Error('You can only select either "BLRMerge Unit ID" or "BLRUnit ID", not both.');
+                if "BLRMerge Unit ID" <> '' then begin
+                    if not Confirm('Once you select this "BLRMerge Unit ID", the status of the associated units will change from "Free" to "Selected". Do you wish to proceed?', false) then begin
+                        Validate("BLRMerge Unit ID", '');
                         exit;
                     end;
-                    if MergedUnitRec.Get("Merge Unit ID") then begin
-                        "Property Name" := MergedUnitRec."Property Name";
-                        "Unit Name" := MergedUnitRec."Merged Unit Name";
-                        "Base Unit of Measure" := MergedUnitRec."Base Unit of Measure";
-                        "Usage Type" := MergedUnitRec."Property Type";
-                        "Unit Size" := MergedUnitRec."Unit Size";
-                        "Market Rate per Sq. Ft." := MergedUnitRec."Market Rate per Square";
-                        "Single Unit Name" := MergedUnitRec."Single Unit Name";
-                        "Unit Number" := MergedUnitRec."Unit Number";
-                        "Makani Number" := MergedUnitRec."Makani Number";
-                        "DEWA Number" := MergedUnitRec."DEWA Number";
-                        "Municipality Number" := MergedUnitRec."Municipality Number";
+                    if MergedUnitRec.Get("BLRMerge Unit ID") then begin
+                        "BLRProperty Name" := MergedUnitRec."BLRProperty Name";
+                        "BLRUnit Name" := MergedUnitRec."BLRMerged Unit Name";
+                        "BLRBase Unit of Measure" := MergedUnitRec."BLRBase Unit of Measure";
+                        "BLRUsage Type" := MergedUnitRec."BLRProperty Type";
+                        "BLRUnit Size" := MergedUnitRec."BLRUnit Size";
+                        "BLRMarket Rate per Sq. Ft." := MergedUnitRec."BLRMarket Rate per Square";
+                        "BLRSingle Unit Name" := MergedUnitRec."BLRSingle Unit Name";
+                        "BLRUnit Number" := MergedUnitRec."BLRUnit Number";
+                        "BLRMakani Number" := MergedUnitRec."BLRMakani Number";
+                        "BLRDEWA Number" := MergedUnitRec."BLRDEWA Number";
+                        "BLRMunicipality Number" := MergedUnitRec."BLRMunicipality Number";
                         SetRentAmountVAT();
 
-                        if MergedUnitRec."Status" = MergedUnitRec."Status"::Free then begin
-                            MergedUnitRec."Status" := MergedUnitRec."Status"::Selected; // Set to Selected status
+                        if MergedUnitRec."BLRStatus" = MergedUnitRec."BLRStatus"::Free then begin
+                            MergedUnitRec."BLRStatus" := MergedUnitRec."BLRStatus"::Selected; // Set to Selected status
                             MergedUnitRec.Modify();
                         end;
-                        SelectedUnits := MergedUnitRec."Unit ID";
+                        SelectedUnits := MergedUnitRec."BLRUnit ID";
                         ItemRec.SetFilter("No.", SelectedUnits);
                         if ItemRec.FindSet() then
                             repeat
-                                ItemRec."Unit Status" := ItemRec."Unit Status"::Selected;
+                                ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Selected;
 
                                 ItemRec.Modify();
                             until ItemRec.Next() = 0;
                     end else begin
                         // Clear fields if no record is found
-                        "Property Name" := '';
-                        "Unit Name" := '';
-                        "Base Unit of Measure" := '';
-                        "Unit Size" := 0;
-                        "Rent Amount" := 0;
+                        "BLRProperty Name" := '';
+                        "BLRUnit Name" := '';
+                        "BLRBase Unit of Measure" := '';
+                        "BLRUnit Size" := 0;
+                        "BLRRent Amount" := 0;
                     end;
                 end else begin
-                    "Property Name" := '';
-                    "Unit Name" := '';
-                    "Base Unit of Measure" := '';
-                    "Unit Size" := 0;
-                    "Rent Amount" := 0;
+                    "BLRProperty Name" := '';
+                    "BLRUnit Name" := '';
+                    "BLRBase Unit of Measure" := '';
+                    "BLRUnit Size" := 0;
+                    "BLRRent Amount" := 0;
                 end;
-                Evaluate(mergeUnitId, Rec."Merge Unit ID");
-                MergeUnitLeaseGrid.SetRange("Merge Unit ID", FORMAT(mergeUnitId));
+                Evaluate(mergeUnitId, Rec."BLRMerge Unit ID");
+                MergeUnitLeaseGrid.SetRange("BLRMerge Unit ID", FORMAT(mergeUnitId));
                 if MergeUnitLeaseGrid.FindSet() then
                     repeat
                         MergeUnitLeaseGrid.Delete();
                     until MergeUnitLeaseGrid.Next() = 0;
-                MergeUnitGrid.SetRange("Merged Unit ID", mergeUnitId);
+                MergeUnitGrid.SetRange("BLRMerged Unit ID", mergeUnitId);
                 if MergeUnitGrid.FindSet() then
                     repeat
                         MergeUnitLeaseGrid.Init();
-                        MergeUnitLeaseGrid."Merge Unit ID" := FORMAT(MergeUnitGrid."Merged Unit ID");
-                        MergeUnitLeaseGrid."Proposal ID" := Rec."Proposal ID";
-                        MergeUnitLeaseGrid."Single Unit Name" := MergeUnitGrid."Single Unit Name";
-                        MergeUnitLeaseGrid."Unit ID" := MergeUnitGrid."Unit ID";
-                        MergeUnitLeaseGrid."Base Unit of Measure" := MergeUnitGrid."Base Unit of Measure";
-                        MergeUnitLeaseGrid."Unit Size" := MergeUnitGrid."Unit Size";
-                        MergeUnitLeaseGrid."Unit Name" := MergeUnitGrid."Unit Name";
-                        MergeUnitLeaseGrid."Market Rate per Square" := MergeUnitGrid."Market Rate per Square";
-                        MergeUnitLeaseGrid.Amount := MergeUnitGrid.Amount;
+                        MergeUnitLeaseGrid."BLRMerge Unit ID" := FORMAT(MergeUnitGrid."BLRMerged Unit ID");
+                        MergeUnitLeaseGrid."BLRProposal ID" := Rec."BLRProposal ID";
+                        MergeUnitLeaseGrid."BLRSingle Unit Name" := MergeUnitGrid."BLRSingle Unit Name";
+                        MergeUnitLeaseGrid."BLRUnit ID" := MergeUnitGrid."BLRUnit ID";
+                        MergeUnitLeaseGrid."BLRBase Unit of Measure" := MergeUnitGrid."BLRBase Unit of Measure";
+                        MergeUnitLeaseGrid."BLRUnit Size" := MergeUnitGrid."BLRUnit Size";
+                        MergeUnitLeaseGrid."BLRUnit Name" := MergeUnitGrid."BLRUnit Name";
+                        MergeUnitLeaseGrid."BLRMarket Rate per Square" := MergeUnitGrid."BLRMarket Rate per Square";
+                        MergeUnitLeaseGrid."BLRAmount" := MergeUnitGrid."BLRAmount";
                         MergeUnitLeaseGrid.Insert();
                     until MergeUnitGrid.Next() = 0;
             end;
         }
-        field(73209613; "Annual Rent Amount"; Decimal)
+        field(73209613; "BLRAnnual Rent Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Amount ';
             Editable = false;
         }
 
-        field(73209614; "Praposal Type Selected"; Option)
+        field(73209614; "BLRPraposal Type Selected"; Option)
         {
             OptionMembers = " ","Single Unit","Merge Unit";
             DataClassification = CustomerContent;
 
         }
 
-        field(73209615; "Chiller Deposit Amount"; Decimal)
+        field(73209615; "BLRChiller Deposit Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Chiller Deposit Amount';
         }
 
 
-        field(73209616; "Electricity Deposit Amount"; Decimal)
+        field(73209616; "BLRElectricity Deposit Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Electricity Deposit Amount';
         }
 
-        field(73209617; "Renewal Amount"; Decimal)
+        field(73209617; "BLRRenewal Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Renewal Amount';
         }
 
-        field(73209618; "Rera Fees"; Decimal)
+        field(73209618; "BLRRera Fees"; Decimal)
         {
             DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Rera Fees';
         }
 
-        field(73209619; "Ejari Processing Fees"; Decimal)
+        field(73209619; "BLREjari Processing Fees"; Decimal)
         {
             DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Ejari Processing Fees';
         }
 
-        field(73209620; "Renewal Amount VAT %"; Option)
+        field(73209620; "BLRRenewal Amount VAT %"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = "0%","5%";
@@ -542,18 +542,18 @@ table 73209628 "Lease Proposal Details"
             Editable = false;
         }
 
-        field(73209621; "Renewal Amount Including VAT"; Decimal)
+        field(73209621; "BLRRenewalAmtInclVAT"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Renewal Amount Including VAT';
 
             trigger OnValidate()
             begin
-                "Renewal Amount Including VAT" := "Renewal Amount" + "Renewal VAT Amount";
+                "BLRRenewalAmtInclVAT" := "BLRRenewal Amount" + "BLRRenewal VAT Amount";
             end;
         }
 
-        field(73209622; "Rent Amount VAT %"; Option)
+        field(73209622; "BLRRent Amount VAT %"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = "0%","5%";
@@ -561,14 +561,14 @@ table 73209628 "Lease Proposal Details"
             Editable = false;
         }
 
-        field(73209623; "Rent Amount Including VAT"; Decimal)
+        field(73209623; "BLRRent Amount Including VAT"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Amount Including VAT';
             Editable = false;
         }
 
-        field(73209624; "Ejari Fees VAT %"; Option)
+        field(73209624; "BLREjari Fees VAT %"; Option)
         {
             DataClassification = OrganizationIdentifiableInformation;
             OptionMembers = "0%","5%";
@@ -576,88 +576,88 @@ table 73209628 "Lease Proposal Details"
             Editable = false;
         }
 
-        field(73209625; "Ejari Fees Including VAT"; Decimal)
+        field(73209625; "BLREjari Fees Including VAT"; Decimal)
         {
             DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Ejari Fees Including VAT';
             trigger OnValidate()
             begin
-                "Ejari Fees Including VAT" := "Ejari Processing Fees" + "Ejari VAT Amount";
+                "BLREjari Fees Including VAT" := "BLREjari Processing Fees" + "BLREjari VAT Amount";
             end;
         }
-        field(73209626; "Ejari VAT Amount"; Decimal)
+        field(73209626; "BLREjari VAT Amount"; Decimal)
         {
             DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Ejari VAT Amount';
             trigger OnValidate()
             begin
-                "Ejari VAT Amount" := "Ejari Processing Fees" * ("Ejari Fees VAT %" / 100);
+                "BLREjari VAT Amount" := "BLREjari Processing Fees" * ("BLREjari Fees VAT %" / 100);
             end;
         }
 
-        field(73209627; "Rent VAT Amount"; Decimal)
+        field(73209627; "BLRRent VAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract VAT Amount';
             Editable = false;
         }
 
-        field(73209628; "Renewal VAT Amount"; Decimal)
+        field(73209628; "BLRRenewal VAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Renewal VAT Amount';
 
             trigger OnValidate()
             begin
-                "Renewal VAT Amount" := "Renewal Amount" * ("Renewal Amount VAT %" / 100);
+                "BLRRenewal VAT Amount" := "BLRRenewal Amount" * ("BLRRenewal Amount VAT %" / 100);
             end;
         }
-        field(73209629; "License No."; Code[20])
+        field(73209629; "BLRLicense No."; Code[20])
         {
             Caption = 'License No.';
             DataClassification = OrganizationIdentifiableInformation;
         }
 
-        field(73209630; "Licensing Authority"; Text[100])
+        field(73209630; "BLRLicensing Authority"; Text[100])
         {
             Caption = 'Licensing Authority';
             DataClassification = OrganizationIdentifiableInformation;
         }
 
-        field(73209631; "Makani Number"; Text[100])
+        field(73209631; "BLRMakani Number"; Text[100])
         {
             Caption = 'Makani Number';
             DataClassification = EndUserIdentifiableInformation;
 
         }
-        field(73209632; "Emirate"; Code[50])
+        field(73209632; "BLREmirate"; Code[50])
         {
             Caption = 'Emirate';
             DataClassification = CustomerContent;
 
         }
-        field(73209633; "Community"; Text[100])
+        field(73209633; "BLRCommunity"; Text[100])
         {
             Caption = 'Community';
             DataClassification = CustomerContent;
         }
-        field(73209634; "DEWA Number"; Text[100])
+        field(73209634; "BLRDEWA Number"; Text[100])
         {
             Caption = 'DEWA Number';
             DataClassification = CustomerContent;
         }
-        field(73209635; "Property Size"; Code[30])
+        field(73209635; "BLRProperty Size"; Code[30])
         {
             DataClassification = CustomerContent;
             Caption = 'Property Size';
         }
-        field(73209636; "No of Installments"; Integer)
+        field(73209636; "BLRNo of Installments"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'No of Installments';
             Editable = false;
         }
-        field(73209637; "Single Rent Calculation"; Option)
+        field(73209637; "BLRSingle Rent Calculation"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Single Unit Rent Calculation Type';
@@ -666,9 +666,9 @@ table 73209628 "Lease Proposal Details"
             trigger OnValidate()
 
             var
-                LeaseProposal: Record "Lease Proposal Details";
-                SingleSameSquare: Record "Single Unit Rent SubPage";
-                SingleLumSquare: Record "Single Lum_AnnualAmnt SubPage";
+                LeaseProposal: Record "BLRLeaseProposalDetails";
+                SingleSameSquare: Record "BLRSingleUnitRentSubPage";
+                SingleLumSquare: Record "BLRSingleLumAnnualAmntSubPage";
                 PeriodStartDate: Date;
                 PeriodEndDate: Date;
                 LeaseEndDate: Date;
@@ -679,22 +679,22 @@ table 73209628 "Lease Proposal Details"
                 YearCounter: Integer;
                 LineNoCounter: Integer;
             begin
-                if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with square feet rate" then begin
-                    SingleSameSquare.SetRange("Proposal ID", Rec."Proposal ID");
+                if "BLRSingle Rent Calculation" = "BLRSingle Rent Calculation"::"Single Unit with square feet rate" then begin
+                    SingleSameSquare.SetRange("BLRProposal ID", Rec."BLRProposal ID");
                     if SingleSameSquare.FindSet() then
                         repeat
                             SingleSameSquare.Delete();
                         until SingleSameSquare.Next() = 0;
-                    PeriodStartDate := Rec."Lease Start Date";
-                    LeaseEndDate := Rec."Lease End Date";
+                    PeriodStartDate := Rec."BLRLease Start Date";
+                    LeaseEndDate := Rec."BLRLease End Date";
                     YearCounter := 1;
                     LineNoCounter := 1;
                     while PeriodStartDate <= LeaseEndDate do begin
                         SingleSameSquare.Init();
-                        SingleSameSquare."Proposal ID" := Rec."Proposal ID";
-                        SingleSameSquare."Line No." := LineNoCounter;
-                        SingleSameSquare.Year := YearCounter;
-                        SingleSameSquare."Start Date" := PeriodStartDate;
+                        SingleSameSquare."BLRProposal ID" := Rec."BLRProposal ID";
+                        SingleSameSquare."BLRLine No." := LineNoCounter;
+                        SingleSameSquare."BLRYear" := YearCounter;
+                        SingleSameSquare."BLRStart Date" := PeriodStartDate;
                         DaysToAdd := 365;
                         LeapDays := 0;
                         for CurrentYear := Date2DMY(PeriodStartDate, 3) to Date2DMY(PeriodStartDate + 364, 3) do
@@ -706,15 +706,15 @@ table 73209628 "Lease Proposal Details"
                         PeriodEndDate := PeriodStartDate + DaysToAdd - 1;
                         if PeriodEndDate > LeaseEndDate then
                             PeriodEndDate := LeaseEndDate;
-                        SingleSameSquare."End Date" := PeriodEndDate;
+                        SingleSameSquare."BLREnd Date" := PeriodEndDate;
                         TotalDays := PeriodEndDate - PeriodStartDate + 1;
-                        SingleSameSquare."Number of Days" := TotalDays;
-                        SingleSameSquare."Unit ID" := Rec."Unit Name";
-                        SingleSameSquare."Unit Sq Ft" := Rec."Unit Size";
-                        SingleSameSquare."Rate per Sq.Ft" := 0;
-                        SingleSameSquare."Annual Amount" := 0;
-                        SingleSameSquare."Final Annual Amount" := SingleSameSquare."Annual Amount";
-                        SingleSameSquare."Per Day Rent" := 0;
+                        SingleSameSquare."BLRNumber of Days" := TotalDays;
+                        SingleSameSquare."BLRUnit ID" := Rec."BLRUnit Name";
+                        SingleSameSquare."BLRUnit Sq Ft" := Rec."BLRUnit Size";
+                        SingleSameSquare."BLRRate per Sq.Ft" := 0;
+                        SingleSameSquare."BLRAnnual Amount" := 0;
+                        SingleSameSquare."BLRFinal Annual Amount" := SingleSameSquare."BLRAnnual Amount";
+                        SingleSameSquare."BLRPer Day Rent" := 0;
                         SingleSameSquare.Insert();
                         PeriodStartDate := PeriodEndDate + 1;
                         YearCounter += 1;
@@ -722,27 +722,27 @@ table 73209628 "Lease Proposal Details"
                     end;
                 end
                 else
-                    if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
-                        if Rec."Proposal ID" = 0 then
+                    if "BLRSingle Rent Calculation" = "BLRSingle Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
+                        if Rec."BLRProposal ID" = 0 then
                             Error('Proposal ID is missing or not assigned.');
                         LeaseProposal.Reset();
-                        LeaseProposal.SetRange("Proposal ID", Rec."Proposal ID");
+                        LeaseProposal.SetRange("BLRProposal ID", Rec."BLRProposal ID");
                         if not LeaseProposal.FindFirst() then
-                            Error('No record found for Proposal ID %1.', Rec."Proposal ID");
-                        SingleLumSquare.SetRange("Proposal ID", LeaseProposal."Proposal ID");
+                            Error('No record found for "BLRProposal ID" %1.', Rec."BLRProposal ID");
+                        SingleLumSquare.SetRange("BLRProposal ID", LeaseProposal."BLRProposal ID");
                         if SingleLumSquare.FindSet() then
                             repeat
                                 SingleLumSquare.Delete();
                             until SingleLumSquare.Next() = 0;
-                        PeriodStartDate := LeaseProposal."Lease Start Date";
+                        PeriodStartDate := LeaseProposal."BLRLease Start Date";
                         YearCounter := 1;
                         LineNoCounter := 1;
-                        while PeriodStartDate <= LeaseProposal."Lease End Date" do begin
+                        while PeriodStartDate <= LeaseProposal."BLRLease End Date" do begin
                             SingleLumSquare.Init();
-                            SingleLumSquare."Proposal ID" := LeaseProposal."Proposal ID";
-                            SingleLumSquare."SL_Line No." := LineNoCounter;
-                            SingleLumSquare.SL_Year := YearCounter;
-                            SingleLumSquare."SL_Start Date" := PeriodStartDate;
+                            SingleLumSquare."BLRProposal ID" := LeaseProposal."BLRProposal ID";
+                            SingleLumSquare."BLRSL_Line No." := LineNoCounter;
+                            SingleLumSquare."BLRSL_Year" := YearCounter;
+                            SingleLumSquare."BLRSL_Start Date" := PeriodStartDate;
                             DaysToAdd := 365;
                             LeapDays := 0;
                             for CurrentYear := Date2DMY(PeriodStartDate, 3) to Date2DMY(PeriodStartDate + 364, 3) do
@@ -752,21 +752,21 @@ table 73209628 "Lease Proposal Details"
                                         LeapDays += 1;
                             DaysToAdd := DaysToAdd + LeapDays;
                             PeriodEndDate := PeriodStartDate + DaysToAdd - 1;
-                            if PeriodEndDate > LeaseProposal."Lease End Date" then
-                                PeriodEndDate := LeaseProposal."Lease End Date";
-                            SingleLumSquare."SL_End Date" := PeriodEndDate;
+                            if PeriodEndDate > LeaseProposal."BLRLease End Date" then
+                                PeriodEndDate := LeaseProposal."BLRLease End Date";
+                            SingleLumSquare."BLRSL_End Date" := PeriodEndDate;
                             TotalDays := PeriodEndDate - PeriodStartDate + 1;
-                            SingleLumSquare."SL_Number of Days" := TotalDays;
-                            SingleLumSquare."SL_Unit ID" := LeaseProposal."Unit Name";
-                            SingleLumSquare."SL_Unit Sq Ft" := LeaseProposal."Unit Size";
+                            SingleLumSquare."BLRSL_Number of Days" := TotalDays;
+                            SingleLumSquare."BLRSL_Unit ID" := LeaseProposal."BLRUnit Name";
+                            SingleLumSquare."BLRSL_Unit Sq Ft" := LeaseProposal."BLRUnit Size";
                             if YearCounter = 1 then begin
-                                SingleLumSquare."SL_Annual Amount" := 0; // User will enter manually
-                                SingleLumSquare."SL_Final Annual Amount" := 0;
+                                SingleLumSquare."BLRSL_Annual Amount" := 0; // User will enter manually
+                                SingleLumSquare."BLRSL_Final Annual Amount" := 0;
                             end;
                             if TotalDays > 0 then
-                                SingleLumSquare."SL_Per Day Rent" := SingleLumSquare."SL_Final Annual Amount" / TotalDays
+                                SingleLumSquare."BLRSL_Per Day Rent" := SingleLumSquare."BLRSL_Final Annual Amount" / TotalDays
                             else
-                                SingleLumSquare."SL_Per Day Rent" := 0;
+                                SingleLumSquare."BLRSL_Per Day Rent" := 0;
                             SingleLumSquare.Insert();
                             PeriodStartDate := PeriodEndDate + 1;
                             YearCounter += 1;
@@ -775,18 +775,18 @@ table 73209628 "Lease Proposal Details"
                     end;
             end;
         }
-        field(73209638; "Merge Rent Calculation"; Option)
+        field(73209638; "BLRMerge Rent Calculation"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Merge Unit Rent Calculation Type';
             OptionMembers = " ","Merged Unit with same square feet","Merged Unit with differential square feet rate","Merged Unit with lumpsum annual amount";
             trigger OnValidate()
             var
-                LeaseProposal: Record "Lease Proposal Details"; // Replace with actual table name
-                MergeSameSquare: Record "Merge SameSqure SubPage"; // Target table
-                MergeDiffSquare: Record "Merge DifferentSqure SubPage"; // Target table
-                MergeLumSquare: Record "Merge Lum_AnnualAmount SubPage";
-                SubLeaseMergeRec: Record "Sub Lease Merged Units";
+                LeaseProposal: Record "BLRLeaseProposalDetails"; // Replace with actual table name
+                MergeSameSquare: Record "BLRMergeSameSqureSubPage"; // Target table
+                MergeDiffSquare: Record "BLRMergeDifferentSqureSubPage"; // Target table
+                MergeLumSquare: Record "BLRMergeLumAnnualAmountSubPage";
+                SubLeaseMergeRec: Record "BLRSubLeaseMergedUnits";
                 PeriodStartDate: Date;
                 PeriodEndDate: Date;
                 LeaseEndDate: Date;
@@ -798,24 +798,24 @@ table 73209628 "Lease Proposal Details"
                 LineNoCounter: Integer;
             begin
                 case
-                    "Merge Rent Calculation" of
-                    "Merge Rent Calculation"::"Merged Unit with same square feet":
+                    "BLRMerge Rent Calculation" of
+                    "BLRMerge Rent Calculation"::"Merged Unit with same square feet":
                         begin
-                            MergeSameSquare.SetRange("Proposal ID", Rec."Proposal ID");
+                            MergeSameSquare.SetRange("BLRProposal ID", Rec."BLRProposal ID");
                             if MergeSameSquare.FindSet() then
                                 repeat
                                     MergeSameSquare.Delete();
                                 until MergeSameSquare.Next() = 0;
-                            PeriodStartDate := Rec."Lease Start Date";
-                            LeaseEndDate := Rec."Lease End Date";
+                            PeriodStartDate := Rec."BLRLease Start Date";
+                            LeaseEndDate := Rec."BLRLease End Date";
                             YearCounter := 1;
                             LineNoCounter := 1;
                             while PeriodStartDate <= LeaseEndDate do begin
                                 MergeSameSquare.Init();
-                                MergeSameSquare."Proposal ID" := Rec."Proposal ID";
-                                MergeSameSquare."MS_Line No." := LineNoCounter;
-                                MergeSameSquare.MS_Year := YearCounter;
-                                MergeSameSquare."MS_Start Date" := PeriodStartDate;
+                                MergeSameSquare."BLRProposal ID" := Rec."BLRProposal ID";
+                                MergeSameSquare."BLRMS_Line No." := LineNoCounter;
+                                MergeSameSquare."BLRMS_Year" := YearCounter;
+                                MergeSameSquare."BLRMS_Start Date" := PeriodStartDate;
                                 DaysToAdd := 365; // Default to 365 days
                                 LeapDays := 0;
                                 for CurrentYear := Date2DMY(PeriodStartDate, 3) to Date2DMY(PeriodStartDate + 364, 3) do
@@ -827,43 +827,43 @@ table 73209628 "Lease Proposal Details"
                                 PeriodEndDate := PeriodStartDate + DaysToAdd - 1;
                                 if PeriodEndDate > LeaseEndDate then
                                     PeriodEndDate := LeaseEndDate;
-                                MergeSameSquare."MS_End Date" := PeriodEndDate;
+                                MergeSameSquare."BLRMS_End Date" := PeriodEndDate;
                                 TotalDays := PeriodEndDate - PeriodStartDate + 1;
-                                MergeSameSquare."MS_Number of Days" := TotalDays;
-                                MergeSameSquare."MS_Merged Unit ID" := Rec."Unit Name";
-                                MergeSameSquare."MS_Unit Sq Ft" := Rec."Unit Size";
-                                MergeSameSquare."MS_Rate per Sq.Ft" := 0; // Initialize as 0; users will manually enter this
-                                MergeSameSquare."MS_Annual Amount" := 0; // Calculated after manual input
-                                MergeSameSquare."MS_Final Annual Amount" := MergeSameSquare."MS_Annual Amount";
-                                MergeSameSquare."MS_Per Day Rent" := 0; // Will be calculated after manual input
+                                MergeSameSquare."BLRMS_Number of Days" := TotalDays;
+                                MergeSameSquare."BLRMS_Merged Unit ID" := Rec."BLRUnit Name";
+                                MergeSameSquare."BLRMS_Unit Sq Ft" := Rec."BLRUnit Size";
+                                MergeSameSquare."BLRMS_Rate per Sq.Ft" := 0; // Initialize as 0; users will manually enter this
+                                MergeSameSquare."BLRMS_Annual Amount" := 0; // Calculated after manual input
+                                MergeSameSquare."BLRMS_Final Annual Amount" := MergeSameSquare."BLRMS_Annual Amount";
+                                MergeSameSquare."BLRMS_Per Day Rent" := 0; // Will be calculated after manual input
                                 MergeSameSquare.Insert();
                                 PeriodStartDate := PeriodEndDate + 1;
                                 YearCounter += 1;
                                 LineNoCounter += 1;
                             end;
                         end;
-                    "Merge Rent Calculation"::"Merged Unit with lumpsum annual amount":
+                    "BLRMerge Rent Calculation"::"Merged Unit with lumpsum annual amount":
                         begin
-                            if Rec."Proposal ID" = 0 then
+                            if Rec."BLRProposal ID" = 0 then
                                 Error('Proposal ID is missing or not assigned.');
                             LeaseProposal.Reset();
-                            LeaseProposal.SetRange("Proposal ID", Rec."Proposal ID");
+                            LeaseProposal.SetRange("BLRProposal ID", Rec."BLRProposal ID");
                             if not LeaseProposal.FindFirst() then
-                                Error('No record found for Proposal ID %1.', Rec."Proposal ID");
-                            MergeLumSquare.SetRange("Proposal ID", LeaseProposal."Proposal ID");
+                                Error('No record found for "BLRProposal ID" %1.', Rec."BLRProposal ID");
+                            MergeLumSquare.SetRange("BLRProposal ID", LeaseProposal."BLRProposal ID");
                             if MergeLumSquare.FindSet() then
                                 repeat
                                     MergeLumSquare.Delete();
                                 until MergeLumSquare.Next() = 0;
-                            PeriodStartDate := LeaseProposal."Lease Start Date";
+                            PeriodStartDate := LeaseProposal."BLRLease Start Date";
                             YearCounter := 1;
                             LineNoCounter := 1;
-                            while PeriodStartDate <= LeaseProposal."Lease End Date" do begin
+                            while PeriodStartDate <= LeaseProposal."BLRLease End Date" do begin
                                 MergeLumSquare.Init();
-                                MergeLumSquare."Proposal ID" := LeaseProposal."Proposal ID";
-                                MergeLumSquare."ML_Line No." := LineNoCounter;
-                                MergeLumSquare.ML_Year := YearCounter;
-                                MergeLumSquare."ML_Start Date" := PeriodStartDate;
+                                MergeLumSquare."BLRProposal ID" := LeaseProposal."BLRProposal ID";
+                                MergeLumSquare."BLRML_Line No." := LineNoCounter;
+                                MergeLumSquare."BLRML_Year" := YearCounter;
+                                MergeLumSquare."BLRML_Start Date" := PeriodStartDate;
                                 DaysToAdd := 365; // Default to 365 days
                                 LeapDays := 0;
 
@@ -875,50 +875,50 @@ table 73209628 "Lease Proposal Details"
 
                                 DaysToAdd := DaysToAdd + LeapDays;
                                 PeriodEndDate := PeriodStartDate + DaysToAdd - 1;
-                                if PeriodEndDate > LeaseProposal."Lease End Date" then
-                                    PeriodEndDate := LeaseProposal."Lease End Date";
-                                MergeLumSquare."ML_End Date" := PeriodEndDate;
+                                if PeriodEndDate > LeaseProposal."BLRLease End Date" then
+                                    PeriodEndDate := LeaseProposal."BLRLease End Date";
+                                MergeLumSquare."BLRML_End Date" := PeriodEndDate;
                                 TotalDays := PeriodEndDate - PeriodStartDate + 1;
-                                MergeLumSquare."ML_Number of Days" := TotalDays;
-                                MergeLumSquare."ML_Merged Unit ID" := LeaseProposal."Unit Name";
-                                MergeLumSquare."ML_Unit Sq Ft" := LeaseProposal."Unit Size";
+                                MergeLumSquare."BLRML_Number of Days" := TotalDays;
+                                MergeLumSquare."BLRML_Merged Unit ID" := LeaseProposal."BLRUnit Name";
+                                MergeLumSquare."BLRML_Unit Sq Ft" := LeaseProposal."BLRUnit Size";
                                 if YearCounter = 1 then begin
-                                    MergeLumSquare."ML_Annual Amount" := 0; // User will enter manually
-                                    MergeLumSquare."ML_Final Annual Amount" := 0;
+                                    MergeLumSquare."BLRML_Annual Amount" := 0; // User will enter manually
+                                    MergeLumSquare."BLRML_Final Annual Amount" := 0;
                                 end;
                                 if TotalDays > 0 then
-                                    MergeLumSquare."ML_Per Day Rent" := MergeLumSquare."ML_Final Annual Amount" / TotalDays
+                                    MergeLumSquare."BLRML_Per Day Rent" := MergeLumSquare."BLRML_Final Annual Amount" / TotalDays
                                 else
-                                    MergeLumSquare."ML_Per Day Rent" := 0;
+                                    MergeLumSquare."BLRML_Per Day Rent" := 0;
                                 MergeLumSquare.Insert();
                                 PeriodStartDate := PeriodEndDate + 1;
                                 YearCounter += 1;
                                 LineNoCounter += 1;
                             end;
                         end;
-                    "Merge Rent Calculation"::"Merged Unit with differential square feet rate":
+                    "BLRMerge Rent Calculation"::"Merged Unit with differential square feet rate":
                         begin
-                            MergeDiffSquare.SetRange("Proposal ID", Rec."Proposal ID");
+                            MergeDiffSquare.SetRange("BLRProposal ID", Rec."BLRProposal ID");
                             if MergeDiffSquare.FindSet() then
                                 repeat
                                     MergeDiffSquare.Delete();
                                 until MergeDiffSquare.Next() = 0;
-                            PeriodStartDate := Rec."Lease Start Date";
-                            LeaseEndDate := Rec."Lease End Date";
+                            PeriodStartDate := Rec."BLRLease Start Date";
+                            LeaseEndDate := Rec."BLRLease End Date";
                             YearCounter := 1;
                             LineNoCounter := 1;
-                            SubLeaseMergeRec.SetRange("Proposal ID", Rec."Proposal ID");
+                            SubLeaseMergeRec.SetRange("BLRProposal ID", Rec."BLRProposal ID");
                             if SubLeaseMergeRec.FindSet() then
                                 repeat
                                     YearCounter := 1;
-                                    PeriodStartDate := Rec."Lease Start Date";
-                                    LeaseEndDate := Rec."Lease End Date";
+                                    PeriodStartDate := Rec."BLRLease Start Date";
+                                    LeaseEndDate := Rec."BLRLease End Date";
                                     while PeriodStartDate <= LeaseEndDate do begin
                                         MergeDiffSquare.Init();
-                                        MergeDiffSquare."Proposal ID" := Rec."Proposal ID";
-                                        MergeDiffSquare."MD_Line No." := LineNoCounter;
-                                        MergeDiffSquare.MD_Year := YearCounter;
-                                        MergeDiffSquare."MD_Start Date" := PeriodStartDate;
+                                        MergeDiffSquare."BLRProposal ID" := Rec."BLRProposal ID";
+                                        MergeDiffSquare."BLRMD_Line No." := LineNoCounter;
+                                        MergeDiffSquare."BLRMD_Year" := YearCounter;
+                                        MergeDiffSquare."BLRMD_Start Date" := PeriodStartDate;
                                         DaysToAdd := 365;
                                         LeapDays := 0;
 
@@ -933,16 +933,16 @@ table 73209628 "Lease Proposal Details"
                                         if PeriodEndDate > LeaseEndDate then
                                             PeriodEndDate := LeaseEndDate;
 
-                                        MergeDiffSquare."MD_End Date" := PeriodEndDate;
+                                        MergeDiffSquare."BLRMD_End Date" := PeriodEndDate;
                                         TotalDays := PeriodEndDate - PeriodStartDate + 1;
-                                        MergeDiffSquare."MD_Number of Days" := TotalDays;
-                                        MergeDiffSquare."MD_Merged Unit ID" := Rec."Unit Name";
-                                        MergeDiffSquare."MD_Unit Sq Ft" := SubLeaseMergeRec."Unit Size"; // From Sub Lease Merged Units
-                                        MergeDiffSquare."MD_Unit ID" := CopyStr(SubLeaseMergeRec."Single Unit Name", 1, StrLen(SubLeaseMergeRec."Single Unit Name")); // From Sub Lease Merged Units
-                                        MergeDiffSquare."MD_Rate per Sq.Ft" := 0; // Initialize as 0; users will manually enter this
-                                        MergeDiffSquare."MD_Annual Amount" := 0; // Calculated after manual input
-                                        MergeDiffSquare."MD_Final Annual Amount" := MergeSameSquare."MS_Annual Amount";
-                                        MergeDiffSquare."MD_Per Day Rent" := 0;
+                                        MergeDiffSquare."BLRMD_Number of Days" := TotalDays;
+                                        MergeDiffSquare."BLRMD_Merged Unit ID" := Rec."BLRUnit Name";
+                                        MergeDiffSquare."BLRMD_Unit Sq Ft" := SubLeaseMergeRec."BLRUnit Size"; // From Sub Lease Merged Units
+                                        MergeDiffSquare."BLRMD_Unit ID" := CopyStr(SubLeaseMergeRec."BLRSingle Unit Name", 1, StrLen(SubLeaseMergeRec."BLRSingle Unit Name")); // From Sub Lease Merged Units
+                                        MergeDiffSquare."BLRMD_Rate per Sq.Ft" := 0; // Initialize as 0; users will manually enter this
+                                        MergeDiffSquare."BLRMD_Annual Amount" := 0; // Calculated after manual input
+                                        MergeDiffSquare."BLRMD_Final Annual Amount" := MergeSameSquare."BLRMS_Annual Amount";
+                                        MergeDiffSquare."BLRMD_Per Day Rent" := 0;
                                         MergeDiffSquare.Insert();
                                         PeriodStartDate := PeriodEndDate + 1;
                                         YearCounter += 1;
@@ -950,41 +950,41 @@ table 73209628 "Lease Proposal Details"
                                     end;
                                 until SubLeaseMergeRec.Next() = 0
                             else
-                                Error('No matching records found in Sub Lease Merged Units for the given Proposal ID.');
+                                Error('No matching records found in Sub Lease Merged Units for the given "BLRProposal ID".');
                         end;
 
                 end;
             end;
         }
-        field(73209639; "Market Rate per Sq. Ft."; Decimal)
+        field(73209639; "BLRMarket Rate per Sq. Ft."; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Market Rate per Sq. Ft. ';
         }
 
-        field(73209640; "Single Unit Name"; Text[500])
+        field(73209640; "BLRSingle Unit Name"; Text[500])
         {
             DataClassification = CustomerContent;
             Caption = 'Single Unit Names';
         }
 
-        field(73209641; "TotalFinalAmount"; Decimal)
+        field(73209641; "BLRTotalFinalAmount"; Decimal)
         {
             DataClassification = CustomerContent;
 
         }
-        field(73209642; "TotalAnnualAmount"; Decimal)
+        field(73209642; "BLRTotalAnnualAmount"; Decimal)
         {
             DataClassification = CustomerContent;
 
         }
-        field(73209643; "TotalRoundOff"; Decimal)
+        field(73209643; "BLRTotalRoundOff"; Decimal)
         {
             DataClassification = CustomerContent;
 
         }
 
-        field(73209644; "Update Data"; Text[100])
+        field(73209644; "BLRUpdate Data"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Update Data';
@@ -992,80 +992,80 @@ table 73209628 "Lease Proposal Details"
 
         }
 
-        field(73209645; "Vendor ID"; Code[20])
+        field(73209645; "BLRVendor ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Vendor ID';
         }
 
-        field(73209646; "Vendor Name"; Text[100])
+        field(73209646; "BLRVendor Name"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Vendor Name';
             Editable = false;
         }
-        field(73209647; "Percentage"; Integer)
+        field(73209647; "BLRPercentage"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Percentage';
         }
-        field(73209648; "Amount"; Decimal)
+        field(73209648; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Amount';
         }
-        field(73209649; "Calculation Method"; Text[100])
+        field(73209649; "BLRCalculation Method"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Calculation Method';
-            TableRelation = "Calculation Type"."Calculation Type";
+            TableRelation = "BLRCalculationType"."BLRCalculation Type";
         }
 
-        field(73209650; "Percentage Type"; Option)
+        field(73209650; "BLRPercentage Type"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Percentage Type';
             OptionMembers = " ","Fixed","Variable";
         }
-        field(73209651; "Base Amount Type"; Option)
+        field(73209651; "BLRBase Amount Type"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Base Amount Type';
             OptionMembers = " ","Revenue","Collection","Annual Rent","Monthly Rent";
         }
-        field(73209652; "Frequency Of Payment"; Option)
+        field(73209652; "BLRFrequency Of Payment"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Frequency Of Payment';
             OptionMembers = " ","Monthly","Quaterly","Half Yearly","Yearly";
         }
 
-        field(73209653; "Start Date"; Date)
+        field(73209653; "BLRStart Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Start Date';
             Editable = false;
         }
-        field(73209654; "End Date"; Date)
+        field(73209654; "BLREnd Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'End Date';
             Editable = false;
         }
 
-        field(73209655; "Contract Status"; Option)
+        field(73209655; "BLRContract Status"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Status';
             OptionMembers = " ","Active","Terminate";
         }
 
-        field(73209656; "Is any Broker Involved?"; Boolean)
+        field(73209656; "BLRIs any Broker Involved?"; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Is any Broker Involved?';
         }
-        field(73209657; "Municipality Number"; Text[100])
+        field(73209657; "BLRMunicipality Number"; Text[100])
         {
             Caption = 'Municipality Number';
             DataClassification = ToBeClassified;
@@ -1074,7 +1074,7 @@ table 73209628 "Lease Proposal Details"
 
     keys
     {
-        key(PK; "Proposal ID", "Merge Unit ID")
+        key(PK; "BLRProposal ID", "BLRMerge Unit ID")
         {
             Clustered = true;
         }
@@ -1082,7 +1082,7 @@ table 73209628 "Lease Proposal Details"
 
     fieldgroups
     {
-        fieldgroup(DropDown; "Proposal ID", "Unit Name", "Property Name", "Tenant Full Name", "Tenant ID", "Unit Number")
+        fieldgroup(DropDown; "BLRProposal ID", "BLRUnit Name", "BLRProperty Name", "BLRTenant Full Name", "BLRTenant ID", "BLRUnit Number")
         {
 
         }
@@ -1098,8 +1098,8 @@ table 73209628 "Lease Proposal Details"
         TempStartDate: Date;
         DaysDifference: Integer;
     begin
-        LeaseStartDate := "Lease Start Date";
-        LeaseEndDate := "Lease End Date";
+        LeaseStartDate := "BLRLease Start Date";
+        LeaseEndDate := "BLRLease End Date";
 
         if (LeaseStartDate <> 0D) and (LeaseEndDate <> 0D) then begin
             if LeaseEndDate >= LeaseStartDate then begin
@@ -1131,11 +1131,11 @@ table 73209628 "Lease Proposal Details"
                     DurationText := Format(DurationText + Format(Months) + ' month(s) ');
                 if Days > 0 then
                     DurationText := Format(DurationText + Format(Days) + ' day(s)');
-                "Lease Duration" := DelChr(DurationText, '<>', ' ');
+                "BLRLease Duration" := DelChr(DurationText, '<>', ' ');
             end else
-                "Lease Duration" := '';
+                "BLRLease Duration" := '';
         end else
-            "Lease Duration" := '';
+            "BLRLease Duration" := '';
     end;
 
     trigger OnDelete()
@@ -1154,10 +1154,10 @@ table 73209628 "Lease Proposal Details"
 
     procedure DeleteSingleUnitSameRate()
     var
-        deleteSingleUnitRecords: Record "Single Unit Rent SubPage";
+        deleteSingleUnitRecords: Record "BLRSingleUnitRentSubPage";
 
     begin
-        deleteSingleUnitRecords.SetRange("Proposal Id", Rec."Proposal ID");
+        deleteSingleUnitRecords.SetRange("BLRProposal ID", Rec."BLRProposal ID");
 
         if deleteSingleUnitRecords.FindSet() then
             deleteSingleUnitRecords.DeleteAll();
@@ -1165,10 +1165,10 @@ table 73209628 "Lease Proposal Details"
 
     procedure DeleteMergeUnitSameRate()
     var
-        deleteMergeUnitRecords: Record "Merge SameSqure SubPage";
+        deleteMergeUnitRecords: Record "BLRMergeSameSqureSubPage";
 
     begin
-        deleteMergeUnitRecords.SetRange("Proposal Id", Rec."Proposal ID");
+        deleteMergeUnitRecords.SetRange("BLRProposal ID", Rec."BLRProposal ID");
 
         if deleteMergeUnitRecords.FindSet() then
             deleteMergeUnitRecords.DeleteAll();
@@ -1176,9 +1176,9 @@ table 73209628 "Lease Proposal Details"
 
     procedure DeleteAdditionalTerms()
     var
-        AdditionalTerms: Record "Additional Terms";
+        AdditionalTerms: Record "BLRAdditionalTerms";
     begin
-        AdditionalTerms.SetRange("Document No.", Rec."Proposal ID");
+        AdditionalTerms.SetRange("BLRDocument No.", Rec."BLRProposal ID");
 
         if AdditionalTerms.FindSet() then
             AdditionalTerms.DeleteAll();
@@ -1186,10 +1186,10 @@ table 73209628 "Lease Proposal Details"
 
     procedure DeletePerDayRevenueUnitSameRate()
     var
-        deletePerDayRevenueUnitRecords: Record "Per Day Rent for Revenue";
+        deletePerDayRevenueUnitRecords: Record "BLRPerDayRentforRevenue";
 
     begin
-        deletePerDayRevenueUnitRecords.SetRange("Proposal Id", Rec."Proposal ID");
+        deletePerDayRevenueUnitRecords.SetRange("BLRProposal Id", Rec."BLRProposal ID");
 
         if deletePerDayRevenueUnitRecords.FindSet() then
             deletePerDayRevenueUnitRecords.DeleteAll();
@@ -1197,10 +1197,10 @@ table 73209628 "Lease Proposal Details"
 
     procedure DeleteLeaseMergeAllUnitDetails()
     var
-        deleteAllUnitRecords: Record "Sub Lease Merged Units";
+        deleteAllUnitRecords: Record "BLRSubLeaseMergedUnits";
 
     begin
-        deleteAllUnitRecords.SetRange("Proposal Id", Rec."Proposal ID");
+        deleteAllUnitRecords.SetRange("BLRProposal ID", Rec."BLRProposal ID");
 
         if deleteAllUnitRecords.FindSet() then
             deleteAllUnitRecords.DeleteAll();
@@ -1208,10 +1208,10 @@ table 73209628 "Lease Proposal Details"
 
     procedure DeleteMergeUnitDiffRate()
     var
-        deleteMergeUnitDiffRecords: Record "Merge DifferentSqure SubPage";
+        deleteMergeUnitDiffRecords: Record "BLRMergeDifferentSqureSubPage";
 
     begin
-        deleteMergeUnitDiffRecords.SetRange("Proposal Id", Rec."Proposal ID");
+        deleteMergeUnitDiffRecords.SetRange("BLRProposal ID", Rec."BLRProposal ID");
 
         if deleteMergeUnitDiffRecords.FindSet() then
             deleteMergeUnitDiffRecords.DeleteAll();
@@ -1219,10 +1219,10 @@ table 73209628 "Lease Proposal Details"
 
     procedure DeleteMergeUnitLumpsumRate()
     var
-        deleteMergeUnitLumpsumRecords: Record "Merge Lum_AnnualAmount SubPage";
+        deleteMergeUnitLumpsumRecords: Record "BLRMergeLumAnnualAmountSubPage";
 
     begin
-        deleteMergeUnitLumpsumRecords.SetRange("Proposal Id", Rec."Proposal ID");
+        deleteMergeUnitLumpsumRecords.SetRange("BLRProposal ID", Rec."BLRProposal ID");
 
         if deleteMergeUnitLumpsumRecords.FindSet() then
             deleteMergeUnitLumpsumRecords.DeleteAll();
@@ -1230,10 +1230,10 @@ table 73209628 "Lease Proposal Details"
 
     procedure DeleteSingleUnitLumpsumRate()
     var
-        deleteSingleUnitLumpsumRecords: Record "Single Lum_AnnualAmnt SubPage";
+        deleteSingleUnitLumpsumRecords: Record "BLRSingleLumAnnualAmntSubPage";
 
     begin
-        deleteSingleUnitLumpsumRecords.SetRange("Proposal Id", Rec."Proposal ID");
+        deleteSingleUnitLumpsumRecords.SetRange("BLRProposal ID", Rec."BLRProposal ID");
 
         if deleteSingleUnitLumpsumRecords.FindSet() then
             deleteSingleUnitLumpsumRecords.DeleteAll();
@@ -1255,19 +1255,19 @@ table 73209628 "Lease Proposal Details"
     var
         UsageTypeTxt: Text;
     begin
-        UsageTypeTxt := UpperCase(Rec."Usage Type");
+        UsageTypeTxt := UpperCase(Rec."BLRUsage Type");
 
         case UsageTypeTxt of
             'COMMERCIAL':
-                "Rent Amount VAT %" := "Rent Amount VAT %"::"5%";
+                "BLRRent Amount VAT %" := "BLRRent Amount VAT %"::"5%";
             else
-                "Rent Amount VAT %" := "Rent Amount VAT %"::"0%";
+                "BLRRent Amount VAT %" := "BLRRent Amount VAT %"::"0%";
         end;
     end;
 
     procedure ValidateRecord()
     begin
-        TestField(Rec."Property ID");
+        TestField(Rec."BLRProperty ID");
     end;
 }
 

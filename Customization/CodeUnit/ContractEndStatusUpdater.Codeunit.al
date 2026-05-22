@@ -8,25 +8,25 @@ codeunit 73209582 "Contract End Status Updater"
 
     local procedure UpdateStatusesOnContractEnd()
     var
-        TenancyRec: Record "Tenancy Contract";
-        RenewalRec: Record "Contract Renewal";
+        TenancyRec: Record "BLRTenancyContract";
+        RenewalRec: Record "BLRContractRenewal";
     begin
         if TenancyRec.FindSet() then
             repeat
-                if (TenancyRec."Tenant Contract Status" = TenancyRec."Tenant Contract Status"::"Active-Contract Renewed") and
-                   (TenancyRec."Contract End Date" <= Today()) then begin
-                    TenancyRec."Tenant Contract Status" := TenancyRec."Tenant Contract Status"::"Contract Renewed";
+                if (TenancyRec."BLRTenant Contract Status" = TenancyRec."BLRTenant Contract Status"::"Active-Contract Renewed") and
+                   (TenancyRec."BLRContract End Date" <= Today()) then begin
+                    TenancyRec."BLRTenant Contract Status" := TenancyRec."BLRTenant Contract Status"::"Contract Renewed";
                     TenancyRec.Modify();
-                    RenewalRec.SetRange("Contract ID", TenancyRec."Contract ID");
+                    RenewalRec.SetRange("BLRContract ID", TenancyRec."BLRContract ID");
                     if RenewalRec.FindSet() then
                         repeat
-                            RenewalRec."Contract Status" := RenewalRec."Contract Status"::Active;
+                            RenewalRec."BLRContract Status" := RenewalRec."BLRContract Status"::Active;
                             RenewalRec.Modify();
                             TenancyRec.Reset();
-                            TenancyRec.SetRange("Renewal Proposal ID", RenewalRec.Id);
+                            TenancyRec.SetRange("BLRRenewal Proposal ID", RenewalRec."BLRId");
                             if TenancyRec.FindSet() then
                                 repeat
-                                    TenancyRec."Tenant Contract Status" := TenancyRec."Tenant Contract Status"::Active;
+                                    TenancyRec."BLRTenant Contract Status" := TenancyRec."BLRTenant Contract Status"::Active;
                                     TenancyRec.Modify();
                                 until TenancyRec.Next() = 0;
                         until RenewalRec.Next() = 0;

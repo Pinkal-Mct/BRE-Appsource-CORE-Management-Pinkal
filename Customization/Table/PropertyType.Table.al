@@ -1,23 +1,23 @@
-table 73209662 "Property Type"
+table 73209662 "BLRPropertyType"
 {
     DataClassification = SystemMetadata;
-    DataCaptionFields = ID;
+    DataCaptionFields = "BLRID";
 
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
-        field(73209576; "Classification Name"; Text[100])
+        field(73209576; "BLRClassification Name"; Text[100])
         {
             DataClassification = SystemMetadata;
             Caption = 'Primary Classification';
-            TableRelation = "Primary Classification"."Classification Name";
+            TableRelation = "BLRPrimaryClassification"."BLRClassification Name";
         }
-        field(73209577; "Property Type"; Text[100])
+        field(73209577; "BLRProperty Type"; Text[100])
         {
             DataClassification = SystemMetadata;
             Caption = 'Property Type';
@@ -26,7 +26,7 @@ table 73209662 "Property Type"
 
     keys
     {
-        key(PK; "ID", "Property Type")
+        key(PK;"BLRID", "BLRProperty Type")
         {
             Clustered = true;
         }
@@ -34,7 +34,7 @@ table 73209662 "Property Type"
 
     fieldgroups
     {
-        fieldgroup(DropDown; ID, "Classification Name", "Property Type")
+        fieldgroup(DropDown;"BLRID", "BLRClassification Name", "BLRProperty Type")
         {
         }
     }

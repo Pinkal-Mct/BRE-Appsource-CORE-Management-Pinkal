@@ -10,7 +10,7 @@ page 73209589 FinalCalculationApproval
     EntitySetName = 'finalcalculationapprovals';
     PageType = API;
     ODataKeyFields = SystemId;
-    SourceTable = "Approval Final Calculation";
+    SourceTable = "BLRApprovalFinalCalculation";
     DeleteAllowed = true;
     ModifyAllowed = true;
 
@@ -20,34 +20,34 @@ page 73209589 FinalCalculationApproval
         {
             repeater(General)
             {
-                field(contractId; Rec."Contract Id")
+                field(contractId; Rec."BLRContract ID")
                 {
                     Caption = 'Contract Id';
                 }
-                field(id; Rec.ID)
+                field(id; Rec."BLRID")
                 {
                     Caption = 'ID';
                 }
-                field(startDate; Rec."Contract Start Date")
+                field(startDate; Rec."BLRContract Start Date")
                 {
                     Caption = 'Contract Start Date';
                 }
 
-                field(endDate; Rec."Contract End Date")
+                field(endDate; Rec."BLRContract End Date")
                 {
                     Caption = 'Contract End Date';
                 }
 
-                field(terminationDate; Rec."Termination Date")
+                field(terminationDate; Rec."BLRTermination Date")
                 {
                     Caption = 'Termination Date';
                 }
 
-                field(contractAmount; Rec."Contract Amount")
+                field(contractAmount; Rec."BLRContract Amount")
                 {
                     Caption = 'Contract Amount';
                 }
-                field(status; Rec.Status)
+                field(status; Rec."BLRStatus")
                 {
                     Caption = 'Status';
                 }
@@ -71,7 +71,7 @@ page 73209589 FinalCalculationApproval
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantId; Rec."Tenant Id")
+                field(tenantId; Rec."BLRTenant ID")
                 {
                     Caption = 'Tenant Id';
                 }

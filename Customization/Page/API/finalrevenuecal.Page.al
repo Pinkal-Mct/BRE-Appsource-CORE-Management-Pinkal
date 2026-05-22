@@ -11,7 +11,7 @@ page 73209592 finalrevenuecal
     EntityName = 'finalrevenuecalculationgrid';
     EntitySetName = 'finalrevenuecalculationgrids';
     PageType = API;
-    SourceTable = "Final Revenue Calculation Grid";
+    SourceTable = "BLRFinalRevenueCalculationGrid";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -22,71 +22,71 @@ page 73209592 finalrevenuecal
         {
             repeater(General)
             {
-                field(actualContractTenure; Rec."Actual Contract Tenure")
+                field(actualContractTenure; Rec."BLRActual Contract Tenure")
                 {
                     Caption = 'Actual Contract Tenure';
                 }
-                field(annualRentAmountTermiYear; Rec."Annual Rent Amount TermiYear")
+                field(annualRentAmountTermiYear; Rec."BLRAnnualRentAmtTermiYear")
                 {
                     Caption = 'Annual Rent Amount of Termination Year';
                 }
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(contractYearTerminationDate; Rec."ContractYear(Termination Date)")
+                field(contractYearTerminationDate; Rec."BLRContYearTermDate")
                 {
                     Caption = 'Contract Year On Termination Date';
                 }
-                field(differenceAmount; Rec."Difference Amount")
+                field(differenceAmount; Rec."BLRDifference Amount")
                 {
                     Caption = 'Difference Amount';
                 }
-                field(differenceAmountIncl; Rec."Difference Amount Incl.")
+                field(differenceAmountIncl; Rec."BLRDifference Amount Incl.")
                 {
                     Caption = 'Difference Amount Incl.';
                 }
-                field(differenceVAT; Rec."Difference VAT")
+                field(differenceVAT; Rec."BLRDifference VAT")
                 {
                     Caption = 'Difference VAT';
                 }
-                field(entryNo; Rec."Entry No.")
+                field(entryNo; Rec."BLREntry No.")
                 {
                     Caption = 'Entry No.';
                 }
-                field(originalAmount; Rec."Original Amount")
+                field(originalAmount; Rec."BLROriginal Amount")
                 {
                     Caption = 'Amount';
                 }
-                field(originalAmountIncl; Rec."Original Amount Incl.")
+                field(originalAmountIncl; Rec."BLROriginal Amount Incl.")
                 {
                     Caption = 'Amount incl.';
                 }
-                field(originalVAT; Rec."Original VAT")
+                field(originalVAT; Rec."BLROriginal VAT")
                 {
                     Caption = 'VAT';
                 }
-                field(perDayRent; Rec."Per Day Rent")
+                field(perDayRent; Rec."BLRPer Day Rent")
                 {
                     Caption = 'Per Day Rent';
                 }
-                field(revenueDescription; Rec."Revenue Description")
+                field(revenueDescription; Rec."BLRRevenue Description")
                 {
                     Caption = 'Revenue Description';
                 }
-                field(revisedAmount; Rec."Revised Amount")
+                field(revisedAmount; Rec."BLRRevised Amount")
                 {
                     Caption = 'Revised Amount';
                 }
-                field(revisedAmountIncl; Rec."Revised Amount Incl.")
+                field(revisedAmountIncl; Rec."BLRRevised Amount Incl.")
                 {
                     Caption = 'Revised Amount Incl.';
                 }
-                field(revisedVAT; Rec."Revised VAT")
+                field(revisedVAT; Rec."BLRRevised VAT")
                 {
                     Caption = 'Revised VAT';
                 }
-                field(revisedVAT1; Rec."Revised VAT %")
+                field(revisedVAT1; Rec."BLRRevised VAT %")
                 {
                     Caption = 'Revised VAT %';
                 }
@@ -110,43 +110,43 @@ page 73209592 finalrevenuecal
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(totalDifferenceAmount; Rec."Total Difference Amount")
+                field(totalDifferenceAmount; Rec."BLRTotal Difference Amount")
                 {
                     Caption = 'Total Difference Amount';
                 }
-                field(totalDifferenceVAT; Rec."Total Difference VAT")
+                field(totalDifferenceVAT; Rec."BLRTotal Difference VAT")
                 {
                     Caption = 'Total Difference VAT';
                 }
-                field(totalDifferenceAmountInclVAT; Rec."Total DifferenceAmountIncl.VAT")
+                field(totalDifferenceAmountInclVAT; Rec."BLRTotalDiffAmtInclVAT")
                 {
                     Caption = 'Total Difference Amount Incl. VAT"';
                 }
-                field(totalNoOfDays; Rec."Total No. Of Days")
+                field(totalNoOfDays; Rec."BLRTotal No. Of Days")
                 {
                     Caption = 'Total No. Of Days(Termination Year)';
                 }
-                field(totalOrgininalAmountInclVAT; Rec."Total Orgininal AmountIncl.VAT")
+                field(totalOrgininalAmountInclVAT; Rec."BLRTotalOrigAmtInclVAT")
                 {
                     Caption = 'Total Orgininal Amount Incl. VAT';
                 }
-                field(totalOriginalAmount; Rec."Total Original Amount")
+                field(totalOriginalAmount; Rec."BLRTotal Original Amount")
                 {
                     Caption = 'Total Original Amount';
                 }
-                field(totalOriginalVAT; Rec."Total Original VAT")
+                field(totalOriginalVAT; Rec."BLRTotal Original VAT")
                 {
                     Caption = 'Total Original VAT';
                 }
-                field(totalRevisedAmount; Rec."Total Revised Amount")
+                field(totalRevisedAmount; Rec."BLRTotal Revised Amount")
                 {
                     Caption = 'Total Revised Amount';
                 }
-                field(totalRevisedAmountInclVAT; Rec."Total Revised AmountIncl.VAT")
+                field(totalRevisedAmountInclVAT; Rec."BLRTotalRevAmtInclVAT")
                 {
                     Caption = 'Total Revised Amount Incl. VAT';
                 }
-                field(totalRevisedVAT; Rec."Total Revised VAT")
+                field(totalRevisedVAT; Rec."BLRTotal Revised VAT")
                 {
                     Caption = 'Total Revised VAT';
                 }

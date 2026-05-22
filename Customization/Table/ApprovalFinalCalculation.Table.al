@@ -1,59 +1,59 @@
-table 73209579 "Approval Final Calculation"
+table 73209579 "BLRApprovalFinalCalculation"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "ID";
+    DataCaptionFields = "BLRID";
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'ID';
             Editable = false;
             AutoIncrement = true;
         }
-        field(73209576; "FC ID"; Integer)
+        field(73209576; "BLRFC ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'FC ID';
             Editable = false;
         }
-        field(73209577; Status; Option)
+        field(73209577; "BLRStatus"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = Pending,Approved,Rejected;
             Caption = 'Status';
         }
-        field(73209578; "Tenant ID"; Code[50])
+        field(73209578; "BLRTenant ID"; Code[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
-        field(73209579; "Contract ID"; Integer)
+        field(73209579; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
-        field(73209580; "Contract Start Date"; Date)
+        field(73209580; "BLRContract Start Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Start Date';
         }
-        field(73209581; "Contract End Date"; Date)
+        field(73209581; "BLRContract End Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract End Date';
         }
-        field(73209582; "Termination Date"; Date)
+        field(73209582; "BLRTermination Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Termination Date';
         }
-        field(73209583; "Contract Amount"; Decimal)
+        field(73209583; "BLRContract Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Amount';
         }
-        field(73209584; "Link"; Integer)
+        field(73209584; "BLRLink"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Final Calculation Link';
@@ -62,7 +62,7 @@ table 73209579 "Approval Final Calculation"
     }
     keys
     {
-        key(PK; "ID")
+        key(PK;"BLRID")
         {
             Clustered = false;
         }

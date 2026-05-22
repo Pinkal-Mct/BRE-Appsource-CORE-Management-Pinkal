@@ -1,86 +1,86 @@
-table 73209706 "Unearned Revenue Report"
+table 73209706 "BLRUnearnedRevenueReport"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "No.";
+    DataCaptionFields = "BLRNo.";
     fields
     {
-        field(73209575; "No."; Integer)
+        field(73209575; "BLRNo."; Integer)
         {
             DataClassification = CustomerContent;
             Editable = false;
             AutoIncrement = true;
             Caption = 'ID';
         }
-        field(73209576; "Starting Date Year"; Date)
+        field(73209576; "BLRStarting Date Year"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Starting Date Year';
 
             trigger OnValidate()
             begin
-                if (Date2DMY("Starting Date Year", 1) <> 1) or (Date2DMY("Starting Date Year", 2) <> 1) then
+                if (Date2DMY("BLRStarting Date Year", 1) <> 1) or (Date2DMY("BLRStarting Date Year", 2) <> 1) then
                     Error('Starting Date must be 1st January of the year.');
 
-                if ("Starting Date Year" <> 0D) and ("Ending Date Year" <> 0D) then
-                    if "Starting Date Year" > "Ending Date Year" then
-                        Error('Starting Date Year cannot be greater than Ending Date Year.');
+                if ("BLRStarting Date Year" <> 0D) and ("BLREnding Date Year" <> 0D) then
+                    if "BLRStarting Date Year" > "BLREnding Date Year" then
+                        Error('Starting Date Year cannot be greater than "BLREnding Date Year".');
             end;
         }
-        field(73209577; "Ending Date Year"; Date)
+        field(73209577; "BLREnding Date Year"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Ending Date Year';
 
             trigger OnValidate()
             begin
-                if "Ending Date Year" < "Starting Date Year" then
-                    Error('Ending Date Year cannot be less than Starting Date Year.');
+                if "BLREnding Date Year" < "BLRStarting Date Year" then
+                    Error('Ending Date Year cannot be less than "BLRStarting Date Year".');
             end;
         }
 
-        field(73209578; "R_Total Contract Value"; Decimal)
+        field(73209578; "BLRR_Total Contract Value"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Contract Value';
             Editable = false;
         }
 
-        field(73209579; "R_Total Opening Balance"; Decimal)
+        field(73209579; "BLRR_Total Opening Balance"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Opening Balance';
             Editable = false;
         }
 
-        field(73209580; "R_T_Invoice Raised During Year"; Decimal)
+        field(73209580; "BLRRTInvRaisedDurYear"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Invoice Raised During Year';
             Editable = false;
         }
 
-        field(73209581; "R_T_Revenue Allocated During Y"; Decimal)
+        field(73209581; "BLRRTRevAllocDurY"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Revenue Allocated During Year';
             Editable = false;
         }
 
-        field(73209582; "R_T_Unearned Revenue Balance"; Decimal)
+        field(73209582; "BLRRTUnearnedRevBalance"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Unearned Revenue Balance';
             Editable = false;
         }
 
-        field(73209583; "R_T_Cal Unearned RevBalance"; Decimal)
+        field(73209583; "BLRR_T_Cal Unearned RevBalance"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Calculated Unearned Rev Balance';
             Editable = false;
         }
 
-        field(73209584; "R_Total Shortfall Excess"; Decimal)
+        field(73209584; "BLRR_Total Shortfall Excess"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Shortfall/Excess';
@@ -89,7 +89,7 @@ table 73209706 "Unearned Revenue Report"
     }
     keys
     {
-        key(PK; "No.") { Clustered = true; }
+        key(PK;"BLRNo.") { Clustered = true; }
     }
 
 
@@ -104,27 +104,27 @@ table 73209706 "Unearned Revenue Report"
 
     procedure Deleteunearnedrentrevenue()
     var
-        unearnedrevenuerentsubgrid: Record "Sub Unearned Revenue Report";
+        unearnedrevenuerentsubgrid: Record "BLRSubUnearnedRevenueReport";
     begin
-        unearnedrevenuerentsubgrid.SetRange("Header No.", Rec."No.");
+        unearnedrevenuerentsubgrid.SetRange("BLRHeader No.", Rec."BLRNo.");
         if unearnedrevenuerentsubgrid.FindSet() then
             unearnedrevenuerentsubgrid.DeleteAll();
     end;
 
     procedure Deletesubunearnedrevenuereportitem()
     var
-        unearnedrevenuereportitem: Record "Other Charges UnearnedRevenue";
+        unearnedrevenuereportitem: Record "BLROtherChargesUnearnedRevenue";
     begin
-        unearnedrevenuereportitem.SetRange("No.", Rec."No.");
+        unearnedrevenuereportitem.SetRange("BLRNo.", Rec."BLRNo.");
         if unearnedrevenuereportitem.FindSet() then
             unearnedrevenuereportitem.DeleteAll();
     end;
 
     procedure Deleteunearnedrevenueotherrevenue()
     var
-        unearnedrevenueothercharges: Record "Sub Unearned Charges";
+        unearnedrevenueothercharges: Record "BLRSubUnearnedCharges";
     begin
-        unearnedrevenueothercharges.SetRange("Header No.", Rec."No.");
+        unearnedrevenueothercharges.SetRange("BLRHeader No.", Rec."BLRNo.");
         if unearnedrevenueothercharges.FindSet() then
             unearnedrevenueothercharges.DeleteAll();
     end;

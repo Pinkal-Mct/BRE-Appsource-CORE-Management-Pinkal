@@ -11,7 +11,7 @@ page 73209594 finalSettlementRefund
     EntityName = 'finalSettlementRefund';
     EntitySetName = 'finalSettlementRefunds';
     PageType = API;
-    SourceTable = FinalSettlementRefund;
+    SourceTable = "BLRFinalSettlementRefund";
     DeleteAllowed = true;
     ModifyAllowed = true;
     ODataKeyFields = SystemId;
@@ -22,55 +22,55 @@ page 73209594 finalSettlementRefund
         {
             repeater(General)
             {
-                field(balanceRefundable; Rec."Balance Refundable")
+                field(balanceRefundable; Rec."BLRBalance Refundable")
                 {
                     Caption = 'Balance Refundable';
                 }
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Refund Contract ID';
                 }
-                field(fcID; Rec."FC ID")
+                field(fcID; Rec."BLRFC ID")
                 {
                     Caption = 'Refund FC ID';
                 }
-                field(netRefundToTheTenant; Rec."Net Refund to the Tenant")
+                field(netRefundToTheTenant; Rec."BLRNet Refund to the Tenant")
                 {
                     Caption = 'Net Refund to the Tenant';
                 }
-                field(payReceiptProofDocumentURL; Rec."Pay Receipt/Proof document URL")
+                field(payReceiptProofDocumentURL; Rec."BLRPayRcptProofDocURL")
                 {
                     Caption = 'Payment Receipt/Proof document URL';
                 }
-                field(paymentReceiptProof; Rec."Payment Receipt/Proof")
+                field(paymentReceiptProof; Rec."BLRPayment Receipt/Proof")
                 {
                     Caption = 'Payment Receipt/Proof';
                 }
-                field(refundChequeNo; Rec."Refund Cheque No.")
+                field(refundChequeNo; Rec."BLRRefund Cheque No.")
                 {
                     Caption = 'Cheque No.';
                 }
-                field(refundDueDate; Rec."Refund Due Date")
+                field(refundDueDate; Rec."BLRRefund Due Date")
                 {
                     Caption = 'Due Date';
                 }
-                field(refundPaymentStatus; Rec."Refund Payment Status")
+                field(refundPaymentStatus; Rec."BLRRefund Payment Status")
                 {
                     Caption = 'Payment Status';
                 }
-                field(refundPaymentMode; Rec."Refund Payment mode")
+                field(refundPaymentMode; Rec."BLRRefund Payment mode")
                 {
                     Caption = 'Payment mode';
                 }
-                field(refundProcessed; Rec."Refund Processed")
+                field(refundProcessed; Rec."BLRRefund Processed")
                 {
                     Caption = 'Refund Processed';
                 }
-                field(refundStatus; Rec."Refund Status")
+                field(refundStatus; Rec."BLRRefund Status")
                 {
                     Caption = 'Refund Status';
                 }
-                field(refundTotalAmount; Rec."Refund Total Amount")
+                field(refundTotalAmount; Rec."BLRRefund Total Amount")
                 {
                     Caption = 'Total Amount';
                 }
@@ -94,7 +94,7 @@ page 73209594 finalSettlementRefund
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantID; Rec."Tenant ID")
+                field(tenantID; Rec."BLRTenant ID")
                 {
                     Caption = 'Refund Tenant ID';
                 }

@@ -1,144 +1,144 @@
-table 73209702 "Tenancy Contract"
+table 73209702 "BLRTenancyContract"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "Contract ID";
+    DataCaptionFields = "BLRContract ID";
 
     fields
     {
-        field(73209575; "Owner's Name"; Text[100])
+        field(73209575; "BLROwner's Name"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Owner Name';
-            TableRelation = "Owner Profile";
+            TableRelation = "BLROwnerProfile";
             trigger OnValidate()
             var
-                OwnerRec: Record "Owner Profile";
+                OwnerRec: Record "BLROwnerProfile";
                 ownerID: Integer;
             begin
-                Evaluate(ownerID, "Owner's Name");
-                if "Owner's Name" <> '' then begin
+                Evaluate(ownerID, "BLROwner's Name");
+                if "BLROwner's Name" <> '' then begin
                     OwnerRec.Reset();
-                    OwnerRec.SetRange("Owner ID", ownerID);
+                    OwnerRec.SetRange("BLROwner ID", ownerID);
                     if OwnerRec.FindFirst() then begin
-                        "Owner's Name" := OwnerRec."Full Name";
-                        "Owner ID" := OwnerRec."Owner ID";
+                        "BLROwner's Name" := OwnerRec."BLRFull Name";
+                        "BLROwner ID" := OwnerRec."BLROwner ID";
                     end;
                 end;
             end;
         }
-        field(73209576; "Lessor's Name"; Text[100])
+        field(73209576; "BLRLessor's Name"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Lessor Name';
         }
-        field(73209577; "Lessor's Emirates ID"; Code[15])
+        field(73209577; "BLRLessor's Emirates ID"; Code[15])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Lessor Emirates ID';
         }
-        field(73209578; "License No."; Code[20])
+        field(73209578; "BLRLicense No."; Code[20])
         {
             DataClassification = OrganizationIdentifiableInformation;
             Caption = 'License No.';
         }
-        field(73209579; "Licensing Authority"; Text[100])
+        field(73209579; "BLRLicensing Authority"; Text[100])
         {
             DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Licensing Authority';
         }
-        field(73209580; "Lessor's Email"; Text[100])
+        field(73209580; "BLRLessor's Email"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Lessor Email';
         }
-        field(73209581; "Lessor's Phone"; Text[20])
+        field(73209581; "BLRLessor's Phone"; Text[20])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Lessor Phone';
         }
-        field(73209582; "Contract ID"; Integer)
+        field(73209582; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
             AutoIncrement = true;
         }
-        field(73209583; "Proposal ID"; Integer)
+        field(73209583; "BLRProposal ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Proposal ID';
-            TableRelation = "Lease Proposal Details"."Proposal ID" WHERE("Proposal Status" = CONST(Approved));
+            TableRelation = "BLRLeaseProposalDetails"."BLRProposal ID" WHERE("BLRProposal Status" = CONST(Approved));
 
             trigger OnValidate()
             var
-                LeaseProposalRec: Record "Lease Proposal Details";
-                TenantContractRec: Record "Tenancy Contract";
-                propertyRegistration: Record "Property Registration";
-                OwnerRec: Record "Owner Profile";
+                LeaseProposalRec: Record "BLRLeaseProposalDetails";
+                TenantContractRec: Record "BLRTenancyContract";
+                propertyRegistration: Record "BLRPropertyRegistration";
+                OwnerRec: Record "BLROwnerProfile";
             begin
                 TenantContractRec.Reset();
-                TenantContractRec.SetRange("Proposal ID", "Proposal ID");
+                TenantContractRec.SetRange("BLRProposal ID", "BLRProposal ID");
 
-                if TenantContractRec.FindFirst() and (TenantContractRec."Contract ID" <> "Contract ID") then
-                    Error('The selected Proposal ID is already used for another tenant contract.');
+                if TenantContractRec.FindFirst() and (TenantContractRec."BLRContract ID" <> "BLRContract ID") then
+                    Error('The selected "BLRProposal ID" is already used for another tenant contract.');
 
-                LeaseProposalRec.SetRange("Proposal ID", "Proposal ID");
+                LeaseProposalRec.SetRange("BLRProposal ID", "BLRProposal ID");
                 if LeaseProposalRec.FindFirst() then begin
-                    "Tenant ID" := LeaseProposalRec."Tenant ID";
-                    "Tenant_License No." := LeaseProposalRec."License No.";
-                    "Tenant_Licensing Authority" := LeaseProposalRec."Licensing Authority";
-                    "Customer Name" := LeaseProposalRec."Tenant Full Name";
-                    "Email Address" := LeaseProposalRec."Tenant Contact Email";
-                    "Emirates ID" := CopyStr(LeaseProposalRec."Emirates ID", 1, StrLen(LeaseProposalRec."Emirates ID"));
-                    "Property ID" := LeaseProposalRec."Property ID";
-                    "Payment Frequency" := LeaseProposalRec."Payment Frequency";
-                    "Payment Method" := LeaseProposalRec."Payment Method";
-                    "Base Unit of Measure" := LeaseProposalRec."Base Unit of Measure";
-                    "Contact Number" := CopyStr(LeaseProposalRec."Tenant Contact Phone", 1, StrLen(LeaseProposalRec."Tenant Contact Phone"));
-                    "Unit ID" := LeaseProposalRec."Unit ID";
-                    "Merge Unit ID" := LeaseProposalRec."Merge Unit ID";
-                    "Unit Name" := LeaseProposalRec."Unit Name";
-                    "Unit Sq. Feet" := LeaseProposalRec."Unit Size";
-                    "Annual Rent Amount" := LeaseProposalRec."Rent Amount";
-                    "UnitID" := LeaseProposalRec."UnitID";
-                    "Property Classification" := LeaseProposalRec."Usage Type";
-                    "Property Type" := LeaseProposalRec."Unit Type";
-                    "Property Name" := LeaseProposalRec."Property Name";
-                    "Contract Start Date" := LeaseProposalRec."Lease Start Date";
-                    "Contract End Date" := LeaseProposalRec."Lease End Date";
-                    "Contract Tenor" := LeaseProposalRec."Lease Duration";
-                    "Annual Rent Amount" := LeaseProposalRec."Annual Rent Amount";
-                    "Rent Amount" := LeaseProposalRec."Rent Amount";
-                    "Security Deposit Amount" := LeaseProposalRec."Security Deposit Amount";
-                    "Security Amount Pending" := LeaseProposalRec."Security Deposit Amount";
-                    "Unit Number" := LeaseProposalRec."Unit Number";
-                    "Makani Number" := LeaseProposalRec."Makani Number";
-                    "Municipality Number" := LeaseProposalRec."Municipality Number";
-                    Emirate := LeaseProposalRec.Emirate;
-                    Community := LeaseProposalRec.Community;
-                    "DEWA Number" := LeaseProposalRec."DEWA Number";
-                    "Property Size" := LeaseProposalRec."Property Size";
-                    "No of Installments" := LeaseProposalRec."No of Installments";
-                    "praposal Type Selected" := LeaseProposalRec."praposal Type Selected";
-                    "Unit Address" := LeaseProposalRec."Unit Address";
-                    "Usage Type" := LeaseProposalRec."Usage Type";
-                    "Unit Type" := LeaseProposalRec."Unit Type";
-                    "Single Unit Name" := LeaseProposalRec."Single Unit Name";
-                    "Market Rate per Sq. Ft." := LeaseProposalRec."Market Rate per Sq. Ft.";
-                    "Facilities/Amenities" := LeaseProposalRec."Facilities/Amenities";
+                    "BLRTenant ID" := LeaseProposalRec."BLRTenant ID";
+                    "BLRTenant_License No." := LeaseProposalRec."BLRLicense No.";
+                    "BLRTenant_Licensing Authority" := LeaseProposalRec."BLRLicensing Authority";
+                    "BLRCustomer Name" := LeaseProposalRec."BLRTenant Full Name";
+                    "BLREmail Address" := LeaseProposalRec."BLRTenant Contact Email";
+                    "BLREmirates ID" := CopyStr(LeaseProposalRec."BLREmirates ID", 1, StrLen(LeaseProposalRec."BLREmirates ID"));
+                    "BLRProperty ID" := LeaseProposalRec."BLRProperty ID";
+                    "BLRPayment Frequency" := LeaseProposalRec."BLRPayment Frequency";
+                    "BLRPayment Method" := LeaseProposalRec."BLRPayment Method";
+                    "BLRBase Unit of Measure" := LeaseProposalRec."BLRBase Unit of Measure";
+                    "BLRContact Number" := CopyStr(LeaseProposalRec."BLRTenant Contact Phone", 1, StrLen(LeaseProposalRec."BLRTenant Contact Phone"));
+                    "BLRUnit ID" := LeaseProposalRec."BLRUnit ID";
+                    "BLRMerge Unit ID" := LeaseProposalRec."BLRMerge Unit ID";
+                    "BLRUnit Name" := LeaseProposalRec."BLRUnit Name";
+                    "BLRUnit Sq. Feet" := LeaseProposalRec."BLRUnit Size";
+                    "BLRAnnual Rent Amount" := LeaseProposalRec."BLRRent Amount";
+                    "BLRUnitID" := LeaseProposalRec."BLRUnitID";
+                    "BLRProperty Classification" := LeaseProposalRec."BLRUsage Type";
+                    "BLRProperty Type" := LeaseProposalRec."BLRUnit Type";
+                    "BLRProperty Name" := LeaseProposalRec."BLRProperty Name";
+                    "BLRContract Start Date" := LeaseProposalRec."BLRLease Start Date";
+                    "BLRContract End Date" := LeaseProposalRec."BLRLease End Date";
+                    "BLRContract Tenor" := LeaseProposalRec."BLRLease Duration";
+                    "BLRAnnual Rent Amount" := LeaseProposalRec."BLRAnnual Rent Amount";
+                    "BLRRent Amount" := LeaseProposalRec."BLRRent Amount";
+                    "BLRSecurity Deposit Amount" := LeaseProposalRec."BLRSecurity Deposit Amount";
+                    "BLRSecurity Amount Pending" := LeaseProposalRec."BLRSecurity Deposit Amount";
+                    "BLRUnit Number" := LeaseProposalRec."BLRUnit Number";
+                    "BLRMakani Number" := LeaseProposalRec."BLRMakani Number";
+                    "BLRMunicipality Number" := LeaseProposalRec."BLRMunicipality Number";
+                    "BLREmirate" := LeaseProposalRec."BLREmirate";
+                    "BLRCommunity" := LeaseProposalRec."BLRCommunity";
+                    "BLRDEWA Number" := LeaseProposalRec."BLRDEWA Number";
+                    "BLRProperty Size" := LeaseProposalRec."BLRProperty Size";
+                    "BLRNo of Installments" := LeaseProposalRec."BLRNo of Installments";
+                    "BLRPraposal Type Selected" := LeaseProposalRec."BLRPraposal Type Selected";
+                    "BLRUnit Address" := LeaseProposalRec."BLRUnit Address";
+                    "BLRUsage Type" := LeaseProposalRec."BLRUsage Type";
+                    "BLRUnit Type" := LeaseProposalRec."BLRUnit Type";
+                    "BLRSingle Unit Name" := LeaseProposalRec."BLRSingle Unit Name";
+                    "BLRMarket Rate per Sq. Ft." := LeaseProposalRec."BLRMarket Rate per Sq. Ft.";
+                    "BLRFacilities/Amenities" := LeaseProposalRec."BLRFacilities/Amenities";
 
-                    "Unit Number" := LeaseProposalRec."Unit Number";
-                    "Single Rent Calculation" := LeaseProposalRec."Single Rent Calculation";
-                    "Merge Rent Calculation" := LeaseProposalRec."Merge Rent Calculation";
-                    "Contract VAT %" := LeaseProposalRec."Rent Amount VAT %";
-                    "Contract VAT Amount" := LeaseProposalRec."Rent VAT Amount";
-                    "Contract Amount Including VAT" := LeaseProposalRec."Rent Amount Including VAT";
+                    "BLRUnit Number" := LeaseProposalRec."BLRUnit Number";
+                    "BLRSingle Rent Calculation" := LeaseProposalRec."BLRSingle Rent Calculation";
+                    "BLRMerge Rent Calculation" := LeaseProposalRec."BLRMerge Rent Calculation";
+                    "BLRContract VAT %" := LeaseProposalRec."BLRRent Amount VAT %";
+                    "BLRContract VAT Amount" := LeaseProposalRec."BLRRent VAT Amount";
+                    "BLRContAmtInclVAT" := LeaseProposalRec."BLRRent Amount Including VAT";
 
-                    propertyRegistration.SetRange("Property ID", LeaseProposalRec."Property ID");
+                    propertyRegistration.SetRange("BLRProperty ID", LeaseProposalRec."BLRProperty ID");
                     if propertyRegistration.FindFirst() then begin
-                        OwnerRec.SetRange("Owner ID", propertyRegistration."Owner ID");
+                        OwnerRec.SetRange("BLROwner ID", propertyRegistration."BLROwner ID");
                         if OwnerRec.FindFirst() then begin
-                            "Owner ID" := OwnerRec."Owner ID";
-                            "Owner's Name" := OwnerRec."Full Name";
+                            "BLROwner ID" := OwnerRec."BLROwner ID";
+                            "BLROwner's Name" := OwnerRec."BLRFull Name";
                         end;
                     end;
                     TenancyContractSubpage();
@@ -149,54 +149,54 @@ table 73209702 "Tenancy Contract"
                 end;
             end;
         }
-        field(73209584; "Property Name"; Text[100])
+        field(73209584; "BLRProperty Name"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Property Name';
         }
-        field(73209585; "Customer Name"; Text[100])
+        field(73209585; "BLRCustomer Name"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Tenant Name';
             TableRelation = Customer.Name;
         }
-        field(73209586; "Unit Name"; Text[100])
+        field(73209586; "BLRUnit Name"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Name';
         }
-        field(73209587; "Ejari Name"; Text[100])
+        field(73209587; "BLREjari Name"; Text[100])
         {
             DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Ejari Name';
         }
-        field(73209588; "Property Classification"; Text[100])
+        field(73209588; "BLRProperty Classification"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Property Classification';
-            TableRelation = "Primary Classification"."Classification Name";
+            TableRelation = "BLRPrimaryClassification"."BLRClassification Name";
             NotBlank = true;
         }
-        field(73209589; "Property Type"; Text[100])
+        field(73209589; "BLRProperty Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Property Type';
-            TableRelation = "Secondary Classification" where("Classification Name" = field("Property Classification"));
+            TableRelation = "BLRSecondaryClassification" where("BLRClassification Name" = field("BLRProperty Classification"));
 
             trigger OnValidate()
             var
-                secondaryClassification: Record "Secondary Classification";
+                secondaryClassification: Record "BLRSecondaryClassification";
             begin
-                if secondaryClassification.Get(Rec."Property Type") then
-                    Rec."Property Type" := secondaryClassification."Property Type";
+                if secondaryClassification.Get(Rec."BLRProperty Type") then
+                    Rec."BLRProperty Type" := secondaryClassification."BLRProperty Type";
             end;
         }
-        field(73209590; "Annual Rent Amount"; Decimal)
+        field(73209590; "BLRAnnual Rent Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Amount ';
         }
-        field(73209591; "Contract Date"; Date)
+        field(73209591; "BLRContract Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Date';
@@ -207,37 +207,37 @@ table 73209702 "Tenancy Contract"
                 TenancyContractSubpage2();
             end;
         }
-        field(73209592; "Contract Start Date"; Date)
+        field(73209592; "BLRContract Start Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Start Date';
         }
-        field(73209593; "Contract End Date"; Date)
+        field(73209593; "BLRContract End Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract End Date';
         }
-        field(73209594; "Contract Tenor"; Text[50])
+        field(73209594; "BLRContract Tenor"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Period (Months)';
         }
-        field(73209595; "Base Unit of Measure"; Code[10])
+        field(73209595; "BLRBase Unit of Measure"; Code[10])
         {
             DataClassification = CustomerContent;
             Caption = 'Base Unit of Measure';
         }
-        field(73209596; "Unit Sq. Feet"; Decimal)
+        field(73209596; "BLRUnit Sq. Feet"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Size';
         }
-        field(73209597; "Grace Period"; Integer)
+        field(73209597; "BLRGrace Period"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Grace Period (Days)';
         }
-        field(73209598; "Grace Start Date"; Date)
+        field(73209598; "BLRGrace Start Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Grace Start Date';
@@ -246,7 +246,7 @@ table 73209702 "Tenancy Contract"
                 this.CalculateGracePeriod();
             end;
         }
-        field(73209599; "Grace End Date"; Date)
+        field(73209599; "BLRGrace End Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Grace End Date';
@@ -255,55 +255,55 @@ table 73209702 "Tenancy Contract"
                 CalculateGracePeriod();
             end;
         }
-        field(73209600; "Tenant ID"; Code[20])
+        field(73209600; "BLRTenant ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
             TableRelation = Customer."No.";
         }
-        field(73209601; "Property ID"; Code[20])
+        field(73209601; "BLRProperty ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Property ID';
-            TableRelation = "Property Registration"."Property ID";
+            TableRelation = "BLRPropertyRegistration"."BLRProperty ID";
         }
-        field(73209602; "Unit ID"; Code[100])
+        field(73209602; "BLRUnit ID"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Single Unit ID';
-            TableRelation = "Item"."No." where("Property ID" = field("Property ID"));
+            TableRelation = "Item"."No." where("BLRProperty ID" = field("BLRProperty ID"));
         }
-        field(73209603; "Emirates ID"; Code[25])
+        field(73209603; "BLREmirates ID"; Code[25])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Emirates ID';
         }
-        field(73209604; "Contact Number"; Text[20])
+        field(73209604; "BLRContact Number"; Text[20])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Contact Number';
         }
-        field(73209605; "Email Address"; Text[100])
+        field(73209605; "BLREmail Address"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Email Address';
         }
-        field(73209606; "Payment Frequency"; Option)
+        field(73209606; "BLRPayment Frequency"; Option)
         {
             OptionMembers = " ",Monthly,Quarterly,"Half-Yearly",Yearly;
             DataClassification = CustomerContent;
         }
-        field(73209607; "Payment Method"; Text[100])
+        field(73209607; "BLRPayment Method"; Text[100])
         {
             DataClassification = CustomerContent;
         }
-        field(73209608; "Update Contract Status"; Option)
+        field(73209608; "BLRUpdate Contract Status"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Update Contract Status';
             OptionMembers = " ","Initiate Activation Process","Initiate Suspension Process","Initiate Termination Process","Initiate Under Suspension-Unit Released";
         }
-        field(73209609; "Tenant Contract Status"; Option)
+        field(73209609; "BLRTenant Contract Status"; Option)
         {
             Editable = true;
             DataClassification = CustomerContent;
@@ -313,243 +313,243 @@ table 73209702 "Tenancy Contract"
             trigger OnValidate()
             var
                 ItemRec: Record Item;
-                MergeUnitRec: Record "Merged Units";
-                LeaseProposalRec: Record "Lease Proposal Details";
-                paymentscheule: Record "Payment Schedule";
-                paymentschedule2: Record "Payment Schedule2";
-                paymentscheule1: Record "Payment Schedule";
-                paymentschedule3grid: Record "Payment Schedule2";
-                paymentscheulecard: Record "Payment Schedule";
+                MergeUnitRec: Record "BLRMergedUnits";
+                LeaseProposalRec: Record "BLRLeaseProposalDetails";
+                paymentscheule: Record "BLRPaymentSchedule";
+                paymentschedule2: Record "BLRPaymentSchedule2";
+                paymentscheule1: Record "BLRPaymentSchedule";
+                paymentschedule3grid: Record "BLRPaymentSchedule2";
+                paymentscheulecard: Record "BLRPaymentSchedule";
                 emailrec: Codeunit "Send Contract Email";
             begin
-                if Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::Active then begin
-                    if paymentscheule.Get(Rec."Contract ID") then begin
-                        paymentscheule."Contract Status" := Format(Rec."Tenant Contract Status");
+                if Rec."BLRTenant Contract Status" = Rec."BLRTenant Contract Status"::Active then begin
+                    if paymentscheule.Get(Rec."BLRContract ID") then begin
+                        paymentscheule."BLRContract Status" := Format(Rec."BLRTenant Contract Status");
                         paymentscheule.Modify();
                     end;
 
-                    paymentschedule2.SetRange("Contract ID", Rec."Contract ID");
+                    paymentschedule2.SetRange("BLRContract ID", Rec."BLRContract ID");
                     if paymentschedule2.FindSet() then
                         repeat
-                            paymentschedule2."Contract Status" := Format(Rec."Tenant Contract Status");
+                            paymentschedule2."BLRContract Status" := Format(Rec."BLRTenant Contract Status");
                             paymentschedule2.Modify();
                         until paymentschedule2.Next() = 0;
 
                 end;
 
-                if Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::Suspended then
-                    if paymentscheule1.Get(Rec."Contract ID") then begin
-                        paymentscheule1."Contract Status" := Format(Rec."Tenant Contract Status");
+                if Rec."BLRTenant Contract Status" = Rec."BLRTenant Contract Status"::Suspended then
+                    if paymentscheule1.Get(Rec."BLRContract ID") then begin
+                        paymentscheule1."BLRContract Status" := Format(Rec."BLRTenant Contract Status");
                         paymentscheule1.Modify();
                     end;
 
-                if Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::Terminated then begin
-                    if paymentscheulecard.Get(Rec."Contract ID") then begin
-                        paymentscheulecard."Contract Status" := Format(Rec."Tenant Contract Status");
+                if Rec."BLRTenant Contract Status" = Rec."BLRTenant Contract Status"::Terminated then begin
+                    if paymentscheulecard.Get(Rec."BLRContract ID") then begin
+                        paymentscheulecard."BLRContract Status" := Format(Rec."BLRTenant Contract Status");
                         paymentscheulecard.Modify();
                     end;
 
-                    paymentschedule3grid.SetRange("Contract ID", Rec."Contract ID");
+                    paymentschedule3grid.SetRange("BLRContract ID", Rec."BLRContract ID");
                     if paymentschedule3grid.FindSet() then
                         repeat
-                            paymentschedule3grid."Contract Status" := Format(Rec."Tenant Contract Status");
+                            paymentschedule3grid."BLRContract Status" := Format(Rec."BLRTenant Contract Status");
                             paymentschedule3grid.Modify();
                         until paymentschedule3grid.Next() = 0;
 
                 end;
 
-                if ("Tenant Contract Status" = "Tenant Contract Status"::Terminated) or
-                    ("Tenant Contract Status" = "Tenant Contract Status"::"Under Suspension-Unit Released") then begin
+                if ("BLRTenant Contract Status" = "BLRTenant Contract Status"::Terminated) or
+                    ("BLRTenant Contract Status" = "BLRTenant Contract Status"::"Under Suspension-Unit Released") then begin
 
                     LeaseProposalRec.Reset();
-                    LeaseProposalRec.SetRange("Proposal ID", Rec."Proposal ID"); // assuming field exists
+                    LeaseProposalRec.SetRange("BLRProposal ID", Rec."BLRProposal ID"); // assuming field exists
 
                     if LeaseProposalRec.FindFirst() then begin
-                        LeaseProposalRec."Proposal Status" := LeaseProposalRec."Proposal Status"::Completed;
+                        LeaseProposalRec."BLRProposal Status" := LeaseProposalRec."BLRProposal Status"::Completed;
                         LeaseProposalRec.Modify();
                     end;
                 end;
 
-                if "Unit ID" <> '' then
-                    if ItemRec.Get("Unit ID") then begin
-                        case "Tenant Contract Status" of
-                            "Tenant Contract Status"::Active,
-                            "Tenant Contract Status"::Suspended:
-                                ItemRec."Unit Status" := ItemRec."Unit Status"::Occupied;
+                if "BLRUnit ID" <> '' then
+                    if ItemRec.Get("BLRUnit ID") then begin
+                        case "BLRTenant Contract Status" of
+                            "BLRTenant Contract Status"::Active,
+                            "BLRTenant Contract Status"::Suspended:
+                                ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Occupied;
 
-                            "Tenant Contract Status"::Terminated,
-                            "Tenant Contract Status"::"Under Suspension-Unit Released":
-                                ItemRec."Unit Status" := ItemRec."Unit Status"::Free;
+                            "BLRTenant Contract Status"::Terminated,
+                            "BLRTenant Contract Status"::"Under Suspension-Unit Released":
+                                ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Free;
                         end;
                         ItemRec.Modify();
                     end;
 
-                if "Merge Unit ID" <> '' then
-                    if MergeUnitRec.Get("Merge Unit ID") then begin
-                        case "Tenant Contract Status" of
-                            "Tenant Contract Status"::Terminated:
-                                MergeUnitRec."Status" := MergeUnitRec."Status"::Free;
-                            "Tenant Contract Status"::"Under Suspension-Unit Released":
-                                MergeUnitRec."Status" := MergeUnitRec."Status"::Free;
-                            "Tenant Contract Status"::Active:
-                                MergeUnitRec."Status" := MergeUnitRec."Status"::Occupied;
-                            "Tenant Contract Status"::Suspended:
-                                MergeUnitRec."Status" := MergeUnitRec."Status"::Occupied;
+                if "BLRMerge Unit ID" <> '' then
+                    if MergeUnitRec.Get("BLRMerge Unit ID") then begin
+                        case "BLRTenant Contract Status" of
+                            "BLRTenant Contract Status"::Terminated:
+                                MergeUnitRec."BLRStatus" := MergeUnitRec."BLRStatus"::Free;
+                            "BLRTenant Contract Status"::"Under Suspension-Unit Released":
+                                MergeUnitRec."BLRStatus" := MergeUnitRec."BLRStatus"::Free;
+                            "BLRTenant Contract Status"::Active:
+                                MergeUnitRec."BLRStatus" := MergeUnitRec."BLRStatus"::Occupied;
+                            "BLRTenant Contract Status"::Suspended:
+                                MergeUnitRec."BLRStatus" := MergeUnitRec."BLRStatus"::Occupied;
                         end;
 
-                        case "Tenant Contract Status" of
-                            "Tenant Contract Status"::Active:
-                                MergeUnitRec."Spliting Status" := MergeUnitRec."Spliting Status"::Merge;
-                            "Tenant Contract Status"::Terminated:
-                                MergeUnitRec."Spliting Status" := MergeUnitRec."Spliting Status"::Merge;
-                            "Tenant Contract Status"::Suspended:
-                                MergeUnitRec."Spliting Status" := MergeUnitRec."Spliting Status"::Merge;
-                            "Tenant Contract Status"::"Under Suspension-Unit Released":
-                                MergeUnitRec."Spliting Status" := MergeUnitRec."Spliting Status"::Merge;
+                        case "BLRTenant Contract Status" of
+                            "BLRTenant Contract Status"::Active:
+                                MergeUnitRec."BLRSpliting Status" := MergeUnitRec."BLRSpliting Status"::Merge;
+                            "BLRTenant Contract Status"::Terminated:
+                                MergeUnitRec."BLRSpliting Status" := MergeUnitRec."BLRSpliting Status"::Merge;
+                            "BLRTenant Contract Status"::Suspended:
+                                MergeUnitRec."BLRSpliting Status" := MergeUnitRec."BLRSpliting Status"::Merge;
+                            "BLRTenant Contract Status"::"Under Suspension-Unit Released":
+                                MergeUnitRec."BLRSpliting Status" := MergeUnitRec."BLRSpliting Status"::Merge;
                         end;
 
                         MergeUnitRec.Modify();
 
-                        if MergeUnitRec."Unit ID" <> '' then begin
-                            ItemRec.SetRange("Merged Unit ID", MergeUnitRec."Merged Unit ID");
+                        if MergeUnitRec."BLRUnit ID" <> '' then begin
+                            ItemRec.SetRange("BLRMerged Unit ID", MergeUnitRec."BLRMerged Unit ID");
                             if ItemRec.FindSet() then
                                 repeat
-                                    case "Tenant Contract Status" of
-                                        "Tenant Contract Status"::Active,
-                                          "Tenant Contract Status"::Suspended:
-                                            ItemRec."Unit Status" := ItemRec."Unit Status"::Occupied;
+                                    case "BLRTenant Contract Status" of
+                                        "BLRTenant Contract Status"::Active,
+                                          "BLRTenant Contract Status"::Suspended:
+                                            ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Occupied;
 
-                                        "Tenant Contract Status"::Terminated,
-                                            "Tenant Contract Status"::"Under Suspension-Unit Released":
-                                            ItemRec."Unit Status" := ItemRec."Unit Status"::Free;
+                                        "BLRTenant Contract Status"::Terminated,
+                                            "BLRTenant Contract Status"::"Under Suspension-Unit Released":
+                                            ItemRec."BLRUnit Status" := ItemRec."BLRUnit Status"::Free;
                                     end;
                                     ItemRec.Modify();
                                 until ItemRec.Next() = 0;
                         end;
                     end;
 
-                if Rec."Tenant Contract Status" = Rec."Tenant Contract Status"::Active then
+                if Rec."BLRTenant Contract Status" = Rec."BLRTenant Contract Status"::Active then
                     emailrec.SendEmail(Rec);
             end;
         }
-        field(73209610; "UnitID"; code[100])
+        field(73209610; "BLRUnitID"; code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Uniq Unit ID';
         }
-        field(73209611; "Created By"; Text[100])
+        field(73209611; "BLRCreated By"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Created By';
         }
-        field(73209612; "Handover is Completed"; Boolean)
+        field(73209612; "BLRHandover is Completed"; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Handover is Completed';
         }
-        field(73209613; "Handover of PDC"; Boolean)
+        field(73209613; "BLRHandover of PDC"; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Handover of PDC';
         }
-        field(73209614; "Signed TC Document"; Boolean)
+        field(73209614; "BLRSigned TC Document"; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Signed TC Document';
         }
-        field(73209615; "Handover Unit"; Boolean)
+        field(73209615; "BLRHandover Unit"; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Handover Unit';
         }
-        field(73209616; "Merge Unit ID"; Code[10])
+        field(73209616; "BLRMerge Unit ID"; Code[10])
         {
             DataClassification = CustomerContent;
             Caption = 'Merge Unit ID';
         }
-        field(73209617; "Rent Amount"; Decimal)
+        field(73209617; "BLRRent Amount"; Decimal)
         {
             DataClassification = CustomerContent;
-            Caption = 'Annual Rent Amount ';
+            Caption = 'Annual "BLRRent Amount" ';
         }
-        field(73209618; "Tenant_License No."; Code[20])
+        field(73209618; "BLRTenant_License No."; Code[20])
         {
             Caption = 'Tenant Trade License No.';
             DataClassification = OrganizationIdentifiableInformation;
         }
-        field(73209619; "Tenant_Licensing Authority"; Text[100])
+        field(73209619; "BLRTenant_Licensing Authority"; Text[100])
         {
             Caption = 'Tenant_Licensing Authority';
             DataClassification = OrganizationIdentifiableInformation;
         }
-        field(73209620; "Security Deposit Amount"; Decimal)
+        field(73209620; "BLRSecurity Deposit Amount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209621; "Unit Number"; Code[50])
+        field(73209621; "BLRUnit Number"; Code[50])
         {
             DataClassification = CustomerContent;
         }
-        field(73209622; "Makani Number"; Text[100])
+        field(73209622; "BLRMakani Number"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
         }
-        field(73209623; "Emirate"; Text[50])
+        field(73209623; "BLREmirate"; Text[50])
         {
             DataClassification = CustomerContent;
         }
-        field(73209624; "Community"; Text[100])
+        field(73209624; "BLRCommunity"; Text[100])
         {
             DataClassification = CustomerContent;
         }
-        field(73209625; "DEWA Number"; Text[100])
+        field(73209625; "BLRDEWA Number"; Text[100])
         {
             Caption = 'DEWA Number';
             DataClassification = CustomerContent;
         }
-        field(73209626; "Property Size"; Code[30])
+        field(73209626; "BLRProperty Size"; Code[30])
         {
             DataClassification = CustomerContent;
             Caption = 'Property Size';
         }
-        field(73209627; "ID"; Integer)
+        field(73209627; "BLRID"; Integer)
         {
             Caption = 'Suspended Reason ID';
             DataClassification = CustomerContent;
         }
-        field(73209628; "Suspended Reason list"; Text[250])
+        field(73209628; "BLRSuspended Reason list"; Text[250])
         {
             Caption = 'Suspended Reason list';
             DataClassification = CustomerContent;
         }
-        field(73209629; "No of Installments"; Integer)
+        field(73209629; "BLRNo of Installments"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'No of Installments';
             Editable = false;
         }
-        field(73209630; "Upload Document"; Text[250])
+        field(73209630; "BLRUpload Document"; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'Upload Document';
         }
-        field(73209631; "view Document"; Text[250])
+        field(73209631; "BLRview Document"; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'view Document';
         }
-        field(73209632; "document URL"; Text[250])
+        field(73209632; "BLRdocument URL"; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'Logo URL';
         }
-        field(73209633; "Renewal Contract Status"; Option)
+        field(73209633; "BLRRenewal Contract Status"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Renewal Contract Status';
             OptionMembers = "N/A","Notify Tenant For Renewal";
         }
-        field(73209634; "Contract Type"; Option)
+        field(73209634; "BLRContract Type"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Type';
@@ -560,62 +560,62 @@ table 73209702 "Tenancy Contract"
                 Rec.Insert();
             end;
         }
-        field(73209635; "Renewal Proposal ID"; Integer)
+        field(73209635; "BLRRenewal Proposal ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Renewal Proposal ID';
-            TableRelation = "Contract Renewal".Id WHERE("Final Status" = CONST(Approved));
+            TableRelation = "BLRContractRenewal"."BLRId" WHERE("BLRFinal Status" = CONST(Approved));
 
             trigger OnValidate()
             var
-                ContractRenewal: Record "Contract Renewal";
-                TenantContractRec: Record "Tenancy Contract";
+                ContractRenewal: Record "BLRContractRenewal";
+                TenantContractRec: Record "BLRTenancyContract";
             begin
                 TenantContractRec.Reset();
-                TenantContractRec.SetRange("Proposal ID", "Proposal ID");
+                TenantContractRec.SetRange("BLRProposal ID", "BLRProposal ID");
 
-                ContractRenewal.SetRange(ID, "Renewal Proposal ID");
+                ContractRenewal.SetRange("BLRID", "BLRRenewal Proposal ID");
                 if ContractRenewal.FindFirst() then begin
-                    "Tenant ID" := ContractRenewal."Tenant ID";
-                    "Tenant_License No." := ContractRenewal."License No.";
-                    "Tenant_Licensing Authority" := ContractRenewal."Licensing Authority";
-                    "Customer Name" := ContractRenewal."Tenant Full Name";
-                    "Email Address" := ContractRenewal."Email Address";
-                    "Emirates ID" := ContractRenewal."Emirates ID";
-                    "Property ID" := ContractRenewal."Property ID";
-                    "Payment Frequency" := ContractRenewal."Payment Frequency";
-                    "Payment Method" := ContractRenewal."Payment Method";
-                    "Base Unit of Measure" := ContractRenewal."Base Unit of Measure";
-                    "Contact Number" := CopyStr(ContractRenewal."Contact Number", 1, StrLen(ContractRenewal."Contact Number"));
-                    "Unit ID" := ContractRenewal."Unit ID";
-                    "Merge Unit ID" := ContractRenewal."Merge Unit ID";
-                    "Unit Name" := ContractRenewal."Unit Name";
-                    "Unit Sq. Feet" := ContractRenewal."Unit Sq. Feet";
-                    "Annual Rent Amount" := ContractRenewal."Rent Amount";
-                    "UnitID" := ContractRenewal."UnitID";
-                    "Property Classification" := ContractRenewal."Property Classification";
-                    "Property Type" := ContractRenewal."Property Type";
-                    "Property Name" := ContractRenewal."Property Name";
-                    "Contract Start Date" := ContractRenewal."Contract Start Date";
-                    "Contract End Date" := ContractRenewal."Contract End Date";
-                    "Contract Tenor" := ContractRenewal."Contract Tenor";
-                    "Annual Rent Amount" := ContractRenewal."Contract Amount";
-                    "Rent Amount" := ContractRenewal."Rent Amount";
-                    "Security Deposit Amount" := ContractRenewal."Security Deposit Amount";
-                    "Unit Number" := ContractRenewal."Unit Number";
-                    "Makani Number" := ContractRenewal."Makani Number";
-                    "Municipality Number" := ContractRenewal."Municipality Number";
-                    Emirate := ContractRenewal.Emirate;
-                    Community := ContractRenewal.Community;
-                    "DEWA Number" := ContractRenewal."DEWA Number";
-                    "Property Size" := ContractRenewal."Property Size";
-                    "No of Installments" := ContractRenewal."No of Installments";
-                    "Unit Type" := ContractRenewal."Unit Type";
-                    "Usage Type" := ContractRenewal."Usage Type";
+                    "BLRTenant ID" := ContractRenewal."BLRTenant ID";
+                    "BLRTenant_License No." := ContractRenewal."BLRLicense No.";
+                    "BLRTenant_Licensing Authority" := ContractRenewal."BLRLicensing Authority";
+                    "BLRCustomer Name" := ContractRenewal."BLRTenant Full Name";
+                    "BLREmail Address" := ContractRenewal."BLREmail Address";
+                    "BLREmirates ID" := ContractRenewal."BLREmirates ID";
+                    "BLRProperty ID" := ContractRenewal."BLRProperty ID";
+                    "BLRPayment Frequency" := ContractRenewal."BLRPayment Frequency";
+                    "BLRPayment Method" := ContractRenewal."BLRPayment Method";
+                    "BLRBase Unit of Measure" := ContractRenewal."BLRBase Unit of Measure";
+                    "BLRContact Number" := CopyStr(ContractRenewal."BLRContact Number", 1, StrLen(ContractRenewal."BLRContact Number"));
+                    "BLRUnit ID" := ContractRenewal."BLRUnit ID";
+                    "BLRMerge Unit ID" := ContractRenewal."BLRMerge Unit ID";
+                    "BLRUnit Name" := ContractRenewal."BLRUnit Name";
+                    "BLRUnit Sq. Feet" := ContractRenewal."BLRUnit Sq. Feet";
+                    "BLRAnnual Rent Amount" := ContractRenewal."BLRRent Amount";
+                    "BLRUnitID" := ContractRenewal."BLRUnitID";
+                    "BLRProperty Classification" := ContractRenewal."BLRProperty Classification";
+                    "BLRProperty Type" := ContractRenewal."BLRProperty Type";
+                    "BLRProperty Name" := ContractRenewal."BLRProperty Name";
+                    "BLRContract Start Date" := ContractRenewal."BLRContract Start Date";
+                    "BLRContract End Date" := ContractRenewal."BLRContract End Date";
+                    "BLRContract Tenor" := ContractRenewal."BLRContract Tenor";
+                    "BLRAnnual Rent Amount" := ContractRenewal."BLRContract Amount";
+                    "BLRRent Amount" := ContractRenewal."BLRRent Amount";
+                    "BLRSecurity Deposit Amount" := ContractRenewal."BLRSecurity Deposit Amount";
+                    "BLRUnit Number" := ContractRenewal."BLRUnit Number";
+                    "BLRMakani Number" := ContractRenewal."BLRMakani Number";
+                    "BLRMunicipality Number" := ContractRenewal."BLRMunicipality Number";
+                    "BLREmirate" := ContractRenewal."BLREmirate";
+                    "BLRCommunity" := ContractRenewal."BLRCommunity";
+                    "BLRDEWA Number" := ContractRenewal."BLRDEWA Number";
+                    "BLRProperty Size" := ContractRenewal."BLRProperty Size";
+                    "BLRNo of Installments" := ContractRenewal."BLRNo of Installments";
+                    "BLRUnit Type" := ContractRenewal."BLRUnit Type";
+                    "BLRUsage Type" := ContractRenewal."BLRUsage Type";
 
-                    "Single Rent Calculation" := ContractRenewal."Single Rent Calculation";
-                    "Merge Rent Calculation" := ContractRenewal."Merge Rent Calculation";
-                    "Praposal Type Selected" := ContractRenewal."Praposal Type Selected";
+                    "BLRSingle Rent Calculation" := ContractRenewal."BLRSingle Rent Calculation";
+                    "BLRMerge Rent Calculation" := ContractRenewal."BLRMerge Rent Calculation";
+                    "BLRPraposal Type Selected" := ContractRenewal."BLRPraposal Type Selected";
 
                     TenancyContractSubpage2();
                     rentdatafetched();
@@ -625,97 +625,97 @@ table 73209702 "Tenancy Contract"
                 end;
             end;
         }
-        field(73209636; "Yes/No"; Boolean)
+        field(73209636; "BLRYes/No"; Boolean)
         {
             DataClassification = CustomerContent;
             Caption = 'Yes/No';
         }
-        field(73209637; "Praposal Type Selected"; Option)
+        field(73209637; "BLRPraposal Type Selected"; Option)
         {
             OptionMembers = " ","Single Unit","Merge Unit";
             DataClassification = CustomerContent;
         }
-        field(73209638; "Unit Address"; Text[100])
+        field(73209638; "BLRUnit Address"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
         }
-        field(73209639; "Usage Type"; Text[100])
+        field(73209639; "BLRUsage Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Usage Type';
             NotBlank = true;
         }
-        field(73209640; "Unit Type"; Text[100])
+        field(73209640; "BLRUnit Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Type';
         }
-        field(73209641; "Single Unit Name"; Text[500])
+        field(73209641; "BLRSingle Unit Name"; Text[500])
         {
             DataClassification = CustomerContent;
             Caption = 'Single Unit Names';
         }
-        field(73209642; "Market Rate per Sq. Ft."; Decimal)
+        field(73209642; "BLRMarket Rate per Sq. Ft."; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Market Rate per Sq. Ft. ';
         }
-        field(73209643; "Facilities/Amenities"; Text[250])
+        field(73209643; "BLRFacilities/Amenities"; Text[250])
         {
             DataClassification = CustomerContent;
         }
-        field(73209644; "Security Deposit Amt. Received"; Decimal)
+        field(73209644; "BLRSecDepAmtReceived"; Decimal)
         {
             DataClassification = CustomerContent;
             trigger OnValidate()
             begin
-                "Security Amount Pending" := "Security Deposit Amount" - "Security Deposit Amt. Received";
+                "BLRSecurity Amount Pending" := "BLRSecurity Deposit Amount" - "BLRSecDepAmtReceived";
                 UpdateSecurityDepositBalance();
             end;
         }
-        field(73209645; "Single Rent Calculation"; Option)
+        field(73209645; "BLRSingle Rent Calculation"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Single Unit Rent Calculation Type';
             Editable = false;
             OptionMembers = " ","Single Unit with square feet rate","Single Unit with lumpsum square feet rate";
         }
-        field(73209646; "Merge Rent Calculation"; Option)
+        field(73209646; "BLRMerge Rent Calculation"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Merge Unit Rent Calculation Type';
             OptionMembers = " ","Merged Unit with same square feet","Merged Unit with differential square feet rate","Merged Unit with lumpsum annual amount";
         }
-        field(73209647; "Update Data"; Text[100])
+        field(73209647; "BLRUpdate Data"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Rent Calculation';
             InitValue = 'Update Data';
         }
-        field(73209648; "Final Calculation"; Text[100])
+        field(73209648; "BLRFinal Calculation"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Final Calculation';
             InitValue = 'Final Calculation';
             Editable = false;
         }
-        field(73209649; "Contract VAT %"; Option)
+        field(73209649; "BLRContract VAT %"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = "0%","5%";
             Editable = false;
         }
-        field(73209650; "Contract VAT Amount"; Decimal)
+        field(73209650; "BLRContract VAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Editable = false;
         }
-        field(73209651; "Contract Amount Including VAT"; Decimal)
+        field(73209651; "BLRContAmtInclVAT"; Decimal)
         {
             DataClassification = CustomerContent;
             Editable = false;
         }
-        field(73209652; "Security Amount Pending"; Decimal)
+        field(73209652; "BLRSecurity Amount Pending"; Decimal)
         {
             DataClassification = CustomerContent;
             Editable = false;
@@ -725,197 +725,197 @@ table 73209702 "Tenancy Contract"
                 UpdateTenancyContractSubPage();
             end;
         }
-        field(73209653; "Security Balanced Amount"; Decimal)
+        field(73209653; "BLRSecurity Balanced Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Editable = false;
         }
-        field(73209654; "Termination Of Contract"; Option)
+        field(73209654; "BLRTermination Of Contract"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = " ","Regular Termination","Early Termination","Suspension to Termination";
             Editable = true;
         }
-        field(73209655; "Termination Date"; Date)
+        field(73209655; "BLRTermination Date"; Date)
         {
             DataClassification = CustomerContent;
         }
-        field(73209656; "Unpaid Rent Due"; Decimal)
+        field(73209656; "BLRUnpaid Rent Due"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209657; "Penalty Charges"; Decimal)
+        field(73209657; "BLRPenalty Charges"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209658; "Damage Charges"; Decimal)
+        field(73209658; "BLRDamage Charges"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209659; "Service Charges Due"; Decimal)
+        field(73209659; "BLRService Charges Due"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209660; "Final Refundable Amount"; Decimal)
+        field(73209660; "BLRFinal Refundable Amount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209661; "Approval Required"; Boolean)
+        field(73209661; "BLRApproval Required"; Boolean)
         {
             DataClassification = CustomerContent;
         }
-        field(73209662; "Approval Stauts"; Enum "Approval Status Enum")
+        field(73209662; "BLRApproval Stauts"; Enum "Approval Status Enum")
         {
             DataClassification = CustomerContent;
         }
-        field(73209663; "Approved By"; Text[100])
+        field(73209663; "BLRApproved By"; Text[100])
         {
             DataClassification = CustomerContent;
         }
-        field(73209664; "Final Settlement Date"; Date)
+        field(73209664; "BLRFinal Settlement Date"; Date)
         {
             DataClassification = CustomerContent;
         }
-        field(73209665; "Rent Calculation Link"; Integer)
+        field(73209665; "BLRRent Calculation Link"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Rent Calculation Link';
             Editable = false;
         }
-        field(73209666; "Link"; Integer)
+        field(73209666; "BLRLink"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Final Calculation Link';
             Editable = false;
         }
-        field(73209667; "Renewal Notification to Tenant"; Integer)
+        field(73209667; "BLRRenewalNotiftoTenant"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Renewal Notification to Tenant';
             Editable = true;
         }
-        field(73209668; "Tenant Loyalty Check Reminder"; Integer)
+        field(73209668; "BLRTenantLoyaltyCheckReminder"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant Loyalty Check Reminder';
             Editable = true;
         }
-        field(73209669; "Payment Reminder"; Integer)
+        field(73209669; "BLRPayment Reminder"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Payment Reminder';
             Editable = false;
         }
-        field(73209670; "Previous Status"; Text[100])
+        field(73209670; "BLRPrevious Status"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Previous Status';
             Editable = true;
         }
-        field(73209671; "Vendor ID"; Code[20])
+        field(73209671; "BLRVendor ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Vendor ID';
         }
-        field(73209672; "Vendor Name"; Text[100])
+        field(73209672; "BLRVendor Name"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Vendor Name';
         }
-        field(73209673; "Percentage"; Integer)
+        field(73209673; "BLRPercentage"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Percentage';
         }
-        field(73209674; "Amount"; Decimal)
+        field(73209674; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Amount';
         }
-        field(73209675; "Calculation Method"; Text[100])
+        field(73209675; "BLRCalculation Method"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Calculation Method';
-            TableRelation = "Calculation Type"."Calculation Type";
+            TableRelation = "BLRCalculationType"."BLRCalculation Type";
         }
 
-        field(73209676; "Percentage Type"; Option)
+        field(73209676; "BLRPercentage Type"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Percentage Type';
             OptionMembers = " ","Fixed","Variable";
         }
-        field(73209677; "Base Amount Type"; Option)
+        field(73209677; "BLRBase Amount Type"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Base Amount Type';
             OptionMembers = " ","Revenue","Collection","Annual Rent","Monthly Rent";
         }
-        field(73209678; "Frequency Of Payment"; Option)
+        field(73209678; "BLRFrequency Of Payment"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Frequency Of Payment';
             OptionMembers = " ","Monthly","Quaterly","Half Yearly","Yearly";
         }
 
-        field(73209679; "Start Date"; Date)
+        field(73209679; "BLRStart Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Start Date';
             //  Editable = false;
         }
-        field(73209680; "End Date"; Date)
+        field(73209680; "BLREnd Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'End Date';
             //  Editable = false;
         }
 
-        field(73209681; "Contract Status"; Option)
+        field(73209681; "BLRContract Status"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Status';
             OptionMembers = " ","Active","Terminate";
         }
-        field(73209682; "Owner ID"; Integer)
+        field(73209682; "BLROwner ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Owner ID';
             Editable = false;
-            TableRelation = "Owner Profile"."Owner ID";
+            TableRelation = "BLROwnerProfile"."BLROwner ID";
         }
-        field(73209683; "Lessor's Nationality"; Text[50])
+        field(73209683; "BLRLessor's Nationality"; Text[50])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Nationality';
         }
-        field(73209684; "Lessor's Address"; Text[100])
+        field(73209684; "BLRLessor's Address"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Address';
         }
-        field(73209685; IsCarryForwarded; Boolean)
+        field(73209685; "BLRIsCarryForwarded"; Boolean)
         {
             DataClassification = CustomerContent;
         }
-        field(73209686; "Carry Forward In"; Decimal)
+        field(73209686; "BLRCarry Forward In"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Carry Forward In';
 
             trigger OnValidate()
             var
-                tenancyContractSubPage: Record "Tenancy Contract Subpage";
+                tenancyContractSubPage: Record "BLRTenancyContractSubpage";
             begin
-                tenancyContractSubPage.SetRange(ContractID, Rec."Contract ID");
-                tenancyContractSubPage.SetRange("Secondary Item Type", 'Security Deposit');
+                tenancyContractSubPage.SetRange("BLRContractID", Rec."BLRContract ID");
+                tenancyContractSubPage.SetRange("BLRSecondary Item Type", 'Security Deposit');
                 if tenancyContractSubPage.FindFirst() then begin
-                    Rec.Validate("Security Deposit Amt. Received", "Carry Forward In" + tenancyContractSubPage."Invoiced and Paid");
+                    Rec.Validate("BLRSecDepAmtReceived", "BLRCarry Forward In" + tenancyContractSubPage."BLRInvoiced and Paid");
                     Rec.Modify()
                 end;
             end;
         }
-        field(73209687; "Carry Forward Out"; Decimal)
+        field(73209687; "BLRCarry Forward Out"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Carry Forward Out';
@@ -924,7 +924,7 @@ table 73209702 "Tenancy Contract"
                 UpdateSecurityDepositBalance();
             end;
         }
-        field(73209688; Adjustments; Decimal)
+        field(73209688; "BLRAdjustments"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Adjustments';
@@ -934,7 +934,7 @@ table 73209702 "Tenancy Contract"
                 UpdateSecurityDepositBalance();
             end;
         }
-        field(73209689; Refund; Decimal)
+        field(73209689; "BLRRefund"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Refund';
@@ -944,7 +944,7 @@ table 73209702 "Tenancy Contract"
                 UpdateSecurityDepositBalance();
             end;
         }
-        field(73209690; "Municipality Number"; Text[100])
+        field(73209690; "BLRMunicipality Number"; Text[100])
         {
             Caption = 'Municipality Number';
             DataClassification = ToBeClassified;
@@ -953,7 +953,7 @@ table 73209702 "Tenancy Contract"
 
     keys
     {
-        key(PK; "Contract ID")
+        key(PK; "BLRContract ID")
         {
             Clustered = false;
         }
@@ -963,7 +963,7 @@ table 73209702 "Tenancy Contract"
             Clustered = false;
         }
 
-        key(PK2; "Proposal ID", "Renewal Proposal ID")
+        key(PK2; "BLRProposal ID", "BLRRenewal Proposal ID")
         {
             Clustered = true;
         }
@@ -972,35 +972,35 @@ table 73209702 "Tenancy Contract"
 
     fieldgroups
     {
-        fieldgroup(DropDown; "Contract ID", "Proposal ID", "Renewal Proposal ID")
+        fieldgroup(DropDown; "BLRContract ID", "BLRProposal ID", "BLRRenewal Proposal ID")
         { }
     }
 
     procedure TenancyContractSubpage()
     var
-        RevenueSubpage: Record "Revenue Item Subpage";
-        lTenancyContractSubpage: Record "Tenancy Contract Subpage";
+        RevenueSubpage: Record "BLRRevenueItemSubpage";
+        lTenancyContractSubpage: Record "BLRTenancyContractSubpage";
     begin
-        if Rec."Contract Type" = Rec."Contract Type"::"New Contract" then begin
-            lTenancyContractSubpage.SetRange(ContractID, Rec."Contract ID");
+        if Rec."BLRContract Type" = Rec."BLRContract Type"::"New Contract" then begin
+            lTenancyContractSubpage.SetRange("BLRContractID", Rec."BLRContract ID");
             if lTenancyContractSubpage.FindSet() then
                 lTenancyContractSubpage.DeleteAll();
 
-            RevenueSubpage.SetRange("ProposalID", Rec."Proposal ID");
+            RevenueSubpage.SetRange("BLRProposalID", Rec."BLRProposal ID");
             if RevenueSubpage.FindSet() then
                 repeat
                     lTenancyContractSubpage.Init();
-                    lTenancyContractSubpage.ProposalID := RevenueSubpage.ProposalID;
-                    lTenancyContractSubpage."ContractID" := Rec."Contract ID";
-                    lTenancyContractSubpage."TenantID" := rec."Tenant Id";
-                    lTenancyContractSubpage."Secondary Item Type" := RevenueSubpage."Secondary Item Type";
-                    lTenancyContractSubpage.Amount := RevenueSubpage.Amount;
-                    lTenancyContractSubpage."VAT Amount" := RevenueSubpage."VAT Amount";
-                    lTenancyContractSubpage."VAT %" := RevenueSubpage."VAT %";
-                    lTenancyContractSubpage."Amount Including VAT" := RevenueSubpage."Amount Including VAT";
-                    lTenancyContractSubpage."Start Date" := RevenueSubpage."Start Date";
-                    lTenancyContractSubpage."End Date" := RevenueSubpage."End Date";
-                    lTenancyContractSubpage."Payment Type" := RevenueSubpage."Payment Type";
+                    lTenancyContractSubpage."BLRProposalID" := RevenueSubpage."BLRProposalID";
+                    lTenancyContractSubpage."BLRContractID" := Rec."BLRContract ID";
+                    lTenancyContractSubpage."BLRTenantID" := rec."BLRTenant ID";
+                    lTenancyContractSubpage."BLRSecondary Item Type" := RevenueSubpage."BLRSecondary Item Type";
+                    lTenancyContractSubpage."BLRAmount" := RevenueSubpage."BLRAmount";
+                    lTenancyContractSubpage."BLRVAT Amount" := RevenueSubpage."BLRVAT Amount";
+                    lTenancyContractSubpage."BLRVAT %" := RevenueSubpage."BLRVAT %";
+                    lTenancyContractSubpage."BLRAmount Including VAT" := RevenueSubpage."BLRAmount Including VAT";
+                    lTenancyContractSubpage."BLRStart Date" := RevenueSubpage."BLRStart Date";
+                    lTenancyContractSubpage."BLREnd Date" := RevenueSubpage."BLREnd Date";
+                    lTenancyContractSubpage."BLRPayment Type" := RevenueSubpage."BLRPayment Type";
                     lTenancyContractSubpage.Insert();
                     Clear(lTenancyContractSubpage);
                 until RevenueSubpage.Next() = 0;
@@ -1009,29 +1009,29 @@ table 73209702 "Tenancy Contract"
 
     procedure TenancyContractSubpage2()
     var
-        RevenueSubpage: Record "Contract Renewal Subpage";
-        lTenancyContractSubpage: Record "Tenancy Contract Subpage";
+        RevenueSubpage: Record "BLRContractRenewalSubpage";
+        lTenancyContractSubpage: Record "BLRTenancyContractSubpage";
     begin
-        if Rec."Contract Type" = Rec."Contract Type"::"Renewal Contract" then begin
-            lTenancyContractSubpage.SetRange(ContractID, Rec."Contract ID");
+        if Rec."BLRContract Type" = Rec."BLRContract Type"::"Renewal Contract" then begin
+            lTenancyContractSubpage.SetRange("BLRContractID", Rec."BLRContract ID");
             if lTenancyContractSubpage.FindSet() then
                 lTenancyContractSubpage.DeleteAll();
 
-            RevenueSubpage.SetRange(ID, "Renewal Proposal ID");
+            RevenueSubpage.SetRange("BLRID", "BLRRenewal Proposal ID");
             if RevenueSubpage.FindSet() then
                 repeat
                     lTenancyContractSubpage.Init();
-                    lTenancyContractSubpage."Contract Renewal ID" := RevenueSubpage.Id;
-                    lTenancyContractSubpage."ContractID" := Rec."Contract ID";
-                    lTenancyContractSubpage."TenantID" := rec."Tenant Id";
-                    lTenancyContractSubpage."Secondary Item Type" := RevenueSubpage."Secondary Item Type";
-                    lTenancyContractSubpage.Amount := RevenueSubpage.Amount;
-                    lTenancyContractSubpage."VAT Amount" := RevenueSubpage."VAT Amount";
-                    lTenancyContractSubpage."VAT %" := RevenueSubpage."VAT %";
-                    lTenancyContractSubpage."Amount Including VAT" := RevenueSubpage."Amount Including VAT";
-                    lTenancyContractSubpage."Start Date" := RevenueSubpage."Start Date";
-                    lTenancyContractSubpage."End Date" := RevenueSubpage."End Date";
-                    lTenancyContractSubpage."Payment Type" := RevenueSubpage."Payment Type";
+                    lTenancyContractSubpage."BLRContract Renewal ID" := RevenueSubpage."BLRId";
+                    lTenancyContractSubpage."BLRContractID" := Rec."BLRContract ID";
+                    lTenancyContractSubpage."BLRTenantID" := rec."BLRTenant ID";
+                    lTenancyContractSubpage."BLRSecondary Item Type" := RevenueSubpage."BLRSecondary Item Type";
+                    lTenancyContractSubpage."BLRAmount" := RevenueSubpage."BLRAmount";
+                    lTenancyContractSubpage."BLRVAT Amount" := RevenueSubpage."BLRVAT Amount";
+                    lTenancyContractSubpage."BLRVAT %" := RevenueSubpage."BLRVAT %";
+                    lTenancyContractSubpage."BLRAmount Including VAT" := RevenueSubpage."BLRAmount Including VAT";
+                    lTenancyContractSubpage."BLRStart Date" := RevenueSubpage."BLRStart Date";
+                    lTenancyContractSubpage."BLREnd Date" := RevenueSubpage."BLREnd Date";
+                    lTenancyContractSubpage."BLRPayment Type" := RevenueSubpage."BLRPayment Type";
                     lTenancyContractSubpage.Insert();
                     Clear(lTenancyContractSubpage);
                 until RevenueSubpage.Next() = 0;
@@ -1041,20 +1041,20 @@ table 73209702 "Tenancy Contract"
 
     procedure TCAdditionalTermFetch()
     var
-        additionalTerm: Record "Additional Terms";
-        TCAdditionalTerm: Record "TC Additional Terms";
+        additionalTerm: Record "BLRAdditionalTerms";
+        TCAdditionalTerm: Record "BLRTCAdditionalTerms";
     begin
-        if Rec."Contract Type" = Rec."Contract Type"::"New Contract"
+        if Rec."BLRContract Type" = Rec."BLRContract Type"::"New Contract"
                then begin
-            TCAdditionalTerm.SetRange("Document No.", Rec."Contract ID");
+            TCAdditionalTerm.SetRange("BLRDocument No.", Rec."BLRContract ID");
             if TCAdditionalTerm.FindSet() then
                 TCAdditionalTerm.DeleteAll();
-            additionalTerm.SetRange("Document No.", Rec."Proposal ID");
+            additionalTerm.SetRange("BLRDocument No.", Rec."BLRProposal ID");
             if additionalTerm.FindSet() then
                 repeat
                     TCAdditionalTerm.Init();
-                    TCAdditionalTerm."Document No." := Rec."Contract ID";
-                    TCAdditionalTerm.Description := additionalTerm.Description;
+                    TCAdditionalTerm."BLRDocument No." := Rec."BLRContract ID";
+                    TCAdditionalTerm."BLRDescription" := additionalTerm."BLRDescription";
                     TCAdditionalTerm.Insert();
                     Clear(TCAdditionalTerm);
                 until additionalTerm.Next() = 0;
@@ -1063,20 +1063,20 @@ table 73209702 "Tenancy Contract"
 
     procedure RenewalAdditionalTermFetch()
     var
-        additionalTerm: Record "Renewal Additional Terms";
-        TCAdditionalTerm: Record "TC Additional Terms";
+        additionalTerm: Record "BLRRenewalAdditionalTerms";
+        TCAdditionalTerm: Record "BLRTCAdditionalTerms";
     begin
-        if Rec."Contract Type" = Rec."Contract Type"::"Renewal Contract"
+        if Rec."BLRContract Type" = Rec."BLRContract Type"::"Renewal Contract"
                then begin
-            TCAdditionalTerm.SetRange("Document No.", Rec."Contract ID");
+            TCAdditionalTerm.SetRange("BLRDocument No.", Rec."BLRContract ID");
             if TCAdditionalTerm.FindSet() then
                 TCAdditionalTerm.DeleteAll();
-            additionalTerm.SetRange("Document No.", Rec."Renewal Proposal ID");
+            additionalTerm.SetRange("BLRDocument No.", Rec."BLRRenewal Proposal ID");
             if additionalTerm.FindSet() then
                 repeat
                     TCAdditionalTerm.Init();
-                    TCAdditionalTerm."Document No." := Rec."Contract ID";
-                    TCAdditionalTerm.Description := additionalTerm.Description;
+                    TCAdditionalTerm."BLRDocument No." := Rec."BLRContract ID";
+                    TCAdditionalTerm."BLRDescription" := additionalTerm."BLRDescription";
                     TCAdditionalTerm.Insert();
                     Clear(TCAdditionalTerm);
                 until additionalTerm.Next() = 0;
@@ -1085,210 +1085,210 @@ table 73209702 "Tenancy Contract"
 
     procedure rentdatafetch()
     var
-        CRSingleUnitRent: Record "Single Unit Rent SubPage"; // Source table
-        TCSingleUnitRent: Record "TC Single Unit Rent SubPage"; // Target table
+        CRSingleUnitRent: Record "BLRSingleUnitRentSubPage"; // Source table
+        TCSingleUnitRent: Record "BLRTCSingleUnitRentSubPage"; // Target table
 
-        TCLumpsumUnitRate: Record "TC Single LumAnnualAmnt SP"; // Target table
-        CRLumpsumUnitRent: Record "Single Lum_AnnualAmnt SubPage"; // Source table
+        TCLumpsumUnitRate: Record "BLRTCSingleLumAnnualAmntSP"; // Target table
+        CRLumpsumUnitRent: Record "BLRSingleLumAnnualAmntSubPage"; // Source table
 
         //---Merge unit  same sq ft rate ---//
-        TCMergeUnitRate: Record "TC Merge SameSqure SubPage"; // Target table
-        CRMergeUnitRent: Record "Merge SameSqure SubPage"; // Source table
+        TCMergeUnitRate: Record "BLRTCMergeSameSqureSubPage"; // Target table
+        CRMergeUnitRent: Record "BLRMergeSameSqureSubPage"; // Source table
 
         //---Merge unit  diff sq ft rate ---//
-        TCMergediffUnitRate: Record "TC Merge DifferentSq SubPage"; // Target table
-        CRMergediffUnitRent: Record "Merge DifferentSqure SubPage"; // Source table
+        TCMergediffUnitRate: Record "BLRTCMergeDifferentSqSubPage"; // Target table
+        CRMergediffUnitRent: Record "BLRMergeDifferentSqureSubPage"; // Source table
 
         //---Merge unit  lumpsum sq ft rate ---//
-        TCMergeLumpsumUnitRate: Record "TC Merge LumAnnualAmount SP"; // Target table
-        CRMergeLumpsumUnitRent: Record "Merge Lum_AnnualAmount SubPage"; // Source table
+        TCMergeLumpsumUnitRate: Record "BLRTCMergeLumAnnualAmountSP"; // Target table
+        CRMergeLumpsumUnitRent: Record "BLRMergeLumAnnualAmountSubPage"; // Source table
 
-        TCPerDayRevenewUnitRate: Record "TC Per Day Rent for Revenue"; // Target table
-        CRPerDayRevenewUnitRate: Record "Per Day Rent for Revenue"; // Source table
+        TCPerDayRevenewUnitRate: Record "BLRTCPerDayRentforRevenue"; // Target table
+        CRPerDayRevenewUnitRate: Record "BLRPerDayRentforRevenue"; // Source table
 
         LineNoCounter: Integer;
     begin
 
-        if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with square feet rate" then begin
+        if "BLRSingle Rent Calculation" = "BLRSingle Rent Calculation"::"Single Unit with square feet rate" then begin
 
             // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
             TCSingleUnitRent.Reset();
-            TCSingleUnitRent.SetRange("ID", "Proposal ID");
+            TCSingleUnitRent.SetRange("BLRID", "BLRProposal ID");
 
             if TCSingleUnitRent.FindSet() then
                 TCSingleUnitRent.DeleteAll();
 
-            // Ã¢Å“â€¦ **Fetch Data from Single Unit Rent SubPage where Proposal ID = Proposal ID**
+            // Ã¢Å“â€¦ **Fetch Data from Single Unit Rent SubPage where "BLRProposal ID" = "BLRProposal ID"**
             CRSingleUnitRent.Reset();
-            CRSingleUnitRent.SetRange("Proposal ID", "Proposal ID"); // Correct condition
+            CRSingleUnitRent.SetRange("BLRProposal ID", "BLRProposal ID"); // Correct condition
 
             if CRSingleUnitRent.FindSet() then begin
                 LineNoCounter := 1; // Start line numbering from 1
                 repeat
                     TCSingleUnitRent.Init();
-                    TCSingleUnitRent."ID" := "Proposal ID"; // Ensure Proposal ID is stored in target ID field
-                    TCSingleUnitRent."Contract Id" := Rec."Contract ID";
-                    TCSingleUnitRent."Line No." := LineNoCounter; // Ensure unique line number
-                    TCSingleUnitRent."Unit ID" := CRSingleUnitRent."Unit ID";
-                    TCSingleUnitRent.Year := CRSingleUnitRent.Year;
-                    TCSingleUnitRent."Start Date" := CRSingleUnitRent."Start Date";
-                    TCSingleUnitRent."End Date" := CRSingleUnitRent."End Date";
-                    TCSingleUnitRent."Number of Days" := CRSingleUnitRent."Number of Days";
-                    TCSingleUnitRent."Unit Sq Ft" := CRSingleUnitRent."Unit Sq Ft";
-                    TCSingleUnitRent."Rate per Sq.Ft" := CRSingleUnitRent."Rate per Sq.Ft";
-                    TCSingleUnitRent."Rent Increase %" := CRSingleUnitRent."Rent Increase %";
-                    TCSingleUnitRent."Annual Amount" := CRSingleUnitRent."Annual Amount";
-                    TCSingleUnitRent."Round off" := CRSingleUnitRent."Round off";
-                    TCSingleUnitRent."Final Annual Amount" := CRSingleUnitRent."Final Annual Amount";
-                    TCSingleUnitRent."Per Day Rent" := CRSingleUnitRent."Per Day Rent";
+                    TCSingleUnitRent."BLRID" := "BLRProposal ID"; // Ensure "BLRProposal ID" is stored in target ID field
+                    TCSingleUnitRent."BLRContract Id" := Rec."BLRContract ID";
+                    TCSingleUnitRent."BLRLine No." := LineNoCounter; // Ensure unique line number
+                    TCSingleUnitRent."BLRUnit ID" := CRSingleUnitRent."BLRUnit ID";
+                    TCSingleUnitRent."BLRYear" := CRSingleUnitRent."BLRYear";
+                    TCSingleUnitRent."BLRStart Date" := CRSingleUnitRent."BLRStart Date";
+                    TCSingleUnitRent."BLREnd Date" := CRSingleUnitRent."BLREnd Date";
+                    TCSingleUnitRent."BLRNumber of Days" := CRSingleUnitRent."BLRNumber of Days";
+                    TCSingleUnitRent."BLRUnit Sq Ft" := CRSingleUnitRent."BLRUnit Sq Ft";
+                    TCSingleUnitRent."BLRRate per Sq.Ft" := CRSingleUnitRent."BLRRate per Sq.Ft";
+                    TCSingleUnitRent."BLRRent Increase %" := CRSingleUnitRent."BLRRent Increase %";
+                    TCSingleUnitRent."BLRAnnual Amount" := CRSingleUnitRent."BLRAnnual Amount";
+                    TCSingleUnitRent."BLRRound off" := CRSingleUnitRent."BLRRound off";
+                    TCSingleUnitRent."BLRFinal Annual Amount" := CRSingleUnitRent."BLRFinal Annual Amount";
+                    TCSingleUnitRent."BLRPer Day Rent" := CRSingleUnitRent."BLRPer Day Rent";
                     TCSingleUnitRent.Insert();
 
                     LineNoCounter += 1; // Increment line number
                 until CRSingleUnitRent.Next() = 0;
                 // end else begin
-                //     Message('No existing records found for Proposal ID: %1 in Single Unit Rent SubPage.', "Proposal ID");
+                //     Message('No existing records found for "BLRProposal ID": %1 in Single Unit Rent SubPage.', "BLRProposal ID");
             end;
         end
         else
-            if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
+            if "BLRSingle Rent Calculation" = "BLRSingle Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
 
                 // Ã¢Å“â€¦ Delete Existing Records Before Insert in TC Single LumAnnualAmnt SP
                 TCLumpsumUnitRate.Reset();
-                TCLumpsumUnitRate.SetRange("ID", "Proposal ID");
+                TCLumpsumUnitRate.SetRange("BLRID", "BLRProposal ID");
                 if TCLumpsumUnitRate.FindSet() then
                     TCLumpsumUnitRate.DeleteAll();
 
                 // Ã¢Å“â€¦ Fetch Data from CR Single LumAnnualAmnt SP and Insert into TC Single LumAnnualAmnt SP
                 CRLumpsumUnitRent.Reset();
-                CRLumpsumUnitRent.SetRange("Proposal ID", "Proposal ID");
+                CRLumpsumUnitRent.SetRange("BLRProposal ID", "BLRProposal ID");
 
                 if CRLumpsumUnitRent.FindSet() then begin
                     LineNoCounter := 1; // Start line numbering from 1
                     repeat
                         TCLumpsumUnitRate.Init();
 
-                        TCLumpsumUnitRate."ID" := CRLumpsumUnitRent."Proposal ID";
-                        TCLumpsumUnitRate."Contract Id" := Rec."Contract ID";
-                        TCLumpsumUnitRate."SL_Line No." := LineNoCounter; // Ensure unique line number
-                        TCLumpsumUnitRate."SL_Unit ID" := CRLumpsumUnitRent."SL_Unit ID";
-                        TCLumpsumUnitRate.SL_Year := CRLumpsumUnitRent.SL_Year;
-                        TCLumpsumUnitRate."SL_Start Date" := CRLumpsumUnitRent."SL_Start Date";
-                        TCLumpsumUnitRate."SL_End Date" := CRLumpsumUnitRent."SL_End Date";
-                        TCLumpsumUnitRate."SL_Number of Days" := CRLumpsumUnitRent."SL_Number of Days";
-                        TCLumpsumUnitRate."SL_Unit Sq Ft" := CRLumpsumUnitRent."SL_Unit Sq Ft";
-                        TCLumpsumUnitRate."SL_Rate per Sq.Ft" := CRLumpsumUnitRent."SL_Rate per Sq.Ft";
-                        TCLumpsumUnitRate."SL_Rent Increase %" := CRLumpsumUnitRent."SL_Rent Increase %";
-                        TCLumpsumUnitRate."SL_Annual Amount" := CRLumpsumUnitRent."SL_Annual Amount";
-                        TCLumpsumUnitRate."SL_Round off" := CRLumpsumUnitRent."SL_Round off";
-                        TCLumpsumUnitRate."SL_Final Annual Amount" := CRLumpsumUnitRent."SL_Final Annual Amount";
-                        TCLumpsumUnitRate."SL_Per Day Rent" := CRLumpsumUnitRent."SL_Per Day Rent";
-                        TCLumpsumUnitRate.TotalFinalAmount := CRSingleUnitRent.TotalFinalAmount;
-                        TCLumpsumUnitRate.TotalAnnualAmount := CRSingleUnitRent.TotalAnnualAmount;
-                        TCLumpsumUnitRate.TotalRoundOff := CRSingleUnitRent.TotalRoundOff;
-                        TCLumpsumUnitRate.TotalFirstAnnualAmount := CRSingleUnitRent.TotalFirstAnnualAmount;
+                        TCLumpsumUnitRate."BLRID" := CRLumpsumUnitRent."BLRProposal ID";
+                        TCLumpsumUnitRate."BLRContract Id" := Rec."BLRContract ID";
+                        TCLumpsumUnitRate."BLRSL_Line No." := LineNoCounter; // Ensure unique line number
+                        TCLumpsumUnitRate."BLRSL_Unit ID" := CRLumpsumUnitRent."BLRSL_Unit ID";
+                        TCLumpsumUnitRate."BLRSL_Year" := CRLumpsumUnitRent."BLRSL_Year";
+                        TCLumpsumUnitRate."BLRSL_Start Date" := CRLumpsumUnitRent."BLRSL_Start Date";
+                        TCLumpsumUnitRate."BLRSL_End Date" := CRLumpsumUnitRent."BLRSL_End Date";
+                        TCLumpsumUnitRate."BLRSL_Number of Days" := CRLumpsumUnitRent."BLRSL_Number of Days";
+                        TCLumpsumUnitRate."BLRSL_Unit Sq Ft" := CRLumpsumUnitRent."BLRSL_Unit Sq Ft";
+                        TCLumpsumUnitRate."BLRSL_Rate per Sq.Ft" := CRLumpsumUnitRent."BLRSL_Rate per Sq.Ft";
+                        TCLumpsumUnitRate."BLRSL_Rent Increase %" := CRLumpsumUnitRent."BLRSL_Rent Increase %";
+                        TCLumpsumUnitRate."BLRSL_Annual Amount" := CRLumpsumUnitRent."BLRSL_Annual Amount";
+                        TCLumpsumUnitRate."BLRSL_Round off" := CRLumpsumUnitRent."BLRSL_Round off";
+                        TCLumpsumUnitRate."BLRSL_Final Annual Amount" := CRLumpsumUnitRent."BLRSL_Final Annual Amount";
+                        TCLumpsumUnitRate."BLRSL_Per Day Rent" := CRLumpsumUnitRent."BLRSL_Per Day Rent";
+                        TCLumpsumUnitRate."BLRTotalFinalAmount" := CRSingleUnitRent."BLRTotalFinalAmount";
+                        TCLumpsumUnitRate."BLRTotalAnnualAmount" := CRSingleUnitRent."BLRTotalAnnualAmount";
+                        TCLumpsumUnitRate."BLRTotalRoundOff" := CRSingleUnitRent."BLRTotalRoundOff";
+                        TCLumpsumUnitRate."BLRTotalFirstAnnualAmount" := CRSingleUnitRent."BLRTotalFirstAnnualAmount";
 
 
                         TCLumpsumUnitRate.Insert();
                         LineNoCounter += 1; // Increment line number
                     until CRLumpsumUnitRent.Next() = 0;
                     // end else begin
-                    //     Message('No existing records found for ID: %1 in CR Single LumAnnualAmnt SP.', "Proposal ID");
+                    //     Message('No existing records found for ID: %1 in CR Single LumAnnualAmnt SP.', "BLRProposal ID");
                 end;
             end
             else
-                if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with same square feet" then begin
+                if "BLRMerge Rent Calculation" = "BLRMerge Rent Calculation"::"Merged Unit with same square feet" then begin
 
                     // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                     TCMergeUnitRate.Reset();
-                    TCMergeUnitRate.SetRange("ID", "Proposal ID");
+                    TCMergeUnitRate.SetRange("BLRID", "BLRProposal ID");
 
                     if TCMergeUnitRate.FindSet() then
                         TCMergeUnitRate.DeleteAll();
 
                     // Ã¢Å“â€¦ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
                     CRMergeUnitRent.Reset();
-                    CRMergeUnitRent.SetRange("Proposal ID", "Proposal ID");
+                    CRMergeUnitRent.SetRange("BLRProposal ID", "BLRProposal ID");
 
                     if CRMergeUnitRent.FindSet() then begin
                         LineNoCounter := 1; // Start line numbering from 1
                         repeat
                             TCMergeUnitRate.Init();
-                            TCMergeUnitRate."ID" := CRMergeUnitRent."Proposal ID";
-                            TCMergeUnitRate."Contract Id" := Rec."Contract ID";
-                            TCMergeUnitRate."MS_Line No." := LineNoCounter; // Ensure unique line number
-                            TCMergeUnitRate."MS_Merged Unit ID" := CRMergeUnitRent."MS_Merged Unit ID";
-                            TCMergeUnitRate.MS_Year := CRMergeUnitRent.MS_Year;
-                            TCMergeUnitRate."MS_Start Date" := CRMergeUnitRent."MS_Start Date";
-                            TCMergeUnitRate."MS_End Date" := CRMergeUnitRent."MS_End Date";
-                            TCMergeUnitRate."MS_Number of Days" := CRMergeUnitRent."MS_Number of Days";
-                            TCMergeUnitRate."MS_Unit Sq Ft" := CRMergeUnitRent."MS_Unit Sq Ft";
-                            TCMergeUnitRate."MS_Rate per Sq.Ft" := CRMergeUnitRent."MS_Rate per Sq.Ft";
-                            TCMergeUnitRate."MS_Rent Increase %" := CRMergeUnitRent."MS_Rent Increase %";
-                            TCMergeUnitRate."MS_Annual Amount" := CRMergeUnitRent."MS_Annual Amount";
-                            TCMergeUnitRate."MS_Round off" := CRMergeUnitRent."MS_Round off";
-                            TCMergeUnitRate."MS_Final Annual Amount" := CRMergeUnitRent."MS_Final Annual Amount";
-                            TCMergeUnitRate."MS_Per Day Rent" := CRMergeUnitRent."MS_Per Day Rent";
-                            TCMergeUnitRate.TotalFinalAmount := CRMergeUnitRent.TotalFinalAmount;
-                            TCMergeUnitRate.TotalAnnualAmount := CRMergeUnitRent.TotalAnnualAmount;
-                            TCMergeUnitRate.TotalRoundOff := CRMergeUnitRent.TotalRoundOff;
-                            TCMergeUnitRate.TotalFirstAnnualAmount := CRMergeUnitRent.TotalFirstAnnualAmount;
+                            TCMergeUnitRate."BLRID" := CRMergeUnitRent."BLRProposal ID";
+                            TCMergeUnitRate."BLRContract Id" := Rec."BLRContract ID";
+                            TCMergeUnitRate."BLRMS_Line No." := LineNoCounter; // Ensure unique line number
+                            TCMergeUnitRate."BLRMS_Merged Unit ID" := CRMergeUnitRent."BLRMS_Merged Unit ID";
+                            TCMergeUnitRate."BLRMS_Year" := CRMergeUnitRent."BLRMS_Year";
+                            TCMergeUnitRate."BLRMS_Start Date" := CRMergeUnitRent."BLRMS_Start Date";
+                            TCMergeUnitRate."BLRMS_End Date" := CRMergeUnitRent."BLRMS_End Date";
+                            TCMergeUnitRate."BLRMS_Number of Days" := CRMergeUnitRent."BLRMS_Number of Days";
+                            TCMergeUnitRate."BLRMS_Unit Sq Ft" := CRMergeUnitRent."BLRMS_Unit Sq Ft";
+                            TCMergeUnitRate."BLRMS_Rate per Sq.Ft" := CRMergeUnitRent."BLRMS_Rate per Sq.Ft";
+                            TCMergeUnitRate."BLRMS_Rent Increase %" := CRMergeUnitRent."BLRMS_Rent Increase %";
+                            TCMergeUnitRate."BLRMS_Annual Amount" := CRMergeUnitRent."BLRMS_Annual Amount";
+                            TCMergeUnitRate."BLRMS_Round off" := CRMergeUnitRent."BLRMS_Round off";
+                            TCMergeUnitRate."BLRMS_Final Annual Amount" := CRMergeUnitRent."BLRMS_Final Annual Amount";
+                            TCMergeUnitRate."BLRMS_Per Day Rent" := CRMergeUnitRent."BLRMS_Per Day Rent";
+                            TCMergeUnitRate."BLRTotalFinalAmount" := CRMergeUnitRent."BLRTotalFinalAmount";
+                            TCMergeUnitRate."BLRTotalAnnualAmount" := CRMergeUnitRent."BLRTotalAnnualAmount";
+                            TCMergeUnitRate."BLRTotalRoundOff" := CRMergeUnitRent."BLRTotalRoundOff";
+                            TCMergeUnitRate."BLRTotalFirstAnnualAmount" := CRMergeUnitRent."BLRTotalFirstAnnualAmount";
                             TCMergeUnitRate.Insert();
 
                             LineNoCounter += 1; // Increment line number
                         until CRMergeUnitRent.Next() = 0;
                         // end else begin
-                        //     Message('No existing records found for ID: %1 in CR Single Unit Rent SubPage.', "Proposal ID");
+                        //     Message('No existing records found for ID: %1 in CR Single Unit Rent SubPage.', "BLRProposal ID");
                     end;
 
                 end
                 else
-                    if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with differential square feet rate" then begin
+                    if "BLRMerge Rent Calculation" = "BLRMerge Rent Calculation"::"Merged Unit with differential square feet rate" then begin
 
                         // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                         TCMergediffUnitRate.Reset();
-                        TCMergediffUnitRate.SetRange("ID", "Proposal ID");
+                        TCMergediffUnitRate.SetRange("BLRID", "BLRProposal ID");
 
                         if TCMergediffUnitRate.FindSet() then
                             TCMergediffUnitRate.DeleteAll();
 
                         // Ã¢Å“â€¦ **Fetch Data from CR Merge Diff Unit Rent SubPage and Insert into TC Merge Diff Unit Rent SubPage**
                         CRMergediffUnitRent.Reset();
-                        CRMergediffUnitRent.SetRange("Proposal ID", "Proposal ID");
+                        CRMergediffUnitRent.SetRange("BLRProposal ID", "BLRProposal ID");
 
                         if CRMergediffUnitRent.FindSet() then begin
                             LineNoCounter := 1; // Start line numbering from 1
                             repeat
-                                // Before inserting, check if the record exists with the same Proposal ID and MD_Line No.
+                                // Before inserting, check if the record exists with the same "BLRProposal ID" and MD_Line No.
                                 // TCMergediffUnitRate.Reset();
-                                // TCMergediffUnitRate.SetRange("ID", CRMergediffUnitRent."Proposal ID");
-                                // TCMergediffUnitRate.SetRange("MD_Line No.", LineNoCounter);
+                                // TCMergediffUnitRate.SetRange("BLRID", CRMergediffUnitRent."BLRProposal ID");
+                                // TCMergediffUnitRate.SetRange("BLRMD_Line No.", LineNoCounter);
 
                                 // if TCMergediffUnitRate.FindFirst() then begin
-                                //     // If a record exists with the same Proposal ID and MD_Line No., skip this record
-                                //     Message('Record with the same Proposal ID and Line No. already exists for Proposal ID: %1', CRMergediffUnitRent."Proposal ID");
+                                //     // If a record exists with the same "BLRProposal ID" and MD_Line No., skip this record
+                                //     Message('Record with the same "BLRProposal ID" and Line No. already exists for "BLRProposal ID": %1', CRMergediffUnitRent."BLRProposal ID");
                                 // end else begin
                                 // Proceed with inserting the new record
                                 TCMergediffUnitRate.Init();
-                                TCMergediffUnitRate."ID" := CRMergediffUnitRent."Proposal ID";
-                                TCMergediffUnitRate."Contract Id" := Rec."Contract ID";
-                                TCMergediffUnitRate."MD_Line No." := LineNoCounter; // Ensure unique line number
-                                TCMergediffUnitRate."MD_Merged Unit ID" := CRMergediffUnitRent."MD_Merged Unit ID";
-                                TCMergediffUnitRate."MD_Unit ID" := CRMergediffUnitRent."MD_Unit ID";
-                                TCMergediffUnitRate.MD_Year := CRMergediffUnitRent.MD_Year;
-                                TCMergediffUnitRate."MD_Start Date" := CRMergediffUnitRent."MD_Start Date";
-                                TCMergediffUnitRate."MD_End Date" := CRMergediffUnitRent."MD_End Date";
-                                TCMergediffUnitRate."MD_Number of Days" := CRMergediffUnitRent."MD_Number of Days";
-                                TCMergediffUnitRate."MD_Unit Sq Ft" := CRMergediffUnitRent."MD_Unit Sq Ft";
-                                TCMergediffUnitRate."MD_Rate per Sq.Ft" := CRMergediffUnitRent."MD_Rate per Sq.Ft";
-                                TCMergediffUnitRate."MD_Rent Increase %" := CRMergediffUnitRent."MD_Rent Increase %";
-                                TCMergediffUnitRate."MD_Annual Amount" := CRMergediffUnitRent."MD_Annual Amount";
-                                TCMergediffUnitRate."MD_Round off" := CRMergediffUnitRent."MD_Round off";
-                                TCMergediffUnitRate."MD_Final Annual Amount" := CRMergediffUnitRent."MD_Final Annual Amount";
-                                TCMergediffUnitRate."MD_Per Day Rent" := CRMergediffUnitRent."MD_Per Day Rent";
-                                TCMergediffUnitRate.TotalFinalAmount := CRMergediffUnitRent.TotalFinalAmount;
-                                TCMergediffUnitRate.TotalAnnualAmount := CRMergediffUnitRent.TotalAnnualAmount;
-                                TCMergediffUnitRate.TotalRoundOff := CRMergediffUnitRent.TotalRoundOff;
-                                TCMergediffUnitRate.TotalFirstAnnualAmount := CRMergediffUnitRent.TotalFirstAnnualAmount;
+                                TCMergediffUnitRate."BLRID" := CRMergediffUnitRent."BLRProposal ID";
+                                TCMergediffUnitRate."BLRContract Id" := Rec."BLRContract ID";
+                                TCMergediffUnitRate."BLRMD_Line No." := LineNoCounter; // Ensure unique line number
+                                TCMergediffUnitRate."BLRMD_Merged Unit ID" := CRMergediffUnitRent."BLRMD_Merged Unit ID";
+                                TCMergediffUnitRate."BLRMD_Unit ID" := CRMergediffUnitRent."BLRMD_Unit ID";
+                                TCMergediffUnitRate."BLRMD_Year" := CRMergediffUnitRent."BLRMD_Year";
+                                TCMergediffUnitRate."BLRMD_Start Date" := CRMergediffUnitRent."BLRMD_Start Date";
+                                TCMergediffUnitRate."BLRMD_End Date" := CRMergediffUnitRent."BLRMD_End Date";
+                                TCMergediffUnitRate."BLRMD_Number of Days" := CRMergediffUnitRent."BLRMD_Number of Days";
+                                TCMergediffUnitRate."BLRMD_Unit Sq Ft" := CRMergediffUnitRent."BLRMD_Unit Sq Ft";
+                                TCMergediffUnitRate."BLRMD_Rate per Sq.Ft" := CRMergediffUnitRent."BLRMD_Rate per Sq.Ft";
+                                TCMergediffUnitRate."BLRMD_Rent Increase %" := CRMergediffUnitRent."BLRMD_Rent Increase %";
+                                TCMergediffUnitRate."BLRMD_Annual Amount" := CRMergediffUnitRent."BLRMD_Annual Amount";
+                                TCMergediffUnitRate."BLRMD_Round off" := CRMergediffUnitRent."BLRMD_Round off";
+                                TCMergediffUnitRate."BLRMD_Final Annual Amount" := CRMergediffUnitRent."BLRMD_Final Annual Amount";
+                                TCMergediffUnitRate."BLRMD_Per Day Rent" := CRMergediffUnitRent."BLRMD_Per Day Rent";
+                                TCMergediffUnitRate."BLRTotalFinalAmount" := CRMergediffUnitRent."BLRTotalFinalAmount";
+                                TCMergediffUnitRate."BLRTotalAnnualAmount" := CRMergediffUnitRent."BLRTotalAnnualAmount";
+                                TCMergediffUnitRate."BLRTotalRoundOff" := CRMergediffUnitRent."BLRTotalRoundOff";
+                                TCMergediffUnitRate."BLRTotalFirstAnnualAmount" := CRMergediffUnitRent."BLRTotalFirstAnnualAmount";
 
                                 // Insert the new record
                                 TCMergediffUnitRate.Insert();
@@ -1297,67 +1297,67 @@ table 73209702 "Tenancy Contract"
                                 LineNoCounter += 1; // Increment line number for next record
                             until CRMergediffUnitRent.Next() = 0;
                             // end else begin
-                            //     Message('No existing records found for Proposal ID: %1 in CR Merge Diff Unit Rent SubPage.', "Proposal ID");
+                            //     Message('No existing records found for "BLRProposal ID": %1 in CR Merge Diff Unit Rent SubPage.', "BLRProposal ID");
                         end;
                     end
 
                     else
-                        if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with lumpsum annual amount" then begin
+                        if "BLRMerge Rent Calculation" = "BLRMerge Rent Calculation"::"Merged Unit with lumpsum annual amount" then begin
 
                             // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                             TCMergeLumpsumUnitRate.Reset();
-                            TCMergeLumpsumUnitRate.SetRange("ID", "Proposal ID");
+                            TCMergeLumpsumUnitRate.SetRange("BLRID", "BLRProposal ID");
 
                             if TCMergeLumpsumUnitRate.FindSet() then
                                 TCMergeLumpsumUnitRate.DeleteAll();
 
                             // Ã¢Å“â€¦ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
                             CRMergeLumpsumUnitRent.Reset();
-                            CRMergeLumpsumUnitRent.SetRange("Proposal ID", "Proposal ID");
+                            CRMergeLumpsumUnitRent.SetRange("BLRProposal ID", "BLRProposal ID");
 
                             if CRMergeLumpsumUnitRent.FindSet() then begin
                                 LineNoCounter := 1; // Start line numbering from 1
                                 repeat
                                     TCMergeLumpsumUnitRate.Init();
-                                    TCMergeLumpsumUnitRate."ID" := CRMergeLumpsumUnitRent."Proposal ID";
-                                    TCMergeLumpsumUnitRate."Contract Id" := Rec."Contract ID";
-                                    TCMergeLumpsumUnitRate."ML_Line No." := LineNoCounter; // Ensure unique line number
-                                    TCMergeLumpsumUnitRate."ML_Merged Unit ID" := CRMergeLumpsumUnitRent."ML_Merged Unit ID";
-                                    TCMergeLumpsumUnitRate.ML_Year := CRMergeLumpsumUnitRent.ML_Year;
-                                    TCMergeLumpsumUnitRate."ML_Start Date" := CRMergeLumpsumUnitRent."ML_Start Date";
-                                    TCMergeLumpsumUnitRate."ML_End Date" := CRMergeLumpsumUnitRent."ML_End Date";
-                                    TCMergeLumpsumUnitRate."ML_Number of Days" := CRMergeLumpsumUnitRent."ML_Number of Days";
-                                    TCMergeLumpsumUnitRate."ML_Unit Sq Ft" := CRMergeLumpsumUnitRent."ML_Unit Sq Ft";
-                                    TCMergeLumpsumUnitRate."ML_Rate per Sq.Ft" := CRMergeLumpsumUnitRent."ML_Rate per Sq.Ft";
-                                    TCMergeLumpsumUnitRate."ML_Rent Increase %" := CRMergeLumpsumUnitRent."ML_Rent Increase %";
-                                    TCMergeLumpsumUnitRate."ML_Annual Amount" := CRMergeLumpsumUnitRent."ML_Annual Amount";
-                                    TCMergeLumpsumUnitRate."ML_Round off" := CRMergeLumpsumUnitRent."ML_Round off";
-                                    TCMergeLumpsumUnitRate."ML_Final Annual Amount" := CRMergeLumpsumUnitRent."ML_Final Annual Amount";
-                                    TCMergeLumpsumUnitRate."ML_Per Day Rent" := CRMergeLumpsumUnitRent."ML_Per Day Rent";
-                                    TCMergeLumpsumUnitRate.TotalFinalAmount := CRMergeLumpsumUnitRent.TotalFinalAmount;
-                                    TCMergeLumpsumUnitRate.TotalAnnualAmount := CRMergeLumpsumUnitRent.TotalAnnualAmount;
-                                    TCMergeLumpsumUnitRate.TotalRoundOff := CRMergeLumpsumUnitRent.TotalRoundOff;
-                                    TCMergeLumpsumUnitRate.TotalFirstAnnualAmount := CRMergeLumpsumUnitRent.TotalFirstAnnualAmount;
+                                    TCMergeLumpsumUnitRate."BLRID" := CRMergeLumpsumUnitRent."BLRProposal ID";
+                                    TCMergeLumpsumUnitRate."BLRContract Id" := Rec."BLRContract ID";
+                                    TCMergeLumpsumUnitRate."BLRML_Line No." := LineNoCounter; // Ensure unique line number
+                                    TCMergeLumpsumUnitRate."BLRML_Merged Unit ID" := CRMergeLumpsumUnitRent."BLRML_Merged Unit ID";
+                                    TCMergeLumpsumUnitRate."BLRML_Year" := CRMergeLumpsumUnitRent."BLRML_Year";
+                                    TCMergeLumpsumUnitRate."BLRML_Start Date" := CRMergeLumpsumUnitRent."BLRML_Start Date";
+                                    TCMergeLumpsumUnitRate."BLRML_End Date" := CRMergeLumpsumUnitRent."BLRML_End Date";
+                                    TCMergeLumpsumUnitRate."BLRML_Number of Days" := CRMergeLumpsumUnitRent."BLRML_Number of Days";
+                                    TCMergeLumpsumUnitRate."BLRML_Unit Sq Ft" := CRMergeLumpsumUnitRent."BLRML_Unit Sq Ft";
+                                    TCMergeLumpsumUnitRate."BLRML_Rate per Sq.Ft" := CRMergeLumpsumUnitRent."BLRML_Rate per Sq.Ft";
+                                    TCMergeLumpsumUnitRate."BLRML_Rent Increase %" := CRMergeLumpsumUnitRent."BLRML_Rent Increase %";
+                                    TCMergeLumpsumUnitRate."BLRML_Annual Amount" := CRMergeLumpsumUnitRent."BLRML_Annual Amount";
+                                    TCMergeLumpsumUnitRate."BLRML_Round off" := CRMergeLumpsumUnitRent."BLRML_Round off";
+                                    TCMergeLumpsumUnitRate."BLRML_Final Annual Amount" := CRMergeLumpsumUnitRent."BLRML_Final Annual Amount";
+                                    TCMergeLumpsumUnitRate."BLRML_Per Day Rent" := CRMergeLumpsumUnitRent."BLRML_Per Day Rent";
+                                    TCMergeLumpsumUnitRate."BLRTotalFinalAmount" := CRMergeLumpsumUnitRent."BLRTotalFinalAmount";
+                                    TCMergeLumpsumUnitRate."BLRTotalAnnualAmount" := CRMergeLumpsumUnitRent."BLRTotalAnnualAmount";
+                                    TCMergeLumpsumUnitRate."BLRTotalRoundOff" := CRMergeLumpsumUnitRent."BLRTotalRoundOff";
+                                    TCMergeLumpsumUnitRate."BLRTotalFirstAnnualAmount" := CRMergeLumpsumUnitRent."BLRTotalFirstAnnualAmount";
                                     TCMergeLumpsumUnitRate.Insert();
 
                                     LineNoCounter += 1; // Increment line number
                                 until CRMergeLumpsumUnitRent.Next() = 0;
                                 // end else begin
-                                //     Message('No existing records found for ID: %1 in CR Single Unit Rent SubPage.', "Proposal ID");
+                                //     Message('No existing records found for ID: %1 in CR Single Unit Rent SubPage.', "BLRProposal ID");
                             end;
 
                         end;
 
         // Ã¢Å“â€¦ **Delete Existing Records Before Insert (TC Per Day Rent for Revenue)**
         TCPerDayRevenewUnitRate.Reset();
-        TCPerDayRevenewUnitRate.SetRange("Proposal Id", "Proposal ID");
+        TCPerDayRevenewUnitRate.SetRange("BLRProposal Id", "BLRProposal ID");
 
         if TCPerDayRevenewUnitRate.FindSet() then
             TCPerDayRevenewUnitRate.DeleteAll();
 
         // Ã¢Å“â€¦ **Fetch Data from CR Per Day Rent for Revenue and Insert into TC Per Day Rent for Revenue**
         CRPerDayRevenewUnitRate.Reset();
-        CRPerDayRevenewUnitRate.SetRange("Proposal Id", "Proposal ID");
+        CRPerDayRevenewUnitRate.SetRange("BLRProposal Id", "BLRProposal ID");
 
         if CRPerDayRevenewUnitRate.FindSet() then begin
             LineNoCounter := 1; // Reset line numbering for Per Day Rent
@@ -1365,12 +1365,12 @@ table 73209702 "Tenancy Contract"
                 TCPerDayRevenewUnitRate.Init();
 
                 // Ã¢Å“â€¦ Assign a unique primary key if ID is part of the primary key
-                TCPerDayRevenewUnitRate."Proposal Id" := CRPerDayRevenewUnitRate."Proposal Id";
-                TCPerDayRevenewUnitRate."Merge Unit Id" := CRPerDayRevenewUnitRate."Merge Unit Id";
-                TCPerDayRevenewUnitRate."Year" := CRPerDayRevenewUnitRate."Year";
-                TCPerDayRevenewUnitRate."Unit ID" := CRPerDayRevenewUnitRate."Unit ID";
-                TCPerDayRevenewUnitRate."Sq.Ft" := CRPerDayRevenewUnitRate."Sq.Ft";
-                TCPerDayRevenewUnitRate."Per Day Rent Per Unit" := CRPerDayRevenewUnitRate."Per Day Rent Per Unit";
+                TCPerDayRevenewUnitRate."BLRProposal Id" := CRPerDayRevenewUnitRate."BLRProposal Id";
+                TCPerDayRevenewUnitRate."BLRMerge Unit Id" := CRPerDayRevenewUnitRate."BLRMerge Unit Id";
+                TCPerDayRevenewUnitRate."BLRYear" := CRPerDayRevenewUnitRate."BLRYear";
+                TCPerDayRevenewUnitRate."BLRUnit ID" := CRPerDayRevenewUnitRate."BLRUnit ID";
+                TCPerDayRevenewUnitRate."BLRSq.Ft" := CRPerDayRevenewUnitRate."BLRSq.Ft";
+                TCPerDayRevenewUnitRate."BLRPer Day Rent Per Unit" := CRPerDayRevenewUnitRate."BLRPer Day Rent Per Unit";
 
                 TCPerDayRevenewUnitRate.Insert();
                 Clear(TCPerDayRevenewUnitRate);
@@ -1383,114 +1383,114 @@ table 73209702 "Tenancy Contract"
     procedure rentdatafetched()
     var
         //---single unit same sq ft rate ---//
-        CRSingleUnitRent: Record "CR Single Unit Rent SubPage"; // Source table
-        TCSingleUnitRent: Record "TC Single Unit Rent SubPage"; // Target table
+        CRSingleUnitRent: Record "BLRCRSingleUnitRentSubPage"; // Source table
+        TCSingleUnitRent: Record "BLRTCSingleUnitRentSubPage"; // Target table
 
         //---single unit lumpsum sq ft rate ---//
-        TCLumpsumUnitRate: Record "TC Single LumAnnualAmnt SP"; // Target table
-        CRLumpsumUnitRent: Record "CR Single LumAnnualAmnt SP"; // Source table
+        TCLumpsumUnitRate: Record "BLRTCSingleLumAnnualAmntSP"; // Target table
+        CRLumpsumUnitRent: Record "BLRCRSingleLumAnnualAmntSP"; // Source table
 
         //---Merge unit  same sq ft rate ---//
-        TCMergeUnitRate: Record "TC Merge SameSqure SubPage"; // Target table
-        CRMergeUnitRent: Record "CR Merge SameSqure SubPage"; // Source table
+        TCMergeUnitRate: Record "BLRTCMergeSameSqureSubPage"; // Target table
+        CRMergeUnitRent: Record "BLRCRMergeSameSqureSubPage"; // Source table
 
         //---Merge unit  diff sq ft rate ---//
-        TCMergediffUnitRate: Record "TC Merge DifferentSq SubPage"; // Target table
-        CRMergediffUnitRent: Record "CR Merge DifferentSq SubPage"; // Source table
+        TCMergediffUnitRate: Record "BLRTCMergeDifferentSqSubPage"; // Target table
+        CRMergediffUnitRent: Record "BLRCRMergeDifferentSqSubPage"; // Source table
 
         //---Merge unit  lumpsum sq ft rate ---//
-        TCMergeLumpsumUnitRate: Record "TC Merge LumAnnualAmount SP"; // Target table
-        CRMergeLumpsumUnitRent: Record "CR Merge LumAnnualAmount SP"; // Source table
-        TCPerDayRevenewUnitRate: Record "TC Per Day Rent for Revenue"; // Target table
-        CRPerDayRevenewUnitRate: Record "CR Per Day Rent for Revenue"; // Source table
+        TCMergeLumpsumUnitRate: Record "BLRTCMergeLumAnnualAmountSP"; // Target table
+        CRMergeLumpsumUnitRent: Record "BLRCRMergeLumAnnualAmountSP"; // Source table
+        TCPerDayRevenewUnitRate: Record "BLRTCPerDayRentforRevenue"; // Target table
+        CRPerDayRevenewUnitRate: Record "BLRCRPerDayRentforRevenue"; // Source table
 
         LineNoCounter: Integer;
     begin
 
 
-        if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with square feet rate" then begin
+        if "BLRSingle Rent Calculation" = "BLRSingle Rent Calculation"::"Single Unit with square feet rate" then begin
 
             // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
             TCSingleUnitRent.Reset();
-            TCSingleUnitRent.SetRange("ID", "Renewal Proposal ID");
+            TCSingleUnitRent.SetRange("BLRID", "BLRRenewal Proposal ID");
 
             if TCSingleUnitRent.FindSet() then
                 TCSingleUnitRent.DeleteAll();
 
             // Ã¢Å“â€¦ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
             CRSingleUnitRent.Reset();
-            CRSingleUnitRent.SetRange("ID", "Renewal Proposal ID");
+            CRSingleUnitRent.SetRange("BLRID", "BLRRenewal Proposal ID");
 
             if CRSingleUnitRent.FindSet() then begin
                 LineNoCounter := 1; // Start line numbering from 1
                 repeat
                     TCSingleUnitRent.Init();
-                    TCSingleUnitRent."ID" := CRSingleUnitRent."ID";
-                    TCSingleUnitRent."Contract Id" := Rec."Contract Id";
-                    TCSingleUnitRent."Line No." := LineNoCounter; // Ensure unique line number
-                    TCSingleUnitRent."Unit ID" := CRSingleUnitRent."Unit ID";
-                    TCSingleUnitRent.Year := CRSingleUnitRent.Year;
-                    TCSingleUnitRent."Start Date" := CRSingleUnitRent."Start Date";
-                    TCSingleUnitRent."End Date" := CRSingleUnitRent."End Date";
-                    TCSingleUnitRent."Number of Days" := CRSingleUnitRent."Number of Days";
-                    TCSingleUnitRent."Unit Sq Ft" := CRSingleUnitRent."Unit Sq Ft";
-                    TCSingleUnitRent."Rate per Sq.Ft" := CRSingleUnitRent."Rate per Sq.Ft";
-                    TCSingleUnitRent."Rent Increase %" := CRSingleUnitRent."Rent Increase %";
-                    TCSingleUnitRent."Annual Amount" := CRSingleUnitRent."Annual Amount";
-                    TCSingleUnitRent."Round off" := CRSingleUnitRent."Round off";
-                    TCSingleUnitRent."Final Annual Amount" := CRSingleUnitRent."Final Annual Amount";
-                    TCSingleUnitRent."Per Day Rent" := CRSingleUnitRent."Per Day Rent";
-                    TCSingleUnitRent.TotalFinalAmount := CRSingleUnitRent.TotalFinalAmount;
-                    TCSingleUnitRent.TotalAnnualAmount := CRSingleUnitRent.TotalAnnualAmount;
-                    TCSingleUnitRent.TotalRoundOff := CRSingleUnitRent.TotalRoundOff;
-                    TCSingleUnitRent.TotalFirstAnnualAmount := CRSingleUnitRent.TotalFirstAnnualAmount;
+                    TCSingleUnitRent."BLRID" := CRSingleUnitRent."BLRID";
+                    TCSingleUnitRent."BLRContract Id" := Rec."BLRContract ID";
+                    TCSingleUnitRent."BLRLine No." := LineNoCounter; // Ensure unique line number
+                    TCSingleUnitRent."BLRUnit ID" := CRSingleUnitRent."BLRUnit ID";
+                    TCSingleUnitRent."BLRYear" := CRSingleUnitRent."BLRYear";
+                    TCSingleUnitRent."BLRStart Date" := CRSingleUnitRent."BLRStart Date";
+                    TCSingleUnitRent."BLREnd Date" := CRSingleUnitRent."BLREnd Date";
+                    TCSingleUnitRent."BLRNumber of Days" := CRSingleUnitRent."BLRNumber of Days";
+                    TCSingleUnitRent."BLRUnit Sq Ft" := CRSingleUnitRent."BLRUnit Sq Ft";
+                    TCSingleUnitRent."BLRRate per Sq.Ft" := CRSingleUnitRent."BLRRate per Sq.Ft";
+                    TCSingleUnitRent."BLRRent Increase %" := CRSingleUnitRent."BLRRent Increase %";
+                    TCSingleUnitRent."BLRAnnual Amount" := CRSingleUnitRent."BLRAnnual Amount";
+                    TCSingleUnitRent."BLRRound off" := CRSingleUnitRent."BLRRound off";
+                    TCSingleUnitRent."BLRFinal Annual Amount" := CRSingleUnitRent."BLRFinal Annual Amount";
+                    TCSingleUnitRent."BLRPer Day Rent" := CRSingleUnitRent."BLRPer Day Rent";
+                    TCSingleUnitRent."BLRTotalFinalAmount" := CRSingleUnitRent."BLRTotalFinalAmount";
+                    TCSingleUnitRent."BLRTotalAnnualAmount" := CRSingleUnitRent."BLRTotalAnnualAmount";
+                    TCSingleUnitRent."BLRTotalRoundOff" := CRSingleUnitRent."BLRTotalRoundOff";
+                    TCSingleUnitRent."BLRTotalFirstAnnualAmount" := CRSingleUnitRent."BLRTotalFirstAnnualAmount";
                     TCSingleUnitRent.Insert();
 
 
                     LineNoCounter += 1; // Increment line number
                 until CRSingleUnitRent.Next() = 0;
                 // end else begin
-                //     Message('No existing records found for ID: %1 in CR Single Unit Rent SubPage.', "Renewal Proposal ID");
+                //     Message('No existing records found for ID: %1 in CR Single Unit Rent SubPage.', "BLRRenewal Proposal ID");
             end;
 
         end
 
         else
-            if "Single Rent Calculation" = "Single Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
+            if "BLRSingle Rent Calculation" = "BLRSingle Rent Calculation"::"Single Unit with lumpsum square feet rate" then begin
                 // Ã¢Å“â€¦ Delete Existing Records Before Insert in TC Single LumAnnualAmnt SP
                 TCLumpsumUnitRate.Reset();
-                TCLumpsumUnitRate.SetRange("ID", "Renewal Proposal ID");
+                TCLumpsumUnitRate.SetRange("BLRID", "BLRRenewal Proposal ID");
                 if TCLumpsumUnitRate.FindSet() then
                     TCLumpsumUnitRate.DeleteAll();
 
                 // Ã¢Å“â€¦ Fetch Data from CR Single LumAnnualAmnt SP and Insert into TC Single LumAnnualAmnt SP
                 CRLumpsumUnitRent.Reset();
-                CRLumpsumUnitRent.SetRange("ID", "Renewal Proposal ID");
+                CRLumpsumUnitRent.SetRange("BLRID", "BLRRenewal Proposal ID");
 
                 if CRLumpsumUnitRent.FindSet() then begin
                     LineNoCounter := 1; // Start line numbering from 1
                     repeat
                         TCLumpsumUnitRate.Init();
 
-                        TCLumpsumUnitRate."ID" := CRLumpsumUnitRent."ID";
-                        TCLumpsumUnitRate."Contract Id" := Rec."Contract Id";
-                        TCLumpsumUnitRate."SL_Line No." := LineNoCounter; // Ensure unique line number
-                        TCLumpsumUnitRate."SL_Unit ID" := CRLumpsumUnitRent."SL_Unit ID";
-                        TCLumpsumUnitRate.SL_Year := CRLumpsumUnitRent.SL_Year;
-                        TCLumpsumUnitRate."SL_Start Date" := CRLumpsumUnitRent."SL_Start Date";
-                        TCLumpsumUnitRate."SL_End Date" := CRLumpsumUnitRent."SL_End Date";
-                        TCLumpsumUnitRate."SL_Number of Days" := CRLumpsumUnitRent."SL_Number of Days";
-                        TCLumpsumUnitRate."SL_Unit Sq Ft" := CRLumpsumUnitRent."SL_Unit Sq Ft";
-                        TCLumpsumUnitRate."SL_Rate per Sq.Ft" := CRLumpsumUnitRent."SL_Rate per Sq.Ft";
-                        TCLumpsumUnitRate."SL_Rent Increase %" := CRLumpsumUnitRent."SL_Rent Increase %";
-                        TCLumpsumUnitRate."SL_Annual Amount" := CRLumpsumUnitRent."SL_Annual Amount";
-                        TCLumpsumUnitRate."SL_Round off" := CRLumpsumUnitRent."SL_Round off";
-                        TCLumpsumUnitRate."SL_Final Annual Amount" := CRLumpsumUnitRent."SL_Final Annual Amount";
-                        TCLumpsumUnitRate."SL_Per Day Rent" := CRLumpsumUnitRent."SL_Per Day Rent";
-                        TCLumpsumUnitRate.TotalFinalAmount := CRSingleUnitRent.TotalFinalAmount;
-                        TCLumpsumUnitRate.TotalAnnualAmount := CRSingleUnitRent.TotalAnnualAmount;
-                        TCLumpsumUnitRate.TotalRoundOff := CRSingleUnitRent.TotalRoundOff;
-                        TCLumpsumUnitRate.TotalFirstAnnualAmount := CRSingleUnitRent.TotalFirstAnnualAmount;
+                        TCLumpsumUnitRate."BLRID" := CRLumpsumUnitRent."BLRID";
+                        TCLumpsumUnitRate."BLRContract Id" := Rec."BLRContract ID";
+                        TCLumpsumUnitRate."BLRSL_Line No." := LineNoCounter; // Ensure unique line number
+                        TCLumpsumUnitRate."BLRSL_Unit ID" := CRLumpsumUnitRent."BLRSL_Unit ID";
+                        TCLumpsumUnitRate."BLRSL_Year" := CRLumpsumUnitRent."BLRSL_Year";
+                        TCLumpsumUnitRate."BLRSL_Start Date" := CRLumpsumUnitRent."BLRSL_Start Date";
+                        TCLumpsumUnitRate."BLRSL_End Date" := CRLumpsumUnitRent."BLRSL_End Date";
+                        TCLumpsumUnitRate."BLRSL_Number of Days" := CRLumpsumUnitRent."BLRSL_Number of Days";
+                        TCLumpsumUnitRate."BLRSL_Unit Sq Ft" := CRLumpsumUnitRent."BLRSL_Unit Sq Ft";
+                        TCLumpsumUnitRate."BLRSL_Rate per Sq.Ft" := CRLumpsumUnitRent."BLRSL_Rate per Sq.Ft";
+                        TCLumpsumUnitRate."BLRSL_Rent Increase %" := CRLumpsumUnitRent."BLRSL_Rent Increase %";
+                        TCLumpsumUnitRate."BLRSL_Annual Amount" := CRLumpsumUnitRent."BLRSL_Annual Amount";
+                        TCLumpsumUnitRate."BLRSL_Round off" := CRLumpsumUnitRent."BLRSL_Round off";
+                        TCLumpsumUnitRate."BLRSL_Final Annual Amount" := CRLumpsumUnitRent."BLRSL_Final Annual Amount";
+                        TCLumpsumUnitRate."BLRSL_Per Day Rent" := CRLumpsumUnitRent."BLRSL_Per Day Rent";
+                        TCLumpsumUnitRate."BLRTotalFinalAmount" := CRSingleUnitRent."BLRTotalFinalAmount";
+                        TCLumpsumUnitRate."BLRTotalAnnualAmount" := CRSingleUnitRent."BLRTotalAnnualAmount";
+                        TCLumpsumUnitRate."BLRTotalRoundOff" := CRSingleUnitRent."BLRTotalRoundOff";
+                        TCLumpsumUnitRate."BLRTotalFirstAnnualAmount" := CRSingleUnitRent."BLRTotalFirstAnnualAmount";
 
 
                         TCLumpsumUnitRate.Insert();
@@ -1498,94 +1498,94 @@ table 73209702 "Tenancy Contract"
                         LineNoCounter += 1; // Increment line number
                     until CRLumpsumUnitRent.Next() = 0;
                     // end else begin
-                    //     Message('No existing records found for ID: %1 in CR Single LumAnnualAmnt SP.', "Renewal Proposal ID");
+                    //     Message('No existing records found for ID: %1 in CR Single LumAnnualAmnt SP.', "BLRRenewal Proposal ID");
                 end;
             end
 
             else
-                if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with same square feet" then begin
+                if "BLRMerge Rent Calculation" = "BLRMerge Rent Calculation"::"Merged Unit with same square feet" then begin
 
                     // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                     TCMergeUnitRate.Reset();
-                    TCMergeUnitRate.SetRange("ID", "Renewal Proposal ID");
+                    TCMergeUnitRate.SetRange("BLRID", "BLRRenewal Proposal ID");
 
                     if TCMergeUnitRate.FindSet() then
                         TCMergeUnitRate.DeleteAll();
 
                     // Ã¢Å“â€¦ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
                     CRMergeUnitRent.Reset();
-                    CRMergeUnitRent.SetRange("ID", "Renewal Proposal ID");
+                    CRMergeUnitRent.SetRange("BLRID", "BLRRenewal Proposal ID");
 
                     if CRMergeUnitRent.FindSet() then begin
                         LineNoCounter := 1; // Start line numbering from 1
                         repeat
                             TCMergeUnitRate.Init();
-                            TCMergeUnitRate."ID" := CRMergeUnitRent."ID";
-                            TCMergeUnitRate."Contract Id" := Rec."Contract Id";
-                            TCMergeUnitRate."MS_Line No." := LineNoCounter; // Ensure unique line number
-                            TCMergeUnitRate."MS_Merged Unit ID" := CRMergeUnitRent."MS_Merged Unit ID";
-                            TCMergeUnitRate.MS_Year := CRMergeUnitRent.MS_Year;
-                            TCMergeUnitRate."MS_Start Date" := CRMergeUnitRent."MS_Start Date";
-                            TCMergeUnitRate."MS_End Date" := CRMergeUnitRent."MS_End Date";
-                            TCMergeUnitRate."MS_Number of Days" := CRMergeUnitRent."MS_Number of Days";
-                            TCMergeUnitRate."MS_Unit Sq Ft" := CRMergeUnitRent."MS_Unit Sq Ft";
-                            TCMergeUnitRate."MS_Rate per Sq.Ft" := CRMergeUnitRent."MS_Rate per Sq.Ft";
-                            TCMergeUnitRate."MS_Rent Increase %" := CRMergeUnitRent."MS_Rent Increase %";
-                            TCMergeUnitRate."MS_Annual Amount" := CRMergeUnitRent."MS_Annual Amount";
-                            TCMergeUnitRate."MS_Round off" := CRMergeUnitRent."MS_Round off";
-                            TCMergeUnitRate."MS_Final Annual Amount" := CRMergeUnitRent."MS_Final Annual Amount";
-                            TCMergeUnitRate."MS_Per Day Rent" := CRMergeUnitRent."MS_Per Day Rent";
-                            TCMergeUnitRate.TotalFinalAmount := CRMergeUnitRent.TotalFinalAmount;
-                            TCMergeUnitRate.TotalAnnualAmount := CRMergeUnitRent.TotalAnnualAmount;
-                            TCMergeUnitRate.TotalRoundOff := CRMergeUnitRent.TotalRoundOff;
-                            TCMergeUnitRate.TotalFirstAnnualAmount := CRMergeUnitRent.TotalFirstAnnualAmount;
+                            TCMergeUnitRate."BLRID" := CRMergeUnitRent."BLRID";
+                            TCMergeUnitRate."BLRContract Id" := Rec."BLRContract ID";
+                            TCMergeUnitRate."BLRMS_Line No." := LineNoCounter; // Ensure unique line number
+                            TCMergeUnitRate."BLRMS_Merged Unit ID" := CRMergeUnitRent."BLRMS_Merged Unit ID";
+                            TCMergeUnitRate."BLRMS_Year" := CRMergeUnitRent."BLRMS_Year";
+                            TCMergeUnitRate."BLRMS_Start Date" := CRMergeUnitRent."BLRMS_Start Date";
+                            TCMergeUnitRate."BLRMS_End Date" := CRMergeUnitRent."BLRMS_End Date";
+                            TCMergeUnitRate."BLRMS_Number of Days" := CRMergeUnitRent."BLRMS_Number of Days";
+                            TCMergeUnitRate."BLRMS_Unit Sq Ft" := CRMergeUnitRent."BLRMS_Unit Sq Ft";
+                            TCMergeUnitRate."BLRMS_Rate per Sq.Ft" := CRMergeUnitRent."BLRMS_Rate per Sq.Ft";
+                            TCMergeUnitRate."BLRMS_Rent Increase %" := CRMergeUnitRent."BLRMS_Rent Increase %";
+                            TCMergeUnitRate."BLRMS_Annual Amount" := CRMergeUnitRent."BLRMS_Annual Amount";
+                            TCMergeUnitRate."BLRMS_Round off" := CRMergeUnitRent."BLRMS_Round off";
+                            TCMergeUnitRate."BLRMS_Final Annual Amount" := CRMergeUnitRent."BLRMS_Final Annual Amount";
+                            TCMergeUnitRate."BLRMS_Per Day Rent" := CRMergeUnitRent."BLRMS_Per Day Rent";
+                            TCMergeUnitRate."BLRTotalFinalAmount" := CRMergeUnitRent."BLRTotalFinalAmount";
+                            TCMergeUnitRate."BLRTotalAnnualAmount" := CRMergeUnitRent."BLRTotalAnnualAmount";
+                            TCMergeUnitRate."BLRTotalRoundOff" := CRMergeUnitRent."BLRTotalRoundOff";
+                            TCMergeUnitRate."BLRTotalFirstAnnualAmount" := CRMergeUnitRent."BLRTotalFirstAnnualAmount";
                             TCMergeUnitRate.Insert();
 
 
                             LineNoCounter += 1; // Increment line number
                         until CRMergeUnitRent.Next() = 0;
                         // end else begin
-                        //     Message('No existing records found for ID: %1 in CR Single Unit Rent SubPage.', "Renewal Proposal ID");
+                        //     Message('No existing records found for ID: %1 in CR Single Unit Rent SubPage.', "BLRRenewal Proposal ID");
                     end;
 
                 end
                 else
-                    if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with differential square feet rate" then begin
+                    if "BLRMerge Rent Calculation" = "BLRMerge Rent Calculation"::"Merged Unit with differential square feet rate" then begin
 
                         // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                         TCMergediffUnitRate.Reset();
-                        TCMergediffUnitRate.SetRange("ID", "Renewal Proposal ID");
+                        TCMergediffUnitRate.SetRange("BLRID", "BLRRenewal Proposal ID");
 
                         if TCMergediffUnitRate.FindSet() then
                             TCMergediffUnitRate.DeleteAll();
 
                         // Ã¢Å“â€¦ **Fetch Data from CR Merge Diff Unit Rent SubPage and Insert into TC Merge Diff Unit Rent SubPage**
                         CRMergediffUnitRent.Reset();
-                        CRMergediffUnitRent.SetRange("ID", "Renewal Proposal ID");
+                        CRMergediffUnitRent.SetRange("BLRID", "BLRRenewal Proposal ID");
 
                         if CRMergediffUnitRent.FindSet() then begin
                             LineNoCounter := 1; // Start line numbering from 1
                             repeat
                                 TCMergediffUnitRate.Init();
-                                TCMergediffUnitRate."ID" := CRMergediffUnitRent."ID";
-                                TCMergediffUnitRate."Contract Id" := Rec."Contract ID";
-                                TCMergediffUnitRate."MD_Line No." := LineNoCounter; // Ensure unique line number
-                                TCMergediffUnitRate."MD_Merged Unit ID" := CRMergediffUnitRent."MD_Merged Unit ID";
-                                TCMergediffUnitRate.MD_Year := CRMergediffUnitRent.MD_Year;
-                                TCMergediffUnitRate."MD_Start Date" := CRMergediffUnitRent."MD_Start Date";
-                                TCMergediffUnitRate."MD_End Date" := CRMergediffUnitRent."MD_End Date";
-                                TCMergediffUnitRate."MD_Number of Days" := CRMergediffUnitRent."MD_Number of Days";
-                                TCMergediffUnitRate."MD_Unit Sq Ft" := CRMergediffUnitRent."MD_Unit Sq Ft";
-                                TCMergediffUnitRate."MD_Rate per Sq.Ft" := CRMergediffUnitRent."MD_Rate per Sq.Ft";
-                                TCMergediffUnitRate."MD_Rent Increase %" := CRMergediffUnitRent."MD_Rent Increase %";
-                                TCMergediffUnitRate."MD_Annual Amount" := CRMergediffUnitRent."MD_Annual Amount";
-                                TCMergediffUnitRate."MD_Round off" := CRMergediffUnitRent."MD_Round off";
-                                TCMergediffUnitRate."MD_Final Annual Amount" := CRMergediffUnitRent."MD_Final Annual Amount";
-                                TCMergediffUnitRate."MD_Per Day Rent" := CRMergediffUnitRent."MD_Per Day Rent";
-                                TCMergediffUnitRate.TotalFinalAmount := CRMergediffUnitRent.TotalFinalAmount;
-                                TCMergediffUnitRate.TotalAnnualAmount := CRMergediffUnitRent.TotalAnnualAmount;
-                                TCMergediffUnitRate.TotalRoundOff := CRMergediffUnitRent.TotalRoundOff;
-                                TCMergediffUnitRate.TotalFirstAnnualAmount := CRMergediffUnitRent.TotalFirstAnnualAmount;
+                                TCMergediffUnitRate."BLRID" := CRMergediffUnitRent."BLRID";
+                                TCMergediffUnitRate."BLRContract Id" := Rec."BLRContract ID";
+                                TCMergediffUnitRate."BLRMD_Line No." := LineNoCounter; // Ensure unique line number
+                                TCMergediffUnitRate."BLRMD_Merged Unit ID" := CRMergediffUnitRent."BLRMD_Merged Unit ID";
+                                TCMergediffUnitRate."BLRMD_Year" := CRMergediffUnitRent."BLRMD_Year";
+                                TCMergediffUnitRate."BLRMD_Start Date" := CRMergediffUnitRent."BLRMD_Start Date";
+                                TCMergediffUnitRate."BLRMD_End Date" := CRMergediffUnitRent."BLRMD_End Date";
+                                TCMergediffUnitRate."BLRMD_Number of Days" := CRMergediffUnitRent."BLRMD_Number of Days";
+                                TCMergediffUnitRate."BLRMD_Unit Sq Ft" := CRMergediffUnitRent."BLRMD_Unit Sq Ft";
+                                TCMergediffUnitRate."BLRMD_Rate per Sq.Ft" := CRMergediffUnitRent."BLRMD_Rate per Sq.Ft";
+                                TCMergediffUnitRate."BLRMD_Rent Increase %" := CRMergediffUnitRent."BLRMD_Rent Increase %";
+                                TCMergediffUnitRate."BLRMD_Annual Amount" := CRMergediffUnitRent."BLRMD_Annual Amount";
+                                TCMergediffUnitRate."BLRMD_Round off" := CRMergediffUnitRent."BLRMD_Round off";
+                                TCMergediffUnitRate."BLRMD_Final Annual Amount" := CRMergediffUnitRent."BLRMD_Final Annual Amount";
+                                TCMergediffUnitRate."BLRMD_Per Day Rent" := CRMergediffUnitRent."BLRMD_Per Day Rent";
+                                TCMergediffUnitRate."BLRTotalFinalAmount" := CRMergediffUnitRent."BLRTotalFinalAmount";
+                                TCMergediffUnitRate."BLRTotalAnnualAmount" := CRMergediffUnitRent."BLRTotalAnnualAmount";
+                                TCMergediffUnitRate."BLRTotalRoundOff" := CRMergediffUnitRent."BLRTotalRoundOff";
+                                TCMergediffUnitRate."BLRTotalFirstAnnualAmount" := CRMergediffUnitRent."BLRTotalFirstAnnualAmount";
 
                                 // Insert the new record
                                 TCMergediffUnitRate.Insert();
@@ -1597,42 +1597,42 @@ table 73209702 "Tenancy Contract"
                         end;
                     end
                     else
-                        if "Merge Rent Calculation" = "Merge Rent Calculation"::"Merged Unit with lumpsum annual amount" then begin
+                        if "BLRMerge Rent Calculation" = "BLRMerge Rent Calculation"::"Merged Unit with lumpsum annual amount" then begin
 
                             // Ã¢Å“â€¦ **Delete Existing Records Before Insert**
                             TCMergeLumpsumUnitRate.Reset();
-                            TCMergeLumpsumUnitRate.SetRange("ID", "Renewal Proposal ID");
+                            TCMergeLumpsumUnitRate.SetRange("BLRID", "BLRRenewal Proposal ID");
 
                             if TCMergeLumpsumUnitRate.FindSet() then
                                 TCMergeLumpsumUnitRate.DeleteAll();
 
                             // Ã¢Å“â€¦ **Fetch Data from CR Single Unit Rent SubPage and Insert into TC Single Unit Rent SubPage**
                             CRMergeLumpsumUnitRent.Reset();
-                            CRMergeLumpsumUnitRent.SetRange("ID", "Renewal Proposal ID");
+                            CRMergeLumpsumUnitRent.SetRange("BLRID", "BLRRenewal Proposal ID");
 
                             if CRMergeLumpsumUnitRent.FindSet() then begin
                                 LineNoCounter := 1; // Start line numbering from 1
                                 repeat
                                     TCMergeLumpsumUnitRate.Init();
-                                    TCMergeLumpsumUnitRate."ID" := CRMergeLumpsumUnitRent."ID";
-                                    TCMergeLumpsumUnitRate."Contract Id" := Rec."Contract ID";
-                                    TCMergeLumpsumUnitRate."ML_Line No." := LineNoCounter; // Ensure unique line number
-                                    TCMergeLumpsumUnitRate."ML_Merged Unit ID" := CRMergeLumpsumUnitRent."ML_Merged Unit ID";
-                                    TCMergeLumpsumUnitRate.ML_Year := CRMergeLumpsumUnitRent.ML_Year;
-                                    TCMergeLumpsumUnitRate."ML_Start Date" := CRMergeLumpsumUnitRent."ML_Start Date";
-                                    TCMergeLumpsumUnitRate."ML_End Date" := CRMergeLumpsumUnitRent."ML_End Date";
-                                    TCMergeLumpsumUnitRate."ML_Number of Days" := CRMergeLumpsumUnitRent."ML_Number of Days";
-                                    TCMergeLumpsumUnitRate."ML_Unit Sq Ft" := CRMergeLumpsumUnitRent."ML_Unit Sq Ft";
-                                    TCMergeLumpsumUnitRate."ML_Rate per Sq.Ft" := CRMergeLumpsumUnitRent."ML_Rate per Sq.Ft";
-                                    TCMergeLumpsumUnitRate."ML_Rent Increase %" := CRMergeLumpsumUnitRent."ML_Rent Increase %";
-                                    TCMergeLumpsumUnitRate."ML_Annual Amount" := CRMergeLumpsumUnitRent."ML_Annual Amount";
-                                    TCMergeLumpsumUnitRate."ML_Round off" := CRMergeLumpsumUnitRent."ML_Round off";
-                                    TCMergeLumpsumUnitRate."ML_Final Annual Amount" := CRMergeLumpsumUnitRent."ML_Final Annual Amount";
-                                    TCMergeLumpsumUnitRate."ML_Per Day Rent" := CRMergeLumpsumUnitRent."ML_Per Day Rent";
-                                    TCMergeLumpsumUnitRate.TotalFinalAmount := CRMergeLumpsumUnitRent.TotalFinalAmount;
-                                    TCMergeLumpsumUnitRate.TotalAnnualAmount := CRMergeLumpsumUnitRent.TotalAnnualAmount;
-                                    TCMergeLumpsumUnitRate.TotalRoundOff := CRMergeLumpsumUnitRent.TotalRoundOff;
-                                    TCMergeLumpsumUnitRate.TotalFirstAnnualAmount := CRMergeLumpsumUnitRent.TotalFirstAnnualAmount;
+                                    TCMergeLumpsumUnitRate."BLRID" := CRMergeLumpsumUnitRent."BLRID";
+                                    TCMergeLumpsumUnitRate."BLRContract Id" := Rec."BLRContract ID";
+                                    TCMergeLumpsumUnitRate."BLRML_Line No." := LineNoCounter; // Ensure unique line number
+                                    TCMergeLumpsumUnitRate."BLRML_Merged Unit ID" := CRMergeLumpsumUnitRent."BLRML_Merged Unit ID";
+                                    TCMergeLumpsumUnitRate."BLRML_Year" := CRMergeLumpsumUnitRent."BLRML_Year";
+                                    TCMergeLumpsumUnitRate."BLRML_Start Date" := CRMergeLumpsumUnitRent."BLRML_Start Date";
+                                    TCMergeLumpsumUnitRate."BLRML_End Date" := CRMergeLumpsumUnitRent."BLRML_End Date";
+                                    TCMergeLumpsumUnitRate."BLRML_Number of Days" := CRMergeLumpsumUnitRent."BLRML_Number of Days";
+                                    TCMergeLumpsumUnitRate."BLRML_Unit Sq Ft" := CRMergeLumpsumUnitRent."BLRML_Unit Sq Ft";
+                                    TCMergeLumpsumUnitRate."BLRML_Rate per Sq.Ft" := CRMergeLumpsumUnitRent."BLRML_Rate per Sq.Ft";
+                                    TCMergeLumpsumUnitRate."BLRML_Rent Increase %" := CRMergeLumpsumUnitRent."BLRML_Rent Increase %";
+                                    TCMergeLumpsumUnitRate."BLRML_Annual Amount" := CRMergeLumpsumUnitRent."BLRML_Annual Amount";
+                                    TCMergeLumpsumUnitRate."BLRML_Round off" := CRMergeLumpsumUnitRent."BLRML_Round off";
+                                    TCMergeLumpsumUnitRate."BLRML_Final Annual Amount" := CRMergeLumpsumUnitRent."BLRML_Final Annual Amount";
+                                    TCMergeLumpsumUnitRate."BLRML_Per Day Rent" := CRMergeLumpsumUnitRent."BLRML_Per Day Rent";
+                                    TCMergeLumpsumUnitRate."BLRTotalFinalAmount" := CRMergeLumpsumUnitRent."BLRTotalFinalAmount";
+                                    TCMergeLumpsumUnitRate."BLRTotalAnnualAmount" := CRMergeLumpsumUnitRent."BLRTotalAnnualAmount";
+                                    TCMergeLumpsumUnitRate."BLRTotalRoundOff" := CRMergeLumpsumUnitRent."BLRTotalRoundOff";
+                                    TCMergeLumpsumUnitRate."BLRTotalFirstAnnualAmount" := CRMergeLumpsumUnitRent."BLRTotalFirstAnnualAmount";
                                     TCMergeLumpsumUnitRate.Insert();
 
                                     // end;
@@ -1640,14 +1640,14 @@ table 73209702 "Tenancy Contract"
                                     LineNoCounter += 1; // Increment line number
                                 until CRMergeLumpsumUnitRent.Next() = 0;
                                 // end else begin
-                                //     Message('No existing records found for ID: %1 in CR Single Unit Rent SubPage.', "Renewal Proposal ID");
+                                //     Message('No existing records found for ID: %1 in CR Single Unit Rent SubPage.', "BLRRenewal Proposal ID");
                             end;
 
                         end;
 
 
         TCPerDayRevenewUnitRate.Reset();
-        TCPerDayRevenewUnitRate.SetRange("Contract Renewal Id", "Renewal Proposal ID");
+        TCPerDayRevenewUnitRate.SetRange("BLRContract Renewal Id", "BLRRenewal Proposal ID");
 
 
         if TCPerDayRevenewUnitRate.FindSet() then
@@ -1656,7 +1656,7 @@ table 73209702 "Tenancy Contract"
 
         // Ã¢Å“â€¦ **Fetch Data from CR Per Day Rent for Revenue and Insert into TC Per Day Rent for Revenue**
         CRPerDayRevenewUnitRate.Reset();
-        CRPerDayRevenewUnitRate.SetRange("Contract Renewal Id", "Renewal Proposal ID");
+        CRPerDayRevenewUnitRate.SetRange("BLRContract Renewal Id", "BLRRenewal Proposal ID");
 
         if CRPerDayRevenewUnitRate.FindSet() then begin
             LineNoCounter := 1; // Reset line numbering for Per Day Rent
@@ -1664,15 +1664,15 @@ table 73209702 "Tenancy Contract"
                 TCPerDayRevenewUnitRate.Init();
 
                 // Ã¢Å“â€¦ Assign a unique primary key if ID is part of the primary key
-                TCPerDayRevenewUnitRate."Contract Renewal Id" := CRPerDayRevenewUnitRate."Contract Renewal Id";
-                TCPerDayRevenewUnitRate."Merge Unit Id" := CRPerDayRevenewUnitRate."Merge Unit Id";
-                TCPerDayRevenewUnitRate."Year" := CRPerDayRevenewUnitRate."Year";
-                TCPerDayRevenewUnitRate."Unit ID" := CRPerDayRevenewUnitRate."Unit ID";
-                TCPerDayRevenewUnitRate."Sq.Ft" := CRPerDayRevenewUnitRate."Sq.Ft";
-                TCPerDayRevenewUnitRate."Per Day Rent Per Unit" := CRPerDayRevenewUnitRate."Per Day Rent Per Unit";
+                TCPerDayRevenewUnitRate."BLRContract Renewal Id" := CRPerDayRevenewUnitRate."BLRContract Renewal Id";
+                TCPerDayRevenewUnitRate."BLRMerge Unit Id" := CRPerDayRevenewUnitRate."BLRMerge Unit Id";
+                TCPerDayRevenewUnitRate."BLRYear" := CRPerDayRevenewUnitRate."BLRYear";
+                TCPerDayRevenewUnitRate."BLRUnit ID" := CRPerDayRevenewUnitRate."BLRUnit ID";
+                TCPerDayRevenewUnitRate."BLRSq.Ft" := CRPerDayRevenewUnitRate."BLRSq.Ft";
+                TCPerDayRevenewUnitRate."BLRPer Day Rent Per Unit" := CRPerDayRevenewUnitRate."BLRPer Day Rent Per Unit";
 
                 // Ã¢Å“â€¦ Ensure unique Line No. to avoid duplicates
-                // TCPerDayRevenewUnitRate."Line No." := LineNoCounter;
+                // TCPerDayRevenewUnitRate."BLRLine No." := LineNoCounter;
 
                 TCPerDayRevenewUnitRate.Insert();
                 Clear(TCPerDayRevenewUnitRate);
@@ -1683,7 +1683,7 @@ table 73209702 "Tenancy Contract"
 
     trigger OnInsert()
     begin
-        "Created By" := CopyStr(UserId, 1, StrLen("Created By"));
+        "BLRCreated By" := CopyStr(UserId, 1, StrLen("BLRCreated By"));
     end;
 
     procedure CalculateGracePeriod()
@@ -1691,8 +1691,8 @@ table 73209702 "Tenancy Contract"
         StartDate, EndDate : Date;
         DaysBetween: Integer;
     begin
-        StartDate := "Grace Start Date";
-        EndDate := "Grace End Date";
+        StartDate := "BLRGrace Start Date";
+        EndDate := "BLRGrace End Date";
 
         if (StartDate <> 0D) and (EndDate <> 0D) then begin
             if EndDate >= StartDate then
@@ -1700,9 +1700,9 @@ table 73209702 "Tenancy Contract"
             else
                 DaysBetween := 0;
 
-            "Grace Period" := DaysBetween;
+            "BLRGrace Period" := DaysBetween;
         end else
-            "Grace Period" := 0; // Clear if either date is not set
+            "BLRGrace Period" := 0; // Clear if either date is not set
     end;
 
     trigger OnDelete()
@@ -1714,9 +1714,9 @@ table 73209702 "Tenancy Contract"
 
     procedure Deletegriddata()
     var
-        otherpayments: Record "Tenancy Contract Subpage";
+        otherpayments: Record "BLRTenancyContractSubpage";
     begin
-        otherpayments.SetRange(ContractID, Rec."Contract ID");
+        otherpayments.SetRange("BLRContractID", Rec."BLRContract ID");
         if otherpayments.FindSet()
         then
             otherpayments.DeleteAll();
@@ -1724,9 +1724,9 @@ table 73209702 "Tenancy Contract"
 
     procedure DeleteAdditionalTerms()
     var
-        AdditionalTerms: Record "TC Additional Terms";
+        AdditionalTerms: Record "BLRTCAdditionalTerms";
     begin
-        AdditionalTerms.SetRange("Document No.", Rec."Contract ID");
+        AdditionalTerms.SetRange("BLRDocument No.", Rec."BLRContract ID");
 
         if AdditionalTerms.FindSet() then
             AdditionalTerms.DeleteAll();
@@ -1734,27 +1734,27 @@ table 73209702 "Tenancy Contract"
 
     procedure brokerdata()
     var
-        leaseproposal: Record "Lease Proposal Details";
+        leaseproposal: Record "BLRLeaseProposalDetails";
     begin
-        leaseproposal.SetRange("Proposal ID", Rec."Proposal ID");
+        leaseproposal.SetRange("BLRProposal ID", Rec."BLRProposal ID");
 
         if leaseproposal.FindFirst() then begin
-            // Exit if Vendor ID is blank (i.e., not available)
-            if leaseproposal."Vendor ID" = '' then
+            // Exit if "BLRVendor ID" is blank (i.e., not available)
+            if leaseproposal."BLRVendor ID" = '' then
                 exit;
 
             // Fill fields from Lease Proposal
-            Rec."Vendor ID" := leaseproposal."Vendor ID";
-            Rec."Vendor Name" := leaseproposal."Vendor Name";
-            Rec."Start Date" := leaseproposal."Start Date";
-            Rec."End Date" := leaseproposal."End Date";
-            Rec."Contract Status" := leaseproposal."Contract Status";
-            Rec."Calculation Method" := leaseproposal."Calculation Method";
-            Rec."Percentage Type" := leaseproposal."Percentage Type";
-            Rec.Percentage := leaseproposal.Percentage;
-            Rec.Amount := leaseproposal.Amount;
-            Rec."Base Amount Type" := leaseproposal."Base Amount Type";
-            Rec."Frequency Of Payment" := leaseproposal."Frequency Of Payment";
+            Rec."BLRVendor ID" := leaseproposal."BLRVendor ID";
+            Rec."BLRVendor Name" := leaseproposal."BLRVendor Name";
+            Rec."BLRStart Date" := leaseproposal."BLRStart Date";
+            Rec."BLREnd Date" := leaseproposal."BLREnd Date";
+            Rec."BLRContract Status" := leaseproposal."BLRContract Status";
+            Rec."BLRCalculation Method" := leaseproposal."BLRCalculation Method";
+            Rec."BLRPercentage Type" := leaseproposal."BLRPercentage Type";
+            Rec."BLRPercentage" := leaseproposal."BLRPercentage";
+            Rec."BLRAmount" := leaseproposal."BLRAmount";
+            Rec."BLRBase Amount Type" := leaseproposal."BLRBase Amount Type";
+            Rec."BLRFrequency Of Payment" := leaseproposal."BLRFrequency Of Payment";
             Rec.Modify();
             ManagementFeeMasterDetailsFetch();
         end;
@@ -1764,26 +1764,26 @@ table 73209702 "Tenancy Contract"
 
     procedure renewalbrokerdata()
     var
-        contractrenewal: Record "Contract Renewal";
+        contractrenewal: Record "BLRContractRenewal";
     begin
-        contractrenewal.SetRange("ID", Rec."Renewal Proposal ID");
+        contractrenewal.SetRange("BLRID", Rec."BLRRenewal Proposal ID");
 
         if contractrenewal.FindFirst() then begin
-            // Exit if Vendor ID is blank (i.e., not available)
-            if contractrenewal."Vendor ID" = '' then
+            // Exit if "BLRVendor ID" is blank (i.e., not available)
+            if contractrenewal."BLRVendor ID" = '' then
                 exit;
 
-            Rec."Vendor ID" := contractrenewal."Vendor ID";
-            Rec."Vendor Name" := contractrenewal."Vendor Name";
-            Rec."Start Date" := contractrenewal."Start Date";
-            Rec."End Date" := contractrenewal."End Date";
-            Rec."Contract Status" := contractrenewal."Contract Status";
-            Rec."Calculation Method" := contractrenewal."Calculation Method";
-            Rec."Percentage Type" := contractrenewal."Percentage Type";
-            Rec.Percentage := contractrenewal.Percentage;
-            Rec.Amount := contractrenewal.Amount;
-            Rec."Base Amount Type" := contractrenewal."Base Amount Type";
-            Rec."Frequency Of Payment" := contractrenewal."Frequency Of Payment";
+            Rec."BLRVendor ID" := contractrenewal."BLRVendor ID";
+            Rec."BLRVendor Name" := contractrenewal."BLRVendor Name";
+            Rec."BLRStart Date" := contractrenewal."BLRStart Date";
+            Rec."BLREnd Date" := contractrenewal."BLREnd Date";
+            Rec."BLRContract Status" := contractrenewal."BLRContract Status";
+            Rec."BLRCalculation Method" := contractrenewal."BLRCalculation Method";
+            Rec."BLRPercentage Type" := contractrenewal."BLRPercentage Type";
+            Rec."BLRPercentage" := contractrenewal."BLRPercentage";
+            Rec."BLRAmount" := contractrenewal."BLRAmount";
+            Rec."BLRBase Amount Type" := contractrenewal."BLRBase Amount Type";
+            Rec."BLRFrequency Of Payment" := contractrenewal."BLRFrequency Of Payment";
             Rec.Modify();
             ManagementFeeMasterDetailsFetchRenewal();
         end;
@@ -1792,72 +1792,72 @@ table 73209702 "Tenancy Contract"
 
     procedure ManagementFeeMasterDetailsFetch()
     var
-        managementfee: Record "Brokerage Master Data";
-        contractLine: Record "Tenancy Contract";
+        managementfee: Record "BLRBrokerageMasterData";
+        contractLine: Record "BLRTenancyContract";
     begin
-        // Filter contractLine using Proposal ID or other unique identifiers
-        contractLine.SetRange("Proposal ID", Rec."Proposal ID"); // Add this line or use appropriate filters
+        // Filter contractLine using "BLRProposal ID" or other unique identifiers
+        contractLine.SetRange("BLRProposal ID", Rec."BLRProposal ID"); // Add this line or use appropriate filters
 
         if not contractLine.FindFirst() then
             exit;
 
-        if contractLine."Vendor ID" = '' then
+        if contractLine."BLRVendor ID" = '' then
             exit;
 
         managementfee.Reset();
-        managementfee.SetRange("Vendor ID", contractLine."Vendor ID");
-        managementfee.SetRange("Contract ID", contractLine."Contract ID");
+        managementfee.SetRange("BLRVendor ID", contractLine."BLRVendor ID");
+        managementfee.SetRange("BLRContract ID", contractLine."BLRContract ID");
 
         if managementfee.FindFirst() then begin
             // Modify existing
-            managementfee."Vendor ID" := contractLine."Vendor ID";
-            managementfee."Contract ID" := contractLine."Contract ID";
-            managementfee."Proposal ID" := contractLine."Proposal ID";
-            managementfee."Unit Name" := contractLine."Unit Name";
-            managementfee."Unit Number" := contractLine."Unit Number";
-            managementfee."Vendor Name" := contractLine."Vendor Name";
-            managementfee."Property ID" := contractLine."Property ID";
-            managementfee."Property Name" := contractLine."Property Name";
-            managementfee."Start Date" := contractLine."Start Date";
-            managementfee."End Date" := contractLine."End Date";
-            managementfee."Property Type" := contractLine."Property Classification";
-            managementfee."Contract Status" := contractLine."Contract Status";
-            managementfee."Calculation Method" := contractLine."Calculation Method";
-            managementfee."Percentage Type" := contractLine."Percentage Type";
-            managementfee."Base Amount Type" := contractLine."Base Amount Type";
-            managementfee."Frequency Of Payment" := contractLine."Frequency Of Payment";
-            managementfee.Amount := contractLine.Amount;
-            managementfee."Base Amount" := contractLine."Rent Amount";
-            managementfee.Percentage := contractLine.Percentage;
-            managementfee."Owner ID" := contractLine."Owner ID";
-            managementfee."Owner Name" := contractLine."Owner's Name";
-            managementfee."Tenant Name" := contractLine."Customer Name";
+            managementfee."BLRVendor ID" := contractLine."BLRVendor ID";
+            managementfee."BLRContract ID" := contractLine."BLRContract ID";
+            managementfee."BLRProposal ID" := contractLine."BLRProposal ID";
+            managementfee."BLRUnit Name" := contractLine."BLRUnit Name";
+            managementfee."BLRUnit Number" := contractLine."BLRUnit Number";
+            managementfee."BLRVendor Name" := contractLine."BLRVendor Name";
+            managementfee."BLRProperty ID" := contractLine."BLRProperty ID";
+            managementfee."BLRProperty Name" := contractLine."BLRProperty Name";
+            managementfee."BLRStart Date" := contractLine."BLRStart Date";
+            managementfee."BLREnd Date" := contractLine."BLREnd Date";
+            managementfee."BLRProperty Type" := contractLine."BLRProperty Classification";
+            managementfee."BLRContract Status" := contractLine."BLRContract Status";
+            managementfee."BLRCalculation Method" := contractLine."BLRCalculation Method";
+            managementfee."BLRPercentage Type" := contractLine."BLRPercentage Type";
+            managementfee."BLRBase Amount Type" := contractLine."BLRBase Amount Type";
+            managementfee."BLRFrequency Of Payment" := contractLine."BLRFrequency Of Payment";
+            managementfee."BLRAmount" := contractLine."BLRAmount";
+            managementfee."BLRBase Amount" := contractLine."BLRRent Amount";
+            managementfee."BLRPercentage" := contractLine."BLRPercentage";
+            managementfee."BLROwner ID" := contractLine."BLROwner ID";
+            managementfee."BLROwner Name" := contractLine."BLROwner's Name";
+            managementfee."BLRTenant Name" := contractLine."BLRCustomer Name";
             managementfee.Modify();
         end else begin
             // Insert new
             managementfee.Init();
-            managementfee."Vendor ID" := contractLine."Vendor ID";
-            managementfee."Contract ID" := contractLine."Contract ID";
-            managementfee."Proposal ID" := contractLine."Proposal ID";
-            managementfee."Unit Name" := contractLine."Unit Name";
-            managementfee."Unit Number" := contractLine."Unit Number";
-            managementfee."Vendor Name" := contractLine."Vendor Name";
-            managementfee."Property ID" := contractLine."Property ID";
-            managementfee."Property Name" := contractLine."Property Name";
-            managementfee."Start Date" := contractLine."Start Date";
-            managementfee."End Date" := contractLine."End Date";
-            managementfee."Property Type" := contractLine."Property Classification";
-            managementfee."Contract Status" := contractLine."Contract Status";
-            managementfee."Calculation Method" := contractLine."Calculation Method";
-            managementfee."Percentage Type" := contractLine."Percentage Type";
-            managementfee."Base Amount Type" := contractLine."Base Amount Type";
-            managementfee."Frequency Of Payment" := contractLine."Frequency Of Payment";
-            managementfee.Amount := contractLine.Amount;
-            managementfee."Base Amount" := contractLine."Rent Amount";
-            managementfee.Percentage := contractLine.Percentage;
-            managementfee."Owner ID" := contractLine."Owner ID";
-            managementfee."Owner Name" := contractLine."Owner's Name";
-            managementfee."Tenant Name" := contractLine."Customer Name";
+            managementfee."BLRVendor ID" := contractLine."BLRVendor ID";
+            managementfee."BLRContract ID" := contractLine."BLRContract ID";
+            managementfee."BLRProposal ID" := contractLine."BLRProposal ID";
+            managementfee."BLRUnit Name" := contractLine."BLRUnit Name";
+            managementfee."BLRUnit Number" := contractLine."BLRUnit Number";
+            managementfee."BLRVendor Name" := contractLine."BLRVendor Name";
+            managementfee."BLRProperty ID" := contractLine."BLRProperty ID";
+            managementfee."BLRProperty Name" := contractLine."BLRProperty Name";
+            managementfee."BLRStart Date" := contractLine."BLRStart Date";
+            managementfee."BLREnd Date" := contractLine."BLREnd Date";
+            managementfee."BLRProperty Type" := contractLine."BLRProperty Classification";
+            managementfee."BLRContract Status" := contractLine."BLRContract Status";
+            managementfee."BLRCalculation Method" := contractLine."BLRCalculation Method";
+            managementfee."BLRPercentage Type" := contractLine."BLRPercentage Type";
+            managementfee."BLRBase Amount Type" := contractLine."BLRBase Amount Type";
+            managementfee."BLRFrequency Of Payment" := contractLine."BLRFrequency Of Payment";
+            managementfee."BLRAmount" := contractLine."BLRAmount";
+            managementfee."BLRBase Amount" := contractLine."BLRRent Amount";
+            managementfee."BLRPercentage" := contractLine."BLRPercentage";
+            managementfee."BLROwner ID" := contractLine."BLROwner ID";
+            managementfee."BLROwner Name" := contractLine."BLROwner's Name";
+            managementfee."BLRTenant Name" := contractLine."BLRCustomer Name";
             managementfee.Insert();
         end;
     end;
@@ -1865,91 +1865,91 @@ table 73209702 "Tenancy Contract"
 
     procedure ManagementFeeMasterDetailsFetchRenewal()
     var
-        managementfee: Record "Brokerage Master Data";
-        contractLine: Record "Tenancy Contract";
+        managementfee: Record "BLRBrokerageMasterData";
+        contractLine: Record "BLRTenancyContract";
     begin
-        // Filter contractLine using Proposal ID or other unique identifiers
-        contractLine.SetRange("Renewal Proposal ID", Rec."Renewal Proposal ID"); // Add this line or use appropriate filters
+        // Filter contractLine using "BLRProposal ID" or other unique identifiers
+        contractLine.SetRange("BLRRenewal Proposal ID", Rec."BLRRenewal Proposal ID"); // Add this line or use appropriate filters
 
         if not contractLine.FindFirst() then
             exit;
 
-        if contractLine."Vendor ID" = '' then
+        if contractLine."BLRVendor ID" = '' then
             exit;
 
         managementfee.Reset();
-        managementfee.SetRange("Vendor ID", contractLine."Vendor ID");
-        managementfee.SetRange("Contract ID", contractLine."Contract ID");
+        managementfee.SetRange("BLRVendor ID", contractLine."BLRVendor ID");
+        managementfee.SetRange("BLRContract ID", contractLine."BLRContract ID");
 
 
         if managementfee.FindFirst() then begin
             // Modify existing
-            managementfee."Vendor ID" := contractLine."Vendor ID";
-            managementfee."Contract ID" := contractLine."Contract ID";
-            managementfee."Proposal ID" := contractLine."Proposal ID";
-            managementfee."Unit Name" := contractLine."Unit Name";
-            managementfee."Unit Number" := contractLine."Unit Number";
-            managementfee."Vendor Name" := contractLine."Vendor Name";
-            managementfee."Property ID" := contractLine."Property ID";
-            managementfee."Property Name" := contractLine."Property Name";
-            managementfee."Start Date" := contractLine."Start Date";
-            managementfee."End Date" := contractLine."End Date";
-            managementfee."Property Type" := contractLine."Property Classification";
-            managementfee."Contract Status" := contractLine."Contract Status";
-            managementfee."Calculation Method" := contractLine."Calculation Method";
-            managementfee."Percentage Type" := contractLine."Percentage Type";
-            managementfee."Base Amount Type" := contractLine."Base Amount Type";
-            managementfee."Frequency Of Payment" := contractLine."Frequency Of Payment";
-            managementfee.Amount := contractLine.Amount;
-            managementfee."Base Amount" := contractLine."Rent Amount";
-            managementfee.Percentage := contractLine.Percentage;
-            managementfee."Owner ID" := contractLine."Owner ID";
-            managementfee."Owner Name" := contractLine."Owner's Name";
-            managementfee."Tenant Name" := contractLine."Customer Name";
+            managementfee."BLRVendor ID" := contractLine."BLRVendor ID";
+            managementfee."BLRContract ID" := contractLine."BLRContract ID";
+            managementfee."BLRProposal ID" := contractLine."BLRProposal ID";
+            managementfee."BLRUnit Name" := contractLine."BLRUnit Name";
+            managementfee."BLRUnit Number" := contractLine."BLRUnit Number";
+            managementfee."BLRVendor Name" := contractLine."BLRVendor Name";
+            managementfee."BLRProperty ID" := contractLine."BLRProperty ID";
+            managementfee."BLRProperty Name" := contractLine."BLRProperty Name";
+            managementfee."BLRStart Date" := contractLine."BLRStart Date";
+            managementfee."BLREnd Date" := contractLine."BLREnd Date";
+            managementfee."BLRProperty Type" := contractLine."BLRProperty Classification";
+            managementfee."BLRContract Status" := contractLine."BLRContract Status";
+            managementfee."BLRCalculation Method" := contractLine."BLRCalculation Method";
+            managementfee."BLRPercentage Type" := contractLine."BLRPercentage Type";
+            managementfee."BLRBase Amount Type" := contractLine."BLRBase Amount Type";
+            managementfee."BLRFrequency Of Payment" := contractLine."BLRFrequency Of Payment";
+            managementfee."BLRAmount" := contractLine."BLRAmount";
+            managementfee."BLRBase Amount" := contractLine."BLRRent Amount";
+            managementfee."BLRPercentage" := contractLine."BLRPercentage";
+            managementfee."BLROwner ID" := contractLine."BLROwner ID";
+            managementfee."BLROwner Name" := contractLine."BLROwner's Name";
+            managementfee."BLRTenant Name" := contractLine."BLRCustomer Name";
             managementfee.Modify();
         end else begin
             // Insert new
             managementfee.Init();
-            managementfee."Vendor ID" := contractLine."Vendor ID";
-            managementfee."Contract ID" := contractLine."Contract ID";
-            managementfee."Proposal ID" := contractLine."Renewal Proposal ID";
-            managementfee."Unit Name" := contractLine."Unit Name";
-            managementfee."Unit Number" := contractLine."Unit Number";
-            managementfee."Vendor Name" := contractLine."Vendor Name";
-            managementfee."Property ID" := contractLine."Property ID";
-            managementfee."Property Name" := contractLine."Property Name";
-            managementfee."Start Date" := contractLine."Start Date";
-            managementfee."End Date" := contractLine."End Date";
-            managementfee."Property Type" := contractLine."Property Classification";
-            managementfee."Contract Status" := contractLine."Contract Status";
-            managementfee."Calculation Method" := contractLine."Calculation Method";
-            managementfee."Percentage Type" := contractLine."Percentage Type";
-            managementfee."Base Amount Type" := contractLine."Base Amount Type";
-            managementfee."Frequency Of Payment" := contractLine."Frequency Of Payment";
-            managementfee.Amount := contractLine.Amount;
-            managementfee."Base Amount" := contractLine."Rent Amount";
-            managementfee.Percentage := contractLine.Percentage;
-            managementfee."Owner ID" := contractLine."Owner ID";
-            managementfee."Owner Name" := contractLine."Owner's Name";
-            managementfee."Tenant Name" := contractLine."Customer Name";
+            managementfee."BLRVendor ID" := contractLine."BLRVendor ID";
+            managementfee."BLRContract ID" := contractLine."BLRContract ID";
+            managementfee."BLRProposal ID" := contractLine."BLRRenewal Proposal ID";
+            managementfee."BLRUnit Name" := contractLine."BLRUnit Name";
+            managementfee."BLRUnit Number" := contractLine."BLRUnit Number";
+            managementfee."BLRVendor Name" := contractLine."BLRVendor Name";
+            managementfee."BLRProperty ID" := contractLine."BLRProperty ID";
+            managementfee."BLRProperty Name" := contractLine."BLRProperty Name";
+            managementfee."BLRStart Date" := contractLine."BLRStart Date";
+            managementfee."BLREnd Date" := contractLine."BLREnd Date";
+            managementfee."BLRProperty Type" := contractLine."BLRProperty Classification";
+            managementfee."BLRContract Status" := contractLine."BLRContract Status";
+            managementfee."BLRCalculation Method" := contractLine."BLRCalculation Method";
+            managementfee."BLRPercentage Type" := contractLine."BLRPercentage Type";
+            managementfee."BLRBase Amount Type" := contractLine."BLRBase Amount Type";
+            managementfee."BLRFrequency Of Payment" := contractLine."BLRFrequency Of Payment";
+            managementfee."BLRAmount" := contractLine."BLRAmount";
+            managementfee."BLRBase Amount" := contractLine."BLRRent Amount";
+            managementfee."BLRPercentage" := contractLine."BLRPercentage";
+            managementfee."BLROwner ID" := contractLine."BLROwner ID";
+            managementfee."BLROwner Name" := contractLine."BLROwner's Name";
+            managementfee."BLRTenant Name" := contractLine."BLRCustomer Name";
             managementfee.Insert();
         end;
     end;
 
     procedure UpdateSecurityDepositBalance()
     begin
-        Rec."Security Balanced Amount" := Rec."Security Deposit Amt. Received" - (Rec."Carry Forward Out" + Rec.Adjustments + Rec.Refund);
+        Rec."BLRSecurity Balanced Amount" := Rec."BLRSecDepAmtReceived" - (Rec."BLRCarry Forward Out" + Rec."BLRAdjustments" + Rec."BLRRefund");
         Rec.Modify()
     end;
 
     procedure UpdateTenancyContractSubPage()
     var
-        tenancyContractSubPageRec: Record "Tenancy Contract Subpage";
+        tenancyContractSubPageRec: Record "BLRTenancyContractSubpage";
     begin
-        tenancyContractSubPageRec.SetRange(ContractID, Rec."Contract ID");
-        tenancyContractSubPageRec.SetRange("Secondary Item Type", 'Security Deposit');
+        tenancyContractSubPageRec.SetRange("BLRContractID", Rec."BLRContract ID");
+        tenancyContractSubPageRec.SetRange("BLRSecondary Item Type", 'Security Deposit');
         if tenancyContractSubPageRec.FindFirst() then begin
-            tenancyContractSubPageRec.Validate(Amount, Rec."Security Amount Pending");
+            tenancyContractSubPageRec.Validate("BLRAmount", Rec."BLRSecurity Amount Pending");
             tenancyContractSubPageRec.Modify();
         end;
     end;

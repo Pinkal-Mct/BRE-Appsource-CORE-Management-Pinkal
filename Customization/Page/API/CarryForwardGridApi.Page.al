@@ -11,7 +11,7 @@ page 73209579 "Carry Forward Grid Api"
     EntityName = 'carryforwardgrid';
     EntitySetName = 'carryforwardgrids';
     PageType = API;
-    SourceTable = "Carry Forward Grid";
+    SourceTable = "BLRCarryForwardGrid";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -22,19 +22,19 @@ page 73209579 "Carry Forward Grid Api"
         {
             repeater(General)
             {
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(entryNo; Rec."Entry No.")
+                field(entryNo; Rec."BLREntry No.")
                 {
                     Caption = 'Entry No.';
                 }
-                field(newContractID; Rec."New Contract ID")
+                field(newContractID; Rec."BLRNew Contract ID")
                 {
                     Caption = 'New Contract ID';
                 }
-                field(securityDeposit; Rec."Security Deposit")
+                field(securityDeposit; Rec."BLRSecurity Deposit")
                 {
                     Caption = 'Security Deposit';
                 }
@@ -58,7 +58,7 @@ page 73209579 "Carry Forward Grid Api"
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(totalAmount; Rec."Total Amount")
+                field(totalAmount; Rec."BLRTotal Amount")
                 {
                     Caption = 'Total Amount';
                 }

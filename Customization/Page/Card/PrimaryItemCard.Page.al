@@ -1,7 +1,7 @@
 page 73209630 "Primary Item Card"
 {
     PageType = Card;
-    SourceTable = "Primary Item";
+    SourceTable = "BLRPrimaryItem";
     ApplicationArea = All;
     Caption = 'Primary Item Card';
     UsageCategory = None;
@@ -13,13 +13,13 @@ page 73209630 "Primary Item Card"
             group(Group)
             {
                 Caption = 'Primary Item Details';
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the primary classification.';
                 }
-                field("Primary Item Type"; Rec."Primary Item Type")
+                field("Primary Item Type"; Rec."BLRPrimary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Classification Name';

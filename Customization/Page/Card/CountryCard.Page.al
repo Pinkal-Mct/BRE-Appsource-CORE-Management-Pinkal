@@ -1,7 +1,7 @@
 page 73209623 "Country Card"
 {
     PageType = Card;
-    SourceTable = Country;
+    SourceTable = "BLRCountry";
     ApplicationArea = All;
     Caption = 'Country Card';
     UsageCategory = None;
@@ -13,24 +13,24 @@ page 73209623 "Country Card"
             group(Group)
             {
                 Caption = 'Country Details';
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the unique identifier for the country.';
                 }
-                field("Sl No."; Rec."Sl No.")
+                field("Sl No."; Rec."BLRSl No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the serial number for the country.';
                 }
-                field("Country Code"; Rec."Country Code")
+                field("Country Code"; Rec."BLRCountry Code")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the country code.';
                     ShowMandatory = true;
                     NotBlank = true;
                 }
-                field("Country Name"; Rec."Country Name")
+                field("Country Name"; Rec."BLRCountry Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the country.';
@@ -51,8 +51,8 @@ page 73209623 "Country Card"
     }
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.TestField("Country Code");
-        Rec.TestField("Country Name");
+        Rec.TestField("BLRCountry Code");
+        Rec.TestField("BLRCountry Name");
     end;
 
 }

@@ -1,7 +1,7 @@
 page 73209636 "Unearned Revenue Report Card"
 {
     PageType = Card;
-    SourceTable = "Unearned Revenue Report";
+    SourceTable = "BLRUnearnedRevenueReport";
     ApplicationArea = All;
     UsageCategory = None;
     Caption = 'Unearned Revenue Report';
@@ -13,17 +13,17 @@ page 73209636 "Unearned Revenue Report Card"
             group("Unearned Revenue Report")
             {
                 Caption = 'Unearned Revenue Report';
-                field("No."; Rec."No.")
+                field("No."; Rec."BLRNo.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Unique identifier for the unearned revenue report.';
                 }
-                field("Starting Date Year"; Rec."Starting Date Year")
+                field("Starting Date Year"; Rec."BLRStarting Date Year")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The starting date for the report, typically set to the first day of the year.';
                 }
-                field("Ending Date Year"; Rec."Ending Date Year")
+                field("Ending Date Year"; Rec."BLREnding Date Year")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The ending date for the report, typically set to the last day of the year.';
@@ -34,50 +34,50 @@ page 73209636 "Unearned Revenue Report Card"
                 Caption = 'Unearned Rent Revenue Report Details';
                 part("Unearned Rent Revenue Report Details"; "Sub Unearned Revenue Card")
                 {
-                    SubPageLink = "Header No." = field("No.");
+                    SubPageLink = "BLRHeader No." = field("BLRNo.");
                 }
             }
 
             group("Total For Rent Charges")
             {
                 Caption = 'Total For Rent Charges';
-                field("Total Contract Value"; Rec."R_Total Contract Value")
+                field("Total Contract Value"; Rec."BLRR_Total Contract Value")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total contract value for the unearned revenue report.';
                     Editable = false;
                 }
-                field("Total Opening Balance"; Rec."R_Total Opening Balance")
+                field("Total Opening Balance"; Rec."BLRR_Total Opening Balance")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total opening balance for the unearned revenue report.';
                     Editable = false;
                 }
-                field("Total Invoice Raised During Year"; Rec."R_T_Invoice Raised During Year")
+                field("Total Invoice Raised During Year"; Rec."BLRRTInvRaisedDurYear")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total invoice raised during the year for the unearned revenue report.';
                     Editable = false;
                 }
-                field("Total Revenue Allocated During Year"; Rec."R_T_Revenue Allocated During Y")
+                field("Total Revenue Allocated During Year"; Rec."BLRRTRevAllocDurY")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total revenue allocated during the year for the unearned revenue report.';
                     Editable = false;
                 }
-                field("Total Unearned Revenue Balance"; Rec."R_T_Unearned Revenue Balance")
+                field("Total Unearned Revenue Balance"; Rec."BLRRTUnearnedRevBalance")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total unearned revenue balance for the unearned revenue report.';
                     Editable = false;
                 }
-                field("Total Calculated Unearned Rev Balance"; Rec."R_T_Cal Unearned RevBalance")
+                field("Total Calculated Unearned Rev Balance"; Rec."BLRR_T_Cal Unearned RevBalance")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total calculated unearned revenue balance for the unearned revenue report.';
                     Editable = false;
                 }
-                field("Total Shortfall Excess"; Rec."R_Total Shortfall Excess")
+                field("Total Shortfall Excess"; Rec."BLRR_Total Shortfall Excess")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Total shortfall or excess for the unearned revenue report.';
@@ -90,7 +90,7 @@ page 73209636 "Unearned Revenue Report Card"
                 Caption = 'Other Charges Details';
                 part("Other Charges Unearned Revenue"; "OtherCharges-UnearnedRevenue")
                 {
-                    SubPageLink = "No." = field("No.");
+                    SubPageLink = "BLRNo." = field("BLRNo.");
                 }
             }
             group("Unearned Other Charges Revenue Report Report Details")
@@ -98,7 +98,7 @@ page 73209636 "Unearned Revenue Report Card"
                 Caption = 'Unearned Other Charges Revenue Report Details';
                 part("Unearned Other Charges Revenue Report Details"; "Sub Unearned Charges")
                 {
-                    SubPageLink = "Header No." = field("No.");
+                    SubPageLink = "BLRHeader No." = field("BLRNo.");
                 }
             }
 
@@ -202,7 +202,7 @@ page 73209636 "Unearned Revenue Report Card"
 
     procedure CalculateAndUpdateTotals()
     var
-        unearnedRevenueBuffer: Record "Sub Unearned Revenue Report";
+        unearnedRevenueBuffer: Record "BLRSubUnearnedRevenueReport";
         TotalContractValue: Decimal;
         lTotalOpeningBalance: Decimal;
         TotalInvoiceRaised: Decimal;
@@ -222,27 +222,27 @@ page 73209636 "Unearned Revenue Report Card"
 
         // Calculate totals from buffer table
         unearnedRevenueBuffer.Reset();
-        unearnedRevenueBuffer.SetRange("Header No.", Rec."No.");
+        unearnedRevenueBuffer.SetRange("BLRHeader No.", Rec."BLRNo.");
 
         if unearnedRevenueBuffer.FindSet() then
             repeat
-                TotalContractValue += unearnedRevenueBuffer."Contract Value";
-                lTotalOpeningBalance += unearnedRevenueBuffer."Opening Balance";
-                TotalInvoiceRaised += unearnedRevenueBuffer."Invoice Raised During the Year";
-                TotalRevenueAllocated += unearnedRevenueBuffer."RevenueAllocated DuringtheYear";
-                TotalUnearnedRevBalance += unearnedRevenueBuffer."Unearned Revenue Balance";
-                TotalCalculatedUnearnedRevBalance += unearnedRevenueBuffer.CalculatedUnearnedRevBalance;
-                TotalShortfallExcess += unearnedRevenueBuffer."Shortfall/Excess";
+                TotalContractValue += unearnedRevenueBuffer."BLRContract Value";
+                lTotalOpeningBalance += unearnedRevenueBuffer."BLROpening Balance";
+                TotalInvoiceRaised += unearnedRevenueBuffer."BLRInvRaisedDurtheYear";
+                TotalRevenueAllocated += unearnedRevenueBuffer."BLRRevAllocDurtheYear";
+                TotalUnearnedRevBalance += unearnedRevenueBuffer."BLRUnearned Revenue Balance";
+                TotalCalculatedUnearnedRevBalance += unearnedRevenueBuffer."BLRCalculatedUnearnedRevB19C1";
+                TotalShortfallExcess += unearnedRevenueBuffer."BLRShortfall/Excess";
             until unearnedRevenueBuffer.Next() = 0;
 
         // Update header record with totals
-        Rec."R_Total Contract Value" := TotalContractValue;
-        Rec."R_Total Opening Balance" := lTotalOpeningBalance;
-        Rec."R_T_Invoice Raised During Year" := TotalInvoiceRaised;
-        Rec."R_T_Revenue Allocated During Y" := TotalRevenueAllocated;
-        Rec."R_T_Unearned Revenue Balance" := TotalUnearnedRevBalance;
-        Rec."R_T_Cal Unearned RevBalance" := TotalCalculatedUnearnedRevBalance;
-        Rec."R_Total Shortfall Excess" := TotalShortfallExcess;
+        Rec."BLRR_Total Contract Value" := TotalContractValue;
+        Rec."BLRR_Total Opening Balance" := lTotalOpeningBalance;
+        Rec."BLRRTInvRaisedDurYear" := TotalInvoiceRaised;
+        Rec."BLRRTRevAllocDurY" := TotalRevenueAllocated;
+        Rec."BLRRTUnearnedRevBalance" := TotalUnearnedRevBalance;
+        Rec."BLRR_T_Cal Unearned RevBalance" := TotalCalculatedUnearnedRevBalance;
+        Rec."BLRR_Total Shortfall Excess" := TotalShortfallExcess;
 
         Rec.Modify();
         CurrPage.Update();
@@ -250,11 +250,11 @@ page 73209636 "Unearned Revenue Report Card"
 
     procedure UnearnedRevenueRent()
     var
-        tenancyContract: Record "Tenancy Contract";
-        unearnedRevenueBuffer: Record "Sub Unearned Revenue Report"; // your buffer table
-        SuspendedReasonRec: Record SuspendReasonTable; // Replace with actual table name
-        FinalCalculationRec: Record "Final Calculation"; // Replace with actual table name
-        paymentSchedule: Record "Payment Schedule2";
+        tenancyContract: Record "BLRTenancyContract";
+        unearnedRevenueBuffer: Record "BLRSubUnearnedRevenueReport"; // your buffer table
+        SuspendedReasonRec: Record "BLRSuspendReasonTable"; // Replace with actual table name
+        FinalCalculationRec: Record "BLRFinalCalculation"; // Replace with actual table name
+        paymentSchedule: Record "BLRPaymentSchedule2";
         SalesCrMemoHeader: Record "Sales Cr.Memo Header";
         SalesCreditMemoLines: Record "Sales Cr.Memo Line";
         PostedSalesInvoiceHeader: Record "Sales Invoice Header";
@@ -277,21 +277,21 @@ page 73209636 "Unearned Revenue Report Card"
     begin
         ClearSubgridData(); // Always clear before inserting
 
-        StartDate := Rec."Starting Date Year";
-        EndDate := Rec."Ending Date Year";
+        StartDate := Rec."BLRStarting Date Year";
+        EndDate := Rec."BLREnding Date Year";
 
         tenancyContract.Reset();
-        tenancyContract.SetFilter("Tenant Contract Status", '%1|%2|%3|%4',
-            tenancyContract."Tenant Contract Status"::Active,
-            tenancyContract."Tenant Contract Status"::Terminated,
-            tenancyContract."Tenant Contract Status"::Suspended,
-            tenancyContract."Tenant Contract Status"::"Active-Contract Renewed",
-            tenancyContract."Tenant Contract Status"::"Contract Renewed");
+        tenancyContract.SetFilter("BLRTenant Contract Status", '%1|%2|%3|%4',
+            tenancyContract."BLRTenant Contract Status"::Active,
+            tenancyContract."BLRTenant Contract Status"::Terminated,
+            tenancyContract."BLRTenant Contract Status"::Suspended,
+            tenancyContract."BLRTenant Contract Status"::"Active-Contract Renewed",
+            tenancyContract."BLRTenant Contract Status"::"Contract Renewed");
 
         // ✅ Filter contracts that fall within OR span the date range
-        // tenancyContract.SetFilter("Contract Start Date", '..%1', EndDate); // starts on or before end date
-        // tenancyContract.SetFilter("Contract End Date", '%1..', StartDate); // ends on or after start date
-        tenancyContract.SetFilter("Contract Start Date", '<=%1', EndDate); // starts on or before end date
+        // tenancyContract.SetFilter("BLRContract Start Date", '..%1', EndDate); // starts on or before end date
+        // tenancyContract.SetFilter("BLRContract End Date", '%1..', StartDate); // ends on or after start date
+        tenancyContract.SetFilter("BLRContract Start Date", '<=%1', EndDate); // starts on or before end date
 
         if tenancyContract.FindSet() then
             repeat
@@ -310,25 +310,25 @@ page 73209636 "Unearned Revenue Report Card"
                 UnearnedNoofday := 0;
                 PeriodDuringYear := false;
                 //////////////////////////////// Totatl Invoiced Amount //////////////////////////////
-                if (tenancyContract."Contract Start Date" >= StartDate) and (tenancyContract."Contract Start Date" <= EndDate) then
+                if (tenancyContract."BLRContract Start Date" >= StartDate) and (tenancyContract."BLRContract Start Date" <= EndDate) then
                     PeriodDuringYear := true
                 else begin
 
                     //////////////////////////////// Totatl Invoiced Amount //////////////////////////////
                     PostedSalesInvoiceHeader.Reset();
-                    PostedSalesInvoiceHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                    PostedSalesInvoiceHeader.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                     PostedSalesInvoiceHeader.SetFilter("Posting Date", '<=%1', StartDate);
                     if PostedSalesInvoiceHeader.FindSet() then
                         repeat
                             paymentSchedule.Reset();
-                            paymentSchedule.SetRange("Invoice ID", PostedSalesInvoiceHeader."No.");
-                            paymentSchedule.SetRange("Contract ID", PostedSalesInvoiceHeader."Contract ID");
-                            paymentSchedule.SetRange("Secondary Item Type", 'Rent');
-                            paymentSchedule.SetRange(Invoiced, true);
-                            paymentSchedule.SetLoadFields("Invoice ID", "Contract ID", "Secondary Item Type", Amount);
+                            paymentSchedule.SetRange("BLRInvoice ID", PostedSalesInvoiceHeader."No.");
+                            paymentSchedule.SetRange("BLRContract ID", PostedSalesInvoiceHeader."BLRContract ID");
+                            paymentSchedule.SetRange("BLRSecondary Item Type", 'Rent');
+                            paymentSchedule.SetRange("BLRInvoiced", true);
+                            paymentSchedule.SetLoadFields("BLRInvoice ID", "BLRContract ID", "BLRSecondary Item Type", "BLRAmount");
                             if paymentSchedule.FindSet() then
                                 repeat
-                                    TotalInvoiceRentAmount += paymentSchedule.Amount;
+                                    TotalInvoiceRentAmount += paymentSchedule."BLRAmount";
                                 until paymentSchedule.Next() = 0;
 
                         until PostedSalesInvoiceHeader.Next() = 0;
@@ -336,7 +336,7 @@ page 73209636 "Unearned Revenue Report Card"
 
                     ///////////////////////////  TOTAL CREDITNOTE AMOUNT /////////////////////////
                     SalesCrMemoHeader.Reset();
-                    SalesCrMemoHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                    SalesCrMemoHeader.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                     SalesCrMemoHeader.SetFilter("Posting Date", '<=%1', StartDate);
                     if SalesCrMemoHeader.FindSet() then
                         repeat
@@ -358,19 +358,19 @@ page 73209636 "Unearned Revenue Report Card"
 
 
                 PostedSalesInvoiceHeader.Reset();
-                PostedSalesInvoiceHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                PostedSalesInvoiceHeader.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                 PostedSalesInvoiceHeader.SetRange("Posting Date", StartDate, EndDate);
                 if PostedSalesInvoiceHeader.FindSet() then
                     repeat
                         paymentSchedule.Reset();
-                        paymentSchedule.SetRange("Invoice ID", PostedSalesInvoiceHeader."No.");
-                        paymentSchedule.SetRange("Contract ID", PostedSalesInvoiceHeader."Contract ID");
-                        paymentSchedule.SetRange("Secondary Item Type", 'Rent');
-                        paymentSchedule.SetRange(Invoiced, true);
-                        paymentSchedule.SetLoadFields("Invoice ID", "Contract ID", "Secondary Item Type", Amount);
+                        paymentSchedule.SetRange("BLRInvoice ID", PostedSalesInvoiceHeader."No.");
+                        paymentSchedule.SetRange("BLRContract ID", PostedSalesInvoiceHeader."BLRContract ID");
+                        paymentSchedule.SetRange("BLRSecondary Item Type", 'Rent');
+                        paymentSchedule.SetRange("BLRInvoiced", true);
+                        paymentSchedule.SetLoadFields("BLRInvoice ID", "BLRContract ID", "BLRSecondary Item Type", "BLRAmount");
                         if paymentSchedule.FindSet() then
                             repeat
-                                TotalInvoicedAmount += paymentSchedule.Amount;
+                                TotalInvoicedAmount += paymentSchedule."BLRAmount";
                             until paymentSchedule.Next() = 0;
 
                     until PostedSalesInvoiceHeader.Next() = 0;
@@ -380,7 +380,7 @@ page 73209636 "Unearned Revenue Report Card"
 
                 ///////////////////////////  TOTAL Credit AMOUNT issued /////////////////////////
                 SalesCrMemoHeader.Reset();
-                SalesCrMemoHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                SalesCrMemoHeader.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                 SalesCrMemoHeader.SetRange("Posting Date", StartDate, EndDate);
                 if SalesCrMemoHeader.FindSet() then
                     repeat
@@ -400,97 +400,97 @@ page 73209636 "Unearned Revenue Report Card"
                 NewLineNo := GetNextLineNo();
 
                 SuspendedDate := 0D;
-                if tenancyContract."Tenant Contract Status" = tenancyContract."Tenant Contract Status"::Suspended then begin
+                if tenancyContract."BLRTenant Contract Status" = tenancyContract."BLRTenant Contract Status"::Suspended then begin
                     SuspendedReasonRec.Reset();
-                    SuspendedReasonRec.SetRange("Contract ID", tenancyContract."Contract ID");
+                    SuspendedReasonRec.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                     if SuspendedReasonRec.FindLast() then
-                        SuspendedDate := SuspendedReasonRec.DateEffective;
+                        SuspendedDate := SuspendedReasonRec."BLRDateEffective";
                 end;
 
                 TerminationDate := 0D;
                 TerminatedDuringYear := false;
-                if tenancyContract."Tenant Contract Status" = tenancyContract."Tenant Contract Status"::Terminated then begin
+                if tenancyContract."BLRTenant Contract Status" = tenancyContract."BLRTenant Contract Status"::Terminated then begin
                     FinalCalculationRec.Reset();
-                    FinalCalculationRec.SetRange("Contract ID", tenancyContract."Contract ID"); // Assuming this link exists
+                    FinalCalculationRec.SetRange("BLRContract ID", tenancyContract."BLRContract ID"); // Assuming this link exists
                     if FinalCalculationRec.FindLast() then begin // Get latest calculation
-                        TerminationDate := FinalCalculationRec."Termination Date";
+                        TerminationDate := FinalCalculationRec."BLRTermination Date";
                         If (TerminationDate >= StartDate) and (TerminationDate <= EndDate) then
                             TerminatedDuringYear := true;
                     end;
                 end;
                 unearnedRevenueBuffer.Init();
-                unearnedRevenueBuffer."Header No." := Rec."No.";
-                unearnedRevenueBuffer."Line No." := NewLineNo;
-                unearnedRevenueBuffer."Contract ID" := tenancyContract."Contract ID";
-                unearnedRevenueBuffer."Start Date" := tenancyContract."Contract Start Date";
-                unearnedRevenueBuffer."End Date" := tenancyContract."Contract End Date";
-                unearnedRevenueBuffer."Customer Name" := tenancyContract."Customer Name";
-                unearnedRevenueBuffer.Property := tenancyContract."Property Name";
-                unearnedRevenueBuffer."Owner Name" := tenancyContract."Owner's Name";
-                unearnedRevenueBuffer."Contract Value" := tenancyContract."Annual Rent Amount";
-                unearnedRevenueBuffer."Contract Status" := Format(tenancyContract."Tenant Contract Status");
+                unearnedRevenueBuffer."BLRHeader No." := Rec."BLRNo.";
+                unearnedRevenueBuffer."BLRLine No." := NewLineNo;
+                unearnedRevenueBuffer."BLRContract ID" := tenancyContract."BLRContract ID";
+                unearnedRevenueBuffer."BLRStart Date" := tenancyContract."BLRContract Start Date";
+                unearnedRevenueBuffer."BLREnd Date" := tenancyContract."BLRContract End Date";
+                unearnedRevenueBuffer."BLRCustomer Name" := tenancyContract."BLRCustomer Name";
+                unearnedRevenueBuffer."BLRProperty" := tenancyContract."BLRProperty Name";
+                unearnedRevenueBuffer."BLROwner Name" := tenancyContract."BLROwner's Name";
+                unearnedRevenueBuffer."BLRContract Value" := tenancyContract."BLRAnnual Rent Amount";
+                unearnedRevenueBuffer."BLRContract Status" := Format(tenancyContract."BLRTenant Contract Status");
                 if PeriodDuringYear then
-                    unearnedRevenueBuffer."Opening Balance" := 0
+                    unearnedRevenueBuffer."BLROpening Balance" := 0
                 else
                     if TerminatedDuringYear then
-                        unearnedRevenueBuffer."Opening Balance" := 0
+                        unearnedRevenueBuffer."BLROpening Balance" := 0
                     else begin
 
-                        TotalEarnedAmount := CalculateRevenueAllocation(tenancyContract, Rec."Starting Date Year", Rec."Ending Date Year");
-                        unearnedRevenueBuffer."Opening Balance" := (TotalInvoiceRentAmount + TotalCreditNote) - TotalEarnedAmount;
+                        TotalEarnedAmount := CalculateRevenueAllocation(tenancyContract, Rec."BLRStarting Date Year", Rec."BLREnding Date Year");
+                        unearnedRevenueBuffer."BLROpening Balance" := (TotalInvoiceRentAmount + TotalCreditNote) - TotalEarnedAmount;
                     end;
 
-                unearnedRevenueBuffer."Invoice Raised During the Year" := TotalInvoicedAmount + TotalCreditAmountIssued;
-                unearnedRevenueBuffer."Suspension Date" := SuspendedDate;
-                unearnedRevenueBuffer."Termination Date" := TerminationDate;
+                unearnedRevenueBuffer."BLRInvRaisedDurtheYear" := TotalInvoicedAmount + TotalCreditAmountIssued;
+                unearnedRevenueBuffer."BLRSuspension Date" := SuspendedDate;
+                unearnedRevenueBuffer."BLRTermination Date" := TerminationDate;
 
 
-                TotalNoofDays := unearnedRevenueBuffer."End Date" - unearnedRevenueBuffer."Start Date" + 1;
-                PerDayrent := unearnedRevenueBuffer."Contract Value" / TotalNoofDays;
-                UnearnedNoofday := unearnedRevenueBuffer."End Date" - EndDate;
-                unearnedRevenueBuffer.CalculatedUnearnedRevBalance := PerDayrent * UnearnedNoofday;
+                TotalNoofDays := unearnedRevenueBuffer."BLREnd Date" - unearnedRevenueBuffer."BLRStart Date" + 1;
+                PerDayrent := unearnedRevenueBuffer."BLRContract Value" / TotalNoofDays;
+                UnearnedNoofday := unearnedRevenueBuffer."BLREnd Date" - EndDate;
+                unearnedRevenueBuffer."BLRCalculatedUnearnedRevB19C1" := PerDayrent * UnearnedNoofday;
 
 
-                case tenancyContract."Praposal Type Selected" of
-                    tenancyContract."Praposal Type Selected"::"Single Unit":
-                        unearnedRevenueBuffer."Unit Name" := COPYSTR(tenancyContract."Unit Name", 1, MAXSTRLEN(unearnedRevenueBuffer."Unit Name"));
-                    tenancyContract."Praposal Type Selected"::"Merge Unit":
-                        unearnedRevenueBuffer."Unit Name" := COPYSTR(tenancyContract."Single Unit Name", 1, MAXSTRLEN(unearnedRevenueBuffer."Unit Name"));
+                case tenancyContract."BLRPraposal Type Selected" of
+                    tenancyContract."BLRPraposal Type Selected"::"Single Unit":
+                        unearnedRevenueBuffer."BLRUnit Name" := COPYSTR(tenancyContract."BLRUnit Name", 1, MAXSTRLEN(unearnedRevenueBuffer."BLRUnit Name"));
+                    tenancyContract."BLRPraposal Type Selected"::"Merge Unit":
+                        unearnedRevenueBuffer."BLRUnit Name" := COPYSTR(tenancyContract."BLRSingle Unit Name", 1, MAXSTRLEN(unearnedRevenueBuffer."BLRUnit Name"));
                     else
-                        unearnedRevenueBuffer."Unit Name" := '';
+                        unearnedRevenueBuffer."BLRUnit Name" := '';
                 end;
 
-                unearnedRevenueBuffer."RevenueAllocated DuringtheYear" := CalculateRevenueAllocationdurngyear(tenancyContract."Contract ID", Rec."Starting Date Year", Rec."Ending Date Year");
+                unearnedRevenueBuffer."BLRRevAllocDurtheYear" := CalculateRevenueAllocationdurngyear(tenancyContract."BLRContract ID", Rec."BLRStarting Date Year", Rec."BLREnding Date Year");
 
-                unearnedRevenueBuffer."Unearned Revenue Balance" := unearnedRevenueBuffer."Opening Balance" + unearnedRevenueBuffer."Invoice Raised During the Year" - unearnedRevenueBuffer."RevenueAllocated DuringtheYear";
+                unearnedRevenueBuffer."BLRUnearned Revenue Balance" := unearnedRevenueBuffer."BLROpening Balance" + unearnedRevenueBuffer."BLRInvRaisedDurtheYear" - unearnedRevenueBuffer."BLRRevAllocDurtheYear";
 
-                unearnedRevenueBuffer."Shortfall/Excess" := unearnedRevenueBuffer."Unearned Revenue Balance" - unearnedRevenueBuffer.CalculatedUnearnedRevBalance;
-                unearnedRevenueBuffer."Report Period" := Format(Rec."Starting Date Year") + ' - ' + Format(Rec."Ending Date Year");
+                unearnedRevenueBuffer."BLRShortfall/Excess" := unearnedRevenueBuffer."BLRUnearned Revenue Balance" - unearnedRevenueBuffer."BLRCalculatedUnearnedRevB19C1";
+                unearnedRevenueBuffer."BLRReport Period" := Format(Rec."BLRStarting Date Year") + ' - ' + Format(Rec."BLREnding Date Year");
 
                 unearnedRevenueBuffer.Insert();
             until tenancyContract.Next() = 0;
     end;
 
-    local procedure CalculateRevenueAllocation(tenancyContract: Record "Tenancy Contract"; StartDate: Date; EndDate: Date): Decimal
+    local procedure CalculateRevenueAllocation(tenancyContract: Record "BLRTenancyContract"; StartDate: Date; EndDate: Date): Decimal
     var
-        RevenueAllocationRec: Record "Revenue Allocation SubGrid";
-        RevenueallocationHeader: Record "Revenue Allocation Details"; // Replace with your actual table name
+        RevenueAllocationRec: Record "BLRRevenueAllocationSubGrid";
+        RevenueallocationHeader: Record "BLRRevenueAllocationDetails"; // Replace with your actual table name
         TotalRevenueAllocated: Decimal;
     begin
-        if (tenancyContract."Contract Start Date" >= StartDate) and (tenancyContract."Contract Start Date" <= EndDate) then begin
+        if (tenancyContract."BLRContract Start Date" >= StartDate) and (tenancyContract."BLRContract Start Date" <= EndDate) then begin
             TotalRevenueAllocated := 0;
             RevenueallocationHeader.Reset();
-            RevenueallocationHeader.SetRange(Status, RevenueallocationHeader.Status::Approve);
+            RevenueallocationHeader.SetRange("BLRStatus", RevenueallocationHeader."BLRStatus"::Approve);
             if RevenueallocationHeader.FindSet() then
                 repeat
                     RevenueAllocationRec.Reset();
-                    RevenueAllocationRec.SetRange("Header No.", RevenueallocationHeader."No.");
-                    RevenueAllocationRec.SetRange("Contract ID", tenancyContract."Contract ID"); // Assuming this field exists
-                    RevenueAllocationRec.SetRange("Revenue Start Date", StartDate, EndDate);
-                    RevenueAllocationRec.SetFilter(Description, '<>%1', 'Credit Note');
-                    RevenueAllocationRec.SetLoadFields("Header No.", "Contract Id", "Revenue Start Date", "Total Value");
-                    RevenueAllocationRec.CalcSums("Total Value");
-                    TotalRevenueAllocated += RevenueAllocationRec."Total Value";
+                    RevenueAllocationRec.SetRange("BLRHeader No.", RevenueallocationHeader."BLRNo.");
+                    RevenueAllocationRec.SetRange("BLRContract Id", tenancyContract."BLRContract ID"); // Assuming this field exists
+                    RevenueAllocationRec.SetRange("BLRRevenue Start Date", StartDate, EndDate);
+                    RevenueAllocationRec.SetFilter("BLRDescription", '<>%1', 'Credit Note');
+                    RevenueAllocationRec.SetLoadFields("BLRHeader No.", "BLRContract Id", "BLRRevenue Start Date", "BLRTotal Value");
+                    RevenueAllocationRec.CalcSums("BLRTotal Value");
+                    TotalRevenueAllocated += RevenueAllocationRec."BLRTotal Value";
                 until RevenueallocationHeader.Next() = 0;
             // Method 1: If Revenue Allocation table has Contract ID field
             exit(TotalRevenueAllocated);
@@ -498,17 +498,17 @@ page 73209636 "Unearned Revenue Report Card"
 
             TotalRevenueAllocated := 0;
             RevenueallocationHeader.Reset();
-            RevenueallocationHeader.SetRange(Status, RevenueallocationHeader.Status::Approve);
+            RevenueallocationHeader.SetRange("BLRStatus", RevenueallocationHeader."BLRStatus"::Approve);
             if RevenueallocationHeader.FindSet() then
                 repeat
                     RevenueAllocationRec.Reset();
-                    RevenueAllocationRec.SetRange("Header No.", RevenueallocationHeader."No.");
-                    RevenueAllocationRec.SetRange("Contract ID", tenancyContract."Contract ID"); // Assuming this field exists
-                    RevenueAllocationRec.SetFilter("Revenue Start Date", '<=%1', StartDate);
-                    RevenueAllocationRec.SetFilter(Description, '<>%1', 'Credit Note');
-                    RevenueAllocationRec.SetLoadFields("Header No.", "Contract Id", "Revenue Start Date", "Total Value");
-                    RevenueAllocationRec.CalcSums("Total Value");
-                    TotalRevenueAllocated += RevenueAllocationRec."Total Value";
+                    RevenueAllocationRec.SetRange("BLRHeader No.", RevenueallocationHeader."BLRNo.");
+                    RevenueAllocationRec.SetRange("BLRContract Id", tenancyContract."BLRContract ID"); // Assuming this field exists
+                    RevenueAllocationRec.SetFilter("BLRRevenue Start Date", '<=%1', StartDate);
+                    RevenueAllocationRec.SetFilter("BLRDescription", '<>%1', 'Credit Note');
+                    RevenueAllocationRec.SetLoadFields("BLRHeader No.", "BLRContract Id", "BLRRevenue Start Date", "BLRTotal Value");
+                    RevenueAllocationRec.CalcSums("BLRTotal Value");
+                    TotalRevenueAllocated += RevenueAllocationRec."BLRTotal Value";
                 until RevenueallocationHeader.Next() = 0;
             // Method 1: If Revenue Allocation table has Contract ID field
             exit(TotalRevenueAllocated);
@@ -517,24 +517,24 @@ page 73209636 "Unearned Revenue Report Card"
 
     local procedure CalculateRevenueAllocationdurngyear(ContractID: Integer; StartDate: Date; EndDate: Date): Decimal
     var
-        RevenueAllocationRec: Record "Revenue Allocation SubGrid";
-        RevenueallocationHeader: Record "Revenue Allocation Details"; // Replace with your actual table name
+        RevenueAllocationRec: Record "BLRRevenueAllocationSubGrid";
+        RevenueallocationHeader: Record "BLRRevenueAllocationDetails"; // Replace with your actual table name
         TotalRevenueAllocatedDuringYear: Decimal;
 
     begin
         TotalRevenueAllocatedDuringYear := 0;
         RevenueallocationHeader.Reset();
-        RevenueallocationHeader.SetRange(Status, RevenueallocationHeader.Status::Approve);
+        RevenueallocationHeader.SetRange("BLRStatus", RevenueallocationHeader."BLRStatus"::Approve);
         if RevenueallocationHeader.FindSet() then
             repeat
                 RevenueAllocationRec.Reset();
-                RevenueAllocationRec.SetRange("Header No.", RevenueallocationHeader."No.");
-                RevenueAllocationRec.SetRange("Contract ID", ContractID);
-                RevenueAllocationRec.SetFilter(Description, '<>%1', 'Credit Note');
-                RevenueAllocationRec.SetFilter("Revenue Start Date", '%1..%2', StartDate, EndDate);
-                RevenueAllocationRec.SetLoadFields("Header No.", "Contract Id", "Revenue Start Date", "Total Value");
-                RevenueAllocationRec.CalcSums("Total Value");
-                TotalRevenueAllocatedDuringYear += RevenueAllocationRec."Total Value";
+                RevenueAllocationRec.SetRange("BLRHeader No.", RevenueallocationHeader."BLRNo.");
+                RevenueAllocationRec.SetRange("BLRContract Id", ContractID);
+                RevenueAllocationRec.SetFilter("BLRDescription", '<>%1', 'Credit Note');
+                RevenueAllocationRec.SetFilter("BLRRevenue Start Date", '%1..%2', StartDate, EndDate);
+                RevenueAllocationRec.SetLoadFields("BLRHeader No.", "BLRContract Id", "BLRRevenue Start Date", "BLRTotal Value");
+                RevenueAllocationRec.CalcSums("BLRTotal Value");
+                TotalRevenueAllocatedDuringYear += RevenueAllocationRec."BLRTotal Value";
             until RevenueallocationHeader.Next() = 0;
         // Method 1: If Revenue Allocation table has Contract ID field
         exit(TotalRevenueAllocatedDuringYear);
@@ -542,13 +542,13 @@ page 73209636 "Unearned Revenue Report Card"
 
     procedure GetNextLineNo(): Integer
     var
-        unearnedRevenueBuffer: Record "Sub Unearned Revenue Report";
+        unearnedRevenueBuffer: Record "BLRSubUnearnedRevenueReport";
         LastLineNo: Integer;
     begin
         unearnedRevenueBuffer.Reset();
-        unearnedRevenueBuffer.SetRange("Header No.", Rec."No."); // ✅ filter by Header No.
+        unearnedRevenueBuffer.SetRange("BLRHeader No.", Rec."BLRNo."); // ✅ filter by Header No.
         if unearnedRevenueBuffer.FindLast() then
-            LastLineNo := unearnedRevenueBuffer."Line No."
+            LastLineNo := unearnedRevenueBuffer."BLRLine No."
         else
             LastLineNo := 0;
 
@@ -557,24 +557,24 @@ page 73209636 "Unearned Revenue Report Card"
 
     procedure ClearSubgridData()
     var
-        RevenueItemDetail: Record "Sub Unearned Revenue Report";
+        RevenueItemDetail: Record "BLRSubUnearnedRevenueReport";
     begin
-        RevenueItemDetail.SetRange("Header No.", Rec."No."); // ✅ Clear only for this header
+        RevenueItemDetail.SetRange("BLRHeader No.", Rec."BLRNo."); // ✅ Clear only for this header
         RevenueItemDetail.DeleteAll(true);
     end;
 
 
     procedure UnearnedRevenueOtherCharges()
     var
-        tenancyContract: Record "Tenancy Contract";
-        unearnedRevenueBuffer: Record "Sub Unearned Charges";
+        tenancyContract: Record "BLRTenancyContract";
+        unearnedRevenueBuffer: Record "BLRSubUnearnedCharges";
         SalesCrMemoHeader: Record "Sales Cr.Memo Header";
         SalesCreditMemoLines: Record "Sales Cr.Memo Line";// your buffer table
         PostedSalesInvoiceHeader: Record "Sales Invoice Header";
-        SuspendedReasonRec: Record SuspendReasonTable;
-        FinalCalculationRec: Record "Final Calculation";
-        paymentSchedule: Record "Payment Schedule2";
-        revenueStructure: Record "Revenue Structure";
+        SuspendedReasonRec: Record "BLRSuspendReasonTable";
+        FinalCalculationRec: Record "BLRFinalCalculation";
+        paymentSchedule: Record "BLRPaymentSchedule2";
+        revenueStructure: Record "BLRRevenueStructure";
         NewLineNo: Integer;
         StartDate, EndDate : Date;
         SuspendedDate, TerminationDate : Date;
@@ -596,8 +596,8 @@ page 73209636 "Unearned Revenue Report Card"
     begin
         ClearSubgridDataParking();
 
-        StartDate := Rec."Starting Date Year";
-        EndDate := Rec."Ending Date Year";
+        StartDate := Rec."BLRStarting Date Year";
+        EndDate := Rec."BLREnding Date Year";
 
         GetSelectedItemTypes(ItemTypes);
 
@@ -607,16 +607,16 @@ page 73209636 "Unearned Revenue Report Card"
         ItemTypeFilter := GetItemTypeFilter(ItemTypes);
 
         tenancyContract.Reset();
-        tenancyContract.SetFilter("Tenant Contract Status", '%1|%2|%3|%4|%5',
-            tenancyContract."Tenant Contract Status"::Active,
-            tenancyContract."Tenant Contract Status"::Terminated,
-            tenancyContract."Tenant Contract Status"::Suspended,
-            tenancyContract."Tenant Contract Status"::"Active-Contract Renewed",
-            tenancyContract."Tenant Contract Status"::"Contract Renewed");
+        tenancyContract.SetFilter("BLRTenant Contract Status", '%1|%2|%3|%4|%5',
+            tenancyContract."BLRTenant Contract Status"::Active,
+            tenancyContract."BLRTenant Contract Status"::Terminated,
+            tenancyContract."BLRTenant Contract Status"::Suspended,
+            tenancyContract."BLRTenant Contract Status"::"Active-Contract Renewed",
+            tenancyContract."BLRTenant Contract Status"::"Contract Renewed");
 
-        // tenancyContract.SetFilter("Contract Start Date", '..%1', EndDate);
-        // tenancyContract.SetFilter("Contract End Date", '%1..', StartDate);
-        tenancyContract.SetFilter("Contract Start Date", '<=%1', EndDate);
+        // tenancyContract.SetFilter("BLRContract Start Date", '..%1', EndDate);
+        // tenancyContract.SetFilter("BLRContract End Date", '%1..', StartDate);
+        tenancyContract.SetFilter("BLRContract Start Date", '<=%1', EndDate);
 
         if tenancyContract.FindSet() then
             repeat
@@ -640,8 +640,8 @@ page 73209636 "Unearned Revenue Report Card"
                 // 🔹 If not found in payment schedule, check Revenue Structure
                 if not HasMatchingData then begin
                     revenueStructure.Reset();
-                    revenueStructure.SetRange("Contract ID", tenancyContract."Contract ID");
-                    revenueStructure.SetFilter("Secondary Item Type", ItemTypeFilter);
+                    revenueStructure.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
+                    revenueStructure.SetFilter("BLRSecondary Item Type", ItemTypeFilter);
                     if revenueStructure.FindFirst() then
                         HasMatchingData := true;
                 end;
@@ -651,25 +651,25 @@ page 73209636 "Unearned Revenue Report Card"
                     continue;
 
                 // 🔹 Sum Revenue Structure
-                if (tenancyContract."Contract Start Date" >= StartDate) and (tenancyContract."Contract Start Date" <= EndDate) then
+                if (tenancyContract."BLRContract Start Date" >= StartDate) and (tenancyContract."BLRContract Start Date" <= EndDate) then
                     ChargesDuringTheYear := true
                 else begin
 
                     //////////////////////////////// Totatl Invoiced Amount //////////////////////////////
                     PostedSalesInvoiceHeader.Reset();
-                    PostedSalesInvoiceHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                    PostedSalesInvoiceHeader.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                     PostedSalesInvoiceHeader.SetFilter("Posting Date", '<=%1', StartDate);
                     if PostedSalesInvoiceHeader.FindSet() then
                         repeat
                             paymentSchedule.Reset();
-                            paymentSchedule.SetRange("Invoice ID", PostedSalesInvoiceHeader."No.");
-                            paymentSchedule.SetRange("Contract ID", PostedSalesInvoiceHeader."Contract ID");
-                            paymentSchedule.SetRange("Secondary Item Type", ItemTypeFilter);
-                            paymentSchedule.SetRange(Invoiced, true);
-                            paymentSchedule.SetLoadFields("Invoice ID", "Contract ID", "Secondary Item Type", Amount);
+                            paymentSchedule.SetRange("BLRInvoice ID", PostedSalesInvoiceHeader."No.");
+                            paymentSchedule.SetRange("BLRContract ID", PostedSalesInvoiceHeader."BLRContract ID");
+                            paymentSchedule.SetRange("BLRSecondary Item Type", ItemTypeFilter);
+                            paymentSchedule.SetRange("BLRInvoiced", true);
+                            paymentSchedule.SetLoadFields("BLRInvoice ID", "BLRContract ID", "BLRSecondary Item Type", "BLRAmount");
                             if paymentSchedule.FindSet() then
                                 repeat
-                                    TotalInvoicedAmountCharges += paymentSchedule.Amount;
+                                    TotalInvoicedAmountCharges += paymentSchedule."BLRAmount";
                                 until paymentSchedule.Next() = 0;
 
                         until PostedSalesInvoiceHeader.Next() = 0;
@@ -679,7 +679,7 @@ page 73209636 "Unearned Revenue Report Card"
 
                     ///////////////////////////  TOTAL CREDITNOTE AMOUNT /////////////////////////
                     SalesCrMemoHeader.Reset();
-                    SalesCrMemoHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                    SalesCrMemoHeader.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                     SalesCrMemoHeader.SetFilter("Posting Date", '<=%1', StartDate);
                     if SalesCrMemoHeader.FindSet() then
                         repeat
@@ -703,19 +703,19 @@ page 73209636 "Unearned Revenue Report Card"
 
 
                 PostedSalesInvoiceHeader.Reset();
-                PostedSalesInvoiceHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                PostedSalesInvoiceHeader.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                 PostedSalesInvoiceHeader.SetRange("Posting Date", StartDate, EndDate);
                 if PostedSalesInvoiceHeader.FindSet() then
                     repeat
                         paymentSchedule.Reset();
-                        paymentSchedule.SetRange("Invoice ID", PostedSalesInvoiceHeader."No.");
-                        paymentSchedule.SetRange("Contract ID", PostedSalesInvoiceHeader."Contract ID");
-                        paymentSchedule.SetRange("Secondary Item Type", ItemTypeFilter);
-                        paymentSchedule.SetRange(Invoiced, true);
-                        paymentSchedule.SetLoadFields("Invoice ID", "Contract ID", "Secondary Item Type", Amount);
+                        paymentSchedule.SetRange("BLRInvoice ID", PostedSalesInvoiceHeader."No.");
+                        paymentSchedule.SetRange("BLRContract ID", PostedSalesInvoiceHeader."BLRContract ID");
+                        paymentSchedule.SetRange("BLRSecondary Item Type", ItemTypeFilter);
+                        paymentSchedule.SetRange("BLRInvoiced", true);
+                        paymentSchedule.SetLoadFields("BLRInvoice ID", "BLRContract ID", "BLRSecondary Item Type", "BLRAmount");
                         if paymentSchedule.FindSet() then
                             repeat
-                                TotalInvoicedAmount += paymentSchedule.Amount;
+                                TotalInvoicedAmount += paymentSchedule."BLRAmount";
                             until paymentSchedule.Next() = 0;
 
                     until PostedSalesInvoiceHeader.Next() = 0;
@@ -725,7 +725,7 @@ page 73209636 "Unearned Revenue Report Card"
 
                 ///////////////////////////  TOTAL Credit AMOUNT issued /////////////////////////
                 SalesCrMemoHeader.Reset();
-                SalesCrMemoHeader.SetRange("Contract ID", tenancyContract."Contract ID");
+                SalesCrMemoHeader.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                 SalesCrMemoHeader.SetRange("Posting Date", StartDate, EndDate);
                 if SalesCrMemoHeader.FindSet() then
                     repeat
@@ -744,20 +744,20 @@ page 73209636 "Unearned Revenue Report Card"
                 // 🔹 Suspension and Termination Logic
                 SuspendedDate := 0D;
                 TerminationDate := 0D;
-                if tenancyContract."Tenant Contract Status" = tenancyContract."Tenant Contract Status"::Suspended then begin
+                if tenancyContract."BLRTenant Contract Status" = tenancyContract."BLRTenant Contract Status"::Suspended then begin
                     SuspendedReasonRec.Reset();
-                    SuspendedReasonRec.SetRange("Contract ID", tenancyContract."Contract ID");
+                    SuspendedReasonRec.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                     if SuspendedReasonRec.FindLast() then
-                        SuspendedDate := SuspendedReasonRec.DateEffective;
+                        SuspendedDate := SuspendedReasonRec."BLRDateEffective";
                 end;
 
                 TerminatedDuringYear := false;
-                if tenancyContract."Tenant Contract Status" = tenancyContract."Tenant Contract Status"::Terminated then begin
+                if tenancyContract."BLRTenant Contract Status" = tenancyContract."BLRTenant Contract Status"::Terminated then begin
                     FinalCalculationRec.Reset();
-                    FinalCalculationRec.SetRange("Contract ID", tenancyContract."Contract ID");
+                    FinalCalculationRec.SetRange("BLRContract ID", tenancyContract."BLRContract ID");
                     if FinalCalculationRec.FindLast() then begin
 
-                        TerminationDate := FinalCalculationRec."Termination Date";
+                        TerminationDate := FinalCalculationRec."BLRTermination Date";
                         if (TerminationDate >= StartDate) and (TerminationDate <= EndDate) then
                             TerminatedDuringYear := true;
                     end;
@@ -767,82 +767,82 @@ page 73209636 "Unearned Revenue Report Card"
                 // 🔹 Insert into Buffer
                 NewLineNo := GetNextLineNum();
                 unearnedRevenueBuffer.Init();
-                unearnedRevenueBuffer."Header No." := Rec."No.";
-                unearnedRevenueBuffer."Line No." := NewLineNo;
-                unearnedRevenueBuffer."Contract ID" := tenancyContract."Contract ID";
-                unearnedRevenueBuffer."Start Date" := tenancyContract."Contract Start Date";
-                unearnedRevenueBuffer."End Date" := tenancyContract."Contract End Date";
-                unearnedRevenueBuffer."Customer Name" := tenancyContract."Customer Name";
-                unearnedRevenueBuffer.Property := tenancyContract."Property Name";
-                unearnedRevenueBuffer."Owner Name" := tenancyContract."Owner's Name";
-                unearnedRevenueBuffer."Other Charges Value" := otherchargesvalue;
-                unearnedRevenueBuffer."Contract Status" := Format(tenancyContract."Tenant Contract Status");
+                unearnedRevenueBuffer."BLRHeader No." := Rec."BLRNo.";
+                unearnedRevenueBuffer."BLRLine No." := NewLineNo;
+                unearnedRevenueBuffer."BLRContract ID" := tenancyContract."BLRContract ID";
+                unearnedRevenueBuffer."BLRStart Date" := tenancyContract."BLRContract Start Date";
+                unearnedRevenueBuffer."BLREnd Date" := tenancyContract."BLRContract End Date";
+                unearnedRevenueBuffer."BLRCustomer Name" := tenancyContract."BLRCustomer Name";
+                unearnedRevenueBuffer."BLRProperty" := tenancyContract."BLRProperty Name";
+                unearnedRevenueBuffer."BLROwner Name" := tenancyContract."BLROwner's Name";
+                unearnedRevenueBuffer."BLROther Charges Value" := otherchargesvalue;
+                unearnedRevenueBuffer."BLRContract Status" := Format(tenancyContract."BLRTenant Contract Status");
 
                 if ChargesDuringTheYear then
-                    unearnedRevenueBuffer."Opening Balance" := 0
+                    unearnedRevenueBuffer."BLROpening Balance" := 0
                 else
                     if TerminatedDuringYear then
-                        unearnedRevenueBuffer."Opening Balance" := 0
+                        unearnedRevenueBuffer."BLROpening Balance" := 0
                     else begin
-                        TotalEarnedAmount := CalculateRevenueAllocationothercharges(tenancyContract, Rec."Starting Date Year", Rec."Ending Date Year");
-                        unearnedRevenueBuffer."Opening Balance" := (TotalInvoicedAmountCharges + TotalCreditNote) - TotalEarnedAmount;
+                        TotalEarnedAmount := CalculateRevenueAllocationothercharges(tenancyContract, Rec."BLRStarting Date Year", Rec."BLREnding Date Year");
+                        unearnedRevenueBuffer."BLROpening Balance" := (TotalInvoicedAmountCharges + TotalCreditNote) - TotalEarnedAmount;
                     end;
 
-                unearnedRevenueBuffer."Invoice Raised During the Year" := TotalInvoicedAmount + TotalCreditAmountIssued;
-                unearnedRevenueBuffer."Suspension Date" := SuspendedDate;
-                unearnedRevenueBuffer."Termination Date" := TerminationDate;
+                unearnedRevenueBuffer."BLRInvRaisedDurtheYear" := TotalInvoicedAmount + TotalCreditAmountIssued;
+                unearnedRevenueBuffer."BLRSuspension Date" := SuspendedDate;
+                unearnedRevenueBuffer."BLRTermination Date" := TerminationDate;
 
-                case tenancyContract."Praposal Type Selected" of
-                    tenancyContract."Praposal Type Selected"::"Single Unit":
-                        unearnedRevenueBuffer."Unit Name" := COPYSTR(tenancyContract."Unit Name", 1, MAXSTRLEN(unearnedRevenueBuffer."Unit Name"));
-                    tenancyContract."Praposal Type Selected"::"Merge Unit":
-                        unearnedRevenueBuffer."Unit Name" := COPYSTR(tenancyContract."Single Unit Name", 1, MAXSTRLEN(unearnedRevenueBuffer."Unit Name"));
+                case tenancyContract."BLRPraposal Type Selected" of
+                    tenancyContract."BLRPraposal Type Selected"::"Single Unit":
+                        unearnedRevenueBuffer."BLRUnit Name" := COPYSTR(tenancyContract."BLRUnit Name", 1, MAXSTRLEN(unearnedRevenueBuffer."BLRUnit Name"));
+                    tenancyContract."BLRPraposal Type Selected"::"Merge Unit":
+                        unearnedRevenueBuffer."BLRUnit Name" := COPYSTR(tenancyContract."BLRSingle Unit Name", 1, MAXSTRLEN(unearnedRevenueBuffer."BLRUnit Name"));
                     else
-                        unearnedRevenueBuffer."Unit Name" := '';
+                        unearnedRevenueBuffer."BLRUnit Name" := '';
                 end;
 
-                unearnedRevenueBuffer."RevenueAllocated DuringtheYear" := CalculateRevenueAllocationdurngyearothercharges(tenancyContract."Contract ID", Rec."Starting Date Year", Rec."Ending Date Year");
+                unearnedRevenueBuffer."BLRRevAllocDurtheYear" := CalculateRevenueAllocationdurngyearothercharges(tenancyContract."BLRContract ID", Rec."BLRStarting Date Year", Rec."BLREnding Date Year");
 
 
-                unearnedRevenueBuffer."Unearned Revenue Balance" := (unearnedRevenueBuffer."Opening Balance" + unearnedRevenueBuffer."Invoice Raised During the Year") - unearnedRevenueBuffer."RevenueAllocated DuringtheYear";
-
-
-
-
-                TotalNoofDays := unearnedRevenueBuffer."End Date" - unearnedRevenueBuffer."Start Date" + 1;
-                PerDayrent := unearnedRevenueBuffer."Other Charges Value" / TotalNoofDays;
-                UnearnedNoofday := unearnedRevenueBuffer."End Date" - EndDate;
-                unearnedRevenueBuffer.CalculatedUnearnedRevBalance := PerDayrent * UnearnedNoofday;
+                unearnedRevenueBuffer."BLRUnearned Revenue Balance" := (unearnedRevenueBuffer."BLROpening Balance" + unearnedRevenueBuffer."BLRInvRaisedDurtheYear") - unearnedRevenueBuffer."BLRRevAllocDurtheYear";
 
 
 
-                unearnedRevenueBuffer."Shortfall/Excess" := unearnedRevenueBuffer."Unearned Revenue Balance" - unearnedRevenueBuffer.CalculatedUnearnedRevBalance;
-                unearnedRevenueBuffer."Report Period" := Format(Rec."Starting Date Year") + ' - ' + Format(Rec."Ending Date Year");
+
+                TotalNoofDays := unearnedRevenueBuffer."BLREnd Date" - unearnedRevenueBuffer."BLRStart Date" + 1;
+                PerDayrent := unearnedRevenueBuffer."BLROther Charges Value" / TotalNoofDays;
+                UnearnedNoofday := unearnedRevenueBuffer."BLREnd Date" - EndDate;
+                unearnedRevenueBuffer."BLRCalculatedUnearnedRevB19C1" := PerDayrent * UnearnedNoofday;
+
+
+
+                unearnedRevenueBuffer."BLRShortfall/Excess" := unearnedRevenueBuffer."BLRUnearned Revenue Balance" - unearnedRevenueBuffer."BLRCalculatedUnearnedRevB19C1";
+                unearnedRevenueBuffer."BLRReport Period" := Format(Rec."BLRStarting Date Year") + ' - ' + Format(Rec."BLREnding Date Year");
 
                 unearnedRevenueBuffer.Insert();
             until tenancyContract.Next() = 0;
     end;
 
-    local procedure CalculateRevenueAllocationothercharges(tenancyContract: Record "Tenancy Contract"; StartDate: Date; EndDate: Date): Decimal
+    local procedure CalculateRevenueAllocationothercharges(tenancyContract: Record "BLRTenancyContract"; StartDate: Date; EndDate: Date): Decimal
     var
-        RevenueAllocationchargesRec: Record "Revenue Recognition Details";
-        RevenueallocationHeader: Record "Revenue Allocation Details"; // Replace with your actual table name
+        RevenueAllocationchargesRec: Record "BLRRevenueRecognitionDetails";
+        RevenueallocationHeader: Record "BLRRevenueAllocationDetails"; // Replace with your actual table name
         TotalRevenueAllocated: Decimal;
     begin
-        if (tenancyContract."Contract Start Date" >= StartDate) and (tenancyContract."Contract Start Date" <= EndDate) then begin
+        if (tenancyContract."BLRContract Start Date" >= StartDate) and (tenancyContract."BLRContract Start Date" <= EndDate) then begin
             TotalRevenueAllocated := 0;
             RevenueallocationHeader.Reset();
-            RevenueallocationHeader.SetRange(Status, RevenueallocationHeader.Status::Approve);
+            RevenueallocationHeader.SetRange("BLRStatus", RevenueallocationHeader."BLRStatus"::Approve);
             if RevenueallocationHeader.FindSet() then
                 repeat
                     RevenueAllocationchargesRec.Reset();
-                    RevenueAllocationchargesRec.SetRange("RR_No.", RevenueallocationHeader."No.");
-                    RevenueAllocationchargesRec.SetRange("Contract ID", tenancyContract."Contract ID"); // Assuming this field exists
-                    RevenueAllocationchargesRec.SetRange("Revenue Start Date", StartDate, EndDate);
-                    RevenueAllocationchargesRec.SetFilter(Description, '<>%1', 'Credit Note');
-                    RevenueAllocationchargesRec.SetLoadFields("RR_No.", "Contract Id", "Revenue Start Date", "Total Value");
-                    RevenueAllocationchargesRec.CalcSums("Total Value");
-                    TotalRevenueAllocated += RevenueAllocationchargesRec."Total Value";
+                    RevenueAllocationchargesRec.SetRange("BLRRR_No.", RevenueallocationHeader."BLRNo.");
+                    RevenueAllocationchargesRec.SetRange("BLRContract Id", tenancyContract."BLRContract ID"); // Assuming this field exists
+                    RevenueAllocationchargesRec.SetRange("BLRRevenue Start Date", StartDate, EndDate);
+                    RevenueAllocationchargesRec.SetFilter("BLRDescription", '<>%1', 'Credit Note');
+                    RevenueAllocationchargesRec.SetLoadFields("BLRRR_No.", "BLRContract Id", "BLRRevenue Start Date", "BLRTotal Value");
+                    RevenueAllocationchargesRec.CalcSums("BLRTotal Value");
+                    TotalRevenueAllocated += RevenueAllocationchargesRec."BLRTotal Value";
                 until RevenueallocationHeader.Next() = 0;
             // Method 1: If Revenue Allocation table has Contract ID field
             exit(TotalRevenueAllocated);
@@ -850,17 +850,17 @@ page 73209636 "Unearned Revenue Report Card"
 
             TotalRevenueAllocated := 0;
             RevenueallocationHeader.Reset();
-            RevenueallocationHeader.SetRange(Status, RevenueallocationHeader.Status::Approve);
+            RevenueallocationHeader.SetRange("BLRStatus", RevenueallocationHeader."BLRStatus"::Approve);
             if RevenueallocationHeader.FindSet() then
                 repeat
                     RevenueAllocationchargesRec.Reset();
-                    RevenueAllocationchargesRec.SetRange("RR_No.", RevenueallocationHeader."No.");
-                    RevenueAllocationchargesRec.SetRange("Contract ID", tenancyContract."Contract ID"); // Assuming this field exists
-                    RevenueAllocationchargesRec.SetFilter("Revenue Start Date", '<=%1', StartDate);
-                    RevenueAllocationchargesRec.SetFilter(Description, '<>%1', 'Credit Note');
-                    RevenueAllocationchargesRec.SetLoadFields("RR_No.", "Contract Id", "Revenue Start Date", "Total Value");
-                    RevenueAllocationchargesRec.CalcSums("Total Value");
-                    TotalRevenueAllocated += RevenueAllocationchargesRec."Total Value";
+                    RevenueAllocationchargesRec.SetRange("BLRRR_No.", RevenueallocationHeader."BLRNo.");
+                    RevenueAllocationchargesRec.SetRange("BLRContract Id", tenancyContract."BLRContract ID"); // Assuming this field exists
+                    RevenueAllocationchargesRec.SetFilter("BLRRevenue Start Date", '<=%1', StartDate);
+                    RevenueAllocationchargesRec.SetFilter("BLRDescription", '<>%1', 'Credit Note');
+                    RevenueAllocationchargesRec.SetLoadFields("BLRRR_No.", "BLRContract Id", "BLRRevenue Start Date", "BLRTotal Value");
+                    RevenueAllocationchargesRec.CalcSums("BLRTotal Value");
+                    TotalRevenueAllocated += RevenueAllocationchargesRec."BLRTotal Value";
                 until RevenueallocationHeader.Next() = 0;
             // Method 1: If Revenue Allocation table has Contract ID field
             exit(TotalRevenueAllocated);
@@ -871,23 +871,23 @@ page 73209636 "Unearned Revenue Report Card"
 
     local procedure CalculateRevenueAllocationdurngyearothercharges(ContractID: Integer; StartDate: Date; EndDate: Date): Decimal
     var
-        RevenueAllocationchargesRec: Record "Revenue Recognition Details";
-        RevenueallocationHeader: Record "Revenue Allocation Details"; // Replace with your actual table name
+        RevenueAllocationchargesRec: Record "BLRRevenueRecognitionDetails";
+        RevenueallocationHeader: Record "BLRRevenueAllocationDetails"; // Replace with your actual table name
         TotalRevenueAllocatedDuringYear: Decimal;
     begin
         TotalRevenueAllocatedDuringYear := 0;
         RevenueallocationHeader.Reset();
-        RevenueallocationHeader.SetRange(Status, RevenueallocationHeader.Status::Approve);
+        RevenueallocationHeader.SetRange("BLRStatus", RevenueallocationHeader."BLRStatus"::Approve);
         if RevenueallocationHeader.FindSet() then
             repeat
                 RevenueAllocationchargesRec.Reset();
-                RevenueAllocationchargesRec.SetRange("RR_No.", RevenueallocationHeader."No.");
-                RevenueAllocationchargesRec.SetRange("Contract ID", ContractID); // Assuming this field exists
-                RevenueAllocationchargesRec.SetFilter(Description, '<>%1', 'Credit Note');
-                RevenueAllocationchargesRec.SetFilter("Revenue Start Date", '%1..%2', StartDate, EndDate);
-                RevenueAllocationchargesRec.SetLoadFields("RR_No.", "Contract Id", "Revenue Start Date", "Total Value");
-                RevenueAllocationchargesRec.CalcSums("Total Value");
-                TotalRevenueAllocatedDuringYear += RevenueAllocationchargesRec."Total Value";
+                RevenueAllocationchargesRec.SetRange("BLRRR_No.", RevenueallocationHeader."BLRNo.");
+                RevenueAllocationchargesRec.SetRange("BLRContract Id", ContractID); // Assuming this field exists
+                RevenueAllocationchargesRec.SetFilter("BLRDescription", '<>%1', 'Credit Note');
+                RevenueAllocationchargesRec.SetFilter("BLRRevenue Start Date", '%1..%2', StartDate, EndDate);
+                RevenueAllocationchargesRec.SetLoadFields("BLRRR_No.", "BLRContract Id", "BLRRevenue Start Date", "BLRTotal Value");
+                RevenueAllocationchargesRec.CalcSums("BLRTotal Value");
+                TotalRevenueAllocatedDuringYear += RevenueAllocationchargesRec."BLRTotal Value";
             until RevenueallocationHeader.Next() = 0;
         // Method 1: If Revenue Allocation table has Contract ID field
         exit(TotalRevenueAllocatedDuringYear);
@@ -895,14 +895,14 @@ page 73209636 "Unearned Revenue Report Card"
 
     local procedure GetSelectedItemTypes(var pItemTypes: List of [Text])
     var
-        UnearnedRevenueItem: Record "Other Charges UnearnedRevenue";
+        UnearnedRevenueItem: Record "BLROtherChargesUnearnedRevenue";
     begin
-        UnearnedRevenueItem.SetRange("No.", Rec."No.");
+        UnearnedRevenueItem.SetRange("BLRNo.", Rec."BLRNo.");
         if UnearnedRevenueItem.FindSet() then
             repeat
-                if UnearnedRevenueItem."Item Type" <> '' then
-                    if not pItemTypes.Contains(UnearnedRevenueItem."Item Type") then
-                        pItemTypes.Add(UnearnedRevenueItem."Item Type");
+                if UnearnedRevenueItem."BLRItem Type" <> '' then
+                    if not pItemTypes.Contains(UnearnedRevenueItem."BLRItem Type") then
+                        pItemTypes.Add(UnearnedRevenueItem."BLRItem Type");
             until UnearnedRevenueItem.Next() = 0;
     end;
 
@@ -923,13 +923,13 @@ page 73209636 "Unearned Revenue Report Card"
 
     procedure GetNextLineNum(): Integer
     var
-        unearnedRevenueBuffer: Record "Sub Unearned Charges";
+        unearnedRevenueBuffer: Record "BLRSubUnearnedCharges";
         LastLineNo: Integer;
     begin
         unearnedRevenueBuffer.Reset();
-        unearnedRevenueBuffer.SetRange("Header No.", Rec."No.");
+        unearnedRevenueBuffer.SetRange("BLRHeader No.", Rec."BLRNo.");
         if unearnedRevenueBuffer.FindLast() then
-            LastLineNo := unearnedRevenueBuffer."Line No."
+            LastLineNo := unearnedRevenueBuffer."BLRLine No."
         else
             LastLineNo := 0;
 
@@ -938,15 +938,15 @@ page 73209636 "Unearned Revenue Report Card"
 
     procedure ClearSubgridDataParking()
     var
-        RevenueItemDetail: Record "Sub Unearned Charges";
+        RevenueItemDetail: Record "BLRSubUnearnedCharges";
     begin
-        RevenueItemDetail.SetRange("Header No.", Rec."No."); // ✅ Clear only for this header
+        RevenueItemDetail.SetRange("BLRHeader No.", Rec."BLRNo."); // ✅ Clear only for this header
         RevenueItemDetail.DeleteAll(true);
     end;
 
     procedure CalculateAndStoreTotalRevenue()
     var
-        SubUnearnedParkingReport: Record "Sub Unearned Charges";
+        SubUnearnedParkingReport: Record "BLRSubUnearnedCharges";
     begin
         Clear(TotalOtherCharges);
         Clear(TotalOpeningBalance);
@@ -956,16 +956,16 @@ page 73209636 "Unearned Revenue Report Card"
         Clear(Totalcalculatedunearnedrevenuebalance);
         Clear(Totalshortfall);
 
-        SubUnearnedParkingReport.SetRange("Header No.", Rec."No.");
+        SubUnearnedParkingReport.SetRange("BLRHeader No.", Rec."BLRNo.");
         if SubUnearnedParkingReport.FindSet() then
             repeat
-                TotalOtherCharges += SubUnearnedParkingReport."Other Charges Value";
-                TotalOpeningBalance += SubUnearnedParkingReport."Opening Balance";
-                TotalInvoiceraisedduringtheyear += SubUnearnedParkingReport."Invoice Raised During the Year";
-                Totalrevenueallocatedduringtheyear += SubUnearnedParkingReport."RevenueAllocated DuringtheYear";
-                Totalunearnedrevenuebalance += SubUnearnedParkingReport."Unearned Revenue Balance";
-                Totalcalculatedunearnedrevenuebalance += SubUnearnedParkingReport.CalculatedUnearnedRevBalance;
-                Totalshortfall += SubUnearnedParkingReport."Shortfall/Excess";
+                TotalOtherCharges += SubUnearnedParkingReport."BLROther Charges Value";
+                TotalOpeningBalance += SubUnearnedParkingReport."BLROpening Balance";
+                TotalInvoiceraisedduringtheyear += SubUnearnedParkingReport."BLRInvRaisedDurtheYear";
+                Totalrevenueallocatedduringtheyear += SubUnearnedParkingReport."BLRRevAllocDurtheYear";
+                Totalunearnedrevenuebalance += SubUnearnedParkingReport."BLRUnearned Revenue Balance";
+                Totalcalculatedunearnedrevenuebalance += SubUnearnedParkingReport."BLRCalculatedUnearnedRevB19C1";
+                Totalshortfall += SubUnearnedParkingReport."BLRShortfall/Excess";
             until SubUnearnedParkingReport.Next() = 0;
     end;
 
@@ -981,18 +981,18 @@ page 73209636 "Unearned Revenue Report Card"
 
     trigger OnAfterGetRecord()
     begin
-        CurrPage."Other Charges Unearned Revenue".Page.SetNo(Rec."No.");
+        CurrPage."Other Charges Unearned Revenue".Page.SetNo(Rec."BLRNo.");
         CalculateAndStoreTotalRevenue();
     end;
 
 
     trigger OnModifyRecord(): Boolean
     begin
-        CurrPage."Other Charges Unearned Revenue".Page.SetNo(Rec."No.");
+        CurrPage."Other Charges Unearned Revenue".Page.SetNo(Rec."BLRNo.");
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        CurrPage."Other Charges Unearned Revenue".Page.SetNo(Rec."No.");
+        CurrPage."Other Charges Unearned Revenue".Page.SetNo(Rec."BLRNo.");
     end;
 }

@@ -72,7 +72,7 @@ codeunit 73209595 LeaseManagerSendMail
                     repeat
                         TotalAmount += Round(SalesLine."Amount Including VAT");
                     until SalesLine.Next() = 0;
-                TempEmailBody += StrSubstNo(emailBodyLbl, SalesHeader."No.", SalesHeader."Contract ID", SalesHeader."Tenant Name", Format(TotalAmount));
+                TempEmailBody += StrSubstNo(emailBodyLbl, SalesHeader."No.", SalesHeader."BLRContract ID", SalesHeader."BLRTenant Name", Format(TotalAmount));
             until SalesHeader.Next() = 0;
             TempEmailBody += '</table>';
         end;

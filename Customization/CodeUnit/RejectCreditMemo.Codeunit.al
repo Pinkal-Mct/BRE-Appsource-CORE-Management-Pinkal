@@ -42,11 +42,11 @@ codeunit 73209600 "Reject Credit Memo"
                          '<h3>Credit Memo Rejection Details:</h3>' +
                          '<p>The following invoice has been rejected:</p>' +
                          '<p><b>Invoice ID:</b> ' + SalesHeader."No." + '<br/>' +
-                         '<b>Contract ID:</b> ' + Format(SalesHeader."Contract ID") + '<br/>' +
+                         '<b>Contract ID:</b> ' + Format(SalesHeader."BLRContract ID") + '<br/>' +
                           '<b>Applies-to Invoice No.:</b> ' + SalesHeader."Applies-to Doc. No." + '<br/>' +
-                         '<b>Property Name:</b> ' + SalesHeader."Property Name" + '<br/>' +
+                         '<b>Property Name:</b> ' + SalesHeader."BLRProperty Name" + '<br/>' +
                          '<b>Total Amount:</b> ' + Format(TotalAmount) + '<br/>' +
-                         '<b>Reason For Rejection:</b> ' + SalesHeader."Rejection Reason CreditNote" + '<br/>' +
+                         '<b>Reason For Rejection:</b> ' + SalesHeader."BLRRejection Reason CreditNote" + '<br/>' +
                          '<p>Please review the details and update the Credit Memo</p>' +
                          '<p><a href="' + Creditmemolink + '" target="_blank">Click here to view the Credit Memo</a></p>' +
                          '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +

@@ -24,24 +24,24 @@ page 73209612 "tenantProfileAPI"
             }
             field("tenantID"; Rec."No.") { }
             field("fullName"; Rec.Name) { }
-            field("username"; Rec."Username") { }
-            field("password"; Rec."Password") { }
-            field("dateOfBirth"; Rec."Date Of Birth") { }
-            field("nationality"; Rec."Nationality") { }
-            field("codeArea"; Rec."Code Area") { }
+            field("username"; Rec."BLRUsername") { }
+            field("password"; Rec."BLRPassword") { }
+            field("dateOfBirth"; Rec."BLRDate Of Birth") { }
+            field("nationality"; Rec."BLRNationality") { }
+            field("codeArea"; Rec."BLRCode Area") { }
             field("contactNumber"; rec."Phone No.") { }
             field("emailAddress"; rec."E-Mail") { }
             field("localAddress"; rec.Address) { }
             field("emergencyContact"; rec."Mobile Phone No.") { }
-            field("occupation"; rec."Occupation") { }
-            field("passportNumber"; rec."Passport Number") { }
-            field("passportIssueDate"; rec."Passport Issue Date") { }
-            field("passportExpiryDate"; rec."Passport Expiry Date") { }
-            field("countryofPassport"; rec."Country of Passport") { }
-            field("emiratesID"; rec."Emirates ID") { }
-            field("emiratesIDExpiryDate"; rec."Emirates ID Expiry Date") { }
-            field(approve; Rec.Approve) { }
-            field(decline; Rec.Decline) { }
+            field("occupation"; rec."BLROccupation") { }
+            field("passportNumber"; rec."BLRPassport Number") { }
+            field("passportIssueDate"; rec."BLRPassport Issue Date") { }
+            field("passportExpiryDate"; rec."BLRPassport Expiry Date") { }
+            field("countryofPassport"; rec."BLRCountry of Passport") { }
+            field("emiratesID"; rec."BLREmirates ID") { }
+            field("emiratesIDExpiryDate"; rec."BLREmirates ID Expiry Date") { }
+            field(approve; Rec.BLRApprove) { }
+            field(decline; Rec.BLRDecline) { }
         }
     }
 }

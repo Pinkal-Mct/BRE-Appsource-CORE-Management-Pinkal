@@ -1,15 +1,14 @@
 codeunit 73209604 "Security Deposit Posting Mgt."
 {
-    procedure PostSecurityDepositAmount(SecurityDeposit: Record "Security Deposit")
+    procedure PostSecurityDepositAmount(SecurityDeposit: Record "BLRSecurityDeposit")
     var
         GenJnlLine: Record "Gen. Journal Line";
-        COASetup: Record "COA Setup";
+        COASetup: Record "BLRCOASetup";
         GenJnlPost: Codeunit "Gen. Jnl.-Post";
         GenJnlTemplate: Code[10];
         GenJnlBatch: Code[10];
         Amount: Decimal;
         PropertyType: Text[30];
-        TenantReceivableAccount: Code[20];
         CarryForwardOutAccount: Code[20];
         CarryForwardInAccount: Code[20];
         LineNo: Integer;
@@ -18,23 +17,23 @@ codeunit 73209604 "Security Deposit Posting Mgt."
         GenJnlTemplate := 'CASH RECE';
         GenJnlBatch := 'DEFAULT';
 
-        Amount := SecurityDeposit."Carry Forward Amount";
-        PropertyType := SecurityDeposit."Property Classification";
+        Amount := SecurityDeposit."BLRCarry Forward Amount";
+        PropertyType := SecurityDeposit."BLRProperty Classification";
 
         if Amount = 0 then
             Error('Security Deposit Amount Received is zero. Cannot post.');
 
         COASetup.Get();
-        if COASetup."Carried Forward Out SD" <> '' then
-            CarryForwardOutAccount := COASetup."Carried Forward Out SD"
+        if COASetup."BLRCarried Forward Out SD" <> '' then
+            CarryForwardOutAccount := COASetup."BLRCarried Forward Out SD"
         else
             Error('COA Setup doest not exist for Carried Forward Out SD Account');
-        if COASetup."Carried Forward in SD" <> '' then
-            CarryForwardInAccount := COASetup."Carried Forward in SD"
+        if COASetup."BLRCarried Forward in SD" <> '' then
+            CarryForwardInAccount := COASetup."BLRCarried Forward in SD"
         else
             Error('COA Setup doest not exist for Carried Forward in SD Account');
 
-        DocNo := 'SD-' + Format(SecurityDeposit."Contract ID");
+        DocNo := 'SD-' + Format(SecurityDeposit."BLRContract ID");
 
         GenJnlLine.Reset();
         GenJnlLine.SetRange("Journal Template Name", GenJnlTemplate);
@@ -49,13 +48,13 @@ codeunit 73209604 "Security Deposit Posting Mgt."
         GenJnlLine."Journal Template Name" := GenJnlTemplate;
         GenJnlLine."Journal Batch Name" := GenJnlBatch;
         GenJnlLine."Line No." := LineNo;
-        GenJnlLine."Posting Date" := SecurityDeposit."Posting Date";
+        GenJnlLine."Posting Date" := SecurityDeposit."BLRPosting Date";
         GenJnlLine."Document No." := DocNo;
         GenJnlLine.Validate("Account Type", GenJnlLine."Account Type"::Customer);
-        GenJnlLine.Validate("Account No.", SecurityDeposit."Tenant ID");
-        GenJnlLine.Description := CopyStr(SecurityDeposit.Narration, 1, 100);
+        GenJnlLine.Validate("Account No.", SecurityDeposit."BLRTenant ID");
+        GenJnlLine.Description := CopyStr(SecurityDeposit."BLRNarration", 1, 100);
         GenJnlLine.Validate(Amount, -Amount);
-        GenJnlLine."Contract ID" := SecurityDeposit."Contract ID";
+        GenJnlLine."BLRContract ID" := SecurityDeposit."BLRContract ID";
         GenJnlLine.Insert();
 
         LineNo += 10000;
@@ -65,13 +64,13 @@ codeunit 73209604 "Security Deposit Posting Mgt."
         GenJnlLine."Journal Template Name" := GenJnlTemplate;
         GenJnlLine."Journal Batch Name" := GenJnlBatch;
         GenJnlLine."Line No." := LineNo;
-        GenJnlLine."Posting Date" := SecurityDeposit."Posting Date";
+        GenJnlLine."Posting Date" := SecurityDeposit."BLRPosting Date";
         GenJnlLine."Document No." := DocNo;
         GenJnlLine.Validate("Account Type", GenJnlLine."Account Type"::"G/L Account");
         GenJnlLine.Validate("Account No.", CarryForwardOutAccount);
-        GenJnlLine.Description := CopyStr(SecurityDeposit.Narration, 1, 100);
+        GenJnlLine.Description := CopyStr(SecurityDeposit."BLRNarration", 1, 100);
         GenJnlLine.Validate(Amount, Amount);
-        GenJnlLine."Contract ID" := SecurityDeposit."Contract ID";
+        GenJnlLine."BLRContract ID" := SecurityDeposit."BLRContract ID";
         GenJnlLine.Insert();
 
         LineNo += 10000;
@@ -81,13 +80,13 @@ codeunit 73209604 "Security Deposit Posting Mgt."
         GenJnlLine."Journal Template Name" := GenJnlTemplate;
         GenJnlLine."Journal Batch Name" := GenJnlBatch;
         GenJnlLine."Line No." := LineNo;
-        GenJnlLine."Posting Date" := SecurityDeposit."Posting Date";
+        GenJnlLine."Posting Date" := SecurityDeposit."BLRPosting Date";
         GenJnlLine."Document No." := DocNo;
         GenJnlLine.Validate("Account Type", GenJnlLine."Account Type"::"G/L Account");
         GenJnlLine.Validate("Account No.", CarryForwardInAccount);
-        GenJnlLine.Description := CopyStr(SecurityDeposit.Narration, 1, 100);
+        GenJnlLine.Description := CopyStr(SecurityDeposit."BLRNarration", 1, 100);
         GenJnlLine.Validate(Amount, -Amount);
-        GenJnlLine."Contract ID" := SecurityDeposit."New_Contract ID";
+        GenJnlLine."BLRContract ID" := SecurityDeposit."BLRNew_Contract ID";
         GenJnlLine.Insert();
 
         LineNo += 10000;
@@ -97,13 +96,13 @@ codeunit 73209604 "Security Deposit Posting Mgt."
         GenJnlLine."Journal Template Name" := GenJnlTemplate;
         GenJnlLine."Journal Batch Name" := GenJnlBatch;
         GenJnlLine."Line No." := LineNo;
-        GenJnlLine."Posting Date" := SecurityDeposit."Posting Date";
+        GenJnlLine."Posting Date" := SecurityDeposit."BLRPosting Date";
         GenJnlLine."Document No." := DocNo;
         GenJnlLine.Validate("Account Type", GenJnlLine."Account Type"::Customer);
-        GenJnlLine.Validate("Account No.", SecurityDeposit."Tenant ID");
-        GenJnlLine.Description := CopyStr(SecurityDeposit.Narration, 1, 100);
+        GenJnlLine.Validate("Account No.", SecurityDeposit."BLRTenant ID");
+        GenJnlLine.Description := CopyStr(SecurityDeposit."BLRNarration", 1, 100);
         GenJnlLine.Validate(Amount, Amount);
-        GenJnlLine."Contract ID" := SecurityDeposit."New_Contract ID";
+        GenJnlLine."BLRContract ID" := SecurityDeposit."BLRNew_Contract ID";
         GenJnlLine.Insert();
 
         GenJnlPost.Run(GenJnlLine);

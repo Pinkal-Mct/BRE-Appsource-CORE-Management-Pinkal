@@ -5,44 +5,44 @@ tableextension 73209581 "Item Ext" extends Item
 
     fields
     {
-        field(73209575; "UnitID"; code[100])
+        field(73209575; "BLRUnitID"; code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'UnitID';
         }
-        field(73209576; "Property ID"; Code[20])
+        field(73209576; "BLRProperty ID"; Code[20])
         {
             Caption = 'Property ID';
             DataClassification = CustomerContent;
-            TableRelation = "Property Registration"."Property ID";
+            TableRelation = "BLRPropertyRegistration"."BLRProperty ID";
             trigger OnValidate()
             var
-                PropertyRec: Record "Property Registration";
+                PropertyRec: Record "BLRPropertyRegistration";
             begin
-                PropertyRec.SetRange("Property ID", Rec."Property ID");
+                PropertyRec.SetRange("BLRProperty ID", Rec."BLRProperty ID");
                 if PropertyRec.FindFirst() then begin
-                    "Property Name" := PropertyRec."Property Name";
-                    "Usage Type" := PropertyRec."Property Classification";
-                    Country := PropertyRec.Country;
-                    "Emirate Name" := PropertyRec."Emirate Name";
-                    Community := PropertyRec.Community;
+                    "BLRProperty Name" := PropertyRec."BLRProperty Name";
+                    "BLRUsage Type" := PropertyRec."BLRProperty Classification";
+                    "BLRCountry" := PropertyRec."BLRCountry";
+                    "BLREmirate Name" := PropertyRec."BLREmirate Name";
+                    "BLRCommunity" := PropertyRec."BLRCommunity";
                 end else begin
-                    "Property Name" := '';
-                    "Usage Type" := '';
-                    Country := '';
-                    "Emirate Name" := '';
-                    Community := '';
+                    "BLRProperty Name" := '';
+                    "BLRUsage Type" := '';
+                    "BLRCountry" := '';
+                    "BLREmirate Name" := '';
+                    "BLRCommunity" := '';
                 end;
             end;
         }
-        field(73209577; "Property Name"; Text[100])
+        field(73209577; "BLRProperty Name"; Text[100])
         {
             Caption = 'Property Name';
             DataClassification = CustomerContent;
             ValidateTableRelation = false;
-            TableRelation = "Property Registration"."Property Name";
+            TableRelation = "BLRPropertyRegistration"."BLRProperty Name";
         }
-        field(73209578; "Unit Number"; Text[50])
+        field(73209578; "BLRUnit Number"; Text[50])
         {
             Caption = 'Actual Unit Number';
             DataClassification = CustomerContent;
@@ -52,43 +52,43 @@ tableextension 73209581 "Item Ext" extends Item
             begin
                 // Check duplicate Unit Number for same Property
                 UnitRec.Reset();
-                UnitRec.SetRange("Property ID", Rec."Property ID");
-                UnitRec.SetRange("Unit Number", Rec."Unit Number");
+                UnitRec.SetRange("BLRProperty ID", Rec."BLRProperty ID");
+                UnitRec.SetRange("BLRUnit Number", Rec."BLRUnit Number");
 
                 // Exclude current record (important for Modify case)
                 if not UnitRec.IsEmpty() then
-                    Error('Unit Number %1 already exists for Property %2.', "Unit Number", "Property ID");
+                    Error('Unit Number %1 already exists for Property %2.', "BLRUnit Number", "BLRProperty ID");
             end;
         }
-        field(73209579; "Floor Number"; Integer)
+        field(73209579; "BLRFloor Number"; Integer)
         {
             Caption = 'Floor Number';
             DataClassification = CustomerContent;
         }
-        field(73209580; "Usage Type"; Text[100])
+        field(73209580; "BLRUsage Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Usage Type';
-            TableRelation = "Primary Classification"."Classification Name";
+            TableRelation = "BLRPrimaryClassification"."BLRClassification Name";
             NotBlank = true;
         }
-        field(73209581; "Unit Type"; Text[100])
+        field(73209581; "BLRUnit Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Type';
-            TableRelation = "Secondary Classification" where("Classification Name" = field("Usage Type"));
+            TableRelation = "BLRSecondaryClassification" where("BLRClassification Name" = field("BLRUsage Type"));
             trigger OnValidate()
             var
-                secondaryClassification: Record "Secondary Classification";
+                secondaryClassification: Record "BLRSecondaryClassification";
                 id: Integer;
             begin
-                Evaluate(id, Rec."Unit Type");
-                secondaryClassification.SetRange(ID, id);
+                Evaluate(id, Rec."BLRUnit Type");
+                secondaryClassification.SetRange("BLRID", id);
                 if secondaryClassification.FindFirst() then
-                    Rec."Unit Type" := secondaryClassification."Property Type";
+                    Rec."BLRUnit Type" := secondaryClassification."BLRProperty Type";
             end;
         }
-        field(73209582; "Unit Status"; Option)
+        field(73209582; "BLRUnit Status"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Status';
@@ -96,64 +96,64 @@ tableextension 73209581 "Item Ext" extends Item
             OptionCaption = ' ,Free,Selected,Occupied';
             Editable = true;
         }
-        field(73209583; "Selected"; Boolean)
+        field(73209583; "BLRSelected"; Boolean)
         {
             Caption = 'Selected';
             DataClassification = CustomerContent;
             Editable = true;
         }
-        field(73209584; "MergeSplitOption"; Option)
+        field(73209584; "BLRMergeSplitOption"; Option)
         {
             Caption = 'Unit Classification';
             OptionMembers = "Single","Merge";
             DataClassification = CustomerContent;
         }
-        field(73209585; "Unit Name"; Code[100])
+        field(73209585; "BLRUnit Name"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Name';
         }
-        field(73209586; "Floor plans"; Text[250])
+        field(73209586; "BLRFloor plans"; Text[250])
         {
             Caption = 'Floor plans';
             DataClassification = CustomerContent;
         }
-        field(73209587; "Inspection certificates"; Text[250])
+        field(73209587; "BLRInspection certificates"; Text[250])
         {
             Caption = 'Inspection certificates';
             DataClassification = CustomerContent;
         }
-        field(73209588; "Other Documents"; Text[250])
+        field(73209588; "BLROther Documents"; Text[250])
         {
             Caption = 'Other Documents';
             DataClassification = CustomerContent;
         }
-        field(73209589; "GTIN_"; Code[100])
+        field(73209589; "BLRGTIN_"; Code[100])
         {
             Caption = 'GTIN';
             DataClassification = CustomerContent;
         }
-        field(73209590; "Country"; Text[100])
+        field(73209590; "BLRCountry"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Country';
         }
-        field(73209591; "Emirate Name"; Text[50])
+        field(73209591; "BLREmirate Name"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Emirate';
         }
-        field(73209592; "Community"; Text[100])
+        field(73209592; "BLRCommunity"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Community';
         }
-        field(73209593; "Unit Address"; Text[250])
+        field(73209593; "BLRUnit Address"; Text[250])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Unit Address';
         }
-        field(73209594; "Market Rate per Sq. Ft."; Decimal)
+        field(73209594; "BLRMarket Rate per Sq. Ft."; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Market Rate per Sq. Ft.';
@@ -162,7 +162,7 @@ tableextension 73209581 "Item Ext" extends Item
                 CalculateAmount();
             end;
         }
-        field(73209595; "Unit Size"; Decimal)
+        field(73209595; "BLRUnit Size"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Size (sq. ft./meters)';
@@ -171,95 +171,95 @@ tableextension 73209581 "Item Ext" extends Item
                 CalculateAmount();
             end;
         }
-        field(73209596; "Amount"; Decimal)
+        field(73209596; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Amount';
             Editable = false;
         }
-        field(73209597; "FixedNumber"; Code[100])
+        field(73209597; "BLRFixedNumber"; Code[100])
         {
             DataClassification = CustomerContent;
         }
-        field(73209598; "Merged Unit ID"; Integer)
+        field(73209598; "BLRMerged Unit ID"; Integer)
         {
             Caption = 'Merged Unit ID';
             DataClassification = CustomerContent;
         }
-        field(73209599; "Primary Classification Type"; Text[100])
+        field(73209599; "BLRPrimary Classification Type"; Text[100])
         {
             Caption = 'Primary Classification Type';
             DataClassification = CustomerContent;
-            TableRelation = "Primary Classification"."Classification Name";
+            TableRelation = "BLRPrimaryClassification"."BLRClassification Name";
         }
-        field(73209600; "Item Type"; Enum "Module Enum")
+        field(73209600; "BLRItem Type"; Enum "Module Enum")
         {
             Caption = 'Item Type';
             DataClassification = CustomerContent;
         }
-        field(73209601; "Item Template"; Enum "Item Template Enum")
+        field(73209601; "BLRItem Template"; Enum "Item Template Enum")
         {
             Caption = 'Item Template';
             DataClassification = CustomerContent;
         }
-        field(73209602; "Item type template"; Enum "Item Type Template Enum")
+        field(73209602; "BLRItem type template"; Enum "Item Type Template Enum")
         {
             Caption = 'Item type template';
             DataClassification = CustomerContent;
         }
-        field(73209603; "Primary Item Type"; Text[100])
+        field(73209603; "BLRPrimary Item Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Primary Item';
-            TableRelation = "Primary Item"."Primary Item Type";
+            TableRelation = "BLRPrimaryItem"."BLRPrimary Item Type";
             Editable = false;
         }
-        field(73209604; "Category Types"; Text[100])
+        field(73209604; "BLRCategory Types"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Category';
-            TableRelation = "Category Type";
+            TableRelation = "BLRCategoryType";
             trigger OnValidate()
             var
-                CategoryType: Record "Category type";
+                CategoryType: Record "BLRCategoryType";
             begin
-                if CategoryType.Get("Category Types") then begin
-                    "Category Types" := CategoryType."Category Types";
-                    "Primary Item Type" := CategoryType."Primary Item Type";
+                if CategoryType.Get("BLRCategory Types") then begin
+                    "BLRCategory Types" := CategoryType."BLRCategory Types";
+                    "BLRPrimary Item Type" := CategoryType."BLRPrimary Item Type";
                 end;
             end;
         }
-        field(73209605; "VAT Type"; Option)
+        field(73209605; "BLRVAT Type"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'VAT Type';
             OptionMembers = "Zero-0%","Standard-5%";
             trigger OnValidate()
             begin
-                case "VAT Type" of
+                case "BLRVAT Type" of
                     0:
-                        "VAT %" := 0;
+                        "BLRVAT %" := 0;
                     1:
-                        "VAT %" := 1;
+                        "BLRVAT %" := 1;
                     else
-                        "VAT %" := 0;
+                        "BLRVAT %" := 0;
                 end;
             end;
         }
-        field(73209606; "VAT %"; Option)
+        field(73209606; "BLRVAT %"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = "0","5";
             Caption = 'VAT %';
             Editable = false;
         }
-        field(73209607; "Charges Status"; Option)
+        field(73209607; "BLRCharges Status"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = " ","Regular Charges","Additional Charges";
             Caption = 'Charges Status';
         }
-        field(73209608; "Inventory Unit Status"; Option)
+        field(73209608; "BLRInventory Unit Status"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Status';
@@ -267,19 +267,19 @@ tableextension 73209581 "Item Ext" extends Item
             OptionCaption = ' ,Free,Reserved,Sold';
             Editable = true;
         }
-        field(73209609; "Makani Number"; Text[100])
+        field(73209609; "BLRMakani Number"; Text[100])
         {
             Caption = 'Makani Number';
             DataClassification = ToBeClassified;
 
         }
-        field(73209610; "Municipality Number"; Text[100])
+        field(73209610; "BLRMunicipality Number"; Text[100])
         {
             Caption = 'Municipality Number';
             DataClassification = ToBeClassified;
 
         }
-        field(73209611; "DEWA Number"; Text[100])
+        field(73209611; "BLRDEWA Number"; Text[100])
         {
             Caption = 'DEWA Number';
             DataClassification = ToBeClassified;
@@ -290,12 +290,12 @@ tableextension 73209581 "Item Ext" extends Item
         MarketRate: Decimal;
         UnitSize: Decimal;
     begin
-        MarketRate := "Market Rate per Sq. Ft.";
-        UnitSize := "Unit Size";
+        MarketRate := "BLRMarket Rate per Sq. Ft.";
+        UnitSize := "BLRUnit Size";
         if (MarketRate <> 0) and (UnitSize <> 0) then
-            "Amount" := MarketRate * UnitSize
+            "BLRAmount" := MarketRate * UnitSize
         else
-            "Amount" := 0;
+            "BLRAmount" := 0;
     end;
 
     trigger OnInsert()
@@ -308,9 +308,9 @@ tableextension 73209581 "Item Ext" extends Item
             NewNo := NoSeriesManagement.GetNextNo('UNITID', 0D, true);
             "No." := NewNo;
         end;
-        if ("FixedNumber" = '') then begin
+        if ("BLRFixedNumber" = '') then begin
             NewUnitNo := NoSeriesManagement.GetNextNo('UNITNO', 0D, true);
-            FixedNumber := NewUnitNo;
+            "BLRFixedNumber" := NewUnitNo;
         end;
     end;
 }

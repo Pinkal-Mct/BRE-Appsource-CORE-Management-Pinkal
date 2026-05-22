@@ -1,7 +1,7 @@
 page 73209627 "Owner Profile Card"
 {
     PageType = Card;
-    SourceTable = "Owner Profile";
+    SourceTable = "BLROwnerProfile";
     ApplicationArea = All;
 
     layout
@@ -12,25 +12,25 @@ page 73209627 "Owner Profile Card"
             {
                 Caption = 'Owner Identification Details';
 
-                field("Owner ID"; rec."Owner ID")
+                field("Owner ID"; rec."BLROwner ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the unique identifier for the owner.';
                 }
 
-                field("Full Name"; rec."Full Name")
+                field("Full Name"; rec."BLRFull Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the full name of the owner.';
                 }
 
-                field("Nationality"; rec."Nationality")
+                field("Nationality"; rec."BLRNationality")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Select the nationality of the owner.';
                 }
 
-                field("Emirates ID"; rec."Emirates ID")
+                field("Emirates ID"; rec."BLREmirates ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Emirates ID of the owner.';
@@ -41,31 +41,31 @@ page 73209627 "Owner Profile Card"
             {
                 Caption = 'Contact Information';
 
-                field("Phone Number"; rec."Phone Number")
+                field("Phone Number"; rec."BLRPhone Number")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the phone number of the owner.';
                 }
 
-                field("Email Address"; rec."Email Address")
+                field("Email Address"; rec."BLREmail Address")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the email address of the owner.';
                 }
 
-                field("P.O.Box"; Rec."P.O.Box")
+                field("P.O.Box"; Rec."BLRP.O.Box")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the P.O.Box number for the owner.';
                 }
 
-                field("Mailing Address"; rec."Mailing Address")
+                field("Mailing Address"; rec."BLRMailing Address")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the mailing address of the owner.';
                 }
 
-                field("Local Address in UAE"; rec."Local Address in UAE")
+                field("Local Address in UAE"; rec."BLRLocal Address in UAE")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the local address of the owner in the UAE.';
@@ -76,13 +76,13 @@ page 73209627 "Owner Profile Card"
             {
                 Caption = 'Ownership Details';
 
-                field("Ownership Type"; rec."Ownership Type")
+                field("Ownership Type"; rec."BLROwnership Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Select the type of ownership for the owner.';
                 }
 
-                field("TRN"; rec."TRN")
+                field("TRN"; rec."BLRTRN")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Tax Registration Number (TRN) of the owner.';
@@ -94,25 +94,25 @@ page 73209627 "Owner Profile Card"
             {
                 Caption = 'Banking Information';
 
-                field("Bank Account Number"; rec."Bank Account Number")
+                field("Bank Account Number"; rec."BLRBank Account Number")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the bank account number of the owner.';
                 }
 
-                field("IBAN"; rec."IBAN")
+                field("IBAN"; rec."BLRIBAN")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the International Bank Account Number (IBAN) of the owner.';
                 }
 
-                field("Bank Name"; rec."Bank Name")
+                field("Bank Name"; rec."BLRBank Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the name of the bank where the owner holds an account.';
                 }
 
-                field("SWIFT/IFSC Code"; rec."SWIFT/IFSC Code")
+                field("SWIFT/IFSC Code"; rec."BLRSWIFT/IFSC Code")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the SWIFT or IFSC code of the owner`s bank.';
@@ -123,30 +123,30 @@ page 73209627 "Owner Profile Card"
             {
                 Caption = 'Status and Remarks';
 
-                field("Status"; rec."Status")
+                field("Status"; rec."BLRStatus")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Select the current status of the owner profile.';
                 }
 
-                field("Date of Registration"; rec."Date of Registration")
+                field("Date of Registration"; rec."BLRDate of Registration")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the date when the owner was registered in the system.';
                 }
 
-                field("Remarks/Notes"; rec."Remarks/Notes")
+                field("Remarks/Notes"; rec."BLRRemarks/Notes")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter any additional remarks or notes regarding the owner profile.';
                 }
 
-                field("Ejari Registration Number"; Rec."Ejari Registration Number")
+                field("Ejari Registration Number"; Rec."BLREjari Registration Number")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the Ejari registration number for the owner.';
                 }
-                field("RERA Owner ID"; Rec."RERA Owner ID")
+                field("RERA Owner ID"; Rec."BLRRERA Owner ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Enter the RERA owner ID for the owner.';
@@ -157,7 +157,7 @@ page 73209627 "Owner Profile Card"
             // Add the Document Attachment Subpage here
             part("Document Attachments"; "Owner Document Subpage")
             {
-                SubPageLink = OwnerId = FIELD("Owner ID"); // Link to filter attachments for this owner only
+                SubPageLink = "BLROwnerId" = FIELD("BLROwner ID"); // Link to filter attachments for this owner only
                 ApplicationArea = All;
                 Visible = isVisible;
             }
@@ -169,19 +169,19 @@ page 73209627 "Owner Profile Card"
 
     trigger OnModifyRecord(): Boolean
     begin
-        CurrPage."Document Attachments".Page.SetOwnerId(Rec."Owner ID");
+        CurrPage."Document Attachments".Page.SetOwnerId(Rec."BLROwner ID");
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        CurrPage."Document Attachments".Page.SetOwnerId(Rec."Owner ID");
+        CurrPage."Document Attachments".Page.SetOwnerId(Rec."BLROwner ID");
         isVisible := true;
     end;
 
     trigger OnAfterGetRecord()
     begin
-        CurrPage."Document Attachments".Page.SetOwnerId(Rec."Owner ID");
-        if Format(Rec."Owner ID") <> '' then
+        CurrPage."Document Attachments".Page.SetOwnerId(Rec."BLROwner ID");
+        if Format(Rec."BLROwner ID") <> '' then
             isVisible := true
         else
             isVisible := false;

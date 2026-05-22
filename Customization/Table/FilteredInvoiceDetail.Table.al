@@ -1,40 +1,40 @@
-table 73209615 "Filtered Invoice Detail"
+table 73209615 "BLRFilteredInvoiceDetail"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'ID';
             Editable = false;
         }
-        field(73209576; "Contract ID"; Integer)
+        field(73209576; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
-        field(73209577; "Tenant ID"; Code[20])
+        field(73209577; "BLRTenant ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
-        field(73209578; "Invoice ID"; Text[100])
+        field(73209578; "BLRInvoice ID"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Invoice ID';
         }
-        field(73209579; "Item Name"; Text[100])
+        field(73209579; "BLRItem Name"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Item Name';
         }
-        field(73209580; "Item Amount"; Decimal)
+        field(73209580; "BLRItem Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Item Amount';
         }
-        field(73209581; "Entry No."; Integer)
+        field(73209581; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Entry No.';
@@ -44,7 +44,7 @@ table 73209615 "Filtered Invoice Detail"
     }
     keys
     {
-        key(PK; "Entry No.", "ID")
+        key(PK;"BLREntry No.", "BLRID")
         {
             Clustered = true;
         }

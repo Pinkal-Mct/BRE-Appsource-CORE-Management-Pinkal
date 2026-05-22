@@ -1,7 +1,7 @@
 page 73209665 "Vendor Calculation Details Sub"
 {
     PageType = ListPart;
-    SourceTable = "Vendor Calculation Details";
+    SourceTable = "BLRVendorCalculationDetails";
     ApplicationArea = All;
     Caption = 'Vendor Calculation Details';
     layout
@@ -10,28 +10,28 @@ page 73209665 "Vendor Calculation Details Sub"
         {
             repeater("Calculation Details")
             {
-                field("Vendor ID"; Rec."Vendor ID")
+                field("Vendor ID"; Rec."BLRVendor ID")
                 {
                     ToolTip = 'The unique identifier for the vendor associated with the calculation.';
                     ApplicationArea = All;
                     Visible = false;
                 }
-                field("Vendor Name"; Rec."Vendor Name")
+                field("Vendor Name"; Rec."BLRVendor Name")
                 {
                     ToolTip = 'The name of the vendor associated with the calculation.';
                     ApplicationArea = All;
                 }
-                field("Start Date"; Rec."Start Date")
+                field("Start Date"; Rec."BLRStart Date")
                 {
                     ToolTip = 'The start date of the calculation period for the vendor.';
                     ApplicationArea = All;
                 }
-                field("End Date"; Rec."End Date")
+                field("End Date"; Rec."BLREnd Date")
                 {
                     ToolTip = 'The end date of the calculation period for the vendor.';
                     ApplicationArea = All;
                 }
-                field("Calculation Method"; Rec."Calculation Method")
+                field("Calculation Method"; Rec."BLRCalculation Method")
                 {
                     ToolTip = 'The method used for calculating the vendor payment.';
                     ApplicationArea = All;
@@ -40,30 +40,30 @@ page 73209665 "Vendor Calculation Details Sub"
                         UpdateFieldEditability();
                     end;
                 }
-                field("Base Amount"; Rec."Base Amount")
+                field("Base Amount"; Rec."BLRBase Amount")
                 {
                     ToolTip = 'The base amount used for the vendor calculation.';
                     ApplicationArea = All;
                 }
-                field("Percentage Type"; Rec."Percentage Type")
+                field("Percentage Type"; Rec."BLRPercentage Type")
                 {
                     ToolTip = 'The type of percentage used in the vendor calculation.';
                     ApplicationArea = All;
                     Editable = IsPercentageTypeEditable;
                 }
-                field("Percentage"; Rec."Percentage")
+                field("Percentage"; Rec."BLRPercentage")
                 {
                     ToolTip = 'The percentage value used in the vendor calculation.';
                     ApplicationArea = All;
                     Editable = IsPercentageEditable;
                 }
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ToolTip = 'The calculated amount for the vendor based on the calculation method.';
                     ApplicationArea = All;
                     Editable = IsAmountEditable;
                 }
-                field("Frequency Of Payment"; Rec."Frequency Of Payment")
+                field("Frequency Of Payment"; Rec."BLRFrequency Of Payment")
                 {
                     ToolTip = 'The frequency at which the vendor is paid.';
                     ApplicationArea = All;
@@ -85,10 +85,10 @@ page 73209665 "Vendor Calculation Details Sub"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."Vendor ID" := VendorID;
-        Rec."Start Date" := startDate;
-        Rec."End Date" := endDate;
-        Rec."Vendor Name" := vendorName;
+        Rec."BLRVendor ID" := VendorID;
+        Rec."BLRStart Date" := startDate;
+        Rec."BLREnd Date" := endDate;
+        Rec."BLRVendor Name" := vendorName;
     end;
 
     var
@@ -102,7 +102,7 @@ page 73209665 "Vendor Calculation Details Sub"
 
     procedure UpdateFieldEditability()
     begin
-        case UpperCase(Rec."Calculation Method") of
+        case UpperCase(Rec."BLRCalculation Method") of
             '':
                 begin
                     IsAmountEditable := false;

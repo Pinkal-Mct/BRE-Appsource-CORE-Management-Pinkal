@@ -1,131 +1,131 @@
-table 73209631 "Management Fee Grid"
+table 73209631 "BLRManagementFeeGrid"
 {
 
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "Entry No."; Integer)
+        field(73209575; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
         }
-        field(73209576; "Management Fee Number"; Code[20])
+        field(73209576; "BLRManagement Fee Number"; Code[20])
         {
             DataClassification = CustomerContent;
         }
-        field(73209577; "Vendor ID"; Code[20])
+        field(73209577; "BLRVendor ID"; Code[20])
         {
             DataClassification = CustomerContent;
         }
-        field(73209578; "Company/Owner Name"; Text[100])
+        field(73209578; "BLRCompany/Owner Name"; Text[100])
         {
             FieldClass = FlowField;
-            CalcFormula = lookup("Owner Profile"."Full Name" where("Owner ID" = field("Owner ID")));
+            CalcFormula = lookup("BLROwnerProfile"."BLRFull Name" where("BLROwner ID" = field("BLROwner ID")));
 
         }
 
-        field(73209579; "Property Name"; Text[100])
+        field(73209579; "BLRProperty Name"; Text[100])
         {
             DataClassification = CustomerContent;
-            TableRelation = "Property Registration"."Property Name" where("Owner ID" = field("Owner ID"));
+            TableRelation = "BLRPropertyRegistration"."BLRProperty Name" where("BLROwner ID" = field("BLROwner ID"));
             ValidateTableRelation = false;
 
 
             trigger OnValidate()
             var
-                PropertyRec: Record "Property Registration";
+                PropertyRec: Record "BLRPropertyRegistration";
             begin
-                PropertyRec.SetRange("Property Name", Rec."Property Name");
+                PropertyRec.SetRange("BLRProperty Name", Rec."BLRProperty Name");
                 if PropertyRec.FindFirst() then
-                    Rec."Property Type" := PropertyRec."Property Classification";
+                    Rec."BLRProperty Type" := PropertyRec."BLRProperty Classification";
             end;
         }
 
-        field(73209580; "Property Type"; Text[100])
+        field(73209580; "BLRProperty Type"; Text[100])
         {
             DataClassification = CustomerContent;
         }
 
-        // 4. Calculation Method
-        field(73209581; "Calculation Method"; Option)
+        // 4. "BLRCalculation Method"
+        field(73209581; "BLRCalculation Method"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers =
                 " ","Percentage of Monthly Revenue","Percentage of Annual Rent","Percentage of Collections","Per Unit Fee",Hybrid;
             trigger OnValidate()
             begin
-                if Rec."Calculation Method" = Rec."Calculation Method"::"Per Unit Fee" then
-                    Rec."Base Amount Source" := Rec."Base Amount Source"::"Number of Units";
+                if Rec."BLRCalculation Method" = Rec."BLRCalculation Method"::"Per Unit Fee" then
+                    Rec."BLRBase Amount Source" := Rec."BLRBase Amount Source"::"Number of Units";
             end;
         }
 
-        // 5. Calculation Sub-Type
-        field(73209582; "Calculation Sub-Type"; Option)
+        // 5. "BLRCalculation Sub-Type"
+        field(73209582; "BLRCalculation Sub-Type"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = " ","Percentage Based","Fixed Amount";
         }
 
-        // 6. Percentage Type
-        field(73209583; "Percentage Type"; Option)
+        // 6. "BLRPercentage Type"
+        field(73209583; "BLRPercentage Type"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = "",Fixed,Variable;
         }
 
         // 7. Percentage / Amount
-        field(73209584; "Amount"; Decimal)
+        field(73209584; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
 
-        // 8. Base Amount Source
-        field(73209585; "Base Amount Source"; Option)
+        // 8. "BLRBase Amount Source"
+        field(73209585; "BLRBase Amount Source"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = Revenue,Collections,"Annual Rent","Number of Units";
 
             trigger OnValidate()
             begin
-                if Rec."Base Amount Source" = Rec."Base Amount Source"::"Number of Units" then
-                    if Rec."Calculation Method" <> Rec."Calculation Method"::"Per Unit Fee" then begin
-                        Message('Base Amount Source should be "Number of Units" only when Calculation Method is "Per Unit Fee".');
-                        Rec."Base Amount Source" := Rec."Base Amount Source"::Revenue;
+                if Rec."BLRBase Amount Source" = Rec."BLRBase Amount Source"::"Number of Units" then
+                    if Rec."BLRCalculation Method" <> Rec."BLRCalculation Method"::"Per Unit Fee" then begin
+                        Message('Base Amount Source should be "Number of Units" only when "BLRCalculation Method" is "Per Unit Fee".');
+                        Rec."BLRBase Amount Source" := Rec."BLRBase Amount Source"::Revenue;
                     end;
             end;
         }
 
-        // 9. Payment Frequency
-        field(73209586; "Payment Frequency"; Option)
+        // 9. "BLRPayment Frequency"
+        field(73209586; "BLRPayment Frequency"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = Monthly,Quarterly,"Half-Yearly",Yearly;
         }
 
-        // 10. Validity Period
-        field(73209587; "Valid From"; Date)
+        // 10. "BLRValidity Period"
+        field(73209587; "BLRValid From"; Date)
         {
             DataClassification = CustomerContent;
             trigger OnValidate()
             begin
-                if (Rec."Valid From" <= Today()) and (Rec."Valid To" >= Today()) then
-                    if Rec."Contract Status" <> Rec."Contract Status"::Active then
-                        Rec."Contract Status" := Rec."Contract Status"::Active;
+                if (Rec."BLRValid From" <= Today()) and (Rec."BLRValid To" >= Today()) then
+                    if Rec."BLRContract Status" <> Rec."BLRContract Status"::Active then
+                        Rec."BLRContract Status" := Rec."BLRContract Status"::Active;
             end;
         }
 
-        field(73209588; "Valid To"; Date)
+        field(73209588; "BLRValid To"; Date)
         {
             DataClassification = CustomerContent;
             trigger OnValidate()
             begin
-                if (Rec."Valid From" <= Today()) and (Rec."Valid To" >= Today()) then
-                    if Rec."Contract Status" <> Rec."Contract Status"::Active then
-                        Rec."Contract Status" := Rec."Contract Status"::Active;
+                if (Rec."BLRValid From" <= Today()) and (Rec."BLRValid To" >= Today()) then
+                    if Rec."BLRContract Status" <> Rec."BLRContract Status"::Active then
+                        Rec."BLRContract Status" := Rec."BLRContract Status"::Active;
             end;
         }
 
-        field(73209589; "Contract Status"; Option)
+        field(73209589; "BLRContract Status"; Option)
         {
             OptionMembers = Active,Expired;
             DataClassification = CustomerContent;
@@ -133,44 +133,44 @@ table 73209631 "Management Fee Grid"
         }
 
         // Document
-        field(73209590; "Contract Document"; Text[250])
+        field(73209590; "BLRContract Document"; Text[250])
         {
             DataClassification = CustomerContent;
         }
-        field(73209591; "View Document"; Text[250])
+        field(73209591; "BLRView Document"; Text[250])
         {
             DataClassification = CustomerContent;
         }
-        field(73209592; "URL Document"; Text[250])
+        field(73209592; "BLRURL Document"; Text[250])
         {
             DataClassification = CustomerContent;
         }
-        field(73209593; Percentage; Decimal)
+        field(73209593; "BLRPercentage"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209594; "Owner ID"; Integer)
+        field(73209594; "BLROwner ID"; Integer)
         {
             DataClassification = CustomerContent;
-            TableRelation = "Owner Profile"."Owner ID";
+            TableRelation = "BLROwnerProfile"."BLROwner ID";
 
             trigger OnValidate()
             begin
-                CalcFields("Company/Owner Name");
+                CalcFields("BLRCompany/Owner Name");
             end;
         }
-        field(73209595; "Validity Period"; Text[50])
+        field(73209595; "BLRValidity Period"; Text[50])
         {
             DataClassification = CustomerContent;
         }
-        field(73209596; "Property Management Company"; Text[100])
+        field(73209596; "BLRProperty Management Company"; Text[100])
         {
             DataClassification = OrganizationIdentifiableInformation;
         }
     }
     keys
     {
-        key(PK; "Entry No.", "Management Fee Number")
+        key(PK;"BLREntry No.", "BLRManagement Fee Number")
         {
             Clustered = true;
         }
@@ -179,10 +179,10 @@ table 73209631 "Management Fee Grid"
 
     trigger OnInsert()
     var
-        ManagementFeeMaster: Record "Management Fee MasterData";
+        ManagementFeeMaster: Record "BLRManagementFeeMasterData";
     begin
-        ManagementFeeMaster.SetRange("Management Fee Number", Rec."Management Fee Number");
+        ManagementFeeMaster.SetRange("BLRManagement Fee Number", Rec."BLRManagement Fee Number");
         if ManagementFeeMaster.FindFirst() then
-            Rec."Vendor ID" := ManagementFeeMaster."Vendor ID";
+            Rec."BLRVendor ID" := ManagementFeeMaster."BLRVendor ID";
     end;
 }

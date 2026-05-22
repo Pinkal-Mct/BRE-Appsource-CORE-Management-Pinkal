@@ -1,23 +1,23 @@
 codeunit 73209619 "SendTenantMail"
 {
-    procedure SendEmailToTenant(Rec: Record "ContractEndProcessApproval"): Text;
+    procedure SendEmailToTenant(Rec: Record "BLRContractEndProcessApproval"): Text;
     var
         CompanyInfo: Record "Company Information";
-        TenancyRec: Record "Tenancy Contract";
+        TenancyRec: Record "BLRTenancyContract";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
         RemainingDays: Integer;
     begin
-        RemainingDays := Rec."End Date" - Today;
-        if Rec."Property_M Status" = 'Approved' then
+        RemainingDays := Rec."BLREnd Date" - Today;
+        if Rec."BLRProperty_M Status" = 'Approved' then
             if CompanyInfo.Get() then begin
                 EmailMessage.Create(
-                    Rec."Tenant Email",
-                    'Contract Renewal Confirmation : Contract ID - ' + Format(Rec."Contract ID"),
+                    Rec."BLRTenant Email",
+                    'Contract Renewal Confirmation : Contract ID - ' + Format(Rec."BLRContract Id"),
                     '<html><body>' +
-                    '<p>Dear ' + Rec."Tenant Name" + ',</p>' +
+                    '<p>Dear ' + Rec."BLRTenant Name" + ',</p>' +
                      '<p>I hope this email finds you well. This is a kind reminder that your contract with Contract ID - ' +
-            Format(Rec."Contract ID") +
+            Format(Rec."BLRContract Id") +
             ' is set to expire in the next <b>' +
             Format(RemainingDays) +
             ' days</b>. To ensure continuity, we would like to know if you are interested in renewing your contract.</p>' +
@@ -28,9 +28,9 @@ codeunit 73209619 "SendTenantMail"
                     true
                 );
                 if Email.Send(EmailMessage) then begin
-                    Message('Email sent successfully for Contract Renewal Confirmation: %1', Rec."Tenant Email");
-                    if TenancyRec.Get(Rec."Contract ID") then begin
-                        TenancyRec."Renewal Contract Status" := TenancyRec."Renewal Contract Status"::"Notify Tenant For Renewal";
+                    Message('Email sent successfully for Contract Renewal Confirmation: %1', Rec."BLRTenant Email");
+                    if TenancyRec.Get(Rec."BLRContract Id") then begin
+                        TenancyRec."BLRRenewal Contract Status" := TenancyRec."BLRRenewal Contract Status"::"Notify Tenant For Renewal";
                         TenancyRec.Modify();
                     end;
                 end else

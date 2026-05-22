@@ -1,38 +1,38 @@
-table 73209629 "Management Fee Calc. Header"
+table 73209629 "BLRManagementFeeCalcHeader"
 {
     DataClassification = CustomerContent;
 
     fields
     {
-        field(73209575; "Entry No."; Integer)
+        field(73209575; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
         }
-        field(73209576; "Report Date"; Date)
+        field(73209576; "BLRReport Date"; Date)
         {
             DataClassification = CustomerContent;
         }
-        field(73209577; "Owner ID"; Integer)
+        field(73209577; "BLROwner ID"; Integer)
         {
             DataClassification = CustomerContent;
-            TableRelation = "Owner Profile"."Owner ID";
+            TableRelation = "BLROwnerProfile"."BLROwner ID";
 
             trigger OnValidate()
             begin
-                CalcFields("Owner Name");
+                CalcFields("BLROwner Name");
             end;
         }
-        field(73209578; "Owner Name"; Text[100])
+        field(73209578; "BLROwner Name"; Text[100])
         {
             FieldClass = FlowField;
-            CalcFormula = lookup("Owner Profile"."Full Name" where("Owner ID" = field("Owner ID")));
+            CalcFormula = lookup("BLROwnerProfile"."BLRFull Name" where("BLROwner ID" = field("BLROwner ID")));
         }
-        field(73209579; "Property"; Text[100])
+        field(73209579; "BLRProperty"; Text[100])
         {
             DataClassification = CustomerContent;
         }
-        field(73209580; "Financial Year"; Integer)
+        field(73209580; "BLRFinancial Year"; Integer)
         {
             DataClassification = CustomerContent;
 
@@ -52,13 +52,13 @@ table 73209629 "Management Fee Calc. Header"
                 if integerList.RunModal() = Action::LookupOK then begin
                     integerList.SetSelectionFilter(YearRec);
                     if YearRec.FindFirst() then
-                        Rec."Financial Year" := YearRec.Number;
-                    Rec."Period From" := 0D;
-                    Rec."Period To" := 0D;
+                        Rec."BLRFinancial Year" := YearRec.Number;
+                    Rec."BLRPeriod From" := 0D;
+                    Rec."BLRPeriod To" := 0D;
                 end;
             end;
         }
-        field(73209581; "Period From"; Date)
+        field(73209581; "BLRPeriod From"; Date)
         {
             DataClassification = CustomerContent;
 
@@ -68,16 +68,16 @@ table 73209629 "Management Fee Calc. Header"
                 EndDate: Date;
             begin
 
-                StartDate := DMY2Date(1, 1, Rec."Financial Year");
-                EndDate := DMY2Date(31, 12, Rec."Financial Year");
+                StartDate := DMY2Date(1, 1, Rec."BLRFinancial Year");
+                EndDate := DMY2Date(31, 12, Rec."BLRFinancial Year");
 
-                if (Rec."Period From" < StartDate) or (Rec."Period From" > EndDate) then
+                if (Rec."BLRPeriod From" < StartDate) or (Rec."BLRPeriod From" > EndDate) then
                     Error(
-                      'Period From must be within Financial Year %1 (01/01/%1 - 31/12/%1).',
-                      Rec."Financial Year");
+                      'Period From must be within "BLRFinancial Year" %1 (01/01/%1 - 31/12/%1).',
+                      Rec."BLRFinancial Year");
             end;
         }
-        field(73209582; "Period To"; Date)
+        field(73209582; "BLRPeriod To"; Date)
         {
             DataClassification = CustomerContent;
 
@@ -86,46 +86,46 @@ table 73209629 "Management Fee Calc. Header"
                 StartDate: Date;
                 EndDate: Date;
             begin
-                StartDate := DMY2Date(1, 1, Rec."Financial Year");
-                EndDate := DMY2Date(31, 12, Rec."Financial Year");
+                StartDate := DMY2Date(1, 1, Rec."BLRFinancial Year");
+                EndDate := DMY2Date(31, 12, Rec."BLRFinancial Year");
 
-                if (Rec."Period To" < StartDate) or (Rec."Period To" > EndDate) then
+                if (Rec."BLRPeriod To" < StartDate) or (Rec."BLRPeriod To" > EndDate) then
                     Error(
-                      'Period To must be within Financial Year %1 (01/01/%1 - 31/12/%1).',
-                      Rec."Financial Year");
+                      'Period To must be within "BLRFinancial Year" %1 (01/01/%1 - 31/12/%1).',
+                      Rec."BLRFinancial Year");
 
-                if Rec."Period To" < Rec."Period From" then
-                    Error('Period To cannot be earlier than Period From.');
+                if Rec."BLRPeriod To" < Rec."BLRPeriod From" then
+                    Error('Period To cannot be earlier than "BLRPeriod From".');
             end;
         }
-        field(73209583; "All Owners"; Boolean)
+        field(73209583; "BLRAll Owners"; Boolean)
         {
             DataClassification = CustomerContent;
 
             trigger OnValidate()
             begin
-                if Rec."All Owners" = true then begin
+                if Rec."BLRAll Owners" = true then begin
 
-                    Rec."Owner ID" := 0;
-                    Rec."Owner Name" := '';
+                    Rec."BLROwner ID" := 0;
+                    Rec."BLROwner Name" := '';
                 end;
             end;
         }
-        field(73209584; "All Properties"; Boolean)
+        field(73209584; "BLRAll Properties"; Boolean)
         {
             DataClassification = CustomerContent;
 
             trigger OnValidate()
             begin
-                if Rec."All Properties" = true then
-                    Rec.Property := '';
+                if Rec."BLRAll Properties" = true then
+                    Rec."BLRProperty" := '';
             end;
         }
     }
 
     keys
     {
-        key(PK; "Entry No.")
+        key(PK;"BLREntry No.")
         {
             Clustered = true;
         }
@@ -133,24 +133,24 @@ table 73209629 "Management Fee Calc. Header"
 
     trigger OnDelete()
     var
-        managementFeeCalcLine: Record "Management Fee Calc. Line";
-        baseAmountHeader: Record "Base Amount Data Header";
-        baseAmountData: Record "Base Amount Data";
-        baseAmountDataUnitWise: Record "Base Amount Data Unit Wise";
+        managementFeeCalcLine: Record "BLRManagementFeeCalcLine";
+        baseAmountHeader: Record "BLRBaseAmountDataHeader";
+        baseAmountData: Record "BLRBaseAmountData";
+        baseAmountDataUnitWise: Record "BLRBaseAmountDataUnitWise";
     begin
-        managementFeeCalcLine.SetRange("Header No.", Rec."Entry No.");
+        managementFeeCalcLine.SetRange("BLRHeader No.", Rec."BLREntry No.");
         if managementFeeCalcLine.FindSet() then begin
             repeat
-                baseAmountHeader.SetRange("Header No.", managementFeeCalcLine."Header No.");
-                baseAmountHeader.SetRange("Line No.", managementFeeCalcLine."Entry No.");
+                baseAmountHeader.SetRange("BLRHeader No.", managementFeeCalcLine."BLRHeader No.");
+                baseAmountHeader.SetRange("BLRLine No.", managementFeeCalcLine."BLREntry No.");
                 if baseAmountHeader.FindSet() then begin
                     repeat
-                        baseAmountData.SetRange("Header No.", baseAmountHeader."Header No.");
-                        baseAmountData.SetRange("Line No.", baseAmountHeader."Line No.");
+                        baseAmountData.SetRange("BLRHeader No.", baseAmountHeader."BLRHeader No.");
+                        baseAmountData.SetRange("BLRLine No.", baseAmountHeader."BLRLine No.");
                         if baseAmountData.FindSet() then
                             baseAmountData.DeleteAll();
-                        baseAmountDataUnitWise.SetRange("Header No.", baseAmountHeader."Header No.");
-                        baseAmountDataUnitWise.SetRange("Line No.", baseAmountHeader."Line No.");
+                        baseAmountDataUnitWise.SetRange("BLRHeader No.", baseAmountHeader."BLRHeader No.");
+                        baseAmountDataUnitWise.SetRange("BLRLine No.", baseAmountHeader."BLRLine No.");
                         if baseAmountDataUnitWise.FindSet() then
                             baseAmountDataUnitWise.DeleteAll();
                     until baseAmountHeader.Next() = 0;

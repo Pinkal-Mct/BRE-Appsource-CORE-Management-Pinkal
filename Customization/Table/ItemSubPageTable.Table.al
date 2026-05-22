@@ -1,15 +1,15 @@
-table 73209627 ItemSubPageTable
+table 73209627 "BLRItemSubPageTable"
 {
     DataClassification = CustomerContent;
 
     fields
     {
-        field(73209575; Id; Code[20])
+        field(73209575; "BLRId"; Code[20])
         {
             DataClassification = CustomerContent;
             TableRelation = Item;
         }
-        field(73209576; UnitName; Text[20])
+        field(73209576; "BLRUnitName"; Text[20])
         {
             DataClassification = CustomerContent;
         }
@@ -17,7 +17,7 @@ table 73209627 ItemSubPageTable
 
     keys
     {
-        key(Key1; Id)
+        key(Key1;"BLRId")
         {
             Clustered = true;
         }

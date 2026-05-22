@@ -11,7 +11,7 @@ page 73209587 finalbillinggrid
     EntityName = 'finalbillinggrid';
     EntitySetName = 'finalbillinggrids';
     PageType = API;
-    SourceTable = "Final Billing Calculation Grid";
+    SourceTable = "BLRFinalBillingCalculationGrid";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -22,51 +22,51 @@ page 73209587 finalbillinggrid
         {
             repeater(General)
             {
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(differenceAmount; Rec.DifferenceAmount)
+                field(differenceAmount; Rec."BLRDifferenceAmount")
                 {
                     Caption = 'Difference Amount';
                 }
-                field(differenceAmountInclVAT; Rec.DifferenceAmountInclVAT)
+                field(differenceAmountInclVAT; Rec."BLRDifferenceAmountInclVAT")
                 {
                     Caption = 'Difference Amount Incl. VAT';
                 }
-                field(differenceVAT; Rec.DifferenceVAT)
+                field(differenceVAT; Rec."BLRDifferenceVAT")
                 {
                     Caption = 'Difference VAT';
                 }
-                field(entryNo; Rec."Entry No")
+                field(entryNo; Rec."BLREntry No")
                 {
                     Caption = 'Entry No';
                 }
-                field(invoicedAmount; Rec.InvoicedAmount)
+                field(invoicedAmount; Rec."BLRInvoicedAmount")
                 {
                     Caption = 'Invoiced Amount';
                 }
-                field(invoicedAmountInclVAT; Rec.InvoicedAmountInclVAT)
+                field(invoicedAmountInclVAT; Rec."BLRInvoicedAmountInclVAT")
                 {
                     Caption = 'Invoiced Amount Incl. VAT';
                 }
-                field(invoicedVAT; Rec.InvoicedVAT)
+                field(invoicedVAT; Rec."BLRInvoicedVAT")
                 {
                     Caption = 'Invoiced VAT';
                 }
-                field(revenueDescription; Rec.RevenueDescription)
+                field(revenueDescription; Rec."BLRRevenueDescription")
                 {
                     Caption = 'Revenue Description';
                 }
-                field(revisedAmount; Rec.RevisedAmount)
+                field(revisedAmount; Rec."BLRRevisedAmount")
                 {
                     Caption = 'Revised Amount';
                 }
-                field(revisedAmountInclVAT; Rec.RevisedAmountInclVAT)
+                field(revisedAmountInclVAT; Rec."BLRRevisedAmountInclVAT")
                 {
                     Caption = 'Revised Amount Incl. VAT';
                 }
-                field(revisedVAT; Rec.RevisedVAT)
+                field(revisedVAT; Rec."BLRRevisedVAT")
                 {
                     Caption = 'Revised VAT';
                 }
@@ -90,95 +90,95 @@ page 73209587 finalbillinggrid
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(terminationDate; Rec."Termination Date")
+                field(terminationDate; Rec."BLRTermination Date")
                 {
                     Caption = 'Termination Date';
                 }
-                field(totalDifferenceVAT; Rec."Total Difference VAT")
+                field(totalDifferenceVAT; Rec."BLRTotal Difference VAT")
                 {
                     Caption = 'Total Invoiced Amount';
                 }
-                field(totalDifferenceAmountInclVAT; Rec."Total DifferenceAmountIncl.VAT")
+                field(totalDifferenceAmountInclVAT; Rec."BLRTotalDiffAmtInclVAT")
                 {
                     Caption = 'Total Difference Amount Incl. VAT';
                 }
-                field(totalDifferneceAmount; Rec."Total Differnece Amount")
+                field(totalDifferneceAmount; Rec."BLRTotal Differnece Amount")
                 {
                     Caption = 'Total Difference Amount';
                 }
-                field(totalInvoicedAmount; Rec."Total Invoiced Amount")
+                field(totalInvoicedAmount; Rec."BLRTotal Invoiced Amount")
                 {
                     Caption = 'Total Invoiced Amount';
                 }
-                field(totalInvoicedAmountInclVAT; Rec."Total Invoiced AmountIncl. VAT")
+                field(totalInvoicedAmountInclVAT; Rec."BLRTotalInvdAmtInclVAT")
                 {
                     Caption = 'Total Invoiced Amount';
                 }
-                field(totalInvoicedVAT; Rec."Total Invoiced VAT")
+                field(totalInvoicedVAT; Rec."BLRTotal Invoiced VAT")
                 {
                     Caption = 'Total Invoiced VAT';
                 }
-                field(totalRevisedAmount; Rec."Total Revised Amount")
+                field(totalRevisedAmount; Rec."BLRTotal Revised Amount")
                 {
                     Caption = 'Total Revised Amount';
                 }
-                field(totalRevisedAmountInclVAT; Rec."Total Revised AmountIncl.VAT")
+                field(totalRevisedAmountInclVAT; Rec."BLRTotalRevAmtInclVAT")
                 {
                     Caption = 'Total Revised Amount Incl. VAT';
                 }
-                field(totalRevisedVAT; Rec."Total Revised VAT")
+                field(totalRevisedVAT; Rec."BLRTotal Revised VAT")
                 {
                     Caption = 'Total Invoiced Amount';
                 }
-                field("invoiceToBeRaised"; Rec."Invoice To Be Raised")
+                field("invoiceToBeRaised"; Rec."BLRInvoice To Be Raised")
                 {
                     Caption = 'Invoice To Be Raised';
                 }
-                field("creditNoteToBeRaised"; Rec."Credit Note To Be Raised")
+                field("creditNoteToBeRaised"; Rec."BLRCredit Note To Be Raised")
                 {
                     Caption = 'CreditNoteToBeRaised';
                 }
-                field("paymentType"; Rec."Payment Type")
+                field("paymentType"; Rec."BLRPayment Type")
                 {
                     Caption = 'Payment Type';
                 }
-                field("propertyClassification"; Rec."Property Classification")
+                field("propertyClassification"; Rec."BLRProperty Classification")
                 {
                     Caption = 'Property Classification';
                 }
-                field(invoiced; Rec.Invoiced)
+                field(invoiced; Rec."BLRInvoiced")
                 {
                     Caption = 'Invoiced';
                 }
-                field("tenantID"; Rec."Tenant ID")
+                field("tenantID"; Rec."BLRTenant ID")
                 {
                     Caption = 'Tenant ID';
                 }
-                field("invoiceID"; Rec."Invoice ID")
+                field("invoiceID"; Rec."BLRInvoice ID")
                 {
                     Caption = 'Invoice ID';
                 }
-                field("postedInvoiceID"; Rec."Posted Invoice ID")
+                field("postedInvoiceID"; Rec."BLRPosted Invoice ID")
                 {
                     Caption = 'Posted Invoice ID';
                 }
-                field("invoiceDocument"; Rec."Invoice Document")
+                field("invoiceDocument"; Rec."BLRInvoice Document")
                 {
                     Caption = 'Invoice Document';
                 }
-                field("invoiceDocumentURL"; Rec."Invoice Document URL")
+                field("invoiceDocumentURL"; Rec."BLRInvoice Document URL")
                 {
                     Caption = 'Invoice Document URL';
                 }
-                field("creditNoteAmount"; Rec."Credit Note Amount")
+                field("creditNoteAmount"; Rec."BLRCredit Note Amount")
                 {
                     Caption = 'Credit Note Amount';
                 }
-                field("creditNoteDocument"; Rec."Credit Note Document")
+                field("creditNoteDocument"; Rec."BLRCredit Note Document")
                 {
                     Caption = 'Credit Note Document';
                 }
-                field("creditNoteURL"; Rec."Credit Note Document URL")
+                field("creditNoteURL"; Rec."BLRCredit Note Document URL")
                 {
                     Caption = 'Credit Note Document URL';
                 }

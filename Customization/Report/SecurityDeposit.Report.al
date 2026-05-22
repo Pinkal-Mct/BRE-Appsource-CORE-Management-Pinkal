@@ -9,28 +9,28 @@ report 73209577 "Security Deposit"
     DefaultLayout = Excel;
     dataset
     {
-        dataitem(TenancyContract; "Tenancy Contract")
+        dataitem(TenancyContract; "BLRTenancyContract")
         {
-            DataItemTableView = SORTING("Customer Name", "Contract ID");
+            DataItemTableView = SORTING("BLRCustomer Name", "BLRContract ID");
             column(CustomDateRange; CustomDateRangeText)
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Customer_Name; "Customer Name")
+            column(Customer_Name; "BLRCustomer Name")
             {
             }
-            column(Property_Name; "Property Name")
+            column(Property_Name; "BLRProperty Name")
             {
             }
-            column(Unit_Name; "Unit Name")
+            column(Unit_Name; "BLRUnit Name")
             {
             }
-            column(Contract_Start_Date; "Contract Start Date")
+            column(Contract_Start_Date; "BLRContract Start Date")
             {
             }
-            column(Contract_End_Date; "Contract End Date")
+            column(Contract_End_Date; "BLRContract End Date")
             {
             }
             column(Opening_Balance; OpeningBalance)
@@ -56,11 +56,11 @@ report 73209577 "Security Deposit"
             }
             trigger OnAfterGetRecord()
             var
-                SecurityDepositTransfer: Record "Security Deposit";
-                adjustmentDeposit: Record "Adjustment Deposits";
+                SecurityDepositTransfer: Record "BLRSecurityDeposit";
+                adjustmentDeposit: Record "BLRAdjustmentDeposits";
                 postedSalesInvoice: Record "Sales Invoice Header";
                 postedSalesInvoiceLine: Record "Sales Invoice Line";
-                tenancyContractSub: Record "Tenancy Contract Subpage";
+                tenancyContractSub: Record "BLRTenancyContractSubpage";
                 IsContractInRange: Boolean;
                 SecurityDepositAmount: Decimal;
             begin
@@ -77,29 +77,29 @@ report 73209577 "Security Deposit"
                      Format(gCustomStartDate, 0, '<Day,2>/<Month,2>/') + Format(Date2DMY(gCustomStartDate, 3)) + ' - ' +
                      Format(gCustomEndDate, 0, '<Day,2>/<Month,2>/') + Format(Date2DMY(gCustomEndDate, 3));
 
-                IsContractInRange := ("Contract Start Date" <= gCustomEndDate) and
-                    ("Contract End Date" >= gCustomStartDate);
+                IsContractInRange := ("BLRContract Start Date" <= gCustomEndDate) and
+                    ("BLRContract End Date" >= gCustomStartDate);
 
                 if not IsContractInRange then
                     CurrReport.SKIP();
 
-                SecurityDepositAmount := "Security Deposit Amount";
+                SecurityDepositAmount := "BLRSecurity Deposit Amount";
 
-                if "Contract Start Date" <= gCustomStartDate then
+                if "BLRContract Start Date" <= gCustomStartDate then
                     OpeningBalance := SecurityDepositAmount
                 else
                     OpeningBalance := 0;
 
-                if "Contract Start Date" > gCustomStartDate then begin
-                    tenancyContractSub.SetRange(ContractID, TenancyContract."Contract ID");
-                    tenancyContractSub.SetRange("Secondary Item Type", 'Security Deposit');
+                if "BLRContract Start Date" > gCustomStartDate then begin
+                    tenancyContractSub.SetRange("BLRContractID", TenancyContract."BLRContract ID");
+                    tenancyContractSub.SetRange("BLRSecondary Item Type", 'Security Deposit');
                     if tenancyContractSub.FindFirst() then begin
-                        postedSalesInvoice.SetRange("Contract ID", tenancyContractSub.ContractID);
+                        postedSalesInvoice.SetRange("BLRContract ID", tenancyContractSub."BLRContractID");
                         if postedSalesInvoice.FindFirst() then begin
                             postedSalesInvoiceLine.SetRange("Document No.", postedSalesInvoice."No.");
-                            postedSalesInvoiceLine.SetRange(Description, tenancyContractSub."Secondary Item Type");
+                            postedSalesInvoiceLine.SetRange(Description, tenancyContractSub."BLRSecondary Item Type");
                             if not postedSalesInvoiceLine.IsEmpty() then
-                                Additions := tenancyContractSub.Invoiced;
+                                Additions := tenancyContractSub."BLRInvoiced";
                         end;
 
                     end;
@@ -114,30 +114,30 @@ report 73209577 "Security Deposit"
                 CarriedForwardOutAmount := 0;
 
                 SecurityDepositTransfer.Reset();
-                SecurityDepositTransfer.SetRange("Contract ID", "Contract ID");
+                SecurityDepositTransfer.SetRange("BLRContract ID", "BLRContract ID");
                 if SecurityDepositTransfer.FindSet() then
                     repeat
-                        CarriedForwardOutAmount += SecurityDepositTransfer."Carry Forward Amount";
+                        CarriedForwardOutAmount += SecurityDepositTransfer."BLRCarry Forward Amount";
                     until SecurityDepositTransfer.Next() = 0;
 
                 SecurityDepositTransfer.Reset();
-                SecurityDepositTransfer.SetRange("New_Contract ID", "Contract ID");
+                SecurityDepositTransfer.SetRange("BLRNew_Contract ID", "BLRContract ID");
                 if SecurityDepositTransfer.FindSet() then
                     repeat
-                        CarriedForwardInAmount += SecurityDepositTransfer."Carry Forward Amount";
+                        CarriedForwardInAmount += SecurityDepositTransfer."BLRCarry Forward Amount";
                     until SecurityDepositTransfer.Next() = 0;
 
-                adjustmentDeposit.SetRange("Contract ID", "Contract ID");
-                adjustmentDeposit.SetRange("Item Description", adjustmentDeposit."Item Description"::"Security Deposit");
+                adjustmentDeposit.SetRange("BLRContract Id", "BLRContract ID");
+                adjustmentDeposit.SetRange("BLRItem Description", adjustmentDeposit."BLRItem Description"::"Security Deposit");
                 if adjustmentDeposit.FindSet() then begin
                     AdjustmentAmount := 0;
                     RefundAmount := 0;
                     repeat
-                        if adjustmentDeposit."Transaction Type" = adjustmentDeposit."Transaction Type"::Adjustment then
-                            AdjustmentAmount += adjustmentDeposit.Amount
+                        if adjustmentDeposit."BLRTransaction Type" = adjustmentDeposit."BLRTransaction Type"::Adjustment then
+                            AdjustmentAmount += adjustmentDeposit."BLRAmount"
                         else
-                            if adjustmentDeposit."Transaction Type" = adjustmentDeposit."Transaction Type"::Refund then
-                                RefundAmount += adjustmentDeposit.Amount;
+                            if adjustmentDeposit."BLRTransaction Type" = adjustmentDeposit."BLRTransaction Type"::Refund then
+                                RefundAmount += adjustmentDeposit."BLRAmount";
                     until adjustmentDeposit.Next() = 0;
                 end else begin
                     AdjustmentAmount := 0;

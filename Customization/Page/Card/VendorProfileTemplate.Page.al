@@ -3,7 +3,7 @@ page 73209639 "Vendor Profile Template"
     PageType = Card;
     ApplicationArea = All;
     UsageCategory = None;
-    SourceTable = "Vendor Profile Template";
+    SourceTable = "BLRVendorProfileTemplate";
 
     layout
     {
@@ -14,12 +14,12 @@ page 73209639 "Vendor Profile Template"
                 group(General1)
                 {
                     ShowCaption = false;
-                    field(Code; Rec.Code)
+                    field(Code; Rec."BLRCode")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Specifies the code of the vendor profile template.';
                     }
-                    field(Description; Rec.Description)
+                    field(Description; Rec."BLRDescription")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Specifies the description of the vendor profile template.';
@@ -28,13 +28,13 @@ page 73209639 "Vendor Profile Template"
                 group(General2)
                 {
                     ShowCaption = false;
-                    field("No. Series"; Rec."No. Series")
+                    field("No. Series"; Rec."BLRNo. Series")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Specifies the number series used for the vendor profile template.';
                         TableRelation = "No. Series";
                     }
-                    field(Module; Rec.Module)
+                    field(Module; Rec."BLRModule")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Specifies the type of vendor profile template.';

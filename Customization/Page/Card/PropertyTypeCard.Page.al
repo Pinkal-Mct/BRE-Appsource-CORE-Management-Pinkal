@@ -1,7 +1,7 @@
 page 73209631 "Property Type Card"
 {
     PageType = Card;
-    SourceTable = "Property Type";
+    SourceTable = "BLRPropertyType";
     ApplicationArea = All;
     Caption = 'Property Type Card';
     UsageCategory = None;
@@ -13,20 +13,20 @@ page 73209631 "Property Type Card"
             group(Group)
             {
                 Caption = 'Property Type Details';
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the property type.';
                 }
-                field("Classification Name"; Rec."Classification Name")
+                field("Classification Name"; Rec."BLRClassification Name")
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
                     ToolTip = 'Enter the classification name.';
                     NotBlank = true;
                 }
-                field("Property Type"; Rec."Property Type")
+                field("Property Type"; Rec."BLRProperty Type")
                 {
                     ApplicationArea = All;
                     ShowMandatory = true;
@@ -44,7 +44,7 @@ page 73209631 "Property Type Card"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.TestField("Classification Name");
-        Rec.TestField("Property Type");
+        Rec.TestField("BLRClassification Name");
+        Rec.TestField("BLRProperty Type");
     end;
 }

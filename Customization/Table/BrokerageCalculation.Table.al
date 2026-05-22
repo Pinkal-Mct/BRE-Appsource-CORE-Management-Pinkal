@@ -1,31 +1,31 @@
-table 73209587 "Brokerage Calculation"
+table 73209587 "BLRBrokerageCalculation"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "Owner ID"; Integer)
+        field(73209575; "BLROwner ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Owner ID';
-            TableRelation = "Owner Profile"."Owner ID";
+            TableRelation = "BLROwnerProfile"."BLROwner ID";
         }
-        field(73209576; "Property ID"; Code[20])
+        field(73209576; "BLRProperty ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Property ID';
-            TableRelation = "Property Registration"."Property ID";
+            TableRelation = "BLRPropertyRegistration"."BLRProperty ID";
         }
-        field(73209577; "Start Date"; Date)
+        field(73209577; "BLRStart Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Start Date';
         }
-        field(73209578; "End Date"; Date)
+        field(73209578; "BLREnd Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'End Date';
         }
-        field(73209579; "ID"; Integer)
+        field(73209579; "BLRID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'ID';
@@ -35,17 +35,17 @@ table 73209587 "Brokerage Calculation"
     }
     keys
     {
-        key(PK; "ID")
+        key(PK;"BLRID")
         {
             Clustered = true;
         }
-        key(Secondary; "Owner ID", "Property ID")
+        key(Secondary;"BLROwner ID", "BLRProperty ID")
         {
         }
     }
     fieldgroups
     {
-        fieldgroup(DropDown; "Property ID", "Owner ID")
+        fieldgroup(DropDown;"BLRProperty ID", "BLROwner ID")
         {
         }
     }

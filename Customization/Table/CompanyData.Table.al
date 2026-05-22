@@ -1,64 +1,64 @@
-table 73209598 "Company Data"
+table 73209598 "BLRCompanyData"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "Company ID";
+    DataCaptionFields = "BLRCompany ID";
 
     fields
     {
-        field(73209575; "Company ID"; Integer)
+        field(73209575; "BLRCompany ID"; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
         }
 
-        field(73209576; "Company Name"; Text[100])
+        field(73209576; "BLRCompany Name"; Text[100])
         {
             DataClassification = CustomerContent;
             Editable = false;
         }
 
-        field(73209577; "Company Logo"; Text[50])
+        field(73209577; "BLRCompany Logo"; Text[50])
         {
             DataClassification = CustomerContent;
 
         }
 
-        field(73209578; "Logo URL"; Text[250])
+        field(73209578; "BLRLogo URL"; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'Logo URL';
         }
-        field(73209579; "View Document URL"; Text[250])
+        field(73209579; "BLRView Document URL"; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'View Document URL';
         }
-        field(73209580; "Tenant id"; Text[250])
+        field(73209580; "BLRTenant id"; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'View Document URL';
             Editable = false;
         }
-        field(73209581; "Environment Name"; Text[100])
+        field(73209581; "BLREnvironment Name"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Environment Name';
             Editable = false;
         }
 
-        field(73209582; "Access Validity"; Integer)
+        field(73209582; "BLRAccess Validity"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Access Validity (Days)';
             Editable = true;
         }
-        field(73209583; "API URL"; Text[100])
+        field(73209583; "BLRAPI URL"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'API URL';
             Editable = true;
         }
-        field(73209584; "Revenue Methods"; Option)
+        field(73209584; "BLRRevenue Methods"; Option)
         {
             OptionMembers = " ","Fixed Monthly Rent","Per Day Rent";
             Caption = 'Revenue Methods';
@@ -68,7 +68,7 @@ table 73209598 "Company Data"
 
     keys
     {
-        key(PK; "Company ID")
+        key(PK;"BLRCompany ID")
         {
             Clustered = true;
         }
@@ -76,7 +76,7 @@ table 73209598 "Company Data"
 
     fieldgroups
     {
-        fieldgroup(DropDown; "Company ID", "Company Name")
+        fieldgroup(DropDown;"BLRCompany ID", "BLRCompany Name")
         {
 
         }
@@ -94,15 +94,15 @@ table 73209598 "Company Data"
 
     begin
         if CompanyInfo.Get() then
-            "Company Name" := CompanyInfo.Name;
+            "BLRCompany Name" := CompanyInfo.Name;
 
         TenantIdTxt := TenantId();
         BCURLList := GetUrl(ClientType::Web).Split('/');
         TenantGuidTxt := BCURLList.Get(4);
         EnvironmentNameTxt := BCURLList.Get(5);
 
-        "Tenant id" := CopyStr(TenantGuidTxt, 1, StrLen(TenantGuidTxt));
-        "Environment Name" := CopyStr(EnvironmentNameTxt, 1, StrLen(EnvironmentNameTxt));
+        "BLRTenant id" := CopyStr(TenantGuidTxt, 1, StrLen(TenantGuidTxt));
+        "BLREnvironment Name" := CopyStr(EnvironmentNameTxt, 1, StrLen(EnvironmentNameTxt));
 
         Message(Msg, TenantIdTxt, TenantGuidTxt);
     end;

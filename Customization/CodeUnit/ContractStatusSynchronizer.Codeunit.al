@@ -1,45 +1,45 @@
 codeunit 73209586 "Contract Status Synchronizer"
 {
-    procedure SyncToTenancyContract(ContractStatusRec: Record "Approval Contract Status")
+    procedure SyncToTenancyContract(ContractStatusRec: Record "BLRApprovalContractStatus")
     var
-        TenancyContract: Record "Tenancy Contract";
+        TenancyContract: Record "BLRTenancyContract";
     begin
         TenancyContract.Reset();
-        TenancyContract.SetRange("Contract ID", ContractStatusRec."Contract ID");
+        TenancyContract.SetRange("BLRContract ID", ContractStatusRec."BLRContract ID");
         if not TenancyContract.FindFirst() then begin
-            Message('No Tenancy Contract found for Contract ID %1', ContractStatusRec."Contract ID");
+            Message('No Tenancy Contract found for Contract ID %1', ContractStatusRec."BLRContract ID");
             exit;
         end;
-        if ContractStatusRec.Status = 'Approved' then begin
-            case ContractStatusRec."Tenancy Contract Status" of
+        if ContractStatusRec."BLRStatus" = 'Approved' then begin
+            case ContractStatusRec."BLRTenancy Contract Status" of
                 'Activation':
                     begin
-                        TenancyContract."Previous Status" := Format(TenancyContract."Tenant Contract Status");
-                        TenancyContract.Validate("Tenant Contract Status", TenancyContract."Tenant Contract Status"::Active);
+                        TenancyContract."BLRPrevious Status" := Format(TenancyContract."BLRTenant Contract Status");
+                        TenancyContract.Validate("BLRTenant Contract Status", TenancyContract."BLRTenant Contract Status"::Active);
                     end;
                 'Termination':
                     begin
-                        TenancyContract."Previous Status" := Format(TenancyContract."Tenant Contract Status");
-                        TenancyContract.Validate("Tenant Contract Status", TenancyContract."Tenant Contract Status"::Terminated);
+                        TenancyContract."BLRPrevious Status" := Format(TenancyContract."BLRTenant Contract Status");
+                        TenancyContract.Validate("BLRTenant Contract Status", TenancyContract."BLRTenant Contract Status"::Terminated);
                     end;
                 'Suspension':
                     begin
-                        TenancyContract."Previous Status" := Format(TenancyContract."Tenant Contract Status");
-                        TenancyContract.Validate("Tenant Contract Status", TenancyContract."Tenant Contract Status"::Suspended);
+                        TenancyContract."BLRPrevious Status" := Format(TenancyContract."BLRTenant Contract Status");
+                        TenancyContract.Validate("BLRTenant Contract Status", TenancyContract."BLRTenant Contract Status"::Suspended);
                     end;
                 'Under Suspension-Unit Release':
                     begin
-                        TenancyContract."Previous Status" := Format(TenancyContract."Tenant Contract Status");
-                        TenancyContract.Validate("Tenant Contract Status", TenancyContract."Tenant Contract Status"::"Under Suspension-Unit Released");
+                        TenancyContract."BLRPrevious Status" := Format(TenancyContract."BLRTenant Contract Status");
+                        TenancyContract.Validate("BLRTenant Contract Status", TenancyContract."BLRTenant Contract Status"::"Under Suspension-Unit Released");
                     end;
                 else
-                    Message('Unsupported Tenancy Contract Status: %1', ContractStatusRec."Tenancy Contract Status");
+                    Message('Unsupported Tenancy Contract Status: %1', ContractStatusRec."BLRTenancy Contract Status");
             end;
-            TenancyContract."Update Contract Status" := TenancyContract."Update Contract Status"::" ";
+            TenancyContract."BLRUpdate Contract Status" := TenancyContract."BLRUpdate Contract Status"::" ";
             TenancyContract.Modify();
         end;
-        if ContractStatusRec.Status = 'Declined' then begin
-            TenancyContract."Update Contract Status" := TenancyContract."Update Contract Status"::" ";
+        if ContractStatusRec."BLRStatus" = 'Declined' then begin
+            TenancyContract."BLRUpdate Contract Status" := TenancyContract."BLRUpdate Contract Status"::" ";
             TenancyContract.Modify();
         end;
     end;

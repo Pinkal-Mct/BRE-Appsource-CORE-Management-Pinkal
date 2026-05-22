@@ -1,74 +1,74 @@
-table 73209678 "RevenueRecognition Othercharge"
+table 73209678 "BLRRevenueRecognitionOthChg"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "Entry No."; Integer)
+        field(73209575; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
             Caption = 'Entry No.';
         }
-        field(73209576; "RS Id"; Integer)
+        field(73209576; "BLRRS Id"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'RS Id';
         }
-        field(73209577; "Contract ID"; Integer)
+        field(73209577; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
-            TableRelation = "Tenancy Contract"."Contract ID";
+            TableRelation = "BLRTenancyContract"."BLRContract ID";
             Editable = false;
         }
-        field(73209578; "Tenant Id"; Code[20])
+        field(73209578; "BLRTenant Id"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant Id';
-            TableRelation = "Tenancy Contract"."Tenant ID";
+            TableRelation = "BLRTenancyContract"."BLRTenant ID";
             Editable = false;
         }
-        field(73209579; "Month"; Text[50])
+        field(73209579; "BLRMonth"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Month';
             Editable = false;
         }
-        field(73209580; "No. of Days"; Integer)
+        field(73209580; "BLRNo. of Days"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'No. of Days';
             Editable = false;
         }
-        field(73209581; "RR - Method 1 (Day)"; Decimal)
+        field(73209581; "BLRRR - Method 1 (Day)"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'RR - Method 1 (Day)';
             Editable = false;
         }
-        field(73209582; "RR - Method 2 (Month)"; Decimal)
+        field(73209582; "BLRRR - Method 2 (Month)"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'RR - Method 2 (Month)';
             Editable = false;
         }
-        field(73209583; "Total Amount(Day)"; Decimal)
+        field(73209583; "BLRTotal Amount(Day)"; Decimal)
         {
             Caption = 'Total Amount(Day)';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("RevenueRecognition Othercharge"."RR - Method 1 (Day)" where("Contract ID" = field("Contract ID")));
+            CalcFormula = sum("BLRRevenueRecognitionOthChg"."BLRRR - Method 1 (Day)" where("BLRContract ID" = field("BLRContract ID")));
         }
-        field(73209584; "Total Amount(Month)"; Decimal)
+        field(73209584; "BLRTotal Amount(Month)"; Decimal)
         {
             Caption = 'Total Amount(Month)';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("RevenueRecognition Othercharge"."RR - Method 2 (Month)" where("Contract ID" = field("Contract ID")));
+            CalcFormula = sum("BLRRevenueRecognitionOthChg"."BLRRR - Method 2 (Month)" where("BLRContract ID" = field("BLRContract ID")));
         }
     }
     keys
     {
-        key(PK; "Entry No.")
+        key(PK;"BLREntry No.")
         {
             Clustered = true;
         }

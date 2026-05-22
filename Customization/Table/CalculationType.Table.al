@@ -1,16 +1,16 @@
-table 73209590 "Calculation Type"
+table 73209590 "BLRCalculationType"
 {
     DataClassification = SystemMetadata;
-    DataCaptionFields = ID;
+    DataCaptionFields = "BLRID";
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
-        field(73209576; "Calculation Type"; Text[100])
+        field(73209576; "BLRCalculation Type"; Text[100])
         {
             DataClassification = SystemMetadata;
             Caption = 'Calculation Type';
@@ -18,14 +18,14 @@ table 73209590 "Calculation Type"
     }
     keys
     {
-        key(PK; "ID", "Calculation Type")
+        key(PK;"BLRID", "BLRCalculation Type")
         {
             Clustered = true;
         }
     }
     fieldgroups
     {
-        fieldgroup(DropDown; ID, "Calculation Type")
+        fieldgroup(DropDown;"BLRID", "BLRCalculation Type")
         {
         }
     }

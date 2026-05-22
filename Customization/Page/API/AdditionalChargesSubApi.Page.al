@@ -11,7 +11,7 @@ page 73209575 "Additional Charges Sub Api"
     EntityName = 'additionalchargessub';
     EntitySetName = 'additionalchargessubs';
     PageType = API;
-    SourceTable = "Additional Charges Sub";
+    SourceTable = "BLRAdditionalChargesSub";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -22,31 +22,31 @@ page 73209575 "Additional Charges Sub Api"
         {
             repeater(General)
             {
-                field(amount; Rec.Amount)
+                field(amount; Rec."BLRAmount")
                 {
                     Caption = 'Amount';
                 }
-                field(amountIncludingVAT; Rec."Amount Including VAT")
+                field(amountIncludingVAT; Rec."BLRAmount Including VAT")
                 {
                     Caption = 'Amount Including VAT';
                 }
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(endDate; Rec."End Date")
+                field(endDate; Rec."BLREnd Date")
                 {
                     Caption = 'End Date';
                 }
-                field(entryNo; Rec."Entry No.")
+                field(entryNo; Rec."BLREntry No.")
                 {
                     Caption = 'Entry No.';
                 }
-                field(secondaryItemType; Rec."Secondary Item Type")
+                field(secondaryItemType; Rec."BLRSecondary Item Type")
                 {
                     Caption = 'Secondary Item';
                 }
-                field(startDate; Rec."Start Date")
+                field(startDate; Rec."BLRStart Date")
                 {
                     Caption = 'Start Date';
                 }
@@ -70,43 +70,43 @@ page 73209575 "Additional Charges Sub Api"
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantID; Rec."Tenant ID")
+                field(tenantID; Rec."BLRTenant ID")
                 {
                     Caption = 'Tenant ID';
                 }
-                field(totalAmount; Rec."Total Amount")
+                field(totalAmount; Rec."BLRTotal Amount")
                 {
                     Caption = 'Total Amount';
                 }
-                field(vat; Rec."VAT %")
+                field(vat; Rec."BLRVAT %")
                 {
                     Caption = 'VAT %';
                 }
-                field(vatAmount; Rec."VAT Amount")
+                field(vatAmount; Rec."BLRVAT Amount")
                 {
                     Caption = 'VAT Amount';
                 }
-                field(invoiced; Rec.Invoiced)
+                field(invoiced; Rec."BLRInvoiced")
                 {
                     Caption = 'VAT Amount';
                 }
-                field("invoicedID"; Rec."Invoiced ID")
+                field("invoicedID"; Rec."BLRInvoiced ID")
                 {
                     Caption = 'Invoiced ID';
                 }
-                field("unitType"; Rec."Unit Type")
+                field("unitType"; Rec."BLRUnit Type")
                 {
                     Caption = 'Unit Type';
                 }
-                field("postedInvoiceID"; Rec."Posted Invoice ID")
+                field("postedInvoiceID"; Rec."BLRPosted Invoice ID")
                 {
                     Caption = 'Posted Invoice ID';
                 }
-                field("invoiceDocument"; Rec."Invoice Document")
+                field("invoiceDocument"; Rec."BLRInvoice Document")
                 {
                     Caption = 'Invoice Document';
                 }
-                field("invoiceDocumentURL"; Rec."Invoice Document URL")
+                field("invoiceDocumentURL"; Rec."BLRInvoice Document URL")
                 {
                     Caption = 'Invoice Document URL';
                 }

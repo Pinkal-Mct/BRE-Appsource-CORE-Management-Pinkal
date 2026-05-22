@@ -1,50 +1,50 @@
-table 73209576 "Adjustment Deposits"
+table 73209576 "BLRAdjustmentDeposits"
 {
     DataClassification = CustomerContent;
 
     fields
     {
-        field(73209575; "Entry No."; Integer)
+        field(73209575; "BLREntry No."; Integer)
         {
             AutoIncrement = true;
             DataClassification = CustomerContent;
         }
 
-        field(73209576; "Item Description"; Enum "Deposit Type")
+        field(73209576; "BLRItem Description"; Enum "Deposit Type")
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209577; "Transaction Type"; Option)
+        field(73209577; "BLRTransaction Type"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = " ",Refund,Adjustment;
         }
 
-        field(73209578; "Amount"; Decimal)
+        field(73209578; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209579; "Narration"; Text[250])
+        field(73209579; "BLRNarration"; Text[250])
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209580; "Posted"; Boolean)
+        field(73209580; "BLRPosted"; Boolean)
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209581; "Posting Date"; Date)
+        field(73209581; "BLRPosting Date"; Date)
         {
             DataClassification = CustomerContent;
         }
-        field(73209582; "Contract Id"; Integer)
+        field(73209582; "BLRContract Id"; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209583; "Adjusted"; Boolean)
+        field(73209583; "BLRAdjusted"; Boolean)
         {
             DataClassification = CustomerContent;
         }
@@ -52,7 +52,7 @@ table 73209576 "Adjustment Deposits"
 
     keys
     {
-        key(PK; "Entry No.", "Contract Id")
+        key(PK;"BLREntry No.", "BLRContract Id")
         {
             Clustered = true;
         }

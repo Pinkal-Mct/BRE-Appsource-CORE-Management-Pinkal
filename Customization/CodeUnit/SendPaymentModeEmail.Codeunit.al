@@ -1,38 +1,38 @@
 codeunit 73209614 "Send PaymentMode Email"
 {
-    procedure SendEmail(Rec: Record "Payment Mode2"): Text;
+    procedure SendEmail(Rec: Record "BLRPaymentMode2"): Text;
     var
         CompanyInfo: Record "Company Information";
-        PaymentMode: Record "Payment Mode";
+        PaymentMode: Record "BLRPaymentMode";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
         EmailAddress: Text[250];
     begin
-        if Rec."Payment Status" = Rec."Payment Status"::Received then begin
+        if Rec."BLRPayment Status" = Rec."BLRPayment Status"::Received then begin
 
             PaymentMode.Reset();
-            PaymentMode.SetRange("Tenant ID", Rec."Tenant ID");
-            PaymentMode.SetRange("Contract ID", Rec."Contract ID");
+            PaymentMode.SetRange("BLRTenant Id", Rec."BLRTenant Id");
+            PaymentMode.SetRange("BLRContract ID", Rec."BLRContract ID");
             if PaymentMode.FindFirst() then begin
-                EmailAddress := PaymentMode."Tenant Email";
+                EmailAddress := PaymentMode."BLRTenant Email";
                 if EmailAddress = '' then
-                    Error('Email address not found for Tenant ID: %1', Rec."Tenant ID");
+                    Error('Email address not found for Tenant ID: %1', Rec."BLRTenant Id");
             end else
-                Error('Payment Mode record not found for Tenant ID: %1', Rec."Tenant ID");
+                Error('Payment Mode record not found for Tenant ID: %1', Rec."BLRTenant Id");
 
             if CompanyInfo.Get() then begin
                 EmailMessage.Create(EmailAddress,
-                                    'Payment Mode Details - ' + Format(Rec."Contract ID"),
+                                    'Payment Mode Details - ' + Format(Rec."BLRContract ID"),
                                     '<html><body>' +
-                                    '<p>Dear ' + Rec."Tenant Name" + ',</p>' +
+                                    '<p>Dear ' + Rec."BLRTenant Name" + ',</p>' +
                                     '<p>I hope this message finds you well. We confirm the receipt of your payment towards Rent/Charges.</p>' +
                                     '<h3>Details of the Payment:</h3>' +
-                                    '<b>Contract ID:</b> ' + Format(Rec."Contract ID") + '<br/>' +
-                                    '<b>Payment ID:</b> ' + Rec."Payment Series" + '<br/>' +
-                                    '<b>Amount Including VAT:</b> ' + Format(Rec."Amount Including VAT") + '<br/>' +
-                                    '<b>Due Date:</b> ' + Format(Rec."Due Date", 0, '<Day,2>-<Month,2>-<Year4>') + '<br/>' +
-                                    '<b>Payment Mode:</b> ' + Rec."Payment Mode" + '<br/>' +
-                                    '<b>Payment Status:</b> ' + Format(Rec."Payment Status") + '</p>' +
+                                    '<b>Contract ID:</b> ' + Format(Rec."BLRContract ID") + '<br/>' +
+                                    '<b>Payment ID:</b> ' + Rec."BLRPayment Series" + '<br/>' +
+                                    '<b>Amount Including VAT:</b> ' + Format(Rec."BLRAmount Including VAT") + '<br/>' +
+                                    '<b>Due Date:</b> ' + Format(Rec."BLRDue Date", 0, '<Day,2>-<Month,2>-<Year4>') + '<br/>' +
+                                    '<b>Payment Mode:</b> ' + Rec."BLRPayment Mode" + '<br/>' +
+                                    '<b>Payment Status:</b> ' + Format(Rec."BLRPayment Status") + '</p>' +
                                     '<p>Kindly review the information provided and let us know if you have any questions or need further clarification.</p>' +
                                     '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
                                     '</body></html>',
@@ -46,39 +46,39 @@ codeunit 73209614 "Send PaymentMode Email"
         end;
     end;
 
-    procedure SendEmailCancelled(Rec: Record "Payment Mode2"): Text;
+    procedure SendEmailCancelled(Rec: Record "BLRPaymentMode2"): Text;
     var
         CompanyInfo: Record "Company Information";
-        PaymentMode: Record "Payment Mode";
+        PaymentMode: Record "BLRPaymentMode";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
         EmailAddress: Text[250];
     begin
-        if Rec."Payment Status" = Rec."Payment Status"::Cancelled then begin
+        if Rec."BLRPayment Status" = Rec."BLRPayment Status"::Cancelled then begin
             PaymentMode.Reset();
-            PaymentMode.SetRange("Tenant ID", Rec."Tenant ID");
-            PaymentMode.SetRange("Contract ID", Rec."Contract ID");
+            PaymentMode.SetRange("BLRTenant Id", Rec."BLRTenant Id");
+            PaymentMode.SetRange("BLRContract ID", Rec."BLRContract ID");
 
             if PaymentMode.FindFirst() then begin
-                EmailAddress := PaymentMode."Tenant Email";
+                EmailAddress := PaymentMode."BLRTenant Email";
                 if EmailAddress = '' then
-                    Error('Email address not found for Tenant ID: %1', Rec."Tenant ID");
+                    Error('Email address not found for Tenant ID: %1', Rec."BLRTenant Id");
             end else
-                Error('Payment Mode record not found for Tenant ID: %1', Rec."Tenant ID");
+                Error('Payment Mode record not found for Tenant ID: %1', Rec."BLRTenant Id");
 
             if CompanyInfo.Get() then begin
                 EmailMessage.Create(EmailAddress,
-                                    'Payment Mode Details - ' + Format(Rec."Contract ID"),
+                                    'Payment Mode Details - ' + Format(Rec."BLRContract ID"),
                                     '<html><body>' +
-                                    '<p>Dear ' + Rec."Tenant Name" + ',</p>' +
+                                    '<p>Dear ' + Rec."BLRTenant Name" + ',</p>' +
                                     '<p>I hope this message finds you well. This is to inform you that your payment towards Rent/Charges is Cancelled.</p>' +
                                     '<h3>Details of the Payment:</h3>' +
-                                    '<b>Contract ID:</b> ' + Format(Rec."Contract ID") + '<br/>' +
-                                    '<b>Payment ID:</b> ' + Rec."Payment Series" + '<br/>' +
-                                    '<b>Amount Including VAT:</b> ' + Format(Rec."Amount Including VAT") + '<br/>' +
-                                    '<b>Due Date:</b> ' + Format(Rec."Due Date", 0, '<Day,2>-<Month,2>-<Year4>') + '<br/>' +
-                                    '<b>Payment Mode:</b> ' + Rec."Payment Mode" + '<br/>' +
-                                    '<b>Payment Status:</b> ' + Format(Rec."Payment Status") + '</p>' +
+                                    '<b>Contract ID:</b> ' + Format(Rec."BLRContract ID") + '<br/>' +
+                                    '<b>Payment ID:</b> ' + Rec."BLRPayment Series" + '<br/>' +
+                                    '<b>Amount Including VAT:</b> ' + Format(Rec."BLRAmount Including VAT") + '<br/>' +
+                                    '<b>Due Date:</b> ' + Format(Rec."BLRDue Date", 0, '<Day,2>-<Month,2>-<Year4>') + '<br/>' +
+                                    '<b>Payment Mode:</b> ' + Rec."BLRPayment Mode" + '<br/>' +
+                                    '<b>Payment Status:</b> ' + Format(Rec."BLRPayment Status") + '</p>' +
                                     '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
                                     '</body></html>',
                                     true);
@@ -91,39 +91,39 @@ codeunit 73209614 "Send PaymentMode Email"
         end;
     end;
 
-    procedure SendEmailOverdue(Rec: Record "Payment Mode2"): Text;
+    procedure SendEmailOverdue(Rec: Record "BLRPaymentMode2"): Text;
     var
         CompanyInfo: Record "Company Information";
-        PaymentMode: Record "Payment Mode";
+        PaymentMode: Record "BLRPaymentMode";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
         EmailAddress: Text[250];
     begin
-        if Rec."Payment Status" = Rec."Payment Status"::Overdue then begin
+        if Rec."BLRPayment Status" = Rec."BLRPayment Status"::Overdue then begin
             PaymentMode.Reset();
-            PaymentMode.SetRange("Tenant ID", Rec."Tenant ID");
-            PaymentMode.SetRange("Contract ID", Rec."Contract ID");
+            PaymentMode.SetRange("BLRTenant Id", Rec."BLRTenant Id");
+            PaymentMode.SetRange("BLRContract ID", Rec."BLRContract ID");
 
             if PaymentMode.FindFirst() then begin
-                EmailAddress := PaymentMode."Tenant Email";
+                EmailAddress := PaymentMode."BLRTenant Email";
                 if EmailAddress = '' then
-                    Error('Email address not found for Tenant ID: %1', Rec."Tenant ID");
+                    Error('Email address not found for Tenant ID: %1', Rec."BLRTenant Id");
             end else
-                Error('Payment Mode record not found for Tenant ID: %1', Rec."Tenant ID");
+                Error('Payment Mode record not found for Tenant ID: %1', Rec."BLRTenant Id");
 
             if CompanyInfo.Get() then begin
                 EmailMessage.Create(EmailAddress,
-                                    'Payment Mode Details - ' + Format(Rec."Contract ID"),
+                                    'Payment Mode Details - ' + Format(Rec."BLRContract ID"),
                                     '<html><body>' +
-                                    '<p>Dear ' + Rec."Tenant Name" + ',</p>' +
+                                    '<p>Dear ' + Rec."BLRTenant Name" + ',</p>' +
                                     '<p>I hope this message finds you well. This is a kind reminder that your payment for (Rent/Charges) is Overdue.</p>' +
                                     '<h3>Details of the Payment:</h3>' +
-                                    '<b>Contract ID:</b> ' + Format(Rec."Contract ID") + '<br/>' +
-                                    '<b>Payment ID:</b> ' + Rec."Payment Series" + '<br/>' +
-                                    '<b>Amount Including VAT:</b> ' + Format(Rec."Amount Including VAT") + '<br/>' +
-                                    '<b>Due Date:</b> ' + Format(Rec."Due Date", 0, '<Day,2>-<Month,2>-<Year4>') + '<br/>' +
-                                    '<b>Payment Mode:</b> ' + Rec."Payment Mode" + '<br/>' +
-                                    '<b>Payment Status:</b> ' + Format(Rec."Payment Status") + '</p>' +
+                                    '<b>Contract ID:</b> ' + Format(Rec."BLRContract ID") + '<br/>' +
+                                    '<b>Payment ID:</b> ' + Rec."BLRPayment Series" + '<br/>' +
+                                    '<b>Amount Including VAT:</b> ' + Format(Rec."BLRAmount Including VAT") + '<br/>' +
+                                    '<b>Due Date:</b> ' + Format(Rec."BLRDue Date", 0, '<Day,2>-<Month,2>-<Year4>') + '<br/>' +
+                                    '<b>Payment Mode:</b> ' + Rec."BLRPayment Mode" + '<br/>' +
+                                    '<b>Payment Status:</b> ' + Format(Rec."BLRPayment Status") + '</p>' +
                                     '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
                                     '</body></html>',
                                     true);

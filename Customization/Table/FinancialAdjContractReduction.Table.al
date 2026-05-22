@@ -1,39 +1,39 @@
-table 73209624 "FinancialAdjContractReduction"
+table 73209624 "BLRFinAdjContractReduction"
 {
     DataClassification = CustomerContent;
     fields
     {
 
-        field(73209575; "Entry No."; Integer)
+        field(73209575; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
         }
-        field(73209576; "Contract No."; Integer)
+        field(73209576; "BLRContract No."; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209577; "Revenue Description"; Text[100])
+        field(73209577; "BLRRevenue Description"; Text[100])
         {
             DataClassification = CustomerContent;
-            TableRelation = Item WHERE("Item type template" = const("Item Type Template Enum"::"Secondary Item"));
+            TableRelation = Item WHERE("BLRItem type template" = const("Item Type Template Enum"::"Secondary Item"));
             trigger OnValidate()
             var
                 SecondaryItemRec: Record "Item";
             begin
                 // Check if a record with the selected Secondary Item Type exists
-                SecondaryItemRec.SetRange("No.", Rec."Revenue Description");
+                SecondaryItemRec.SetRange("No.", Rec."BLRRevenue Description");
                 if SecondaryItemRec.FindFirst() then begin
-                    "Revenue Description" := SecondaryItemRec.Description;
-                    // Retrieve the VAT % from the Secondary Item record
-                    "VAT %" := SecondaryItemRec."VAT %";
+                    "BLRRevenue Description" := SecondaryItemRec.Description;
+                    // Retrieve the "BLRVAT %" from the Secondary Item record
+                    "BLRVAT %" := SecondaryItemRec."BLRVAT %";
                 end else
-                    // Clear the VAT % field if no matching record is found
-                    "VAT %" := 0;
+                    // Clear the "BLRVAT %" field if no matching record is found
+                    "BLRVAT %" := 0;
             end;
 
         }
-        field(73209578; Amount; Decimal)
+        field(73209578; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             DecimalPlaces = 0 : 2;
@@ -42,7 +42,7 @@ table 73209624 "FinancialAdjContractReduction"
                 CalcVATAndTotal();
             end;
         }
-        field(73209579; "VAT %"; Option)
+        field(73209579; "BLRVAT %"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = "0%","5%";
@@ -53,33 +53,33 @@ table 73209624 "FinancialAdjContractReduction"
                 CalcVATAndTotal();
             end;
         }
-        field(73209580; "Amount Incl. VAT"; Decimal)
+        field(73209580; "BLRAmount Incl. VAT"; Decimal)
         {
             DataClassification = CustomerContent;
             DecimalPlaces = 0 : 2;
         }
-        field(73209581; "Description"; Text[100])
+        field(73209581; "BLRDescription"; Text[100])
         {
             DataClassification = CustomerContent;
         }
-        field(73209582; Total; Decimal)
+        field(73209582; "BLRTotal"; Decimal)
         {
             FieldClass = FlowField;
             DecimalPlaces = 0 : 2;
-            CalcFormula = sum(FinancialAdjContractReduction."Amount" where("Contract No." = field("Contract No.")));
+            CalcFormula = sum("BLRFinAdjContractReduction"."BLRAmount" where("BLRContract No." = field("BLRContract No.")));
         }
-        field(73209583; "Total VAT"; Decimal)
+        field(73209583; "BLRTotal VAT"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = sum(FinancialAdjContractReduction."VAT Amount" where("Contract No." = field("Contract No.")));
+            CalcFormula = sum("BLRFinAdjContractReduction"."BLRVAT Amount" where("BLRContract No." = field("BLRContract No.")));
         }
-        field(73209584; "Total Amount Incl.VAT"; Decimal)
+        field(73209584; "BLRTotal Amount Incl.VAT"; Decimal)
         {
             FieldClass = FlowField;
             DecimalPlaces = 0 : 2;
-            CalcFormula = sum(FinancialAdjContractReduction."Amount Incl. VAT" where("Contract No." = field("Contract No.")));
+            CalcFormula = sum("BLRFinAdjContractReduction"."BLRAmount Incl. VAT" where("BLRContract No." = field("BLRContract No.")));
         }
-        field(73209585; "VAT Amount"; Decimal)
+        field(73209585; "BLRVAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'VAT Amount';
@@ -89,74 +89,74 @@ table 73209624 "FinancialAdjContractReduction"
             var
                 vatPer: Integer;
             begin
-                if "VAT %" = "VAT %"::"5%" then
+                if "BLRVAT %" = "BLRVAT %"::"5%" then
                     vatPer := 5
                 else
                     vatPer := 0;
 
-                "VAT Amount" := Amount * (vatPer / 100);
+                "BLRVAT Amount" := "BLRAmount" * (vatPer / 100);
             end;
         }
-        field(73209586; "Credit Note ID"; Code[50])
+        field(73209586; "BLRCredit Note ID"; Code[50])
         {
             DataClassification = CustomerContent;
         }
     }
     keys
     {
-        key(Key1; "Entry No.", "Contract No.")
+        key(Key1; "BLREntry No.", "BLRContract No.")
         {
             Clustered = true;
         }
     }
     local procedure CalcVATAndTotal()
     var
-        InvoiceCreditNoteSummaryRec: Record "InvoiceCreditNoteSummary";
-        finalCalculation: Record "Final Calculation";
+        InvoiceCreditNoteSummaryRec: Record "BLRInvoiceCreditNoteSummary";
+        finalCalculation: Record "BLRFinalCalculation";
         vatPer: Integer;
     begin
-        if "VAT %" = "VAT %"::"5%" then
+        if "BLRVAT %" = "BLRVAT %"::"5%" then
             vatPer := 5
         else
             vatPer := 0;
 
-        "VAT Amount" := Amount * (vatPer / 100);
-        "Amount Incl. VAT" := Amount + "VAT Amount";
+        "BLRVAT Amount" := "BLRAmount" * (vatPer / 100);
+        "BLRAmount Incl. VAT" := "BLRAmount" + "BLRVAT Amount";
         Rec.Modify();
 
         InvoiceCreditNoteSummaryRec.CalculateInvoiceCreditNoteSummary(Rec);
 
-        finalCalculation.SetRange("Contract ID", Rec."Contract No.");
+        finalCalculation.SetRange("BLRContract ID", Rec."BLRContract No.");
         if finalCalculation.FindFirst() then
             finalCalculation.CalculateFinalSummary(finalCalculation);
     end;
 
     trigger OnDelete()
     var
-        finalcalculationRec: Record "Final Calculation";
-        InvoiceCreditNoteSummaryRec: Record "InvoiceCreditNoteSummary";
+        finalcalculationRec: Record "BLRFinalCalculation";
+        InvoiceCreditNoteSummaryRec: Record "BLRInvoiceCreditNoteSummary";
     begin
-        finalcalculationRec.SetRange("Contract ID", Rec."Contract No.");
+        finalcalculationRec.SetRange("BLRContract ID", Rec."BLRContract No.");
         if finalcalculationRec.FindFirst() then begin
-            finalcalculationRec."Total Claim" -= Rec."Amount Incl. VAT";
-            finalcalculationRec."Summery Net Balance" := finalcalculationRec."Total Claim" - finalcalculationRec."Total Refund";
+            finalcalculationRec."BLRTotal Claim" -= Rec."BLRAmount Incl. VAT";
+            finalcalculationRec."BLRSummery Net Balance" := finalcalculationRec."BLRTotal Claim" - finalcalculationRec."BLRTotal Refund";
 
-            finalcalculationRec."Amount Refundable" := 0;
-            finalcalculationRec."Net Receivable From The Tenant" := 0;
-            if finalcalculationRec."Summery Net Balance" < 0 then begin
-                finalcalculationRec."Amount Refundable" := Abs(finalcalculationRec."Summery Net Balance");
-                finalcalculationRec."Net Receivable From The Tenant" := 0;
+            finalcalculationRec."BLRAmount Refundable" := 0;
+            finalcalculationRec."BLRNetRecvFromTheTenant" := 0;
+            if finalcalculationRec."BLRSummery Net Balance" < 0 then begin
+                finalcalculationRec."BLRAmount Refundable" := Abs(finalcalculationRec."BLRSummery Net Balance");
+                finalcalculationRec."BLRNetRecvFromTheTenant" := 0;
             end
             else
-                finalcalculationRec."Net Receivable From The Tenant" := finalcalculationRec."Summery Net Balance";
+                finalcalculationRec."BLRNetRecvFromTheTenant" := finalcalculationRec."BLRSummery Net Balance";
 
             finalcalculationRec.Modify();
 
         end;
 
-        InvoiceCreditNoteSummaryRec.SetRange("Contract No.", Rec."Contract No.");
-        InvoiceCreditNoteSummaryRec.SetRange("Description", 'Finanacial Adjustments / Contract Reductions');
-        InvoiceCreditNoteSummaryRec.SetRange("Revenue Description", Rec."Revenue Description");
+        InvoiceCreditNoteSummaryRec.SetRange("BLRContract No.", Rec."BLRContract No.");
+        InvoiceCreditNoteSummaryRec.SetRange("BLRDescription", 'Finanacial Adjustments / Contract Reductions');
+        InvoiceCreditNoteSummaryRec.SetRange("BLRRevenue Description", Rec."BLRRevenue Description");
         if InvoiceCreditNoteSummaryRec.FindFirst() then
             InvoiceCreditNoteSummaryRec.Delete();
     end;

@@ -2,12 +2,12 @@ codeunit 73209603 "Revenue Allocation Posting"
 {
     Subtype = Normal;
 
-    procedure PostRevenueAllocation(RevenueAllocationRec: Record "Revenue Allocation Details"; preview: Boolean; LastDateOfMonth: Date)
+    procedure PostRevenueAllocation(RevenueAllocationRec: Record "BLRRevenueAllocationDetails"; preview: Boolean; LastDateOfMonth: Date)
     var
-        RevenueAllocationGrid: Record "Revenue Allocation SubGrid";
-        COASetup: Record "COA Setup";
-        COASetupLine: Record "COA Setup Line";
-        OtherChargesAllocationGrid: Record "Revenue Recognition Details";
+        RevenueAllocationGrid: Record "BLRRevenueAllocationSubGrid";
+        COASetup: Record "BLRCOASetup";
+        COASetupLine: Record "BLRCOASetupLine";
+        OtherChargesAllocationGrid: Record "BLRRevenueRecognitionDetails";
         GenJournalLineRec: Record "Gen. Journal Line";
         GenJnlPost: Codeunit "Gen. Jnl.-Post";
         LineNumber: Integer;
@@ -18,10 +18,10 @@ codeunit 73209603 "Revenue Allocation Posting"
 
         COASetup.Get();
 
-        if COASetup."Commercial Unearned Rent" = '' then
+        if COASetup."BLRCommercial Unearned Rent" = '' then
             ErrorMessage := 'Commercial Unearned Rent account is not setup. Please setup and try again.' + '\n';
 
-        if COASetup."Residential Unearned Rent" = '' then
+        if COASetup."BLRResidential Unearned Rent" = '' then
             ErrorMessage := ErrorMessage + 'Residential Unearned Rent account is not setup. Please setup and try again.' + '\n';
 
         if ErrorMessage <> '' then
@@ -41,8 +41,8 @@ codeunit 73209603 "Revenue Allocation Posting"
 
         // Loop through the Revenue Allocation records
 
-        RevenueAllocationGrid.SetRange("Header No.", RevenueAllocationRec."No.");
-        RevenueAllocationGrid.SetFilter("Total Value", '<>0');
+        RevenueAllocationGrid.SetRange("BLRHeader No.", RevenueAllocationRec."BLRNo.");
+        RevenueAllocationGrid.SetFilter("BLRTotal Value", '<>0');
         if RevenueAllocationGrid.FindSet() then begin
             LineNumber := 0;
             repeat
@@ -53,21 +53,21 @@ codeunit 73209603 "Revenue Allocation Posting"
                 GenJournalLineRec."Journal Batch Name" := 'DEFAULT';
                 GenJournalLineRec."Line No." := LineNumber;
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::"G/L Account";
-                GenJournalLineRec."Document No." := RevenueAllocationGrid.Description;
+                GenJournalLineRec."Document No." := RevenueAllocationGrid."BLRDescription";
                 GenJournalLineRec."Posting Date" := LastDateOfMonth;
-                GenJournalLineRec."Contract ID" := RevenueAllocationGrid."Contract ID";
-                GenJournalLineRec.Description := 'Rent - ' + RevenueAllocationGrid."Posting Period";
-                // GenJournalLineRec.Amount := RevenueAllocationGrid."Total Value";
-                GenJournalLineRec.Validate(Amount, RevenueAllocationGrid."Total Value");
+                GenJournalLineRec."BLRContract ID" := RevenueAllocationGrid."BLRContract Id";
+                GenJournalLineRec.Description := 'Rent - ' + RevenueAllocationGrid."BLRPosting Period";
+                // GenJournalLineRec.Amount := RevenueAllocationGrid."BLRTotal Value";
+                GenJournalLineRec.Validate(Amount, RevenueAllocationGrid."BLRTotal Value");
                 GenJournalLineRec."Bal. Account Type" := GenJournalLineRec."Bal. Account Type"::"G/L Account";
-                if (RevenueAllocationGrid."Unit Type" = 'COMMERCIAL') or (RevenueAllocationGrid."Unit Type" = 'Commercial') then begin
-                    GenJournalLineRec."Account No." := COASetup."Commercial Unearned Rent";
-                    GenJournalLineRec."Bal. Account No." := COASetup."Commercial Rent";
+                if (RevenueAllocationGrid."BLRUnit Type" = 'COMMERCIAL') or (RevenueAllocationGrid."BLRUnit Type" = 'Commercial') then begin
+                    GenJournalLineRec."Account No." := COASetup."BLRCommercial Unearned Rent";
+                    GenJournalLineRec."Bal. Account No." := COASetup."BLRCommercial Rent";
                 end
                 else
-                    if (RevenueAllocationGrid."Unit Type" = 'RESIDENTIAL') or (RevenueAllocationGrid."Unit Type" = 'Residential') then begin
-                        GenJournalLineRec."Account No." := COASetup."Residential Unearned Rent";
-                        GenJournalLineRec."Bal. Account No." := COASetup."Residential Rent";
+                    if (RevenueAllocationGrid."BLRUnit Type" = 'RESIDENTIAL') or (RevenueAllocationGrid."BLRUnit Type" = 'Residential') then begin
+                        GenJournalLineRec."Account No." := COASetup."BLRResidential Unearned Rent";
+                        GenJournalLineRec."Bal. Account No." := COASetup."BLRResidential Rent";
                     end;
 
                 GenJournalLineRec.Insert();
@@ -78,13 +78,13 @@ codeunit 73209603 "Revenue Allocation Posting"
         else
             Error('No Revenue Allocation records found to post.');
 
-        OtherChargesAllocationGrid.SetRange("RR_No.", RevenueAllocationRec."No.");
-        OtherChargesAllocationGrid.SetFilter("Total Value", '<>0');
+        OtherChargesAllocationGrid.SetRange("BLRRR_No.", RevenueAllocationRec."BLRNo.");
+        OtherChargesAllocationGrid.SetFilter("BLRTotal Value", '<>0');
 
         if OtherChargesAllocationGrid.FindSet() then begin
             LineNumber := GenJournalLineRec."Line No." + 10000;
             repeat
-                COASetupLine.SetRange("Secondary Item", OtherChargesAllocationGrid."Item Type");
+                COASetupLine.SetRange("BLRSecondary Item", OtherChargesAllocationGrid."BLRItem Type");
                 COASetupLine.FindFirst();
 
                 LineNumber := GenJournalLineRec."Line No." + 10000;
@@ -93,21 +93,21 @@ codeunit 73209603 "Revenue Allocation Posting"
                 GenJournalLineRec."Journal Batch Name" := 'DEFAULT';
                 GenJournalLineRec."Line No." := LineNumber;
                 GenJournalLineRec."Account Type" := GenJournalLineRec."Account Type"::"G/L Account";
-                GenJournalLineRec."Document No." := OtherChargesAllocationGrid.Description;
+                GenJournalLineRec."Document No." := OtherChargesAllocationGrid."BLRDescription";
                 GenJournalLineRec."Posting Date" := LastDateOfMonth;
-                GenJournalLineRec."Contract ID" := OtherChargesAllocationGrid."Contract ID";
-                GenJournalLineRec.Description := OtherChargesAllocationGrid."Item Type" + ' - ' + OtherChargesAllocationGrid."Posting Period";
+                GenJournalLineRec."BLRContract ID" := OtherChargesAllocationGrid."BLRContract Id";
+                GenJournalLineRec.Description := OtherChargesAllocationGrid."BLRItem Type" + ' - ' + OtherChargesAllocationGrid."BLRPosting Period";
                 // GenJournalLineRec.Amount := OtherChargesAllocationGrid.Amount;
-                GenJournalLineRec.Validate(Amount, OtherChargesAllocationGrid."Total Value");
+                GenJournalLineRec.Validate(Amount, OtherChargesAllocationGrid."BLRTotal Value");
                 GenJournalLineRec."Bal. Account Type" := GenJournalLineRec."Bal. Account Type"::"G/L Account";
-                if (OtherChargesAllocationGrid."Unit Type" = 'COMMERCIAL') or (OtherChargesAllocationGrid."Unit Type" = 'Commercial') then begin
-                    GenJournalLineRec."Account No." := COASetupLine."Commercial-Unearned";
-                    GenJournalLineRec."Bal. Account No." := COASetupLine.Commercial;
+                if (OtherChargesAllocationGrid."BLRUnit Type" = 'COMMERCIAL') or (OtherChargesAllocationGrid."BLRUnit Type" = 'Commercial') then begin
+                    GenJournalLineRec."Account No." := COASetupLine."BLRCommercial-Unearned";
+                    GenJournalLineRec."Bal. Account No." := COASetupLine."BLRCommercial";
                 end
                 else
-                    if (OtherChargesAllocationGrid."Unit Type" = 'RESIDENTIAL') or (OtherChargesAllocationGrid."Unit Type" = 'Residential') then begin
-                        GenJournalLineRec."Account No." := COASetupLine."Residential-Unearned";
-                        GenJournalLineRec."Bal. Account No." := COASetupLine.Residential;
+                    if (OtherChargesAllocationGrid."BLRUnit Type" = 'RESIDENTIAL') or (OtherChargesAllocationGrid."BLRUnit Type" = 'Residential') then begin
+                        GenJournalLineRec."Account No." := COASetupLine."BLRResidential-Unearned";
+                        GenJournalLineRec."Bal. Account No." := COASetupLine."BLRResidential";
 
                     end;
 

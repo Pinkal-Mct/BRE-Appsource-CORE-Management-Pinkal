@@ -1,16 +1,16 @@
-table 73209652 "Payment Type"
+table 73209652 "BLRPaymentType"
 {
     DataClassification = SystemMetadata;
-    DataCaptionFields = "Payment ID";
+    DataCaptionFields = "BLRPayment ID";
     fields
     {
-        field(73209575; "Payment ID"; Integer)
+        field(73209575; "BLRPayment ID"; Integer)
         {
             DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
-        field(73209576; "Payment Method"; Text[100])
+        field(73209576; "BLRPayment Method"; Text[100])
         {
             DataClassification = SystemMetadata;
             Caption = 'Payment Method';
@@ -18,14 +18,14 @@ table 73209652 "Payment Type"
     }
     keys
     {
-        key(PK; "Payment ID", "Payment Method")
+        key(PK;"BLRPayment ID", "BLRPayment Method")
         {
             Clustered = true;
         }
     }
     fieldgroups
     {
-        fieldgroup(DropDown; "Payment ID", "Payment Method")
+        fieldgroup(DropDown;"BLRPayment ID", "BLRPayment Method")
         {
         }
     }

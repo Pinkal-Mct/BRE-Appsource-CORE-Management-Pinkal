@@ -1,7 +1,7 @@
 page 73209653 "Primary Classification List"
 {
     PageType = List;
-    SourceTable = "Primary Classification";
+    SourceTable = "BLRPrimaryClassification";
     ApplicationArea = All;
     Caption = 'Primary Classification List';
     UsageCategory = Lists;
@@ -13,13 +13,13 @@ page 73209653 "Primary Classification List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'Unique identifier for the primary classification.';
                 }
-                field("Classification Name"; Rec."Classification Name")
+                field("Classification Name"; Rec."BLRClassification Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Classification Name';

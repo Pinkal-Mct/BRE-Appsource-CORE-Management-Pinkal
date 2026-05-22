@@ -1,26 +1,26 @@
 codeunit 73209598 "Property Manager Approval"
 {
-    procedure UpdateContractStatus(var Rec: Record "Tenancy Contract"; NewStatus: Option)
+    procedure UpdateContractStatus(var Rec: Record "BLRTenancyContract"; NewStatus: Option)
     var
-        xRec: Record "Tenancy Contract";
+        xRec: Record "BLRTenancyContract";
     begin
         xRec := Rec;
-        if Rec."Update Contract Status" <> NewStatus then begin
-            Rec."Update Contract Status" := NewStatus;
+        if Rec."BLRUpdate Contract Status" <> NewStatus then begin
+            Rec."BLRUpdate Contract Status" := NewStatus;
             Rec.Modify(true);
         end;
     end;
 
-    [EventSubscriber(ObjectType::Table, Database::"Tenancy Contract", 'OnAfterModifyEvent', '', false, false)]
-    local procedure OnAfterModifyTenancyContract(var Rec: Record "Tenancy Contract"; xRec: Record "Tenancy Contract"; RunTrigger: Boolean)
+    [EventSubscriber(ObjectType::Table, Database::"BLRTenancyContract", 'OnAfterModifyEvent', '', false, false)]
+    local procedure OnAfterModifyTenancyContract(var Rec: Record "BLRTenancyContract"; xRec: Record "BLRTenancyContract"; RunTrigger: Boolean)
     begin
-        if Rec."Update Contract Status" <> xRec."Update Contract Status" then
+        if Rec."BLRUpdate Contract Status" <> xRec."BLRUpdate Contract Status" then
             HandleContractStatusUpdate(Rec);
     end;
 
-    procedure HandleContractStatusUpdate(Rec: Record "Tenancy Contract")
+    procedure HandleContractStatusUpdate(Rec: Record "BLRTenancyContract")
     var
-        ApprovalStatusList: Record "Approval Contract Status";
+        ApprovalStatusList: Record "BLRApprovalContractStatus";
         UserPersonalizationRec: Record "User Personalization";
         UserRec: Record User;
         CompanyInfo: Record "Company Information";
@@ -32,13 +32,13 @@ codeunit 73209598 "Property Manager Approval"
         EmailSubject: Text;
         StatusText: Text;
     begin
-        StatusText := GetTenancyStatusFromUpdateStatus(Format(Rec."Update Contract Status"));
+        StatusText := GetTenancyStatusFromUpdateStatus(Format(Rec."BLRUpdate Contract Status"));
         ApprovalStatusList.Init();
-        ApprovalStatusList."Contract ID" := Rec."Contract ID";
-        ApprovalStatusList.Status := 'Pending';
-        ApprovalStatusList."Renewal Contract ID" := 0;
-        ApprovalStatusList."Lease ID" := Rec."Created By";
-        ApprovalStatusList."Tenancy Contract Status" := CopyStr(StatusText, 1, StrLen(StatusText));
+        ApprovalStatusList."BLRContract ID" := Rec."BLRContract ID";
+        ApprovalStatusList."BLRStatus" := 'Pending';
+        ApprovalStatusList."BLRRenewal Contract ID" := 0;
+        ApprovalStatusList."BLRLease ID" := Rec."BLRCreated By";
+        ApprovalStatusList."BLRTenancy Contract Status" := CopyStr(StatusText, 1, StrLen(StatusText));
         ApprovalStatusList.Insert();
         LeaseManagerName := '';
         UserPersonalizationRec.SetRange("Profile ID", 'PROPERTY MANAGER');
@@ -58,21 +58,21 @@ codeunit 73209598 "Property Manager Approval"
         if CompanyInfo.Get() then begin
             case StatusText of
                 'Activation':
-                    EmailSubject := 'Review Approval Contract Status For Activation - Contract ID - ' + Format(Rec."Contract ID");
+                    EmailSubject := 'Review Approval Contract Status For Activation - Contract ID - ' + Format(Rec."BLRContract ID");
                 'Termination':
-                    EmailSubject := 'Review Approval Contract Status For Termination - Contract ID - ' + Format(Rec."Contract ID");
+                    EmailSubject := 'Review Approval Contract Status For Termination - Contract ID - ' + Format(Rec."BLRContract ID");
                 'Suspension':
-                    EmailSubject := 'Review Approval Contract Status For Suspension - Contract ID - ' + Format(Rec."Contract ID");
+                    EmailSubject := 'Review Approval Contract Status For Suspension - Contract ID - ' + Format(Rec."BLRContract ID");
                 'Suspended-Unit Released':
-                    EmailSubject := 'Review Approval Contract Status For Suspension - Contract ID - ' + Format(Rec."Contract ID");
+                    EmailSubject := 'Review Approval Contract Status For Suspension - Contract ID - ' + Format(Rec."BLRContract ID");
                 else
-                    EmailSubject := 'Review Approval Contract Status - Contract ID - ' + Format(Rec."Contract ID");
+                    EmailSubject := 'Review Approval Contract Status - Contract ID - ' + Format(Rec."BLRContract ID");
             end;
             EmailBody :=
                 '<html><body>' +
                 '<p>Dear Property Manager,</p>' +
                 '<p>This is an automated notification from the system.</p>' +
-                '<p>A recent update has been made to the tenancy contract with <b>Contract ID: ' + Format(Rec."Contract ID") + '</b>.</p>' +
+                '<p>A recent update has been made to the tenancy contract with <b>Contract ID: ' + Format(Rec."BLRContract ID") + '</b>.</p>' +
                 '<p>Please review the <b>Approval Contract Status List</b> and take the necessary action as required.</p>' +
                 '<p>To proceed, please log in to the system and review the pending status under the <b>Approval Contract Status List</b> section.</p>' +
                 '<p>This is a system-generated email. Please do not reply to this message.</p>' +

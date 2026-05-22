@@ -1,64 +1,64 @@
-table 73209577 "Adjustment Security Deposit"
+table 73209577 "BLRAdjustmentSecurityDeposit"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = ID;
+    DataCaptionFields = "BLRID";
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
             Editable = false;
         }
-        field(73209576; "Contract ID"; Integer)
+        field(73209576; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
-            TableRelation = "Tenancy Contract"."Contract ID";
+            TableRelation = "BLRTenancyContract"."BLRContract ID";
             trigger OnValidate()
             var
-                ContractRec: Record "Tenancy Contract";
-                AdjustSecurityDeposit: Record "Adjustment Security Deposit";
+                ContractRec: Record "BLRTenancyContract";
+                AdjustSecurityDeposit: Record "BLRAdjustmentSecurityDeposit";
             begin
                 AdjustSecurityDeposit.Reset();
-                AdjustSecurityDeposit.SetRange("Contract ID", Rec."Contract ID");
+                AdjustSecurityDeposit.SetRange("BLRContract ID", Rec."BLRContract ID");
                 if not AdjustSecurityDeposit.IsEmpty() then
-                    Error('This Contract ID %1 is already used in another record.', Rec."Contract ID");
-                ContractRec.SetRange("Contract ID", "Contract ID");
+                    Error('This "BLRContract ID" %1 is already used in another record.', Rec."BLRContract ID");
+                ContractRec.SetRange("BLRContract ID", "BLRContract ID");
                 if ContractRec.Get() then begin
-                    Rec."Main Security Deposit" := ContractRec."Security Deposit Amount";
-                    Rec."Security Deposit" := ContractRec."Security Balanced Amount";
-                    Rec."Contract Start Date" := ContractRec."Contract Start Date";
-                    Rec."Contract End Date" := ContractRec."Contract End Date";
+                    Rec."BLRMain Security Deposit" := ContractRec."BLRSecurity Deposit Amount";
+                    Rec."BLRSecurity Deposit" := ContractRec."BLRSecurity Balanced Amount";
+                    Rec."BLRContract Start Date" := ContractRec."BLRContract Start Date";
+                    Rec."BLRContract End Date" := ContractRec."BLRContract End Date";
                 end;
             end;
         }
-        field(73209577; "Security Deposit"; Decimal)
+        field(73209577; "BLRSecurity Deposit"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Security Deposit';
             Editable = false;
         }
-        field(73209578; "Contract Start Date"; Date)
+        field(73209578; "BLRContract Start Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Start Date';
             Editable = false;
         }
-        field(73209579; "Contract End Date"; Date)
+        field(73209579; "BLRContract End Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract End Date';
             Editable = false;
         }
-        field(73209580; "Status"; Option)
+        field(73209580; "BLRStatus"; Option)
         {
             DataClassification = CustomerContent;
             OptionCaption = 'Pending,Approved';
             OptionMembers = Pending,Approved;
             Editable = false;
         }
-        field(73209581; "Security Amount Status"; Option)
+        field(73209581; "BLRSecurity Amount Status"; Option)
         {
             DataClassification = CustomerContent;
             OptionCaption = 'Termination Charges';
@@ -66,58 +66,58 @@ table 73209577 "Adjustment Security Deposit"
             Editable = false;
             trigger OnValidate()
             var
-                TermChargesGrid: Record "Additional Charges Sub";
+                TermChargesGrid: Record "BLRAdditionalChargesSub";
                 TotalAmount: Decimal;
                 TotalVATAmount: Decimal;
                 TotalAmountInclVAT: Decimal;
             begin
-                if Rec."Security Amount Status" = Rec."Security Amount Status"::"Termination Charges" then begin
-                    if Rec."Contract ID" = 0 then
-                        Error('Please select a Contract ID first');
+                if Rec."BLRSecurity Amount Status" = Rec."BLRSecurity Amount Status"::"Termination Charges" then begin
+                    if Rec."BLRContract ID" = 0 then
+                        Error('Please select a "BLRContract ID" first');
                     Clear(TotalAmount);
                     Clear(TotalVATAmount);
                     Clear(TotalAmountInclVAT);
                     TermChargesGrid.Reset();
-                    TermChargesGrid.SetRange("Contract ID", Rec."Contract ID");
+                    TermChargesGrid.SetRange("BLRContract ID", Rec."BLRContract ID");
                     if TermChargesGrid.FindSet() then begin
                         repeat
-                            TotalAmount += TermChargesGrid.Amount;
-                            TotalVATAmount += TermChargesGrid."VAT Amount";
-                            TotalAmountInclVAT += TermChargesGrid."Amount Including VAT";
+                            TotalAmount += TermChargesGrid."BLRAmount";
+                            TotalVATAmount += TermChargesGrid."BLRVAT Amount";
+                            TotalAmountInclVAT += TermChargesGrid."BLRAmount Including VAT";
                         until TermChargesGrid.Next() = 0;
-                        Rec.Amount := TotalAmount;
-                        Rec."VAT Amount" := TotalVATAmount;
-                        Rec."Amount Including VAT" := TotalAmountInclVAT;
+                        Rec."BLRAmount" := TotalAmount;
+                        Rec."BLRVAT Amount" := TotalVATAmount;
+                        Rec."BLRAmount Including VAT" := TotalAmountInclVAT;
                     end;
                 end;
             end;
         }
-        field(73209582; "Payment Series"; Text[250])
+        field(73209582; "BLRPayment Series"; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'Payment Series';
         }
-        field(73209583; "Amount"; Decimal)
+        field(73209583; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Amount';
         }
-        field(73209584; "VAT Amount"; Decimal)
+        field(73209584; "BLRVAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'VAT Amount';
         }
-        field(73209585; "Amount Including VAT"; Decimal)
+        field(73209585; "BLRAmount Including VAT"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
         }
-        field(73209586; "Due Date"; Date)
+        field(73209586; "BLRDue Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Due Date';
         }
-        field(73209587; "Main Security Deposit"; Decimal)
+        field(73209587; "BLRMain Security Deposit"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Main Security Deposit';
@@ -126,7 +126,7 @@ table 73209577 "Adjustment Security Deposit"
     }
     keys
     {
-        key(PK; "ID")
+        key(PK;"BLRID")
         {
             Clustered = true;
         }

@@ -1,7 +1,7 @@
 page 73209654 "Primary Item List"
 {
     PageType = List;
-    SourceTable = "Primary Item";
+    SourceTable = "BLRPrimaryItem";
     ApplicationArea = All;
     Caption = 'Primary Item List';
     UsageCategory = Lists;
@@ -13,13 +13,13 @@ page 73209654 "Primary Item List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'Specifies the unique identifier for the primary item.';
                 }
-                field("Primary Item Type"; Rec."Primary Item Type")
+                field("Primary Item Type"; Rec."BLRPrimary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Item Name';

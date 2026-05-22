@@ -1,9 +1,9 @@
 codeunit 73209607 "Send Contract Renewal Email"
 {
-    procedure SendEmail(Rec: Record "Contract Renewal"): Text;
+    procedure SendEmail(Rec: Record "BLRContractRenewal"): Text;
     var
         CompanyInfo: Record "Company Information";
-        ConsolidatedInvoiceHeader: Record "Contract Renewal";
+        ConsolidatedInvoiceHeader: Record "BLRContractRenewal";
         TempBlob: Codeunit "Temp Blob";
         Email: Codeunit "Email";
         EmailMessage: Codeunit "Email Message";
@@ -14,27 +14,27 @@ codeunit 73209607 "Send Contract Renewal Email"
         ReportID: Integer;
     begin
         ReportID := 73209579;
-        ConsolidatedInvoiceHeader.SetRange(Id, Rec.Id);
+        ConsolidatedInvoiceHeader.SetRange("BLRId", Rec."BLRId");
         if ConsolidatedInvoiceHeader.FindSet() then begin
             RecRef.GetTable(ConsolidatedInvoiceHeader);
             TempBlob.CreateOutStream(OutStream);
             Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
             TempBlob.CreateInStream(InStream);
-            FileName := 'proposal_' + Format(ConsolidatedInvoiceHeader.Id) + '.pdf';
-            Message('Preparing to send email to: %1', ConsolidatedInvoiceHeader."Email Address");
+            FileName := 'proposal_' + Format(ConsolidatedInvoiceHeader."BLRId") + '.pdf';
+            Message('Preparing to send email to: %1', ConsolidatedInvoiceHeader."BLREmail Address");
             if CompanyInfo.Get() then
                 EmailMessage.Create(
-                                   ConsolidatedInvoiceHeader."Email Address",
-                                   'Lease Proposal for Your Consideration_' + Format(ConsolidatedInvoiceHeader.Id),
+                                   ConsolidatedInvoiceHeader."BLREmail Address",
+                                   'Lease Proposal for Your Consideration_' + Format(ConsolidatedInvoiceHeader."BLRId"),
                                    '<html>' +
                                    '<body>' +
-                                   '<p>Dear ' + ConsolidatedInvoiceHeader."Tenant Full Name" + ',</p>' +
+                                   '<p>Dear ' + ConsolidatedInvoiceHeader."BLRTenant Full Name" + ',</p>' +
                                    '<p>Thank you for your interest in leasing one of our properties. We are pleased to share the lease proposal for your review.</p>' +
                                    '<h3>Property Details:</h3>' +
-                                   '<p><b>Property Name:</b> ' + ConsolidatedInvoiceHeader."Property Name" + '<br/>' +
-                                   '<b>Unit Number:</b> ' + ConsolidatedInvoiceHeader."Unit Number" + '<br/>' +
-                                   '<b>Area:</b> ' + ConsolidatedInvoiceHeader."Property Size" + '<br/>' +
-                                   '<b>Lease Amount:</b> ' + Format(ConsolidatedInvoiceHeader."Contract Amount") + '<br/>' +
+                                   '<p><b>Property Name:</b> ' + ConsolidatedInvoiceHeader."BLRProperty Name" + '<br/>' +
+                                   '<b>Unit Number:</b> ' + ConsolidatedInvoiceHeader."BLRUnit Number" + '<br/>' +
+                                   '<b>Area:</b> ' + ConsolidatedInvoiceHeader."BLRProperty Size" + '<br/>' +
+                                   '<b>Lease Amount:</b> ' + Format(ConsolidatedInvoiceHeader."BLRContract Amount") + '<br/>' +
                                    '<h3>Terms and Conditions:</h3>' +
                                    '<p>The tenancy contract will be renewable annually upon the successful completion of the yearly rental payment.<br/>' +
                                    'Renewal options are available with 90 days prior notice in alignment with the RERA Calculator.<br/>' +
@@ -47,11 +47,11 @@ codeunit 73209607 "Send Contract Renewal Email"
                                );
             EmailMessage.AddAttachment(FileName, '', InStream);
             if Email.Send(EmailMessage) then
-                Message('Email sent successfully to: %1', ConsolidatedInvoiceHeader."Email Address")
+                Message('Email sent successfully to: %1', ConsolidatedInvoiceHeader."BLREmail Address")
             else
                 Error('Failed to send email. Please verify SMTP settings and email addresses.');
             exit('Email send successfully');
         end else
-            Error('No lease proposal details found for Proposal ID: %1', Rec."Tenant ID");
+            Error('No lease proposal details found for Proposal ID: %1', Rec."BLRTenant ID");
     end;
 }

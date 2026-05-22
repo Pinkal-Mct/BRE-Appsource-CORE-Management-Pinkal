@@ -1,7 +1,7 @@
 page 73209628 "Payment Type Card"
 {
     PageType = Card;
-    SourceTable = "Payment Type";
+    SourceTable = "BLRPaymentType";
     ApplicationArea = All;
     Caption = 'Payment Type Card';
     UsageCategory = None;
@@ -13,13 +13,13 @@ page 73209628 "Payment Type Card"
             group(Group)
             {
                 Caption = 'Payment Type Details';
-                field("Payment ID"; Rec."Payment ID")
+                field("Payment ID"; Rec."BLRPayment ID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     toolTip = 'Specifies the unique identifier for the payment type.';
                 }
-                field("Payment Method"; Rec."Payment Method")
+                field("Payment Method"; Rec."BLRPayment Method")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Method';

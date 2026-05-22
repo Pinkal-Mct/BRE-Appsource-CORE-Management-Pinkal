@@ -1,78 +1,78 @@
-table 73209634 "Merged Units"
+table 73209634 "BLRMergedUnits"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "Merged Unit ID"; Integer)
+        field(73209575; "BLRMerged Unit ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Merged Unit ID';
             AutoIncrement = true;
         }
-        field(73209576; "Property ID"; Code[20])
+        field(73209576; "BLRProperty ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Property ID';
-            TableRelation = "Property Registration"."Property ID";
+            TableRelation = "BLRPropertyRegistration"."BLRProperty ID";
             trigger OnValidate()
             var
-                PropertyRec: Record "Property Registration";
+                PropertyRec: Record "BLRPropertyRegistration";
             begin
-                PropertyRec.SetRange("Property ID", Rec."Property ID");
+                PropertyRec.SetRange("BLRProperty ID", Rec."BLRProperty ID");
                 if PropertyRec.FindFirst() then begin
-                    "Property Name" := PropertyRec."Property Name";
-                    "Property Type" := Format(PropertyRec."Property Classification");
-                    "Base Unit of Measure" := PropertyRec."Base Unit of Measure";
+                    "BLRProperty Name" := PropertyRec."BLRProperty Name";
+                    "BLRProperty Type" := Format(PropertyRec."BLRProperty Classification");
+                    "BLRBase Unit of Measure" := PropertyRec."BLRBase Unit of Measure";
                 end else begin
-                    "Property Name" := '';
-                    "Property Type" := '';
-                    "Base Unit of Measure" := '';
+                    "BLRProperty Name" := '';
+                    "BLRProperty Type" := '';
+                    "BLRBase Unit of Measure" := '';
                 end;
             end;
         }
-        field(73209577; "Property Name"; Text[100])
+        field(73209577; "BLRProperty Name"; Text[100])
         {
             Caption = 'Property Name';
             DataClassification = CustomerContent;
         }
-        field(73209578; "Unit ID"; Code[100])
+        field(73209578; "BLRUnit ID"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit ID';
             TableRelation = "Item"."No."
-        where("Property ID" = field("Property ID"));
+        where("BLRProperty ID" = field("BLRProperty ID"));
         }
-        field(73209579; "Unit Name"; Code[100])
+        field(73209579; "BLRUnit Name"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Name';
         }
-        field(73209580; "Merged Unit Name"; Code[100])
+        field(73209580; "BLRMerged Unit Name"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Merged Unit Name';
         }
-        field(73209581; "Unit Size"; Decimal)
+        field(73209581; "BLRUnit Size"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Unit Size';
         }
-        field(73209582; "Market Rate per Square"; Decimal)
+        field(73209582; "BLRMarket Rate per Square"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Market Rate per Square';
         }
-        field(73209583; "Amount"; Decimal)
+        field(73209583; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Total Amount';
         }
-        field(73209584; "Property Type"; Text[100])
+        field(73209584; "BLRProperty Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Property Type';
         }
-        field(73209585; "Status"; Option)
+        field(73209585; "BLRStatus"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Merge Unit Status';
@@ -84,44 +84,44 @@ table 73209634 "Merged Units"
             end;
 
         }
-        field(73209586; "FixedNumber"; Code[100])
+        field(73209586; "BLRFixedNumber"; Code[100])
         {
             DataClassification = CustomerContent;
         }
-        field(73209587; "Spliting Status"; Option)
+        field(73209587; "BLRSpliting Status"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Splitting  Status';
             OptionMembers = " ","Merge","Unmerge";
         }
-        field(73209588; "Base Unit of Measure"; Code[10])
+        field(73209588; "BLRBase Unit of Measure"; Code[10])
         {
             DataClassification = CustomerContent;
             Caption = 'Base Unit of Measure';
         }
-        field(73209589; "Single Unit Name"; Text[500])
+        field(73209589; "BLRSingle Unit Name"; Text[500])
         {
             DataClassification = CustomerContent;
             Caption = 'Single Unit Names';
         }
-        field(73209590; "Unit Number"; Text[50])
+        field(73209590; "BLRUnit Number"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Unit Number';
         }
-        field(73209591; "Makani Number"; Text[100])
+        field(73209591; "BLRMakani Number"; Text[100])
         {
             Caption = 'Makani Number';
             DataClassification = ToBeClassified;
 
         }
-        field(73209592; "Municipality Number"; Text[100])
+        field(73209592; "BLRMunicipality Number"; Text[100])
         {
             Caption = 'Municipality Number';
             DataClassification = ToBeClassified;
 
         }
-        field(73209593; "DEWA Number"; Text[100])
+        field(73209593; "BLRDEWA Number"; Text[100])
         {
             Caption = 'DEWA Number';
             DataClassification = ToBeClassified;
@@ -129,14 +129,14 @@ table 73209634 "Merged Units"
     }
     keys
     {
-        key(PK; "Merged Unit ID")
+        key(PK; "BLRMerged Unit ID")
         {
             Clustered = true;
         }
     }
     fieldgroups
     {
-        fieldgroup(DropDown; "Merged Unit ID", "Unit ID", "Unit Name", "Property Name")
+        fieldgroup(DropDown; "BLRMerged Unit ID", "BLRUnit ID", "BLRUnit Name", "BLRProperty Name")
         {
         }
     }
@@ -144,8 +144,8 @@ table 73209634 "Merged Units"
     var
         PropertyCode: Text;
     begin
-        PropertyCode := FormatName(Rec."Property Name");
-        Rec."Merged Unit Name" := PropertyCode + '-MU-' + Format(Rec.FixedNumber);
+        PropertyCode := FormatName(Rec."BLRProperty Name");
+        Rec."BLRMerged Unit Name" := PropertyCode + '-MU-' + Format(Rec."BLRFixedNumber");
     end;
 
     procedure FormatName(Name: Text): Text
@@ -172,9 +172,9 @@ table 73209634 "Merged Units"
         NoSeriesManagement: Codeunit "No. Series";
         NewUnitNo: Code[20];
     begin
-        if ("FixedNumber" = '') then begin
+        if ("BLRFixedNumber" = '') then begin
             NewUnitNo := NoSeriesManagement.GetNextNo('MGUNITNO', 0D, true);
-            FixedNumber := NewUnitNo;
+            "BLRFixedNumber" := NewUnitNo;
         end;
         AutoGenerateUnitName();
     end;
@@ -187,7 +187,7 @@ table 73209634 "Merged Units"
         CleanText: Text;
         UnitId: Text;
     begin
-        UnitIdTxt := Rec."Unit ID";
+        UnitIdTxt := Rec."BLRUnit ID";
 
         if UnitIdTxt = '' then
             exit;
@@ -209,18 +209,18 @@ table 73209634 "Merged Units"
             if UnitRec.FindFirst() then begin
 
                 // Ã¢Å“â€¦ SAFE mapping
-                case Rec.Status of
-                    Rec.Status::Free:
-                        UnitRec."Unit Status" := UnitRec."Unit Status"::Free;
+                case Rec."BLRStatus" of
+                    Rec."BLRStatus"::Free:
+                        UnitRec."BLRUnit Status" := UnitRec."BLRUnit Status"::Free;
 
-                    Rec.Status::Selected:
-                        UnitRec."Unit Status" := UnitRec."Unit Status"::Selected;
+                    Rec."BLRStatus"::Selected:
+                        UnitRec."BLRUnit Status" := UnitRec."BLRUnit Status"::Selected;
 
-                    Rec.Status::Occupied:
-                        UnitRec."Unit Status" := UnitRec."Unit Status"::Occupied;
+                    Rec."BLRStatus"::Occupied:
+                        UnitRec."BLRUnit Status" := UnitRec."BLRUnit Status"::Occupied;
 
-                    Rec.Status::"N/A":
-                        UnitRec."Unit Status" := UnitRec."Unit Status"::" ";
+                    Rec."BLRStatus"::"N/A":
+                        UnitRec."BLRUnit Status" := UnitRec."BLRUnit Status"::" ";
                 end;
 
                 UnitRec.Modify();

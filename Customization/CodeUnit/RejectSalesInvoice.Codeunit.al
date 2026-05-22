@@ -42,10 +42,10 @@ codeunit 73209601 RejectSalesInvoice
                          '<h3>Invoice Rejection Details:</h3>' +
                          '<p>The following invoice has been rejected:</p>' +
                          '<p><b>Invoice ID:</b> ' + SalesHeader."No." + '<br/>' +
-                         '<b>Contract ID:</b> ' + Format(SalesHeader."Contract ID") + '<br/>' +
-                         '<b>Property Name:</b> ' + SalesHeader."Property Name" + '<br/>' +
+                         '<b>Contract ID:</b> ' + Format(SalesHeader."BLRContract ID") + '<br/>' +
+                         '<b>Property Name:</b> ' + SalesHeader."BLRProperty Name" + '<br/>' +
                          '<b>Total Amount:</b> ' + Format(TotalAmount) + '<br/>' +
-                         '<b>Reason For Rejection:</b> ' + SalesHeader."Reason for Rejection" + '<br/>' +
+                         '<b>Reason For Rejection:</b> ' + SalesHeader."BLRReason for Rejection" + '<br/>' +
                          '<p>Please review the details and update the invoice</p>' +
                          '<p><a href="' + InvoiceLink + '" target="_blank">Click here to view the invoice</a></p>' +
                          '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +

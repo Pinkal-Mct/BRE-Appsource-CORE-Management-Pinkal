@@ -1,7 +1,7 @@
 page 73209577 "Approval Contract Status API"
 {
     PageType = API;
-    SourceTable = "Approval Contract Status";
+    SourceTable = "BLRApprovalContractStatus";
     APIPublisher = 'realestate';
     APIGroup = 'approvalflow';
     APIVersion = 'v2.0';
@@ -22,27 +22,27 @@ page 73209577 "Approval Contract Status API"
                 Caption = 'System Identifier';
             }
 
-            field(iD; Rec."ID")
+            field(iD; Rec."BLRID")
             {
             }
 
-            field(status; Rec."Status")
+            field(status; Rec."BLRStatus")
             {
             }
 
-            field("contractID"; Rec."Contract ID")
+            field("contractID"; Rec."BLRContract ID")
             {
             }
 
-            field("leaseID"; Rec."Lease ID")
+            field("leaseID"; Rec."BLRLease ID")
             {
             }
 
-            field("tenancyContractStatus"; Rec."Tenancy Contract Status")
+            field("tenancyContractStatus"; Rec."BLRTenancy Contract Status")
             {
             }
 
-            field("renewalContractID"; Rec."Renewal Contract ID")
+            field("renewalContractID"; Rec."BLRRenewal Contract ID")
             {
             }
 

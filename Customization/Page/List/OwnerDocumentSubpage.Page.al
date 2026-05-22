@@ -2,7 +2,7 @@ page 73209650 "Owner Document Subpage"
 {
     PageType = ListPart;
     ApplicationArea = All;
-    SourceTable = DocumentUploadDetails;
+    SourceTable = "BLRDocumentUploadDetails";
     Caption = 'Owner Document Attachments';
 
     layout
@@ -11,19 +11,19 @@ page 73209650 "Owner Document Subpage"
         {
             repeater(Group)
             {
-                field("Document Type"; Rec."Document Type")
+                field("Document Type"; Rec."BLRDocument Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Document Type';
                 }
 
-                field("Document Name"; Rec."Document Name")
+                field("Document Name"; Rec."BLRDocument Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Document Name';
                 }
 
-                field("Upload Document"; Rec."Upload Document")
+                field("Upload Document"; Rec."BLRUpload Document")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -39,15 +39,15 @@ page 73209650 "Owner Document Subpage"
                         folderName := 'TenancyContractDocuments';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Upload Document" := CopyStr(fileName, 1, StrLen(fileName));
-                            Rec."View Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec."BLRUpload Document" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."BLRView Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
                     end;
                 }
 
-                field("View & Download"; Rec."View & Download")
+                field("View & Download"; Rec."BLRView & Download")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -58,7 +58,7 @@ page 73209650 "Owner Document Subpage"
                         FileURL: Text;
                     begin
                         // Get the URL of the uploaded document
-                        FileURL := Rec."View Document URL";
+                        FileURL := Rec."BLRView Document URL";
 
                         // Check if the file URL is not empty
                         if FileURL = '' then
@@ -68,7 +68,7 @@ page 73209650 "Owner Document Subpage"
                         OpenFileInBrowser(FileURL);
                     end;
                 }
-                field(Download; Rec.Download)
+                field(Download; Rec."BLRDownload")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -83,9 +83,9 @@ page 73209650 "Owner Document Subpage"
                         ToFile: Text;
                     begin
                         // Find the attachment record
-                        AttachmentRec.SetRange("No.", Format(Rec.OwnerId));
+                        AttachmentRec.SetRange("No.", Format(Rec."BLROwnerId"));
                         AttachmentRec.SetRange("Table ID", 73209613); // Adjust to match your table ID
-                        AttachmentRec.SetRange("File Name", Rec."Upload Document");
+                        AttachmentRec.SetRange("File Name", Rec."BLRUpload Document");
 
                         if AttachmentRec.FindSet() then begin
                             FileName := AttachmentRec."File Name";
@@ -121,7 +121,7 @@ page 73209650 "Owner Document Subpage"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.OwnerId := OwnerId;
+        Rec."BLROwnerId" := OwnerId;
     end;
 
     var

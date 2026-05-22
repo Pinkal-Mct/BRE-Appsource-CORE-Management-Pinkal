@@ -1,10 +1,10 @@
 codeunit 73209611 "FS Refundable Payment Receipt"
 {
-    procedure SendEmail(Rec: Record FinalSettlementRefund): Text;
+    procedure SendEmail(Rec: Record "BLRFinalSettlementRefund"): Text;
     var
         customerRec: Record Customer;
         CompanyInfo: Record "Company Information";
-        ConsolidatedInvoiceHeader: Record FinalSettlementRefund;
+        ConsolidatedInvoiceHeader: Record "BLRFinalSettlementRefund";
         RecRef: RecordRef;
         EmailMessage: Codeunit "Email Message";
         Email: Codeunit "Email";
@@ -18,7 +18,7 @@ codeunit 73209611 "FS Refundable Payment Receipt"
     // ReceiptNo: Code[20];
     begin
         ReportID := 73209582;
-        ConsolidatedInvoiceHeader.SetRange("Contract ID", Rec."Contract ID");
+        ConsolidatedInvoiceHeader.SetRange("BLRContract ID", Rec."BLRContract ID");
 
         if ConsolidatedInvoiceHeader.FindSet() then begin
             RecRef.GetTable(ConsolidatedInvoiceHeader);
@@ -27,17 +27,17 @@ codeunit 73209611 "FS Refundable Payment Receipt"
             Report.SaveAs(ReportID, '', ReportFormat::Pdf, OutStream, RecRef);
 
             TempBlob.CreateInStream(InStream);
-            FileName := 'Payment Receipt_' + Format(ConsolidatedInvoiceHeader."Contract ID") + '.pdf';
+            FileName := 'Payment Receipt_' + Format(ConsolidatedInvoiceHeader."BLRContract ID") + '.pdf';
 
             // Debugging to confirm email creation parameters
             // Message('Preparing to send email to: %1', ConsolidatedInvoiceHeader."Tenant Email");
 
             if CompanyInfo.Get() then
-                if customerRec.Get(ConsolidatedInvoiceHeader."Tenant ID") then begin
+                if customerRec.Get(ConsolidatedInvoiceHeader."BLRTenant ID") then begin
 
                     EmailMessage.Create(
                                        customerRec."E-Mail",
-                                       'Payment Receipt Attached_' + Format(ConsolidatedInvoiceHeader."Contract ID"),
+                                       'Payment Receipt Attached_' + Format(ConsolidatedInvoiceHeader."BLRContract ID"),
                                        '<html>' +
                                        '<body>' +
                                         '<p>Dear ' + customerRec.Name + ',</p>' +
@@ -58,6 +58,6 @@ codeunit 73209611 "FS Refundable Payment Receipt"
                 Error('Failed to send email. Please verify SMTP settings and email addresses.');
 
         end else
-            Error('No lease proposal details found for Proposal ID: %1', Rec."Contract ID");
+            Error('No lease proposal details found for Proposal ID: %1', Rec."BLRContract ID");
     end;
 }

@@ -8,43 +8,43 @@ report 73209576 "PDC Transaction Report"
     DefaultLayout = Excel;
     dataset
     {
-        dataitem(PDCTransaction; "Payment Mode2")
+        dataitem(PDCTransaction; "BLRPaymentMode2")
         {
-            DataItemTableView = where("Payment Mode" = const('Cheque'));
+            DataItemTableView = where("BLRPayment Mode" = const('Cheque'));
             column(Report_Period; CustomDateRangeText)
             {
             }
-            column(payment_Series; "payment Series")
+            column(payment_Series; "BLRPayment Series")
             {
             }
-            column(Contract_ID; "Contract ID")
+            column(Contract_ID; "BLRContract ID")
             {
             }
-            column(Tenant_Id; "Tenant Id")
+            column(Tenant_Id; "BLRTenant Id")
             {
             }
-            column(Tenant_Name; "Tenant Name")
+            column(Tenant_Name; "BLRTenant Name")
             {
             }
-            column(Cheque_Number; "Cheque Number")
+            column(Cheque_Number; "BLRCheque Number")
             {
             }
-            column(Cheque_Date; "Due Date")
+            column(Cheque_Date; "BLRDue Date")
             {
             }
-            column(Amount; Amount)
+            column(Amount; "BLRAmount")
             {
             }
-            column(Old_Cheque_; "Old Cheque #")
+            column(Old_Cheque_; "BLROld Cheque #")
             {
             }
-            column(Cheque_Status; "Cheque Status")
+            column(Cheque_Status; "BLRCheque Status")
             {
             }
-            column(Approval_Status; "Approval Status")
+            column(Approval_Status; "BLRApproval Status")
             {
             }
-            column(Payment_Status; "Payment Status")
+            column(Payment_Status; "BLRPayment Status")
             {
             }
             trigger OnAfterGetRecord()
@@ -55,8 +55,8 @@ report 73209576 "PDC Transaction Report"
                 CustomDateRangeText :=
                     Format(gCustomStartDate, 0, '<Day,2>/<Month,2>/<Year4>') + ' - ' +
                     Format(gCustomEndDate, 0, '<Day,2>/<Month,2>/<Year4>');
-                StartDateIsInRange := ("Due Date" >= gCustomStartDate) and ("Due Date" <= gCustomEndDate);
-                EndDateIsInRange := ("Due Date" >= gCustomStartDate) and ("Due Date" <= gCustomEndDate);
+                StartDateIsInRange := ("BLRDue Date" >= gCustomStartDate) and ("BLRDue Date" <= gCustomEndDate);
+                EndDateIsInRange := ("BLRDue Date" >= gCustomStartDate) and ("BLRDue Date" <= gCustomEndDate);
                 if not (StartDateIsInRange or EndDateIsInRange) then
                     CurrReport.SKIP();
             end;

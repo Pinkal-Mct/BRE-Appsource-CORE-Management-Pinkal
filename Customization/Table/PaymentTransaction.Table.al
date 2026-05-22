@@ -1,35 +1,35 @@
-table 73209651 "Payment Transaction"
+table 73209651 "BLRPaymentTransaction"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "PT Id";
+    DataCaptionFields = "BLRPT Id";
     fields
     {
-        field(73209575; "PT Id"; Code[50])
+        field(73209575; "BLRPT Id"; Code[50])
         {
             DataClassification = CustomerContent;
 
         }
 
-        field(73209576; "Tenant Id"; code[20])
+        field(73209576; "BLRTenant Id"; code[20])
         {
             DataClassification = CustomerContent;
             TableRelation = Customer."No.";
         }
-        field(73209577; "Tenant Name"; Text[100])
+        field(73209577; "BLRTenant Name"; Text[100])
         {
 
             FieldClass = FlowField;
-            CalcFormula = Lookup(Customer.Name WHERE("No." = FIELD("Tenant Id"))); // Displays Customer Name
+            CalcFormula = Lookup(Customer.Name WHERE("No." = FIELD("BLRTenant Id"))); // Displays Customer Name
         }
 
-        field(73209578; "Contract Id"; Integer)
+        field(73209578; "BLRContract Id"; Integer)
         {
 
-            TableRelation = "Tenancy Contract";
+            TableRelation = "BLRTenancyContract";
             DataClassification = CustomerContent;
         }
 
-        field(73209579; "Approval Status"; Enum "Approval Status Enum")
+        field(73209579; "BLRApproval Status"; Enum "Approval Status Enum")
         {
             DataClassification = CustomerContent;
         }
@@ -37,7 +37,7 @@ table 73209651 "Payment Transaction"
 
     keys
     {
-        key(Key1; "PT Id")
+        key(Key1;"BLRPT Id")
         {
             Clustered = true;
         }
@@ -48,8 +48,8 @@ table 73209651 "Payment Transaction"
         NoSeriesMgt: Codeunit "No. Series";
 
     begin
-        if "PT Id" = '' then
-            "PT Id" := NoSeriesMgt.GetNextNo('PT-ID', Today(), true);
+        if "BLRPT Id" = '' then
+            "BLRPT Id" := NoSeriesMgt.GetNextNo('PT-ID', Today(), true);
     end;
 
 

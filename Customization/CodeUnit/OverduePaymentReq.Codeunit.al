@@ -1,6 +1,6 @@
 codeunit 73209596 "OverduePaymentReq"
 {
-    procedure SendApprovalrequest(Rec: Record OverDuePaymentmode): Text;
+    procedure SendApprovalrequest(Rec: Record "BLROverDuePaymentmode"): Text;
     var
         CompanyInfo: Record "Company Information";
         UserPersonalizationRec: Record "User Personalization";
@@ -31,10 +31,10 @@ codeunit 73209596 "OverduePaymentReq"
              '<p>Dear Finance Manager,</p>' +
              '<p>A new OverDue Payment Request has been created and requires your approval.</p>' +
              '<h3>Payment Details:</h3>' +
-             '<b>Contract ID:</b> ' + Format(Rec."Contract ID") + '<br/>' +
-             '<b>Payment Series:</b> ' + Rec."Payment Series" + '<br/>' +
-             '<b>Due Date:</b> ' + Format(Rec."Due Date") + '<br/>' +
-              '<b>Payment Status:</b> ' + Format(Rec."Payment Status") + '<br/>' +
+             '<b>Contract ID:</b> ' + Format(Rec."BLRContract ID") + '<br/>' +
+             '<b>Payment Series:</b> ' + Rec."BLRPayment Series" + '<br/>' +
+             '<b>Due Date:</b> ' + Format(Rec."BLRDue Date") + '<br/>' +
+              '<b>Payment Status:</b> ' + Format(Rec."BLRPayment Status") + '<br/>' +
              '<p>Please log in to Business Central to review and take the necessary action.</p>' +
              '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
              '</body></html>',

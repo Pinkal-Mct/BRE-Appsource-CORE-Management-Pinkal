@@ -2,108 +2,108 @@ tableextension 73209577 "Customer Ext" extends Customer
 {
     fields
     {
-        field(73209575; "Username"; Text[50])
+        field(73209575; "BLRUsername"; Text[50])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Username';
         }
-        field(73209576; "Password"; Text[30])
+        field(73209576; "BLRPassword"; Text[30])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Password';
         }
-        field(73209577; "Date Of Birth"; Date)
+        field(73209577; "BLRDate Of Birth"; Date)
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Date Of Birth';
         }
-        field(73209578; "Nationality"; Text[50])
+        field(73209578; "BLRNationality"; Text[50])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Nationality';
         }
-        field(73209579; "Emirates ID"; Code[25])
+        field(73209579; "BLREmirates ID"; Code[25])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Emirates ID Number';
         }
-        field(73209580; "Emirates ID Expiry Date"; Date)
+        field(73209580; "BLREmirates ID Expiry Date"; Date)
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Emirates ID Expiry Date';
         }
-        field(73209581; "License No."; Code[20])
+        field(73209581; "BLRLicense No."; Code[20])
         {
             DataClassification = OrganizationIdentifiableInformation;
             Caption = 'Tenant Trade License No.';
         }
 
-        field(73209582; "Licensing Authority"; Text[100])
+        field(73209582; "BLRLicensing Authority"; Text[100])
         {
             Caption = 'Licensing Authority';
             DataClassification = OrganizationIdentifiableInformation;
         }
-        field(73209583; "Code Area"; Enum "UAE Phone Code Area")
+        field(73209583; "BLRCode Area"; Enum "UAE Phone Code Area")
         {
             DataClassification = CustomerContent;
             Caption = 'Code Area';
         }
-        field(73209584; "Occupation"; Text[100])
+        field(73209584; "BLROccupation"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Occupation';
         }
-        field(73209585; "Passport Number"; Text[20])
+        field(73209585; "BLRPassport Number"; Text[20])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Passport Number';
         }
-        field(73209586; "Passport Issue Date"; Date)
+        field(73209586; "BLRPassport Issue Date"; Date)
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Passport Issue Date';
         }
-        field(73209587; "Passport Expiry Date"; Date)
+        field(73209587; "BLRPassport Expiry Date"; Date)
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Passport Expiry Date';
         }
-        field(73209588; "Country of Passport"; Text[50])
+        field(73209588; "BLRCountry of Passport"; Text[50])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Country of Passport';
         }
-        field(73209589; "Approve"; Boolean)
+        field(73209589; "BLRApprove"; Boolean)
         {
             DataClassification = CustomerContent;
 
             trigger OnValidate()
             begin
-                if "Approve" = true then
-                    "Decline" := false;
+                if "BLRApprove" = true then
+                    "BLRDecline" := false;
             end;
         }
-        field(73209590; "Decline"; Boolean)
+        field(73209590; "BLRDecline"; Boolean)
         {
             DataClassification = CustomerContent;
 
             trigger OnValidate()
             begin
-                if "Decline" = true then
-                    "Approve" := false;
+                if "BLRDecline" = true then
+                    "BLRApprove" := false;
             end;
         }
-        field(73209591; "Customer Type"; Enum "Customer Type Enum")
+        field(73209591; "BLRCustomer Type"; Enum "Customer Type Enum")
         {
             Caption = 'Customer Type';
             DataClassification = CustomerContent;
         }
-        field(73209592; "Business Unit"; Code[20])
+        field(73209592; "BLRBusiness Unit"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Business Unit';
         }
-        field(73209593; "P.O.Box"; Code[50])
+        field(73209593; "BLRP.O.Box"; Code[50])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'P.O.Box';
@@ -115,8 +115,8 @@ tableextension 73209577 "Customer Ext" extends Customer
         BusinessUnit: Record "Business Unit";
     begin
         if BusinessUnit.Get('PM') then
-            "Business Unit" := 'PM';
+            "BLRBusiness Unit" := 'PM';
         if BusinessUnit.Get('PS') then
-            "Business Unit" := 'PS';
+            "BLRBusiness Unit" := 'PS';
     end;
 }

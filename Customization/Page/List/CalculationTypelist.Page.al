@@ -1,7 +1,7 @@
 page 73209641 "Calculation Type List"
 {
     PageType = List;
-    SourceTable = "Calculation Type";
+    SourceTable = "BLRCalculationType";
     ApplicationArea = All;
     Caption = 'Calculation Type List';
     UsageCategory = Lists;
@@ -13,13 +13,13 @@ page 73209641 "Calculation Type List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'Specifies the unique identifier for the calculation type.';
                 }
-                field("Calculation Type"; Rec."Calculation Type")
+                field("Calculation Type"; Rec."BLRCalculation Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Calculation Type';

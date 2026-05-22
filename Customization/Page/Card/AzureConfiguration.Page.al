@@ -3,7 +3,7 @@ page 73209617 "Azure Configuration"
     PageType = Card;
     ApplicationArea = All;
     UsageCategory = Administration;
-    SourceTable = AzureConfiguration;
+    SourceTable = "BLRAzureConfiguration";
     Caption = 'Azure Configuration Card';
 
     layout
@@ -14,17 +14,17 @@ page 73209617 "Azure Configuration"
             {
                 Caption = 'Azure Storage Configuration';
 
-                field("Storage Account Name"; Rec."Storage Account Name")
+                field("Storage Account Name"; Rec."BLRStorage Account Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of your Azure Storage account';
                 }
-                field("Default Container"; Rec."Default Container")
+                field("Default Container"; Rec."BLRDefault Container")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the default container name to use for uploads';
                 }
-                field("SAS URL"; Rec."SAS URL")
+                field("SAS URL"; Rec."BLRSAS URL")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The SAS URL for legacy compatibility (not recommended)';
@@ -35,17 +35,17 @@ page 73209617 "Azure Configuration"
             {
                 Caption = 'Azure AD Authentication';
 
-                field("Tenant ID"; Rec."Tenant ID")
+                field("Tenant ID"; Rec."BLRTenant ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The Azure AD Tenant ID';
                 }
-                field("Client ID"; Rec."Client ID")
+                field("Client ID"; Rec."BLRClient ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The Client ID (Application ID) from your Azure AD app registration';
                 }
-                field("Client Secret"; Rec."Client Secret")
+                field("Client Secret"; Rec."BLRClient Secret")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The Client Secret from your Azure AD app registration';
@@ -101,7 +101,7 @@ page 73209617 "Azure Configuration"
 
     trigger OnOpenPage()
     var
-        AzureConfig: Record AzureConfiguration;
+        AzureConfig: Record "BLRAzureConfiguration";
     begin
         if not AzureConfig.FindFirst() then begin
             AzureConfig.Init();

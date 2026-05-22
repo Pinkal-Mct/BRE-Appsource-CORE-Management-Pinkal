@@ -11,7 +11,7 @@ page 73209598 "Other Payment Calculate"
     EntityName = 'otherpaymentcalculate';
     EntitySetName = 'otherpaymentcalculates';
     PageType = API;
-    SourceTable = "Other Payment Calculate Sub";
+    SourceTable = "BLROtherPaymentCalculateSub";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -22,31 +22,31 @@ page 73209598 "Other Payment Calculate"
         {
             repeater(General)
             {
-                field(amount; Rec.Amount)
+                field(amount; Rec."BLRAmount")
                 {
                     Caption = 'Amount';
                 }
-                field(amountIncludingVAT; Rec."Amount Including VAT")
+                field(amountIncludingVAT; Rec."BLRAmount Including VAT")
                 {
                     Caption = 'Amount Including VAT';
                 }
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(endDate; Rec."End Date")
+                field(endDate; Rec."BLREnd Date")
                 {
                     Caption = 'End Date';
                 }
-                field(entryNo; Rec."Entry No.")
+                field(entryNo; Rec."BLREntry No.")
                 {
                     Caption = 'Entry No.';
                 }
-                field(secondaryItemType; Rec."Secondary Item Type")
+                field(secondaryItemType; Rec."BLRSecondary Item Type")
                 {
                     Caption = 'Secondary Item Type';
                 }
-                field(startDate; Rec."Start Date")
+                field(startDate; Rec."BLRStart Date")
                 {
                     Caption = 'Start Date';
                 }
@@ -70,23 +70,23 @@ page 73209598 "Other Payment Calculate"
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantID; Rec."Tenant ID")
+                field(tenantID; Rec."BLRTenant ID")
                 {
                     Caption = 'Tenant ID';
                 }
-                field(totalAmount; Rec."Total Amount")
+                field(totalAmount; Rec."BLRTotal Amount")
                 {
                     Caption = 'Total Amount';
                 }
-                field(totalAmountIncludingVAT; Rec."Total Amount Including VAT")
+                field(totalAmountIncludingVAT; Rec."BLRTotal Amount Including VAT")
                 {
                     Caption = 'Total Amount Including VAT';
                 }
-                field(totalVATAmount; Rec."Total VAT Amount")
+                field(totalVATAmount; Rec."BLRTotal VAT Amount")
                 {
                     Caption = 'Total VAT Amount';
                 }
-                field(vatAmount; Rec."VAT Amount")
+                field(vatAmount; Rec."BLRVAT Amount")
                 {
                     Caption = 'VAT Amount';
                 }

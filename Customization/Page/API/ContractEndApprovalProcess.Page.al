@@ -12,7 +12,7 @@ page 73209582 ContractEndApprovalProcess
     EntitySetName = 'contractendapprovals';
     PageType = API;
     ODataKeyFields = SystemId;
-    SourceTable = ContractEndProcessApproval;
+    SourceTable = "BLRContractEndProcessApproval";
 
     layout
     {
@@ -20,31 +20,31 @@ page 73209582 ContractEndApprovalProcess
         {
             repeater(General)
             {
-                field(contractId; Rec."Contract Id")
+                field(contractId; Rec."BLRContract Id")
                 {
                     Caption = 'Contract Id';
                 }
-                field(propertyMStatus; Rec."Property_M Status")
+                field(propertyMStatus; Rec."BLRProperty_M Status")
                 {
                     Caption = 'Property Manager Status';
                 }
-                field(endDate; Rec."End Date")
+                field(endDate; Rec."BLREnd Date")
                 {
                     Caption = 'Contract End Date';
                 }
-                field(id; Rec.ID)
+                field(id; Rec."BLRID")
                 {
                     Caption = 'ID';
                 }
-                field(tenantEmail; Rec."Tenant Email")
+                field(tenantEmail; Rec."BLRTenant Email")
                 {
                     Caption = 'Requested Date';
                 }
-                field(startDate; Rec."Start Date")
+                field(startDate; Rec."BLRStart Date")
                 {
                     Caption = 'Contract Start Date';
                 }
-                field(leaseMStatus; Rec."Lease_M Status")
+                field(leaseMStatus; Rec."BLRLease_M Status")
                 {
                     Caption = 'Lease Manager Status';
                 }
@@ -68,28 +68,28 @@ page 73209582 ContractEndApprovalProcess
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantId; Rec."Tenant Id")
+                field(tenantId; Rec."BLRTenant Id")
                 {
                     Caption = 'Tenant Id';
                 }
-                field(tenantName; Rec."Tenant Name")
+                field(tenantName; Rec."BLRTenant Name")
                 {
                     Caption = 'Tenant Name';
                 }
-                field("leaseManagerRemark"; Rec."Lease Manager Remark")
+                field("leaseManagerRemark"; Rec."BLRLease Manager Remark")
                 {
                     Caption = 'Lease Manager Remark';
                 }
-                field("propertyManagerRemark"; Rec."Property Manager Remark")
+                field("propertyManagerRemark"; Rec."BLRProperty Manager Remark")
                 {
                     Caption = 'Property Manager Remark';
                 }
-                field("value"; Rec."Value")
+                field("value"; Rec."BLRValue")
                 {
                     Caption = 'Value';
                 }
 
-                field("renewalNotificationtoTenant"; Rec."Renewal Notification to Tenant")
+                field("renewalNotificationtoTenant"; Rec."BLRRenewalNotiftoTenant")
                 {
                     Caption = 'Renewal Notification to Tenant';
                 }

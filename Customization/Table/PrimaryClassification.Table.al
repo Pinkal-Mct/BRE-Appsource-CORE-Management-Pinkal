@@ -1,16 +1,16 @@
-table 73209658 "Primary Classification"
+table 73209658 "BLRPrimaryClassification"
 {
     DataClassification = SystemMetadata;
-    DataCaptionFields = ID;
+    DataCaptionFields = "BLRID";
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
-        field(73209576; "Classification Name"; Text[100])
+        field(73209576; "BLRClassification Name"; Text[100])
         {
             DataClassification = SystemMetadata;
             Caption = 'Primary Classification Name';
@@ -18,14 +18,14 @@ table 73209658 "Primary Classification"
     }
     keys
     {
-        key(PK; "ID", "Classification Name")
+        key(PK;"BLRID", "BLRClassification Name")
         {
             Clustered = true;
         }
     }
     fieldgroups
     {
-        fieldgroup(DropDown; ID, "Classification Name")
+        fieldgroup(DropDown;"BLRID", "BLRClassification Name")
         {
         }
     }

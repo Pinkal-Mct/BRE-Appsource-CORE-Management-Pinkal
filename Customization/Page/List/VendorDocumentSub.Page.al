@@ -1,7 +1,7 @@
 page 73209667 "Vendor Document Sub"
 {
     PageType = ListPart;
-    SourceTable = "Vendor Document";
+    SourceTable = "BLRVendorDocument";
     ApplicationArea = All;
     Caption = 'Vendor All Documents';
     layout
@@ -10,29 +10,29 @@ page 73209667 "Vendor Document Sub"
         {
             repeater("Document")
             {
-                field("Vendor ID"; Rec."Vendor ID")
+                field("Vendor ID"; Rec."BLRVendor ID")
                 {
                     ToolTip = 'The unique identifier for the vendor associated with the document.';
                     ApplicationArea = All;
                     Editable = false;
                     Visible = false;
                 }
-                field("Document Type"; Rec."Document Type")
+                field("Document Type"; Rec."BLRDocument Type")
                 {
                     ToolTip = 'The type of document associated with the vendor.';
                     ApplicationArea = All;
                 }
-                field("Document No."; Rec."Document No.")
+                field("Document No."; Rec."BLRDocument No.")
                 {
                     ToolTip = 'The unique identifier for the document associated with the vendor.';
                     ApplicationArea = All;
                 }
-                field("Document Name"; Rec."Document Name")
+                field("Document Name"; Rec."BLRDocument Name")
                 {
                     ToolTip = 'The name of the document associated with the vendor.';
                     ApplicationArea = All;
                 }
-                field("Document Upload"; Rec."Document Upload")
+                field("Document Upload"; Rec."BLRDocument Upload")
                 {
                     ToolTip = 'The uploaded document file associated with the vendor.';
                     ApplicationArea = All;
@@ -48,14 +48,14 @@ page 73209667 "Vendor Document Sub"
                         folderName := 'PropertyDocuments';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Document Upload" := CopyStr(fileName, 1, StrLen(fileName));
-                            Rec."Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec."BLRDocument Upload" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."BLRDocument URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
                     end;
                 }
-                field("Document View"; Rec."Document View")
+                field("Document View"; Rec."BLRDocument View")
                 {
                     ToolTip = 'View the uploaded document associated with the vendor.';
                     ApplicationArea = All;
@@ -65,20 +65,20 @@ page 73209667 "Vendor Document Sub"
                     var
                         FileURL: Text;
                     begin
-                        FileURL := Rec."Document URL";
+                        FileURL := Rec."BLRDocument URL";
                         if FileURL = '' then
                             Error('No document is available to view.');
                         OpenFileInBrowser(FileURL);
                     end;
                 }
-                field("Document URL"; Rec."Document URL")
+                field("Document URL"; Rec."BLRDocument URL")
                 {
                     ToolTip = 'The URL of the uploaded document associated with the vendor.';
                     ApplicationArea = All;
                     Editable = false;
                     Visible = false;
                 }
-                field("Entry No."; Rec."Entry No.")
+                field("Entry No."; Rec."BLREntry No.")
                 {
                     ToolTip = 'The unique entry number for the vendor document.';
                     ApplicationArea = All;
@@ -102,7 +102,7 @@ page 73209667 "Vendor Document Sub"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."Vendor ID" := VendorID;
+        Rec."BLRVendor ID" := VendorID;
     end;
 
     var

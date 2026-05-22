@@ -1,17 +1,17 @@
-table 73209684 "Security Deposit"
+table 73209684 "BLRSecurityDeposit"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "Security Deposit ID";
+    DataCaptionFields = "BLRSecurity Deposit ID";
 
     fields
     {
-        field(73209575; "Security Deposit ID"; Integer)
+        field(73209575; "BLRSecurity Deposit ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Security Deposit ID';
             AutoIncrement = true;
         }
-        field(73209576; "Tenant Full Name"; Text[100])
+        field(73209576; "BLRTenant Full Name"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Tenant Full Name';
@@ -22,8 +22,8 @@ table 73209684 "Security Deposit"
                 CustomerRec: Record Customer;
             begin
                 if PAGE.RunModal(PAGE::"Customer List", CustomerRec) = ACTION::LookupOK then begin
-                    "Tenant Full Name" := CustomerRec.Name;
-                    "Tenant ID" := CustomerRec."No.";
+                    "BLRTenant Full Name" := CustomerRec.Name;
+                    "BLRTenant ID" := CustomerRec."No.";
                 end;
             end;
 
@@ -31,125 +31,125 @@ table 73209684 "Security Deposit"
             var
                 CustomerRec: Record Customer;
             begin
-                if "Tenant Full Name" <> '' then begin
-                    CustomerRec.SetRange(Name, "Tenant Full Name");
+                if "BLRTenant Full Name" <> '' then begin
+                    CustomerRec.SetRange(Name, "BLRTenant Full Name");
                     if not CustomerRec.FindFirst() then
                         Error('The selected tenant does not exist in the Customer table.')
                     else
-                        "Tenant ID" := CustomerRec."No.";
+                        "BLRTenant ID" := CustomerRec."No.";
                 end;
             end;
         }
-        field(73209577; "Contract ID"; Integer)
+        field(73209577; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
 
             trigger OnValidate()
             var
-                tenancyContract: Record "Tenancy Contract";
+                tenancyContract: Record "BLRTenancyContract";
             begin
-                if tenancyContract.Get(Rec."Contract ID") then
-                    Rec."Property Classification" := CopyStr(tenancyContract."Property Classification", 1, 30);
+                if tenancyContract.Get(Rec."BLRContract ID") then
+                    Rec."BLRProperty Classification" := CopyStr(tenancyContract."BLRProperty Classification", 1, 30);
             end;
         }
-        field(73209578; "Contract Start Date"; Date)
+        field(73209578; "BLRContract Start Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Start Date';
         }
-        field(73209579; "Contract End Date"; Date)
+        field(73209579; "BLRContract End Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract End Date';
         }
 
-        field(73209580; "Security Deposit Amount"; Decimal)
+        field(73209580; "BLRSecurity Deposit Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Security Deposit Amount';
         }
 
-        field(73209581; "New_Contract ID"; Integer)
+        field(73209581; "BLRNew_Contract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'New Contract ID';
-            TableRelation = "Tenancy Contract"."Contract ID";
+            TableRelation = "BLRTenancyContract"."BLRContract ID";
         }
 
-        field(73209582; "New_Tenant Full Name"; Text[100])
+        field(73209582; "BLRNew_Tenant Full Name"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'New Tenant Full Name';
         }
 
-        field(73209583; "New_Contract Start Date"; Date)
+        field(73209583; "BLRNew_Contract Start Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'New Contract Start Date';
         }
 
-        field(73209584; "New_Contract End Date"; Date)
+        field(73209584; "BLRNew_Contract End Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'New Contract End Date';
         }
 
-        field(73209585; "Carry Forward Amount"; Decimal)
+        field(73209585; "BLRCarry Forward Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Enter Amount';
         }
 
-        field(73209586; "Security Deposit Amt. Pending"; Decimal)
+        field(73209586; "BLRSecDepAmtPending"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Security Deposit Amount Pending';
             Editable = false; // Make it non-editable since it's auto-calculated
         }
 
-        field(73209587; "Narration"; Text[500])
+        field(73209587; "BLRNarration"; Text[500])
         {
             DataClassification = CustomerContent;
             Caption = 'Narration';
         }
-        field(73209588; "Balance Amount"; Decimal)
+        field(73209588; "BLRBalance Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Available Security Deposit Amount';
         }
 
-        field(73209589; "New Security Amount"; Decimal)
+        field(73209589; "BLRNew Security Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Security Deposit Amount';
 
         }
 
-        field(73209590; "Security Deposit Amt. Received"; Decimal)
+        field(73209590; "BLRSecDepAmtReceived"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Security Deposit Amount Received';
         }
-        field(73209591; "Property Classification"; Text[30])
+        field(73209591; "BLRProperty Classification"; Text[30])
         {
             DataClassification = CustomerContent;
             Caption = 'Property Classification';
-            tableRelation = "Tenancy Contract"."Property Classification";
+            tableRelation = "BLRTenancyContract"."BLRProperty Classification";
         }
-        field(73209592; Status; Option)
+        field(73209592; "BLRStatus"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Status';
             OptionMembers = Open,Posted;
         }
-        field(73209593; "Tenant ID"; Code[20])
+        field(73209593; "BLRTenant ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
             Editable = false;
         }
-        field(73209594; "Posting Date"; Date)
+        field(73209594; "BLRPosting Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Posting Date';
@@ -158,54 +158,54 @@ table 73209684 "Security Deposit"
 
     keys
     {
-        key(PK; "Security Deposit ID", "Tenant Full Name")
+        key(PK;"BLRSecurity Deposit ID", "BLRTenant Full Name")
         {
             Clustered = true;
         }
     }
     procedure UpdateAdjustedAmount()
     var
-        TenancyContractRec: Record "Tenancy Contract";
-        tenancyContractSubPage: Record "Tenancy Contract Subpage";
-        finalcalcRec: Record "Final Calculation";
+        TenancyContractRec: Record "BLRTenancyContract";
+        tenancyContractSubPage: Record "BLRTenancyContractSubpage";
+        finalcalcRec: Record "BLRFinalCalculation";
     begin
-        if "Balance Amount" > "Carry Forward Amount" then begin
-            "Balance Amount" := "Balance Amount" - "Carry Forward Amount";
-            "Security Deposit Amt. Received" += "Carry Forward Amount";
-            "Security Deposit Amt. Pending" := "New Security Amount" - "Security Deposit Amt. Received";
+        if "BLRBalance Amount" > "BLRCarry Forward Amount" then begin
+            "BLRBalance Amount" := "BLRBalance Amount" - "BLRCarry Forward Amount";
+            "BLRSecDepAmtReceived" += "BLRCarry Forward Amount";
+            "BLRSecDepAmtPending" := "BLRNew Security Amount" - "BLRSecDepAmtReceived";
         end else
-            "Balance Amount" := 0;
+            "BLRBalance Amount" := 0;
 
-        TenancyContractRec.SetRange("Contract ID", "Contract ID");
+        TenancyContractRec.SetRange("BLRContract ID", "BLRContract ID");
         if TenancyContractRec.FindFirst() then begin
-            TenancyContractRec."Carry Forward Out" += "Carry Forward Amount";
-            TenancyContractRec."Security Balanced Amount" := TenancyContractRec."Security Deposit Amt. Received" - (TenancyContractRec."Carry Forward Out" + TenancyContractRec.Adjustments + TenancyContractRec.Refund);
+            TenancyContractRec."BLRCarry Forward Out" += "BLRCarry Forward Amount";
+            TenancyContractRec."BLRSecurity Balanced Amount" := TenancyContractRec."BLRSecDepAmtReceived" - (TenancyContractRec."BLRCarry Forward Out" + TenancyContractRec."BLRAdjustments" + TenancyContractRec."BLRRefund");
             TenancyContractRec.Modify();
 
-            finalcalcRec.SetRange("Contract ID", Rec."Contract ID");
+            finalcalcRec.SetRange("BLRContract ID", Rec."BLRContract ID");
             if finalcalcRec.FindFirst() then begin
-                finalcalcRec."Security Deposit" := TenancyContractRec."Security Balanced Amount";
-                finalcalcRec."Remaining Security Deposit" := TenancyContractRec."Security Balanced Amount";
+                finalcalcRec."BLRSecurity Deposit" := TenancyContractRec."BLRSecurity Balanced Amount";
+                finalcalcRec."BLRRemaining Security Deposit" := TenancyContractRec."BLRSecurity Balanced Amount";
                 finalcalcRec.Modify(true);
             end;
         end;
         Modify(true);
         TenancyContractRec.Reset();
-        TenancyContractRec.SetRange("Contract ID", "New_Contract ID");
+        TenancyContractRec.SetRange("BLRContract ID", "BLRNew_Contract ID");
         if TenancyContractRec.FindFirst() then begin
-            TenancyContractRec."Carry Forward In" += "Carry Forward Amount";
+            TenancyContractRec."BLRCarry Forward In" += "BLRCarry Forward Amount";
 
-            tenancyContractSubPage.SetRange(ContractID, TenancyContractRec."Contract ID");
-            tenancyContractSubPage.SetRange("Secondary Item Type", 'Security Deposit');
+            tenancyContractSubPage.SetRange("BLRContractID", TenancyContractRec."BLRContract ID");
+            tenancyContractSubPage.SetRange("BLRSecondary Item Type", 'Security Deposit');
             if tenancyContractSubPage.FindSet() then begin
-                TenancyContractRec."Security Deposit Amt. Received" := TenancyContractRec."Carry Forward In" + tenancyContractSubPage."Invoiced and Paid";
-                TenancyContractRec."Security Amount Pending" := TenancyContractRec."Security Deposit Amount" - TenancyContractRec."Security Deposit Amt. Received";
-                TenancyContractRec."Security Balanced Amount" := TenancyContractRec."Security Deposit Amt. Received" - (TenancyContractRec."Carry Forward Out" + TenancyContractRec.Adjustments + TenancyContractRec.Refund);
-                TenancyContractRec.IsCarryForwarded := true;
+                TenancyContractRec."BLRSecDepAmtReceived" := TenancyContractRec."BLRCarry Forward In" + tenancyContractSubPage."BLRInvoiced and Paid";
+                TenancyContractRec."BLRSecurity Amount Pending" := TenancyContractRec."BLRSecurity Deposit Amount" - TenancyContractRec."BLRSecDepAmtReceived";
+                TenancyContractRec."BLRSecurity Balanced Amount" := TenancyContractRec."BLRSecDepAmtReceived" - (TenancyContractRec."BLRCarry Forward Out" + TenancyContractRec."BLRAdjustments" + TenancyContractRec."BLRRefund");
+                TenancyContractRec."BLRIsCarryForwarded" := true;
                 TenancyContractRec.Modify();
 
-                tenancyContractSubPage.Amount := TenancyContractRec."Security Amount Pending";
-                tenancyContractSubPage.Validate(Amount);
+                tenancyContractSubPage."BLRAmount" := TenancyContractRec."BLRSecurity Amount Pending";
+                tenancyContractSubPage.Validate("BLRAmount");
                 tenancyContractSubPage.Modify();
             end;
         end;

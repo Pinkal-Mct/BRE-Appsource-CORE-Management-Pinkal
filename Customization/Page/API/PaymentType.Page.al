@@ -11,7 +11,7 @@ page 73209605 "Payment Type"
     EntityName = 'paymentType';
     EntitySetName = 'paymentTypes';
     PageType = API;
-    SourceTable = "Payment Type";
+    SourceTable = "BLRPaymentType";
     ODataKeyFields = SystemId;
     ModifyAllowed = true;
     DeleteAllowed = true;
@@ -22,11 +22,11 @@ page 73209605 "Payment Type"
         {
             repeater(General)
             {
-                field(paymentID; Rec."Payment ID")
+                field(paymentID; Rec."BLRPayment ID")
                 {
                     Caption = 'Payment ID';
                 }
-                field(paymentMethod; Rec."Payment Method")
+                field(paymentMethod; Rec."BLRPayment Method")
                 {
                     Caption = 'Payment Method';
                 }

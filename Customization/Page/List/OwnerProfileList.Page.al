@@ -1,7 +1,7 @@
 page 73209651 "Owner Profile List"
 {
     PageType = List;
-    SourceTable = "Owner Profile";
+    SourceTable = "BLROwnerProfile";
     ApplicationArea = All;
     Caption = 'Owner Profiles';
     UsageCategory = Lists;
@@ -13,45 +13,45 @@ page 73209651 "Owner Profile List"
         {
             repeater(Group)
             {
-                field("Owner ID"; rec."Owner ID")
+                field("Owner ID"; rec."BLROwner ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Unique identifier for the owner profile.';
                 }
-                field("Full Name"; rec."Full Name")
+                field("Full Name"; rec."BLRFull Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Name';
                     ToolTip = 'Full name of the owner.';
                 }
-                field("Nationality"; rec."Nationality")
+                field("Nationality"; rec."BLRNationality")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Nationality of the owner.';
 
                 }
-                field("Phone Number"; rec."Phone Number")
+                field("Phone Number"; rec."BLRPhone Number")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Contact phone number of the owner.';
                 }
-                field("Email Address"; rec."Email Address")
+                field("Email Address"; rec."BLREmail Address")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Email address of the owner.';
                 }
-                field("Status"; rec."Status")
+                field("Status"; rec."BLRStatus")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Current status of the owner profile, such as Active or Inactive.';
                 }
 
-                field("Ejari Registration Number"; Rec."Ejari Registration Number")
+                field("Ejari Registration Number"; Rec."BLREjari Registration Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Ejari Reg. No.';
                 }
-                field("RERA Owner ID"; Rec."RERA Owner ID")
+                field("RERA Owner ID"; Rec."BLRRERA Owner ID")
                 {
                     ApplicationArea = All;
                     Caption = 'RERA Owner ID';

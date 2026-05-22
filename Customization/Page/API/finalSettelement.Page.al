@@ -11,7 +11,7 @@ page 73209593 finalSettelement
     EntityName = 'finalSettlement';
     EntitySetName = 'finalSettlements';
     PageType = API;
-    SourceTable = FinalSettlement;
+    SourceTable = "BLRFinalSettlement";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -22,19 +22,19 @@ page 73209593 finalSettelement
         {
             repeater(General)
             {
-                field(contractId; Rec."Contract ID")
+                field(contractId; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(receivablecontractId; Rec."Contract ID")
+                field(receivablecontractId; Rec."BLRContract ID")
                 {
                     Caption = 'Receivable Contract ID';
                 }
-                field(depositBank; Rec."Deposit Bank")
+                field(depositBank; Rec."BLRDeposit Bank")
                 {
                     Caption = 'Deposit Bank';
                 }
-                field(depositStatus; Rec."Deposit Status")
+                field(depositStatus; Rec."BLRDeposit Status")
                 {
                     Caption = 'Deposit Status';
                 }
@@ -58,56 +58,56 @@ page 73209593 finalSettelement
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(receivabletenantID; Rec."Tenant ID")
+                field(receivabletenantID; Rec."BLRTenant ID")
                 {
                     Caption = 'Receivable Tenant ID';
                 }
 
-                field("receivableTotalAmount"; Rec."Receivable Total Amount")
+                field("receivableTotalAmount"; Rec."BLRReceivable Total Amount")
                 {
                     Caption = 'Receivable Total Amount';
                 }
-                field("receivableDueDate"; Rec."Receivable Due Date")
+                field("receivableDueDate"; Rec."BLRReceivable Due Date")
                 {
                     Caption = 'Receivable Due Date';
                 }
-                field("receivablePaymentmode"; Rec."Receivable Payment mode")
+                field("receivablePaymentmode"; Rec."BLRReceivable Payment mode")
                 {
                     Caption = 'Receivable Payment mode';
                 }
-                field("receivablePaymentStatus"; Rec."Receivable Payment Status")
+                field("receivablePaymentStatus"; Rec."BLRReceivable Payment Status")
                 {
                     Caption = 'Receivable Payment Status';
                 }
-                field("receivableChequeNo"; Rec."Receivable Cheque No.")
+                field("receivableChequeNo"; Rec."BLRReceivable Cheque No.")
                 {
                     Caption = 'Receivable Cheque No.';
                 }
-                field("receivablefromtheTenant"; Rec."Receivable from the Tenant")
+                field("receivablefromtheTenant"; Rec."BLRReceivable from the Tenant")
                 {
                     Caption = 'Receivable from the Tenant';
                 }
-                field("paymentProcessed"; Rec."Payment Processed")
+                field("paymentProcessed"; Rec."BLRPayment Processed")
                 {
                     Caption = 'Payment Processed';
                 }
-                field("balanceReceivable"; Rec."Balance Receivable")
+                field("balanceReceivable"; Rec."BLRBalance Receivable")
                 {
                     Caption = 'Balance Receivable';
                 }
-                field(paymentStatusmode; Rec.PaymentStatus)
+                field(paymentStatusmode; Rec."BLRPaymentStatus")
                 {
                     Caption = 'Payment Status mode';
                 }
-                field("paymentreceipt"; Rec."Payment Receipt")
+                field("paymentreceipt"; Rec."BLRPayment Receipt")
                 {
                     Caption = 'Payment Receipt';
                 }
-                field("paymentreceiptdocumentuRL"; Rec."Payment Receipt document URL")
+                field("paymentreceiptdocumentuRL"; Rec."BLRPmtRcptDocURL")
                 {
                     Caption = 'Payment Receipt document URL';
                 }
-                field(receivablePaymentStatuss; Rec.receivablePaymentStatuss)
+                field(receivablePaymentStatuss; Rec."BLRreceivablePaymentStatuss")
                 {
                     Caption = 'receivable Payment Status';
                 }

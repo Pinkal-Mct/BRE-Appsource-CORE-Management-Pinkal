@@ -1,7 +1,7 @@
 page 73209621 "Community Card"
 {
     PageType = Card;
-    SourceTable = Community;
+    SourceTable = "BLRCommunity";
     ApplicationArea = All;
     Caption = 'Community Card';
     UsageCategory = None;
@@ -13,24 +13,24 @@ page 73209621 "Community Card"
             group(Group)
             {
                 Caption = 'Community Details';
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the unique identifier for the community.';
                 }
-                field("Sl No."; Rec."Sl No.")
+                field("Sl No."; Rec."BLRSl No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the serial number for the community.';
                 }
-                field("Community Name"; Rec."Community Name")
+                field("Community Name"; Rec."BLRCommunity Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the community.';
                     ShowMandatory = true;
                     NotBlank = true;
                 }
-                field("Emirate Name"; Rec."Emirate Name")
+                field("Emirate Name"; Rec."BLREmirate Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the emirate associated with the community.';
@@ -42,7 +42,7 @@ page 73209621 "Community Card"
                         CurrPage.SaveRecord();
                     end;
                 }
-                field("Community Code"; Rec."Community Code")
+                field("Community Code"; Rec."BLRCommunity Code")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the code of the community.';
@@ -53,7 +53,7 @@ page 73209621 "Community Card"
     }
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.TestField("Community Name");
-        Rec.TestField("Emirate Name");
+        Rec.TestField("BLRCommunity Name");
+        Rec.TestField("BLREmirate Name");
     end;
 }

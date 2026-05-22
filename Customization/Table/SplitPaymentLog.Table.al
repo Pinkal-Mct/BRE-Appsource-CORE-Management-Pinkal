@@ -1,98 +1,98 @@
-table 73209690 "SplitPaymentLog"
+table 73209690 "BLRSplitPaymentLog"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "ID";
+    DataCaptionFields = "BLRID";
 
 
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'ID';
             Editable = false;
         }
-        field(73209576; "Approval Status"; Text[100])
+        field(73209576; "BLRApproval Status"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Status';
             Editable = false;
         }
-        field(73209577; "Request Type"; Text[50])
+        field(73209577; "BLRRequest Type"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Request Type';
             Editable = false;
         }
 
-        field(73209578; "Tenant ID"; Text[50])
+        field(73209578; "BLRTenant ID"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
             Editable = false;
         }
-        field(73209579; "Contract ID"; Integer)
+        field(73209579; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
             Editable = false;
         }
 
-        field(73209580; "New Amount"; Decimal)
+        field(73209580; "BLRNew Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'New Amount';
             Editable = false;
         }
-        field(73209581; "New VAT Amount"; Decimal)
+        field(73209581; "BLRNew VAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'New Vat Amount';
             Editable = false;
         }
 
-        field(73209582; "Change Amount Including VAT"; Decimal)
+        field(73209582; "BLRChange Amount Including VAT"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'New Amount Including VAT';
             Editable = false;
         }
 
-        field(73209583; "Payment mode"; Text[300])
+        field(73209583; "BLRPayment mode"; Text[300])
         {
             DataClassification = CustomerContent;
             Caption = 'Payment mode';
-            TableRelation = "Payment Type"."Payment Method";
+            TableRelation = "BLRPaymentType"."BLRPayment Method";
             Editable = false;
         }
 
-        field(73209584; "Due Date"; Date)
+        field(73209584; "BLRDue Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'New Due Date';
             Editable = false;
         }
 
-        field(73209585; "Payment Series"; Text[200])
+        field(73209585; "BLRPayment Series"; Text[200])
         {
             DataClassification = CustomerContent;
             Caption = 'Payment Series';
             Editable = false;
         }
-        field(73209586; "Items"; Text[500])
+        field(73209586; "BLRItems"; Text[500])
         {
             DataClassification = CustomerContent;
             Caption = 'Items';
             Editable = false;
         }
 
-        field(73209587; "Entry No."; Integer)
+        field(73209587; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
             Editable = false;
         }
-        field(73209588; "Deposit Bank Name"; Text[100])
+        field(73209588; "BLRDeposit Bank Name"; Text[100])
         {
             DataClassification = AccountData;
             TableRelation = "Bank Account";
@@ -101,12 +101,12 @@ table 73209690 "SplitPaymentLog"
             var
                 BankAccountRec: Record "Bank Account";
             begin
-                if "Deposit Bank Name" <> '' then
-                    if BankAccountRec.Get("Deposit Bank Name") then
-                        "Deposit Bank Name" := BankAccountRec."Name";
+                if "BLRDeposit Bank Name" <> '' then
+                    if BankAccountRec.Get("BLRDeposit Bank Name") then
+                        "BLRDeposit Bank Name" := BankAccountRec."Name";
             end;
         }
-        field(73209589; "Cheque Number"; Text[20])
+        field(73209589; "BLRCheque Number"; Text[20])
         {
             DataClassification = AccountData;
             Caption = 'Cheque Number';
@@ -115,7 +115,7 @@ table 73209690 "SplitPaymentLog"
 
     keys
     {
-        key(Key1; "Entry No.", "ID")
+        key(Key1;"BLREntry No.", "BLRID")
         {
             Clustered = true;
         }

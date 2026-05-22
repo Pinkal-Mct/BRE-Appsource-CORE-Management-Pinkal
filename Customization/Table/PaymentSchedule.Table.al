@@ -1,44 +1,44 @@
-table 73209648 "Payment Schedule"
+table 73209648 "BLRPaymentSchedule"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "Contract ID";
+    DataCaptionFields = "BLRContract ID";
 
     fields
     {
-        field(73209575; "Tenant Id"; Code[20])
+        field(73209575; "BLRTenant Id"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant Id';
-            TableRelation = "Lease Proposal Details"."Tenant ID";
+            TableRelation = "BLRLeaseProposalDetails"."BLRTenant ID";
             Editable = false;
         }
 
-        field(73209576; "Contract ID"; Integer)
+        field(73209576; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
-            TableRelation = "Tenancy Contract"."Contract ID" WHERE("Tenant Contract Status" = CONST(Active));
+            TableRelation = "BLRTenancyContract"."BLRContract ID" WHERE("BLRTenant Contract Status" = CONST(Active));
             Caption = 'Contract ID';
 
             trigger OnValidate()
             var
-                leaserec: Record "Tenancy Contract";
+                leaserec: Record "BLRTenancyContract";
 
             begin
-                leaserec.SetRange("Contract ID", Rec."Contract ID");
+                leaserec.SetRange("BLRContract ID", Rec."BLRContract ID");
                 if leaserec.FindFirst() then begin
-                    "Tenant Id" := leaserec."Tenant Id";
-                    "Tenant Name" := leaserec."Customer Name";
-                    "Contract Status" := Format(leaserec."Tenant Contract Status");
-                    "Contract Start date" := leaserec."Contract Start Date";
-                    "Contract End date" := leaserec."Contract End Date";
-                    "Property ID" := leaserec."Property ID";
-                    "Property Classification" := leaserec."Property Classification";
+                    "BLRTenant Id" := leaserec."BLRTenant Id";
+                    "BLRTenant Name" := leaserec."BLRCustomer Name";
+                    "BLRContract Status" := Format(leaserec."BLRTenant Contract Status");
+                    "BLRContract Start date" := leaserec."BLRContract Start Date";
+                    "BLRContract End date" := leaserec."BLRContract End Date";
+                    "BLRProperty ID" := leaserec."BLRProperty ID";
+                    "BLRProperty Classification" := leaserec."BLRProperty Classification";
                 end else begin
-                    "Tenant Id" := '';
-                    "Tenant Name" := '';
-                    "Contract Status" := '';
-                    "Property ID" := '';
-                    "Property Classification" := '';
+                    "BLRTenant Id" := '';
+                    "BLRTenant Name" := '';
+                    "BLRContract Status" := '';
+                    "BLRProperty ID" := '';
+                    "BLRProperty Classification" := '';
 
                 end;
                 UpdatePaymentSchedule2();
@@ -48,57 +48,57 @@ table 73209648 "Payment Schedule"
             end;
         }
 
-        field(73209577; "Total Amount Including VAT"; Decimal)
+        field(73209577; "BLRTotal Amount Including VAT"; Decimal)
         {
             Caption = 'Total Amount Including VAT';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Payment Schedule2"."Amount Including VAT" where("Contract ID" = field("Contract ID")));
+            CalcFormula = sum("BLRPaymentSchedule2"."BLRAmount Including VAT" where("BLRContract ID" = field("BLRContract ID")));
         }
 
 
-        field(73209578; "Total Amount"; Decimal)
+        field(73209578; "BLRTotal Amount"; Decimal)
         {
             Caption = 'Total Amount';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Payment Schedule2".Amount where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
+            CalcFormula = sum("BLRPaymentSchedule2"."BLRAmount" where("BLRContract ID" = field("BLRContract ID"), "BLRTenant ID" = field("BLRTenant ID")));
         }
-        field(73209579; "Contract End date"; Date)
+        field(73209579; "BLRContract End date"; Date)
         {
             Caption = 'Contract End date';
             DataClassification = CustomerContent;
         }
-        field(73209580; "Total VAT Amount"; Decimal)
+        field(73209580; "BLRTotal VAT Amount"; Decimal)
         {
             Caption = 'Total VAT Amount';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Payment Schedule2"."VAT Amount" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
+            CalcFormula = sum("BLRPaymentSchedule2"."BLRVAT Amount" where("BLRContract ID" = field("BLRContract ID"), "BLRTenant ID" = field("BLRTenant ID")));
         }
-        field(73209581; "Tenant Name"; Text[100])
+        field(73209581; "BLRTenant Name"; Text[100])
         {
             DataClassification = EndUserIdentifiableInformation;
             Caption = 'Tenant Name';
 
         }
-        field(73209582; "Property Classification"; Text[100])
+        field(73209582; "BLRProperty Classification"; Text[100])
         {
             Caption = 'Property Classification';
             DataClassification = CustomerContent;
         }
 
-        field(73209583; "Contract Status"; Text[100])
+        field(73209583; "BLRContract Status"; Text[100])
         {
             Caption = 'Contract Status';
             DataClassification = CustomerContent;
         }
-        field(73209584; "Contract Start date"; Date)
+        field(73209584; "BLRContract Start date"; Date)
         {
             Caption = 'Contract Start date';
             DataClassification = CustomerContent;
         }
-        field(73209585; "Property ID"; Code[40])
+        field(73209585; "BLRProperty ID"; Code[40])
         {
             Caption = 'Property ID';
             DataClassification = CustomerContent;
@@ -107,52 +107,52 @@ table 73209648 "Payment Schedule"
 
     keys
     {
-        key(PK; "Contract ID")
+        key(PK;"BLRContract ID")
         {
             Clustered = true;
         }
     }
     procedure UpdatePaymentSchedule2()
     var
-        RevenueSubpage: Record "Tenancy Contract Subpage";
-        PaymentSchedule2: Record "Payment Schedule2";
+        RevenueSubpage: Record "BLRTenancyContractSubpage";
+        PaymentSchedule2: Record "BLRPaymentSchedule2";
         vatper: Integer;
 
     begin
-        PaymentSchedule2.SetRange("Contract ID", Rec."Contract ID");
+        PaymentSchedule2.SetRange("BLRContract ID", Rec."BLRContract ID");
         if PaymentSchedule2.FindSet() then
             PaymentSchedule2.DeleteAll();
 
-        RevenueSubpage.SetRange("ContractID", Rec."Contract ID");
-        RevenueSubpage.SetRange("Payment Type", 1);
-        RevenueSubpage.SetFilter("Amount Including VAT", '<>%1', 0);
+        RevenueSubpage.SetRange("BLRContractID", Rec."BLRContract ID");
+        RevenueSubpage.SetRange("BLRPayment Type", 1);
+        RevenueSubpage.SetFilter("BLRAmount Including VAT", '<>%1', 0);
         if not RevenueSubpage.FindSet() then begin
             Message('No Payment Type 1 records found in the Tenancy Contract.');
             exit;
         end;
         repeat
             PaymentSchedule2.Init();
-            PaymentSchedule2."Contract ID" := RevenueSubpage."ContractID";
-            PaymentSchedule2."Contract start date" := Rec."Contract Start date";
-            PaymentSchedule2."Contract Status" := Rec."Contract Status";
-            PaymentSchedule2."Property ID" := Rec."Property ID";
-            PaymentSchedule2."Tenant Name" := Rec."Tenant Name";
-            PaymentSchedule2."Tenant ID" := RevenueSubpage."TenantId";
-            PaymentSchedule2."Property Classification" := Rec."Property Classification";
-            PaymentSchedule2."Secondary Item Type" := RevenueSubpage."Secondary Item Type";
-            PaymentSchedule2.Amount := RevenueSubpage.Amount;
-            PaymentSchedule2."VAT Amount" := RevenueSubpage."VAT Amount";
-            PaymentSchedule2."Amount Including VAT" := RevenueSubpage."Amount Including VAT";
-            PaymentSchedule2."Installment Start Date" := RevenueSubpage."Start Date";
-            PaymentSchedule2."Installment End Date" := RevenueSubpage."End Date";
-            PaymentSchedule2."Due Date" := RevenueSubpage."Start Date";
-            PaymentSchedule2."Installment No." := 1;
-            PaymentSchedule2.Year := 1;
-            if RevenueSubpage."VAT %" = RevenueSubpage."VAT %"::"5%" then
+            PaymentSchedule2."BLRContract ID" := RevenueSubpage."BLRContractID";
+            PaymentSchedule2."BLRContract start date" := Rec."BLRContract Start date";
+            PaymentSchedule2."BLRContract Status" := Rec."BLRContract Status";
+            PaymentSchedule2."BLRProperty ID" := Rec."BLRProperty ID";
+            PaymentSchedule2."BLRTenant Name" := Rec."BLRTenant Name";
+            PaymentSchedule2."BLRTenant ID" := RevenueSubpage."BLRTenantID";
+            PaymentSchedule2."BLRProperty Classification" := Rec."BLRProperty Classification";
+            PaymentSchedule2."BLRSecondary Item Type" := RevenueSubpage."BLRSecondary Item Type";
+            PaymentSchedule2."BLRAmount" := RevenueSubpage."BLRAmount";
+            PaymentSchedule2."BLRVAT Amount" := RevenueSubpage."BLRVAT Amount";
+            PaymentSchedule2."BLRAmount Including VAT" := RevenueSubpage."BLRAmount Including VAT";
+            PaymentSchedule2."BLRInstallment Start Date" := RevenueSubpage."BLRStart Date";
+            PaymentSchedule2."BLRInstallment End Date" := RevenueSubpage."BLREnd Date";
+            PaymentSchedule2."BLRDue Date" := RevenueSubpage."BLRStart Date";
+            PaymentSchedule2."BLRInstallment No." := 1;
+            PaymentSchedule2."BLRYear" := 1;
+            if RevenueSubpage."BLRVAT %" = RevenueSubpage."BLRVAT %"::"5%" then
                 vatper := 5
             else
                 vatper := 0;
-            PaymentSchedule2."VAT%" := vatper;
+            PaymentSchedule2."BLRVAT%" := vatper;
             PaymentSchedule2.Insert();
             Clear(PaymentSchedule2);
         until RevenueSubpage.Next() = 0;
@@ -160,32 +160,32 @@ table 73209648 "Payment Schedule"
 
     procedure UpdatePaymentSchedule()
     var
-        RentCalculationSubpage: Record "Rent Calculation Subpage2";
-        PaymentSchedule: Record "Payment Schedule2";
+        RentCalculationSubpage: Record "BLRRentCalculationSubpage2";
+        PaymentSchedule: Record "BLRPaymentSchedule2";
     begin
 
-        RentCalculationSubpage.SetRange("Contract ID", Rec."Contract ID");
+        RentCalculationSubpage.SetRange("BLRContract ID", Rec."BLRContract ID");
 
         if RentCalculationSubpage.FindSet() then
             repeat
                 PaymentSchedule.Init();
-                PaymentSchedule."Contract ID" := RentCalculationSubpage."Contract ID";
-                PaymentSchedule."Contract start date" := Rec."Contract Start date";
-                PaymentSchedule."Contract Status" := Rec."Contract Status";
-                PaymentSchedule."Property ID" := Rec."Property ID";
-                PaymentSchedule."Tenant Name" := Rec."Tenant Name";
-                PaymentSchedule."Tenant ID" := RentCalculationSubpage."Tenant Id";
-                PaymentSchedule."Secondary Item Type" := RentCalculationSubpage."Secondary Item Type";
-                PaymentSchedule.Amount := RentCalculationSubpage.Amount;
-                PaymentSchedule."VAT Amount" := RentCalculationSubpage."VAT Amount";
-                PaymentSchedule."Property Classification" := RentCalculationSubpage."Primary Classification";
-                PaymentSchedule."Installment Start Date" := RentCalculationSubpage."Installment Start Date";
-                PaymentSchedule."Installment End Date" := RentCalculationSubpage."Installment End Date";
-                PaymentSchedule."Installment No." := RentCalculationSubpage."Installment No.";
-                PaymentSchedule."Amount Including VAT" := RentCalculationSubpage."Amount Including VAT";
-                PaymentSchedule."Due Date" := RentCalculationSubpage."Due Date";
-                PaymentSchedule."VAT%" := RentCalculationSubpage."VAT %";
-                PaymentSchedule.Year := RentCalculationSubpage.Year;
+                PaymentSchedule."BLRContract ID" := RentCalculationSubpage."BLRContract ID";
+                PaymentSchedule."BLRContract start date" := Rec."BLRContract Start date";
+                PaymentSchedule."BLRContract Status" := Rec."BLRContract Status";
+                PaymentSchedule."BLRProperty ID" := Rec."BLRProperty ID";
+                PaymentSchedule."BLRTenant Name" := Rec."BLRTenant Name";
+                PaymentSchedule."BLRTenant ID" := RentCalculationSubpage."BLRTenant Id";
+                PaymentSchedule."BLRSecondary Item Type" := RentCalculationSubpage."BLRSecondary Item Type";
+                PaymentSchedule."BLRAmount" := RentCalculationSubpage."BLRAmount";
+                PaymentSchedule."BLRVAT Amount" := RentCalculationSubpage."BLRVAT Amount";
+                PaymentSchedule."BLRProperty Classification" := RentCalculationSubpage."BLRPrimary Classification";
+                PaymentSchedule."BLRInstallment Start Date" := RentCalculationSubpage."BLRInstallment Start Date";
+                PaymentSchedule."BLRInstallment End Date" := RentCalculationSubpage."BLRInstallment End Date";
+                PaymentSchedule."BLRInstallment No." := RentCalculationSubpage."BLRInstallment No.";
+                PaymentSchedule."BLRAmount Including VAT" := RentCalculationSubpage."BLRAmount Including VAT";
+                PaymentSchedule."BLRDue Date" := RentCalculationSubpage."BLRDue Date";
+                PaymentSchedule."BLRVAT%" := RentCalculationSubpage."BLRVAT %";
+                PaymentSchedule."BLRYear" := RentCalculationSubpage."BLRYear";
                 PaymentSchedule.Insert();
                 Clear(PaymentSchedule);
             until RentCalculationSubpage.Next() = 0;
@@ -194,35 +194,35 @@ table 73209648 "Payment Schedule"
 
     procedure addrevnuestructurpagelinePaymentschedule2()
     var
-        RevenueStructureSubpage: Record "Revenue Structure Subpage1";
-        PaymentSchedule3: Record "Payment Schedule2";
+        RevenueStructureSubpage: Record "BLRRevenueStructureSubpage1";
+        PaymentSchedule3: Record "BLRPaymentSchedule2";
     begin
 
-        RevenueStructureSubpage.SetRange("Contract ID", Rec."Contract ID");
+        RevenueStructureSubpage.SetRange("BLRContract ID", Rec."BLRContract ID");
 
 
         if RevenueStructureSubpage.FindSet() then
             repeat
                 PaymentSchedule3.Init();
 
-                PaymentSchedule3."Contract ID" := RevenueStructureSubpage."Contract ID";
+                PaymentSchedule3."BLRContract ID" := RevenueStructureSubpage."BLRContract ID";
 
-                PaymentSchedule3."Contract start date" := Rec."Contract Start date";
-                PaymentSchedule3."Contract Status" := Rec."Contract Status";
-                PaymentSchedule3."Property ID" := Rec."Property ID";
-                PaymentSchedule3."Tenant Name" := Rec."Tenant Name";
-                PaymentSchedule3."Tenant ID" := RevenueStructureSubpage."Tenant Id";
-                PaymentSchedule3."Property Classification" := Rec."Property Classification";
-                PaymentSchedule3."Secondary Item Type" := RevenueStructureSubpage."Secondary Item Type";
-                PaymentSchedule3.Amount := RevenueStructureSubpage.Amount;
-                PaymentSchedule3."VAT Amount" := RevenueStructureSubpage."VAT Amount";
-                PaymentSchedule3."Installment Start Date" := RevenueStructureSubpage."Installment Start Date";
-                PaymentSchedule3."Installment End Date" := RevenueStructureSubpage."Installment End Date";
-                PaymentSchedule3."Installment No." := RevenueStructureSubpage."Installment No.";
-                PaymentSchedule3."Amount Including VAT" := RevenueStructureSubpage."Amount Including VAT";
-                PaymentSchedule3."Due Date" := RevenueStructureSubpage."Due Date";
-                PaymentSchedule3."VAT%" := RevenueStructureSubpage."VAT %";
-                PaymentSchedule3.Year := RevenueStructureSubpage.Year;
+                PaymentSchedule3."BLRContract start date" := Rec."BLRContract Start date";
+                PaymentSchedule3."BLRContract Status" := Rec."BLRContract Status";
+                PaymentSchedule3."BLRProperty ID" := Rec."BLRProperty ID";
+                PaymentSchedule3."BLRTenant Name" := Rec."BLRTenant Name";
+                PaymentSchedule3."BLRTenant ID" := RevenueStructureSubpage."BLRTenant Id";
+                PaymentSchedule3."BLRProperty Classification" := Rec."BLRProperty Classification";
+                PaymentSchedule3."BLRSecondary Item Type" := RevenueStructureSubpage."BLRSecondary Item Type";
+                PaymentSchedule3."BLRAmount" := RevenueStructureSubpage."BLRAmount";
+                PaymentSchedule3."BLRVAT Amount" := RevenueStructureSubpage."BLRVAT Amount";
+                PaymentSchedule3."BLRInstallment Start Date" := RevenueStructureSubpage."BLRInstallment Start Date";
+                PaymentSchedule3."BLRInstallment End Date" := RevenueStructureSubpage."BLRInstallment End Date";
+                PaymentSchedule3."BLRInstallment No." := RevenueStructureSubpage."BLRInstallment No.";
+                PaymentSchedule3."BLRAmount Including VAT" := RevenueStructureSubpage."BLRAmount Including VAT";
+                PaymentSchedule3."BLRDue Date" := RevenueStructureSubpage."BLRDue Date";
+                PaymentSchedule3."BLRVAT%" := RevenueStructureSubpage."BLRVAT %";
+                PaymentSchedule3."BLRYear" := RevenueStructureSubpage."BLRYear";
                 PaymentSchedule3.Insert();
                 Clear(PaymentSchedule3);
             until RevenueStructureSubpage.Next() = 0;
@@ -231,8 +231,8 @@ table 73209648 "Payment Schedule"
 
     procedure EvaluatePaymentSchedule()
     var
-        PaymentScheduleRec: Record "Payment Schedule2";
-        PaymentScheduleRec2: Record "Payment Schedule2";
+        PaymentScheduleRec: Record "BLRPaymentSchedule2";
+        PaymentScheduleRec2: Record "BLRPaymentSchedule2";
         NewPaymentCode: Code[20];
         SequenceNo: Integer;
         MinDueDate: Date;
@@ -241,12 +241,12 @@ table 73209648 "Payment Schedule"
         i: Integer;
         SortedDueDateList: List of [Date];
     begin
-        PaymentScheduleRec.SetRange("Tenant ID", Rec."Tenant ID");
-        PaymentScheduleRec.SetRange("Contract ID", Rec."Contract ID");
+        PaymentScheduleRec.SetRange("BLRTenant ID", Rec."BLRTenant Id");
+        PaymentScheduleRec.SetRange("BLRContract ID", Rec."BLRContract ID");
         if PaymentScheduleRec.FindSet() then
             repeat
-                if not DueDateList.Contains(PaymentScheduleRec."Due Date") then
-                    DueDateList.Add(PaymentScheduleRec."Due Date");
+                if not DueDateList.Contains(PaymentScheduleRec."BLRDue Date") then
+                    DueDateList.Add(PaymentScheduleRec."BLRDue Date");
             until PaymentScheduleRec.Next() = 0;
         while DueDateList.Count() > 0 do begin
             TempDate := DueDateList.Get(1);
@@ -261,13 +261,13 @@ table 73209648 "Payment Schedule"
             MinDueDate := SortedDueDateList.Get(i);
             NewPaymentCode := GeneratePaymentCode(SequenceNo);
             PaymentScheduleRec2.Reset();
-            PaymentScheduleRec2.SetRange("Due Date", MinDueDate);
-            PaymentScheduleRec2.SetRange("Tenant ID", Rec."Tenant ID");
-            PaymentScheduleRec2.SetRange("Contract ID", Rec."Contract ID");
+            PaymentScheduleRec2.SetRange("BLRDue Date", MinDueDate);
+            PaymentScheduleRec2.SetRange("BLRTenant ID", Rec."BLRTenant Id");
+            PaymentScheduleRec2.SetRange("BLRContract ID", Rec."BLRContract ID");
 
             if PaymentScheduleRec2.FindSet() then
                 repeat
-                    PaymentScheduleRec2."Payment Series" := NewPaymentCode;
+                    PaymentScheduleRec2."BLRPayment Series" := NewPaymentCode;
                     PaymentScheduleRec2.Modify();
                 until PaymentScheduleRec2.Next() = 0;
             SequenceNo += 1;
@@ -298,22 +298,22 @@ table 73209648 "Payment Schedule"
 
     procedure Deletepaymetnscheudlesubpage()
     var
-        Paymentschedulesubpage: Record "Payment Schedule2";
+        Paymentschedulesubpage: Record "BLRPaymentSchedule2";
     begin
-        Paymentschedulesubpage.SetRange("Contract ID", Rec."Contract ID");
+        Paymentschedulesubpage.SetRange("BLRContract ID", Rec."BLRContract ID");
         if Paymentschedulesubpage.FindSet() then
             Paymentschedulesubpage.DeleteAll();
     end;
 
     procedure TenancyContractsubpageInvoicedPaidUpdate()
     var
-        TenancyContractSubPageRec: Record "Tenancy Contract Subpage";
+        TenancyContractSubPageRec: Record "BLRTenancyContractSubpage";
     begin
-        TenancyContractSubPageRec.SetRange("ContractID", Rec."Contract ID");
+        TenancyContractSubPageRec.SetRange("BLRContractID", Rec."BLRContract ID");
         if TenancyContractSubPageRec.FindSet()
         then
             repeat
-                TenancyContractSubPageRec.Validate("Invoiced and Paid", 0);
+                TenancyContractSubPageRec.Validate("BLRInvoiced and Paid", 0);
                 TenancyContractSubPageRec.Modify();
             until TenancyContractSubPageRec.Next() = 0;
     end;

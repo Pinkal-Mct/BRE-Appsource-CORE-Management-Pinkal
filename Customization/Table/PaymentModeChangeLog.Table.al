@@ -1,61 +1,61 @@
-table 73209647 "PaymentModeChangeLog"
+table 73209647 "BLRPaymentModeChangeLog"
 {
     DataClassification = CustomerContent;
-    DataCaptionFields = "ID";
+    DataCaptionFields = "BLRID";
 
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'ID';
             Editable = false;
         }
-        field(73209576; "Approval Status"; Text[100])
+        field(73209576; "BLRApproval Status"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Status';
             Editable = false;
         }
-        field(73209577; "Request Type"; Text[50])
+        field(73209577; "BLRRequest Type"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Request Type';
             Editable = false;
         }
 
-        field(73209578; "Tenant ID"; Text[50])
+        field(73209578; "BLRTenant ID"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
             Editable = false;
         }
-        field(73209579; "Contract ID"; Integer)
+        field(73209579; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
             Editable = false;
         }
-        field(73209580; "Payment mode"; Text[300])
+        field(73209580; "BLRPayment mode"; Text[300])
         {
             DataClassification = CustomerContent;
             Caption = 'Payment mode';
             Editable = false;
         }
 
-        field(73209581; "Payment Series"; Text[200])
+        field(73209581; "BLRPayment Series"; Text[200])
         {
             DataClassification = CustomerContent;
             Caption = 'Payment Series';
             Editable = false;
         }
-        field(73209582; "Entry No."; Integer)
+        field(73209582; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
             Editable = false;
         }
-        field(73209583; "Deposit Bank Name"; Text[100])
+        field(73209583; "BLRDeposit Bank Name"; Text[100])
         {
             DataClassification = AccountData;
             TableRelation = "Bank Account";
@@ -64,12 +64,12 @@ table 73209647 "PaymentModeChangeLog"
             var
                 BankAccountRec: Record "Bank Account";
             begin
-                if "Deposit Bank Name" <> '' then
-                    if BankAccountRec.Get("Deposit Bank Name") then
-                        "Deposit Bank Name" := BankAccountRec."Name";
+                if "BLRDeposit Bank Name" <> '' then
+                    if BankAccountRec.Get("BLRDeposit Bank Name") then
+                        "BLRDeposit Bank Name" := BankAccountRec."Name";
             end;
         }
-        field(73209584; "Cheque Number"; Text[20])
+        field(73209584; "BLRCheque Number"; Text[20])
         {
             DataClassification = AccountData;
             Caption = 'Cheque Number';
@@ -78,7 +78,7 @@ table 73209647 "PaymentModeChangeLog"
 
     keys
     {
-        key(Key1; "Entry No.", "ID")
+        key(Key1;"BLREntry No.", "BLRID")
         {
             Clustered = true;
         }

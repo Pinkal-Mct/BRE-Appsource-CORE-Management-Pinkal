@@ -10,7 +10,7 @@ page 73209604 "Payment Transaction Data"
     EntityName = 'paymentTransaction';
     EntitySetName = 'paymentTransactions';
     ODataKeyFields = SystemId; // Ensure the SystemId is exposed in the API
-    SourceTable = "Payment Transaction";
+    SourceTable = "BLRPaymentTransaction";
 
     layout
     {
@@ -18,11 +18,11 @@ page 73209604 "Payment Transaction Data"
         {
             repeater(Group)
             {
-                field("ptId"; Rec."PT Id") { }
+                field("ptId"; Rec."BLRPT Id") { }
                 field(systemId; Rec.SystemId) { }
-                field("tenantId"; Rec."Tenant Id") { }
-                field("contractId"; Rec."Contract Id") { }
-                field("approvalStatus"; Rec."Approval Status") { }
+                field("tenantId"; Rec."BLRTenant Id") { }
+                field("contractId"; Rec."BLRContract Id") { }
+                field("approvalStatus"; Rec."BLRApproval Status") { }
             }
         }
     }

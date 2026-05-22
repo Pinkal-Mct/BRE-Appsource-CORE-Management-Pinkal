@@ -11,7 +11,7 @@ page 73209600 paymentdata
     EntityName = 'paymentData';
     EntitySetName = 'paymentData';
     PageType = API;
-    SourceTable = "Payment Mode2";
+    SourceTable = "BLRPaymentMode2";
     ODataKeyFields = SystemId;
 
     layout
@@ -20,35 +20,35 @@ page 73209600 paymentdata
         {
             repeater(General)
             {
-                field(amount; Rec.Amount)
+                field(amount; Rec."BLRAmount")
                 {
                     Caption = 'Amount';
                 }
-                field(amountIncludingVAT; Format(Rec."Amount Including VAT", 0, '<Integer><Decimals,3>'))
+                field(amountIncludingVAT; Format(Rec."BLRAmount Including VAT", 0, '<Integer><Decimals,3>'))
                 {
                     Caption = 'Amount Including VAT';
                 }
-                field(chequeNumber; Rec."Cheque Number")
+                field(chequeNumber; Rec."BLRCheque Number")
                 {
                     Caption = 'Cheque Number';
                 }
-                field(depositBank; Rec."Deposit Bank")
+                field(depositBank; Rec."BLRDeposit Bank")
                 {
                     Caption = 'Deposit Bank';
                 }
-                field(depositStatus; Rec."Deposit Status")
+                field(depositStatus; Rec."BLRDeposit Status")
                 {
                     Caption = 'Deposit Status';
                 }
-                field(dueDate2; Rec."Due Date")
+                field(dueDate2; Rec."BLRDue Date")
                 {
                     Caption = 'Due Date';
                 }
-                field(paymentMode; Rec."Payment Mode")
+                field(paymentMode; Rec."BLRPayment Mode")
                 {
                     Caption = 'Payment Mode';
                 }
-                field(paymentSeries; Rec."Payment Series")
+                field(paymentSeries; Rec."BLRPayment Series")
                 {
                     Caption = 'Payment Series';
                 }
@@ -73,104 +73,104 @@ page 73209600 paymentdata
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantId; Rec."Tenant Id")
+                field(tenantId; Rec."BLRTenant Id")
                 {
                     Caption = 'Tenant Id';
                 }
-                field(vatAmount; Rec."VAT Amount")
+                field(vatAmount; Rec."BLRVAT Amount")
                 {
                     Caption = 'VAT Amount';
                 }
-                field("contractID"; Rec."Contract ID")
+                field("contractID"; Rec."BLRContract ID")
                 {
                     Caption = 'Contract id';
                 }
-                field("paymentStatus"; Rec."Payment Status")
+                field("paymentStatus"; Rec."BLRPayment Status")
                 {
                     Caption = 'Payment Status';
                 }
-                field("chequeStatus"; Rec."Cheque Status")
+                field("chequeStatus"; Rec."BLRCheque Status")
                 {
                     Caption = 'Cheque Status';
                 }
-                field("invoice"; Rec."Invoice #")
+                field("invoice"; Rec."BLRInvoice #")
                 {
                     Caption = 'Invoice';
                 }
-                field("receipt"; Rec."Receipt #")
+                field("receipt"; Rec."BLRReceipt #")
                 {
                     Caption = 'Receipt';
                 }
-                field("oldCheque"; Rec."Old Cheque #")
+                field("oldCheque"; Rec."BLROld Cheque #")
                 {
                     Caption = 'Old Cheque';
                 }
-                field("uploadCheque"; Rec."Upload Cheque")
+                field("uploadCheque"; Rec."BLRUpload Cheque")
                 {
                     Caption = 'Upload Cheque';
                 }
-                field("download"; Rec.Download)
+                field("download"; Rec."BLRDownload")
                 {
                     Caption = 'Download';
                 }
-                field(view; Rec.View)
+                field(view; Rec."BLRView")
                 {
                     Caption = 'View';
                 }
-                field("viewRevenueDetails"; Rec."View Revenue Details")
+                field("viewRevenueDetails"; Rec."BLRView Revenue Details")
                 {
                     Caption = 'View Revenue Details';
                 }
-                field("viewDocumentURL"; Rec."View Document URL")
+                field("viewDocumentURL"; Rec."BLRView Document URL")
                 {
                     Caption = 'View Document URL';
                 }
-                field("entryNo"; Rec."Entry No.")
+                field("entryNo"; Rec."BLREntry No.")
                 {
                     Caption = 'Entry No';
                 }
-                field("approveDeclineStatus"; Rec."Approve/Decline Status")
+                field("approveDeclineStatus"; Rec."BLRApprove/Decline Status")
                 {
                     Caption = 'Approve/Decline Status';
                 }
-                field("tenantEmail"; Rec."Tenant Email")
+                field("tenantEmail"; Rec."BLRTenant Email")
                 {
                     Caption = 'Tenant Email';
                 }
-                field("tenantName"; Rec."Tenant Name")
+                field("tenantName"; Rec."BLRTenant Name")
                 {
                     Caption = 'Tenant Name';
                 }
-                field("viewInvoice"; Rec."View Invoice")
+                field("viewInvoice"; Rec."BLRView Invoice")
                 {
                     Caption = 'View Invoice';
                 }
-                field("viewRecieptdocumentURL"; Rec."View Reciept document URL")
+                field("viewRecieptdocumentURL"; Rec."BLRView Reciept document URL")
                 {
                     Caption = 'View Reciept document URL';
                 }
-                field("paymentReceivedDate"; Rec."Payment Received Date")
+                field("paymentReceivedDate"; Rec."BLRPayment Received Date")
                 {
                     Caption = 'Payment Received Date';
                 }
 
-                field("paymentReminder"; Rec."Payment Reminder")
+                field("paymentReminder"; Rec."BLRPayment Reminder")
                 {
                     Caption = 'Payment Reminder';
                 }
-                field("creditNoteNo"; Rec."Credit Note No.")
+                field("creditNoteNo"; Rec."BLRCredit Note No.")
                 {
                     Caption = 'Credit Note No.';
                 }
-                field("creditNoteAmount"; Rec."Credit Note Amount")
+                field("creditNoteAmount"; Rec."BLRCredit Note Amount")
                 {
                     Caption = 'Credit Note Amount';
                 }
-                field("finalRentAmount"; Rec."Final Rent Amount")
+                field("finalRentAmount"; Rec."BLRFinal Rent Amount")
                 {
                     Caption = 'Final Rent Amount';
                 }
-                field("portalSidePaymentProcessing"; Rec."PortalSidePaymentProcessing")
+                field("portalSidePaymentProcessing"; Rec."BLRPortalSidePaymentProcessing")
                 {
                     Caption = 'Portal Side Payment Processing';
                 }

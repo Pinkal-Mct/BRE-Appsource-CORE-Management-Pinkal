@@ -1,7 +1,7 @@
 page 73209616 "Workflow Frequency PR API"
 {
     PageType = API;
-    SourceTable = "Workflow Frequency PR";
+    SourceTable = "BLRWorkflowFrequencyPR";
     APIPublisher = 'realestate';
     APIGroup = 'workflowManagement';
     APIVersion = 'v2.0';
@@ -22,23 +22,23 @@ page 73209616 "Workflow Frequency PR API"
                 Caption = 'System Identifier';
             }
 
-            field("companyID"; Rec."Company ID")
+            field("companyID"; Rec."BLRCompany ID")
             {
             }
 
-            field("workflow"; Rec."Workflow")
+            field("workflow"; Rec."BLRWorkflow")
             {
             }
 
-            field("frequencyStatus"; Rec."frequncy Status")
+            field("frequencyStatus"; Rec."BLRfrequncy Status")
             {
             }
 
-            field("noOfDays"; Rec."No. of Days")
+            field("noOfDays"; Rec."BLRNo. of Days")
             {
             }
 
-            field("propertyID"; Rec."Property ID")
+            field("propertyID"; Rec."BLRProperty ID")
             {
             }
         }

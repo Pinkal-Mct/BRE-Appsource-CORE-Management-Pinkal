@@ -1,25 +1,25 @@
-table 73209592 "Category Type"
+table 73209592 "BLRCategoryType"
 {
     DataClassification = SystemMetadata;
-    DataCaptionFields = ID;
+    DataCaptionFields = "BLRID";
 
     fields
     {
 
 
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
-        field(73209576; "Primary Item Type"; Text[100])
+        field(73209576; "BLRPrimary Item Type"; Text[100])
         {
             DataClassification = SystemMetadata;
             Caption = 'Primary Item';
-            TableRelation = "Primary Item"."Primary Item Type";
+            TableRelation = "BLRPrimaryItem"."BLRPrimary Item Type";
         }
-        field(73209577; "Category Types"; Text[100])
+        field(73209577; "BLRCategory Types"; Text[100])
         {
             DataClassification = SystemMetadata;
             Caption = 'Category';
@@ -28,7 +28,7 @@ table 73209592 "Category Type"
 
     keys
     {
-        key(PK; "ID")
+        key(PK;"BLRID")
         {
             Clustered = true;
         }
@@ -36,7 +36,7 @@ table 73209592 "Category Type"
 
     fieldgroups
     {
-        fieldgroup(DropDown; ID, "Primary Item Type", "Category Types")
+        fieldgroup(DropDown;"BLRID", "BLRPrimary Item Type", "BLRCategory Types")
         {
 
         }

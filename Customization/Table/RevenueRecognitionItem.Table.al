@@ -1,29 +1,29 @@
-table 73209677 "Revenue Recognition Item"
+table 73209677 "BLRRevenueRecognitionItem"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "RR_No."; Integer)
+        field(73209575; "BLRRR_No."; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'No.';
             Editable = false;
         }
-        field(73209576; "Item Type"; Text[100])
+        field(73209576; "BLRItem Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Item Type';
-            TableRelation = Item WHERE("Item type template" = const("Item Type Template Enum"::"Secondary Item"), "Charges Status" = CONST("Regular Charges"));
+            TableRelation = Item WHERE("BLRItem type template" = const("Item Type Template Enum"::"Secondary Item"), "BLRCharges Status" = CONST("Regular Charges"));
             trigger OnValidate()
             var
                 SecondaryItemRec: Record Item;
             begin
-                SecondaryItemRec.SetRange("No.", Rec."Item Type");
+                SecondaryItemRec.SetRange("No.", Rec."BLRItem Type");
                 if SecondaryItemRec.FindFirst() then
-                    "Item Type" := SecondaryItemRec.Description;
+                    "BLRItem Type" := SecondaryItemRec.Description;
             end;
         }
-        field(73209577; "Entry No."; Integer)
+        field(73209577; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Entry No.';
@@ -32,7 +32,7 @@ table 73209677 "Revenue Recognition Item"
     }
     keys
     {
-        key(Key1; "Entry No.")
+        key(Key1; "BLREntry No.")
         {
             Clustered = true;
         }

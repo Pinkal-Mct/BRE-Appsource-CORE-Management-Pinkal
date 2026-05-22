@@ -1,113 +1,113 @@
-table 73209687 "Single Lum_AnnualAmnt SubPage"
+table 73209687 "BLRSingleLumAnnualAmntSubPage"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "Proposal ID"; Integer)
+        field(73209575; "BLRProposal ID"; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209576; "SL_Merged Unit ID"; Code[100])
+        field(73209576; "BLRSL_Merged Unit ID"; Code[100])
         {
             DataClassification = CustomerContent;
             trigger OnValidate()
             var
-                LeaseProposal: Record "Lease Proposal Details";
+                LeaseProposal: Record "BLRLeaseProposalDetails";
             begin
-                if LeaseProposal.Get("Proposal ID", "SL_Merged Unit ID") then begin
-                    Rec."SL_Start Date" := LeaseProposal."Lease Start Date";
-                    Rec."SL_End Date" := LeaseProposal."Lease End Date";
-                    Rec."SL_Unit Sq Ft" := LeaseProposal."Unit Size";
-                    Rec."SL_Rate per Sq.Ft" := LeaseProposal."Rent Amount";
-                    Rec."SL_Merged Unit ID" := LeaseProposal."Unit Name";
-                    Rec."SL_Number of Days" := Rec."SL_End Date" - Rec."SL_Start Date";
+                if LeaseProposal.Get("BLRProposal ID", "BLRSL_Merged Unit ID") then begin
+                    Rec."BLRSL_Start Date" := LeaseProposal."BLRLease Start Date";
+                    Rec."BLRSL_End Date" := LeaseProposal."BLRLease End Date";
+                    Rec."BLRSL_Unit Sq Ft" := LeaseProposal."BLRUnit Size";
+                    Rec."BLRSL_Rate per Sq.Ft" := LeaseProposal."BLRRent Amount";
+                    Rec."BLRSL_Merged Unit ID" := LeaseProposal."BLRUnit Name";
+                    Rec."BLRSL_Number of Days" := Rec."BLRSL_End Date" - Rec."BLRSL_Start Date";
                     Modify(true);
                 end else
                     Error('No matching Lease Proposal found for the selected Unit ID.');
             end;
         }
-        field(73209577; "SL_Unit ID"; Code[100])
+        field(73209577; "BLRSL_Unit ID"; Code[100])
         {
             DataClassification = CustomerContent;
         }
-        field(73209578; "SL_Year"; Integer)
+        field(73209578; "BLRSL_Year"; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209579; "SL_Start Date"; Date)
+        field(73209579; "BLRSL_Start Date"; Date)
         {
             DataClassification = CustomerContent;
         }
-        field(73209580; "SL_End Date"; Date)
+        field(73209580; "BLRSL_End Date"; Date)
         {
             DataClassification = CustomerContent;
         }
-        field(73209581; "SL_Number of Days"; Integer)
+        field(73209581; "BLRSL_Number of Days"; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209582; "SL_Unit Sq Ft"; Decimal)
+        field(73209582; "BLRSL_Unit Sq Ft"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209583; "SL_Rate per Sq.Ft"; Decimal)
+        field(73209583; "BLRSL_Rate per Sq.Ft"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209584; "SL_Rent Increase %"; Decimal)
+        field(73209584; "BLRSL_Rent Increase %"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209585; "SL_Annual Amount"; Decimal)
+        field(73209585; "BLRSL_Annual Amount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209586; "SL_Round off"; Decimal)
+        field(73209586; "BLRSL_Round off"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209587; "SL_Final Annual Amount"; Decimal)
+        field(73209587; "BLRSL_Final Annual Amount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209588; "SL_Per Day Rent"; Decimal)
+        field(73209588; "BLRSL_Per Day Rent"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209589; "Single Lumpsum Rent1"; Code[100])
+        field(73209589; "BLRSingle Lumpsum Rent1"; Code[100])
         {
             DataClassification = CustomerContent;
             InitValue = 'Click Here For Get Data.';
             Caption = 'Click Here For Get Data.';
         }
-        field(73209590; "SL_Line No."; Integer)
+        field(73209590; "BLRSL_Line No."; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209591; "TotalFinalAmount"; Decimal)
+        field(73209591; "BLRTotalFinalAmount"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = sum("Single Lum_AnnualAmnt SubPage"."SL_Final Annual Amount" where("Proposal Id" = field("Proposal Id")));
+            CalcFormula = sum("BLRSingleLumAnnualAmntSubPage"."BLRSL_Final Annual Amount" where("BLRProposal ID" = field("BLRProposal ID")));
         }
-        field(73209592; "TotalAnnualAmount"; Decimal)
+        field(73209592; "BLRTotalAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = sum("Single Lum_AnnualAmnt SubPage"."SL_Annual Amount" where("Proposal Id" = field("Proposal Id")));
+            CalcFormula = sum("BLRSingleLumAnnualAmntSubPage"."BLRSL_Annual Amount" where("BLRProposal ID" = field("BLRProposal ID")));
         }
-        field(73209593; "TotalRoundOff"; Decimal)
+        field(73209593; "BLRTotalRoundOff"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = sum("Single Lum_AnnualAmnt SubPage"."SL_Round off" where("Proposal Id" = field("Proposal Id")));
+            CalcFormula = sum("BLRSingleLumAnnualAmntSubPage"."BLRSL_Round off" where("BLRProposal ID" = field("BLRProposal ID")));
         }
-        field(73209594; "TotalFirstAnnualAmount"; Decimal)
+        field(73209594; "BLRTotalFirstAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = sum("Single Lum_AnnualAmnt SubPage"."SL_Final Annual Amount" where("Proposal Id" = field("Proposal Id"), SL_Year = const(1)));
+            CalcFormula = sum("BLRSingleLumAnnualAmntSubPage"."BLRSL_Final Annual Amount" where("BLRProposal ID" = field("BLRProposal ID"), "BLRSL_Year" = const(1)));
         }
     }
     keys
     {
-        key(PK; "Proposal ID", "SL_Line No.")
+        key(PK;"BLRProposal ID", "BLRSL_Line No.")
         {
             Clustered = true;
         }

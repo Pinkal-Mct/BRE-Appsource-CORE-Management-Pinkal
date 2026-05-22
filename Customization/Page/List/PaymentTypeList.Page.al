@@ -1,7 +1,7 @@
 page 73209652 "Payment Type List"
 {
     PageType = List;
-    SourceTable = "Payment Type";
+    SourceTable = "BLRPaymentType";
     ApplicationArea = All;
     Caption = 'Payment Type List';
     UsageCategory = Lists;
@@ -13,13 +13,13 @@ page 73209652 "Payment Type List"
         {
             repeater(Group)
             {
-                field("Payment ID"; Rec."Payment ID")
+                field("Payment ID"; Rec."BLRPayment ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment ID';
                     ToolTip = 'Specifies the unique identifier for the payment type.';
                 }
-                field("Payment Method"; Rec."Payment Method")
+                field("Payment Method"; Rec."BLRPayment Method")
                 {
                     ApplicationArea = All;
                     Caption = 'Payment Method';
@@ -35,10 +35,10 @@ page 73209652 "Payment Type List"
     begin
         Rec.Reset();
         foreach paymentType in Enum::"Default Payment Type".Names() do begin
-            Rec.SetRange("Payment Method", paymentType);
+            Rec.SetRange("BLRPayment Method", paymentType);
             if not Rec.FindFirst() then begin
                 Rec.Init();
-                Rec."Payment Method" := paymentType;
+                Rec."BLRPayment Method" := paymentType;
                 Rec.Insert();
                 Rec.Reset();
                 clear(Rec);

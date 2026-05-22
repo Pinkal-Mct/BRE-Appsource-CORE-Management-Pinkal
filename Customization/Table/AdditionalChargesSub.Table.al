@@ -1,31 +1,31 @@
-table 73209575 "Additional Charges Sub"
+table 73209575 "BLRAdditionalChargesSub"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "Contract ID"; Integer)
+        field(73209575; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
-        field(73209576; "Secondary Item Type"; Text[100])
+        field(73209576; "BLRSecondary Item Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Secondary Item';
-            TableRelation = Item WHERE("Item type template" = const("Item Type Template Enum"::"Secondary Item"), "Charges Status" = CONST("Additional Charges"));
+            TableRelation = Item WHERE("BLRItem type template" = const("Item Type Template Enum"::"Secondary Item"), "BLRCharges Status" = CONST("Additional Charges"));
             trigger OnValidate()
             var
                 SecondaryItemRec: Record "Item";
             begin
-                SecondaryItemRec.SetRange("No.", Rec."Secondary Item Type");
+                SecondaryItemRec.SetRange("No.", Rec."BLRSecondary Item Type");
                 if SecondaryItemRec.FindFirst() then begin
-                    "Secondary Item Type" := SecondaryItemRec.Description;
-                    "VAT %" := SecondaryItemRec."VAT %";
+                    "BLRSecondary Item Type" := SecondaryItemRec.Description;
+                    "BLRVAT %" := SecondaryItemRec."BLRVAT %";
                 end else
-                    "VAT %" := 0;
+                    "BLRVAT %" := 0;
             end;
         }
-        field(73209577; "Amount"; Decimal)
+        field(73209577; "BLRAmount"; Decimal)
         {
             DataClassification = CustomerContent;
             DecimalPlaces = 0 : 2;
@@ -35,7 +35,7 @@ table 73209575 "Additional Charges Sub"
                 CalcVATAndTotal();
             end;
         }
-        field(73209578; "VAT %"; Option)
+        field(73209578; "BLRVAT %"; Option)
         {
             OptionMembers = "0%","5%";
             Caption = 'VAT %';
@@ -46,7 +46,7 @@ table 73209575 "Additional Charges Sub"
                 CalcVATAndTotal();
             end;
         }
-        field(73209579; "VAT Amount"; Decimal)
+        field(73209579; "BLRVAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             DecimalPlaces = 2 : 2;
@@ -56,14 +56,14 @@ table 73209575 "Additional Charges Sub"
             var
                 vatPer: Integer;
             begin
-                if "VAT %" = "VAT %"::"5%" then
+                if "BLRVAT %" = "BLRVAT %"::"5%" then
                     vatPer := 5
                 else
                     vatPer := 0;
-                "VAT Amount" := Amount * (vatPer / 100);
+                "BLRVAT Amount" := "BLRAmount" * (vatPer / 100);
             end;
         }
-        field(73209580; "Amount Including VAT"; Decimal)
+        field(73209580; "BLRAmount Including VAT"; Decimal)
         {
             DataClassification = CustomerContent;
             DecimalPlaces = 0 : 2;
@@ -71,64 +71,64 @@ table 73209575 "Additional Charges Sub"
             Editable = false;
             trigger OnValidate()
             begin
-                "Amount Including VAT" := Amount + "VAT Amount";
+                "BLRAmount Including VAT" := "BLRAmount" + "BLRVAT Amount";
             end;
         }
-        field(73209581; "Start Date"; Date)
+        field(73209581; "BLRStart Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Start Date';
             Editable = True;
         }
-        field(73209582; "End Date"; Date)
+        field(73209582; "BLREnd Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'End Date';
             Editable = True;
         }
-        field(73209583; "Entry No."; Integer)
+        field(73209583; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
         }
-        field(73209584; "Tenant ID"; Code[20])
+        field(73209584; "BLRTenant ID"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
-        field(73209585; "Total Amount"; Decimal)
+        field(73209585; "BLRTotal Amount"; Decimal)
         {
             Caption = 'Total Amount';
             FieldClass = FlowField;
             DecimalPlaces = 2 : 2;
-            CalcFormula = sum("Additional Charges Sub"."Amount Including VAT" where("Contract ID" = field("Contract ID"), "Tenant ID" = field("Tenant ID")));
+            CalcFormula = sum("BLRAdditionalChargesSub"."BLRAmount Including VAT" where("BLRContract ID" = field("BLRContract ID"), "BLRTenant ID" = field("BLRTenant ID")));
         }
-        field(73209586; "Invoiced"; Boolean)
+        field(73209586; "BLRInvoiced"; Boolean)
         {
             Caption = 'Invoiced';
             DataClassification = CustomerContent;
         }
-        field(73209587; "Invoiced ID"; Code[20])
+        field(73209587; "BLRInvoiced ID"; Code[20])
         {
             Caption = 'Invoice ID';
             DataClassification = CustomerContent;
         }
-        field(73209588; "Unit Type"; Text[20])
+        field(73209588; "BLRUnit Type"; Text[20])
         {
             Caption = 'Unit Type';
             DataClassification = CustomerContent;
         }
-        field(73209589; "Posted Invoice ID"; Code[20])
+        field(73209589; "BLRPosted Invoice ID"; Code[20])
         {
             Caption = 'Invoice ID';
             DataClassification = CustomerContent;
         }
-        field(73209590; "Invoice Document"; Text[250])
+        field(73209590; "BLRInvoice Document"; Text[250])
         {
             Caption = 'Invoice Document';
             DataClassification = CustomerContent;
         }
-        field(73209591; "Invoice Document URL"; Text[250])
+        field(73209591; "BLRInvoice Document URL"; Text[250])
         {
             Caption = 'Invoice Document URL';
             DataClassification = CustomerContent;
@@ -136,26 +136,26 @@ table 73209575 "Additional Charges Sub"
     }
     keys
     {
-        key(Key1; "Entry No.", "Contract ID")
+        key(Key1; "BLREntry No.", "BLRContract ID")
         {
             Clustered = true;
         }
     }
     local procedure CalcVATAndTotal()
     var
-        finalCalculation: Record "Final Calculation";
-        InvoiceCreditNoteSummaryRec: Record "InvoiceCreditNoteSummary";
+        finalCalculation: Record "BLRFinalCalculation";
+        InvoiceCreditNoteSummaryRec: Record "BLRInvoiceCreditNoteSummary";
         vatPer: Integer;
     begin
-        if "VAT %" = "VAT %"::"5%" then
+        if "BLRVAT %" = "BLRVAT %"::"5%" then
             vatPer := 5
         else
             vatPer := 0;
-        "VAT Amount" := Amount * (vatPer / 100);
-        "Amount Including VAT" := Amount + "VAT Amount";
+        "BLRVAT Amount" := "BLRAmount" * (vatPer / 100);
+        "BLRAmount Including VAT" := "BLRAmount" + "BLRVAT Amount";
         Rec.Modify();
 
-        finalCalculation.SetRange("Contract ID", Rec."Contract ID");
+        finalCalculation.SetRange("BLRContract ID", Rec."BLRContract ID");
         if finalCalculation.FindFirst() then
             finalCalculation.CalculateFinalSummary(finalCalculation);
 
@@ -164,30 +164,30 @@ table 73209575 "Additional Charges Sub"
 
     trigger OnDelete()
     var
-        finalcalculationRec: Record "Final Calculation";
-        InvoiceCreditNoteSummaryRec: Record "InvoiceCreditNoteSummary";
+        finalcalculationRec: Record "BLRFinalCalculation";
+        InvoiceCreditNoteSummaryRec: Record "BLRInvoiceCreditNoteSummary";
     begin
-        finalcalculationRec.SetRange("Contract ID", Rec."Contract ID");
+        finalcalculationRec.SetRange("BLRContract ID", Rec."BLRContract ID");
         if finalcalculationRec.FindFirst() then begin
-            finalcalculationRec."Total Claim" -= Rec."Amount Including VAT";
-            finalcalculationRec."Summery Net Balance" := finalcalculationRec."Total Claim" - finalcalculationRec."Total Refund";
+            finalcalculationRec."BLRTotal Claim" -= Rec."BLRAmount Including VAT";
+            finalcalculationRec."BLRSummery Net Balance" := finalcalculationRec."BLRTotal Claim" - finalcalculationRec."BLRTotal Refund";
 
-            finalcalculationRec."Amount Refundable" := 0;
-            finalcalculationRec."Net Receivable From The Tenant" := 0;
-            if finalcalculationRec."Summery Net Balance" < 0 then begin
-                finalcalculationRec."Amount Refundable" := Abs(finalcalculationRec."Summery Net Balance");
-                finalcalculationRec."Net Receivable From The Tenant" := 0;
+            finalcalculationRec."BLRAmount Refundable" := 0;
+            finalcalculationRec."BLRNetRecvFromTheTenant" := 0;
+            if finalcalculationRec."BLRSummery Net Balance" < 0 then begin
+                finalcalculationRec."BLRAmount Refundable" := Abs(finalcalculationRec."BLRSummery Net Balance");
+                finalcalculationRec."BLRNetRecvFromTheTenant" := 0;
             end
             else
-                finalcalculationRec."Net Receivable From The Tenant" := finalcalculationRec."Summery Net Balance";
+                finalcalculationRec."BLRNetRecvFromTheTenant" := finalcalculationRec."BLRSummery Net Balance";
 
             finalcalculationRec.Modify();
         end;
 
-        InvoiceCreditNoteSummaryRec.SetRange("Contract No.", Rec."Contract ID");
-        InvoiceCreditNoteSummaryRec.SetRange("Description", 'Termination Additional Charges');
+        InvoiceCreditNoteSummaryRec.SetRange("BLRContract No.", Rec."BLRContract ID");
+        InvoiceCreditNoteSummaryRec.SetRange("BLRDescription", 'Termination Additional Charges');
         if InvoiceCreditNoteSummaryRec.FindFirst() then
-            InvoiceCreditNoteSummaryRec.Invoice -= Rec."Amount Including VAT";
+            InvoiceCreditNoteSummaryRec."BLRInvoice" -= Rec."BLRAmount Including VAT";
 
         InvoiceCreditNoteSummaryRec.Modify();
     end;

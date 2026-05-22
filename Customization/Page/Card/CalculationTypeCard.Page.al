@@ -1,7 +1,7 @@
 page 73209618 "Calculation Type Card"
 {
     PageType = Card;
-    SourceTable = "Calculation Type";
+    SourceTable = "BLRCalculationType";
     ApplicationArea = All;
     Caption = 'Calculation Type Card';
     UsageCategory = None;
@@ -13,13 +13,13 @@ page 73209618 "Calculation Type Card"
             group(Group)
             {
                 Caption = 'Calculation Type Details';
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the calculation type.';
                 }
-                field("Calculation Type"; Rec."Calculation Type")
+                field("Calculation Type"; Rec."BLRCalculation Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Calculation Type';

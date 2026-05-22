@@ -1,7 +1,7 @@
 page 73209619 "Category Card"
 {
     PageType = Card;
-    SourceTable = "Category Type";
+    SourceTable = "BLRCategoryType";
     ApplicationArea = All;
     Caption = 'Category Type';
     UsageCategory = None;
@@ -13,13 +13,13 @@ page 73209619 "Category Card"
             group(Group)
             {
                 Caption = 'Category Type Details';
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the category type.';
                 }
-                field("Primary Item Type"; Rec."Primary Item Type")
+                field("Primary Item Type"; Rec."BLRPrimary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Item Type';
@@ -28,7 +28,7 @@ page 73209619 "Category Card"
                     NotBlank = true;
 
                 }
-                field("Category Types"; Rec."Category Types")
+                field("Category Types"; Rec."BLRCategory Types")
                 {
                     ApplicationArea = All;
                     Caption = 'Category Types';
@@ -47,7 +47,7 @@ page 73209619 "Category Card"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.TestField("Primary Item Type");
-        Rec.TestField("Category Types");
+        Rec.TestField("BLRPrimary Item Type");
+        Rec.TestField("BLRCategory Types");
     end;
 }

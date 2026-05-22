@@ -1,6 +1,6 @@
 codeunit 73209577 "Approval Revenue Allocation"
 {
-    procedure SendRevenueApprovalrequest(Rec: Record "Revenue Allocation Approval"): Text;
+    procedure SendRevenueApprovalrequest(Rec: Record "BLRRevenueAllocationApproval"): Text;
     var
         CompanyInfo: Record "Company Information";
         UserPersonalizationRec: Record "User Personalization";
@@ -25,9 +25,9 @@ codeunit 73209577 "Approval Revenue Allocation"
                             '<p>Dear Finance Manager,</p>' +
                             '<p>A new Revenue Allocation has been created and requires your approval.</p>' +
                             '<h3>Revenue Allocation Details:</h3>' +
-                            '<b>ID:</b> ' + Format(Rec."ID") + '<br/>' +
-                            '<b>Financial Year:</b> ' + Format(Rec."Financial Year") + '<br/>' +
-                            '<b>Month:</b> ' + Format(Rec."Month") + '<br/>' +
+                            '<b>ID:</b> ' + Format(Rec."BLRID") + '<br/>' +
+                            '<b>Financial Year:</b> ' + Format(Rec."BLRFinancial Year") + '<br/>' +
+                            '<b>Month:</b> ' + Format(Rec."BLRMonth") + '<br/>' +
                             '<p>Please log in to Business Central to review and take the necessary action.</p>' +
                             '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
                             '</body></html>',
@@ -40,7 +40,7 @@ codeunit 73209577 "Approval Revenue Allocation"
     end;
 
 
-    procedure ApprovalRevenuerequest(Rec: Record "Revenue Allocation Approval"): Text;
+    procedure ApprovalRevenuerequest(Rec: Record "BLRRevenueAllocationApproval"): Text;
     var
         CompanyInfo: Record "Company Information";
         UserPersonalizationRec: Record "User Personalization";
@@ -60,7 +60,7 @@ codeunit 73209577 "Approval Revenue Allocation"
                 Username := UserRec."User Name";
             until UserPersonalizationRec.Next() = 0;
 
-        if Rec.Status = Rec.Status::Approved then
+        if Rec."BLRStatus" = Rec."BLRStatus"::Approved then
             if CompanyInfo.Get() then begin
                 EmailMessage.Create(EmailAddress,
                                     'New Revenue Allocation Created - Approval Required',
@@ -68,9 +68,9 @@ codeunit 73209577 "Approval Revenue Allocation"
                                     '<p>Dear Lease Manager,</p>' +
                                     '<p>A new Revenue Allocation has been created and requires your approval.</p>' +
                                     '<h3>Revenue Allocation Details:</h3>' +
-                                    '<b>ID:</b> ' + Format(Rec."ID") + '<br/>' +
-                                    '<b>Financial Year:</b> ' + Format(Rec."Financial Year") + '<br/>' +
-                                    '<b>Month:</b> ' + Format(Rec."Month") + '<br/>' +
+                                    '<b>ID:</b> ' + Format(Rec."BLRID") + '<br/>' +
+                                    '<b>Financial Year:</b> ' + Format(Rec."BLRFinancial Year") + '<br/>' +
+                                    '<b>Month:</b> ' + Format(Rec."BLRMonth") + '<br/>' +
                                     '<p>Please log in to Business Central to review and take the necessary action.</p>' +
                                     '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
                                     '</body></html>',
@@ -84,7 +84,7 @@ codeunit 73209577 "Approval Revenue Allocation"
     end;
 
 
-    procedure RejectRevenuerequest(Rec: Record "Revenue Allocation Approval"): Text;
+    procedure RejectRevenuerequest(Rec: Record "BLRRevenueAllocationApproval"): Text;
     var
         CompanyInfo: Record "Company Information";
         UserPersonalizationRec: Record "User Personalization";
@@ -104,7 +104,7 @@ codeunit 73209577 "Approval Revenue Allocation"
                 Username := UserRec."User Name";
             until UserPersonalizationRec.Next() = 0;
 
-        if Rec.Status = Rec.Status::Reject then
+        if Rec."BLRStatus" = Rec."BLRStatus"::Reject then
             if CompanyInfo.Get() then begin
                 EmailMessage.Create(EmailAddress,
                                     'New Revenue Allocation Created - Approval Required',
@@ -112,9 +112,9 @@ codeunit 73209577 "Approval Revenue Allocation"
                                     '<p>Dear Lease Manager,</p>' +
                                     '<p>A new Revenue Allocation has been created and requires your approval.</p>' +
                                     '<h3>Revenue Allocation Details:</h3>' +
-                                    '<b>ID:</b> ' + Format(Rec."ID") + '<br/>' +
-                                    '<b>Financial Year:</b> ' + Format(Rec."Financial Year") + '<br/>' +
-                                    '<b>Month:</b> ' + Format(Rec."Month") + '<br/>' +
+                                    '<b>ID:</b> ' + Format(Rec."BLRID") + '<br/>' +
+                                    '<b>Financial Year:</b> ' + Format(Rec."BLRFinancial Year") + '<br/>' +
+                                    '<b>Month:</b> ' + Format(Rec."BLRMonth") + '<br/>' +
                                     '<p>Please log in to Business Central to review and take the necessary action.</p>' +
                                     '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
                                     '</body></html>',

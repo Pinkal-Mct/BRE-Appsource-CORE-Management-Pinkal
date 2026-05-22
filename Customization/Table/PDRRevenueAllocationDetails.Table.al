@@ -1,30 +1,30 @@
-table 73209655 "PDR Revenue Allocation Details"
+table 73209655 "BLRPDRRevenueAllocationDetails"
 {
     DataClassification = CustomerContent;
 
     fields
     {
-        field(73209575; "Year"; Text[30])
+        field(73209575; "BLRYear"; Text[30])
         {
             DataClassification = CustomerContent;
         }
-        field(73209576; "Unit ID"; Text[2048])
+        field(73209576; "BLRUnit ID"; Text[2048])
         {
             DataClassification = CustomerContent;
         }
-        field(73209577; "Sq. Ft."; Decimal)
+        field(73209577; "BLRSq. Ft."; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209578; "Per Day Rent Per Unit"; Decimal)
+        field(73209578; "BLRPer Day Rent Per Unit"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209579; "Total Revenue"; Decimal)
+        field(73209579; "BLRTotal Revenue"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209580; "Praposal ID"; Decimal)
+        field(73209580; "BLRPraposal ID"; Decimal)
         {
             DataClassification = CustomerContent;
         }
@@ -32,6 +32,6 @@ table 73209655 "PDR Revenue Allocation Details"
 
     keys
     {
-        key(PK; "Year", "Unit ID") { Clustered = true; }
+        key(PK;"BLRYear", "BLRUnit ID") { Clustered = true; }
     }
 }

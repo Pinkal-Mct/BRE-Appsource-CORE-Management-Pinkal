@@ -11,7 +11,7 @@ page 73209588 "Final Calculation"
     EntityName = 'finalcalculation';
     EntitySetName = 'finalcalculations';
     PageType = API;
-    SourceTable = "Final Calculation";
+    SourceTable = "BLRFinalCalculation";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -22,83 +22,83 @@ page 73209588 "Final Calculation"
         {
             repeater(General)
             {
-                field(actualContractTenure; Rec."Actual Contract Tenure")
+                field(actualContractTenure; Rec."BLRActual Contract Tenure")
                 {
                     Caption = 'Actual Contract Tenure';
                 }
-                field(adjustmentSecurityDeposit; Rec."Adjustment Security Deposit")
+                field(adjustmentSecurityDeposit; Rec."BLRAdjustment Security Deposit")
                 {
                     Caption = 'Adjustment Security Deposit';
                 }
-                field(amountRefundable; Rec."Amount Refundable")
+                field(amountRefundable; Rec."BLRAmount Refundable")
                 {
                     Caption = 'Amount Refundable To The Tenant';
                 }
-                field(annualRentAmountTermiYear; Rec."Annual Rent Amount TermiYear")
+                field(annualRentAmountTermiYear; Rec."BLRAnnualRentAmtTermiYear")
                 {
                     Caption = 'Annual Rent Amount of Termination Year';
                 }
-                field(chillerDeposit; Rec."Chiller Deposit")
+                field(chillerDeposit; Rec."BLRChiller Deposit")
                 {
                     Caption = 'Chiller Deposit';
                 }
-                field(contractAmount; Rec."Contract Amount")
+                field(contractAmount; Rec."BLRContract Amount")
                 {
                     Caption = 'Contract Amount';
                 }
-                field(contractEndDate; Rec."Contract End Date")
+                field(contractEndDate; Rec."BLRContract End Date")
                 {
                     Caption = 'Contract End Date';
                 }
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(contractStartDate; Rec."Contract Start Date")
+                field(contractStartDate; Rec."BLRContract Start Date")
                 {
                     Caption = 'Contract Start Date';
                 }
-                field(contractYearTerminationDate; Rec."ContractYear(Termination Date)")
+                field(contractYearTerminationDate; Rec."BLRContYearTermDate")
                 {
                     Caption = 'Contract Year On Termination Date';
                 }
-                field(fcID; Rec."FC ID")
+                field(fcID; Rec."BLRFC ID")
                 {
                     Caption = 'FC ID';
                 }
-                field(intimationDate; Rec."Intimation Date")
+                field(intimationDate; Rec."BLRIntimation Date")
                 {
                     Caption = 'Intimation Date';
                 }
-                field(netBalance; Rec."Net Balance")
+                field(netBalance; Rec."BLRNet Balance")
                 {
                     Caption = 'Net Balance';
                 }
-                field(netReceivableFromTheTenant; Rec."Net Receivable From The Tenant")
+                field(netReceivableFromTheTenant; Rec."BLRNetRecvFromTheTenant")
                 {
                     Caption = 'Net Receivable From The Tenant';
                 }
-                field(originalContractTenure; Rec."Original Contract Tenure")
+                field(originalContractTenure; Rec."BLROriginal Contract Tenure")
                 {
                     Caption = 'Original Contract Tenure';
                 }
-                field(otherDeposit; Rec."Other Deposit")
+                field(otherDeposit; Rec."BLROther Deposit")
                 {
                     Caption = 'Other Deposit';
                 }
-                field(perDayRent; Rec."Per Day Rent")
+                field(perDayRent; Rec."BLRPer Day Rent")
                 {
                     Caption = 'Per Day Rent(Termination Year)';
                 }
-                field(securityDeposit; Rec."Security Deposit")
+                field(securityDeposit; Rec."BLRSecurity Deposit")
                 {
                     Caption = 'Security Deposit';
                 }
-                field(status; Rec.Status)
+                field(status; Rec."BLRStatus")
                 {
                     Caption = 'Status';
                 }
-                field(summeryNetBalance; Rec."Summery Net Balance")
+                field(summeryNetBalance; Rec."BLRSummery Net Balance")
                 {
                     Caption = 'Net Balance';
                 }
@@ -122,59 +122,59 @@ page 73209588 "Final Calculation"
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantID; Rec."Tenant ID")
+                field(tenantID; Rec."BLRTenant ID")
                 {
                     Caption = 'Tenant ID';
                 }
-                field(terminationDate; Rec."Termination Date")
+                field(terminationDate; Rec."BLRTermination Date")
                 {
                     Caption = 'Termination Date';
                 }
-                field(totalClaim; Rec."Total Claim")
+                field(totalClaim; Rec."BLRTotal Claim")
                 {
                     Caption = 'Total Claim';
                 }
-                field(totalNoOfDays; Rec."Total No. Of Days")
+                field(totalNoOfDays; Rec."BLRTotal No. Of Days")
                 {
                     Caption = 'Total No. Of Days(Termination Year)';
                 }
-                field(totalRefund; Rec."Total Refund")
+                field(totalRefund; Rec."BLRTotal Refund")
                 {
                     Caption = 'Total Refund';
                 }
-                field(totalRefundableDeposit; Rec."Total Refundable Deposit")
+                field(totalRefundableDeposit; Rec."BLRTotal Refundable Deposit")
                 {
                     Caption = 'Total Refundable Deposit';
                 }
-                field(unitType; Rec."Unit Type")
+                field(unitType; Rec."BLRUnit Type")
                 {
                     Caption = 'Unit Type';
                 }
-                field("finalCalculationDocument"; Rec."Final Calculation Document")
+                field("finalCalculationDocument"; Rec."BLRFinal Calculation Document")
                 {
                     Caption = 'Unit Type';
                 }
-                field("terminationStatus"; Rec."Termination Status")
+                field("terminationStatus"; Rec."BLRTermination Status")
                 {
                     Caption = 'Termination Status';
                 }
-                field("finalCalculationURL"; Rec."Final Calculation URL")
+                field("finalCalculationURL"; Rec."BLRFinal Calculation URL")
                 {
                     Caption = 'Final Calculation URL';
                 }
-                field("creditNoteDocument"; Rec."Credit Note Document")
+                field("creditNoteDocument"; Rec."BLRCredit Note Document")
                 {
                     Caption = 'Credit Note Document';
                 }
-                field("creditNoteURL"; Rec."Credit Note URL")
+                field("creditNoteURL"; Rec."BLRCredit Note URL")
                 {
                     Caption = 'Credit Note URL';
                 }
-                field("updatedPayments"; Rec."Updated Payments")
+                field("updatedPayments"; Rec."BLRUpdated Payments")
                 {
                     Caption = 'Updated Payments';
                 }
-                field("finalPayments"; Rec."Final Payments")
+                field("finalPayments"; Rec."BLRFinal Payments")
                 {
                     Caption = 'Final Payments';
                 }

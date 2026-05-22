@@ -75,9 +75,9 @@ codeunit 73209608 "Send Credit Memo to Tenant"
                  '<p>Dear ' + pSalesCrMemoHeader."Sell-to Customer Name" + ',</p>' +
                  '<h3>Credit Memo Details:</h3>' +
                                     '<p><b>Credit Note No.</b> ' + pSalesCrMemoHeader."No." + '<br/>' +
-                                   '<p><b>Contract ID:</b> ' + Format(pSalesCrMemoHeader."Contract ID") + '<br/>' +
+                                   '<p><b>Contract ID:</b> ' + Format(pSalesCrMemoHeader."BLRContract ID") + '<br/>' +
                                    '<p><b>Original Invoice No.</b> ' + pSalesCrMemoHeader."Applies-to Doc. No." + '<br/>' +
-                                   '<b>Property Name:</b> ' + pSalesCrMemoHeader."Property Name" + '<br/>' +
+                                   '<b>Property Name:</b> ' + pSalesCrMemoHeader."BLRProperty Name" + '<br/>' +
                                      '<b>Total Amount:</b> ' + Format(TotalAmount) + '<br/>' +
                                      '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
                  '</body>' +
@@ -93,9 +93,9 @@ codeunit 73209608 "Send Credit Memo to Tenant"
                  '<p>Dear ' + pSalesCrMemoHeader."Sell-to Customer Name" + ',</p>' +
                  '<h3>Credit Memo Details:</h3>' +
                                      '<p><b>Credit Note No.</b> ' + pSalesCrMemoHeader."No." + '<br/>' +
-                                    '<p><b>Contract ID:</b> ' + Format(pSalesCrMemoHeader."Contract ID") + '<br/>' +
+                                    '<p><b>Contract ID:</b> ' + Format(pSalesCrMemoHeader."BLRContract ID") + '<br/>' +
                                    '<p><b>Original Invoice No.</b> ' + pSalesCrMemoHeader."Applies-to Doc. No." + '<br/>' +
-                                   '<b>Property Name:</b> ' + pSalesCrMemoHeader."Property Name" + '<br/>' +
+                                   '<b>Property Name:</b> ' + pSalesCrMemoHeader."BLRProperty Name" + '<br/>' +
                                      '<b>Total Amount:</b> ' + Format(TotalAmount) + '<br/>' +
                                      '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
                                     '</body>' +

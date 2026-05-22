@@ -1,183 +1,183 @@
-table 73209645 "Payment Mode"
+table 73209645 "BLRPaymentMode"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "Contract ID"; Integer)
+        field(73209575; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
-            TableRelation = "Payment Schedule"."Contract ID";
+            TableRelation = "BLRPaymentSchedule"."BLRContract ID";
             Caption = 'Contract ID';
             trigger OnValidate()
             var
-                leaserec: Record "Payment Schedule";
-                Tenancycontract: Record "Tenancy Contract";
+                leaserec: Record "BLRPaymentSchedule";
+                Tenancycontract: Record "BLRTenancyContract";
             begin
-                leaserec.SetRange("Contract ID", Rec."Contract ID");
-                Tenancycontract.SetRange("Contract ID", Rec."Contract ID");
+                leaserec.SetRange("BLRContract ID", Rec."BLRContract ID");
+                Tenancycontract.SetRange("BLRContract ID", Rec."BLRContract ID");
                 if leaserec.FindFirst() then
-                    "Tenant Id" := leaserec."Tenant Id"
+                    "BLRTenant Id" := leaserec."BLRTenant Id"
                 else
-                    "Tenant Id" := '';
+                    "BLRTenant Id" := '';
                 if Tenancycontract.FindFirst() then begin
-                    "Tenant Name" := Tenancycontract."Customer Name";
-                    "Tenant Email" := Tenancycontract."Email Address";
-                    "Contract Start date" := Tenancycontract."Contract Start Date";
-                    "Contract End date" := Tenancycontract."Contract End Date";
-                    "Payment Reminder" := Tenancycontract."Payment Reminder";
+                    "BLRTenant Name" := Tenancycontract."BLRCustomer Name";
+                    "BLRTenant Email" := Tenancycontract."BLREmail Address";
+                    "BLRContract Start date" := Tenancycontract."BLRContract Start Date";
+                    "BLRContract End date" := Tenancycontract."BLRContract End Date";
+                    "BLRPayment Reminder" := Tenancycontract."BLRPayment Reminder";
                 end else begin
-                    "Tenant Name" := '';
-                    "Tenant Email" := '';
-                    "Contract Start date" := 0D;
-                    "Contract End date" := 0D;
+                    "BLRTenant Name" := '';
+                    "BLRTenant Email" := '';
+                    "BLRContract Start date" := 0D;
+                    "BLRContract End date" := 0D;
                 end;
                 EvaluatePaymentSchedule();
                 GetNextSequenceNo();
             end;
         }
-        field(73209576; "Contract Start date"; Date)
+        field(73209576; "BLRContract Start date"; Date)
         {
             Caption = 'Contract Start date';
             DataClassification = CustomerContent;
         }
-        field(73209577; "Contract End date"; Date)
+        field(73209577; "BLRContract End date"; Date)
         {
             Caption = 'Contract End date';
             DataClassification = CustomerContent;
         }
-        field(73209578; "Tenant Id"; Code[20])
+        field(73209578; "BLRTenant Id"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant Id';
-            TableRelation = "Payment Schedule"."Contract ID";
+            TableRelation = "BLRPaymentSchedule"."BLRContract ID";
             Editable = false;
         }
-        field(73209579; "Approval Status"; Option)
+        field(73209579; "BLRApproval Status"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = " ","Pending","Approved","On-Hold","Rejected";
             trigger OnValidate()
             var
-                paymentGridRec: Record "Payment Mode2";
-                paymentSeriesRec: Record "Payment Mode2";
-                PdcTransRec: Record "PDC Transaction";
+                paymentGridRec: Record "BLRPaymentMode2";
+                paymentSeriesRec: Record "BLRPaymentMode2";
+                PdcTransRec: Record "BLRPDCTransaction";
                 sendRejectionToLeaseTeam: Codeunit 73209618;
                 approvalPending: Boolean;
                 Isrejected: Boolean;
             begin
-                if Rec."Approval Status" = Rec."Approval Status"::Approved then begin
-                    paymentGridRec.SetRange("Contract ID", Rec."Contract ID");
+                if Rec."BLRApproval Status" = Rec."BLRApproval Status"::Approved then begin
+                    paymentGridRec.SetRange("BLRContract ID", Rec."BLRContract ID");
                     if paymentGridRec.FindSet() then
                         repeat
-                            paymentGridRec."Approval Status" := paymentGridRec."Approval Status"::Approved;
+                            paymentGridRec."BLRApproval Status" := paymentGridRec."BLRApproval Status"::Approved;
                             paymentGridRec.Modify();
-                            pdcTransRec.SetRange("Payment Series", paymentGridRec."Payment Series");
-                            pdcTransRec.SetRange("Contract ID", Rec."Contract ID");
+                            pdcTransRec.SetRange("BLRpayment Series", paymentGridRec."BLRPayment Series");
+                            pdcTransRec.SetRange("BLRContract ID", Rec."BLRContract ID");
                             if pdcTransRec.FindSet() then
                                 repeat
-                                    pdcTransRec."Approval Status" := pdcTransRec."Approval Status"::Approved;
+                                    pdcTransRec."BLRApproval Status" := pdcTransRec."BLRApproval Status"::Approved;
                                     pdcTransRec.Modify();
                                 until pdcTransRec.Next() = 0;
                         until paymentGridRec.Next() = 0;
-                    Rec."On-hold" := Rec."On-hold"::"False";
+                    Rec."BLROn-hold" := Rec."BLROn-hold"::"False";
                 end;
-                if Rec."Approval Status" = Rec."Approval Status"::Rejected then begin
-                    paymentGridRec.SetRange("Contract ID", Rec."Contract ID");
+                if Rec."BLRApproval Status" = Rec."BLRApproval Status"::Rejected then begin
+                    paymentGridRec.SetRange("BLRContract ID", Rec."BLRContract ID");
                     if paymentGridRec.FindSet() then
                         repeat
-                            paymentGridRec."Approval Status" := paymentGridRec."Approval Status"::Rejected;
+                            paymentGridRec."BLRApproval Status" := paymentGridRec."BLRApproval Status"::Rejected;
                             paymentGridRec.Modify();
                         until paymentGridRec.Next() = 0;
-                    Rec."On-hold" := Rec."On-hold"::"True";
+                    Rec."BLROn-hold" := Rec."BLROn-hold"::"True";
                 end;
-                if Rec."On-hold" = Rec."On-hold"::"True" then begin
+                if Rec."BLROn-hold" = Rec."BLROn-hold"::"True" then begin
                     approvalPending := false;
                     Isrejected := false;
-                    paymentSeriesRec.SetRange("Contract ID", Rec."Contract ID");
-                    paymentSeriesRec.SetRange("Tenant Id", Rec."Tenant Id");
+                    paymentSeriesRec.SetRange("BLRContract ID", Rec."BLRContract ID");
+                    paymentSeriesRec.SetRange("BLRTenant Id", Rec."BLRTenant Id");
                     if paymentSeriesRec.FindSet() then
                         repeat
-                            if paymentSeriesRec."Approval Status" = paymentSeriesRec."Approval Status"::Pending then begin
+                            if paymentSeriesRec."BLRApproval Status" = paymentSeriesRec."BLRApproval Status"::Pending then begin
                                 approvalPending := true;
                                 break;
                             end
                             else
-                                if paymentSeriesRec."Approval Status" = paymentSeriesRec."Approval Status"::Rejected then
+                                if paymentSeriesRec."BLRApproval Status" = paymentSeriesRec."BLRApproval Status"::Rejected then
                                     Isrejected := true;
                         until paymentSeriesRec.Next() = 0;
                     if ApprovalPending then
                         exit;
                     if approvalPending = false and Isrejected = true then
-                        sendRejectionToLeaseTeam.SendPaymentRejectionToLeaseManager(paymentSeriesRec."Contract ID", paymentSeriesRec."Tenant Id", paymentSeriesRec."Contract ID");
+                        sendRejectionToLeaseTeam.SendPaymentRejectionToLeaseManager(paymentSeriesRec."BLRContract ID", paymentSeriesRec."BLRTenant Id", paymentSeriesRec."BLRContract ID");
                 end;
             end;
         }
-        field(73209580; "On-hold"; Option)
+        field(73209580; "BLROn-hold"; Option)
         {
             OptionMembers = " ","True","False";
             DataClassification = CustomerContent;
         }
-        field(73209581; "Isupdated"; Option)
+        field(73209581; "BLRIsupdated"; Option)
         {
             OptionMembers = " ","True","False";
             DataClassification = CustomerContent;
         }
-        field(73209582; "Tenant Name"; Text[100])
+        field(73209582; "BLRTenant Name"; Text[100])
         {
             Caption = 'Tenant Name';
             DataClassification = EndUserIdentifiableInformation;
         }
-        field(73209583; "Tenant Email"; Text[100])
+        field(73209583; "BLRTenant Email"; Text[100])
         {
             Caption = 'Tenant Email';
             DataClassification = EndUserIdentifiableInformation;
         }
-        field(73209584; "Combine Payment Series"; Text[150])
+        field(73209584; "BLRCombine Payment Series"; Text[150])
         {
             DataClassification = CustomerContent;
         }
-        field(73209585; "Combine Due Date"; Date)
+        field(73209585; "BLRCombine Due Date"; Date)
         {
             DataClassification = CustomerContent;
         }
-        field(73209586; "Combine Payment Mode"; Text[150])
+        field(73209586; "BLRCombine Payment Mode"; Text[150])
         {
             DataClassification = CustomerContent;
-            TableRelation = "Payment Type"."Payment Method";
+            TableRelation = "BLRPaymentType"."BLRPayment Method";
         }
-        field(73209587; "Combine Amount"; Decimal)
-        {
-            DataClassification = CustomerContent;
-        }
-        field(73209588; "Combine VAT Amount"; Decimal)
+        field(73209587; "BLRCombine Amount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209589; "Combine Amount Including VAT"; Decimal)
+        field(73209588; "BLRCombine VAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209590; "Change Payment Mode"; Text[100])
-        {
-            DataClassification = CustomerContent;
-            TableRelation = "Payment Type"."Payment Method";
-        }
-        field(73209591; "Change Payment Series"; Text[100])
+        field(73209589; "BLRCombineAmtInclVAT"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209592; "Payment Reminder"; Integer)
+        field(73209590; "BLRChange Payment Mode"; Text[100])
+        {
+            DataClassification = CustomerContent;
+            TableRelation = "BLRPaymentType"."BLRPayment Method";
+        }
+        field(73209591; "BLRChange Payment Series"; Text[100])
+        {
+            DataClassification = CustomerContent;
+        }
+        field(73209592; "BLRPayment Reminder"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Payment Reminder';
             Editable = false;
         }
-        field(73209593; "C_Cheque_Number"; Text[20])
+        field(73209593; "BLRC_Cheque_Number"; Text[20])
         {
             DataClassification = AccountData;
             Caption = 'Cheque Number';
         }
-        field(73209594; "C_Deposit_Bank"; Code[100])
+        field(73209594; "BLRC_Deposit_Bank"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Deposit Bank';
@@ -187,18 +187,18 @@ table 73209645 "Payment Mode"
             var
                 BankAccountRec: Record "Bank Account";
             begin
-                if "C_Deposit_Bank" <> '' then
+                if "BLRC_Deposit_Bank" <> '' then
                     // Attempt to find the Bank Account using the No. from the Deposit Bank
-                    if BankAccountRec.Get("C_Deposit_Bank") then
-                        "C_Deposit_Bank" := BankAccountRec."Name";
+                    if BankAccountRec.Get("BLRC_Deposit_Bank") then
+                        "BLRC_Deposit_Bank" := BankAccountRec."Name";
             end;
         }
-        field(73209595; "CP_Cheque_Number"; Text[20])
+        field(73209595; "BLRCP_Cheque_Number"; Text[20])
         {
             DataClassification = AccountData;
             Caption = 'Cheque Number';
         }
-        field(73209596; "CP_Deposit_Bank"; Code[100])
+        field(73209596; "BLRCP_Deposit_Bank"; Code[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Deposit Bank';
@@ -208,24 +208,24 @@ table 73209645 "Payment Mode"
             var
                 BankAccountRec: Record "Bank Account";
             begin
-                if "CP_Deposit_Bank" <> '' then
-                    if BankAccountRec.Get("CP_Deposit_Bank") then
-                        "CP_Deposit_Bank" := BankAccountRec."Name";
+                if "BLRCP_Deposit_Bank" <> '' then
+                    if BankAccountRec.Get("BLRCP_Deposit_Bank") then
+                        "BLRCP_Deposit_Bank" := BankAccountRec."Name";
             end;
         }
     }
     keys
     {
-        key(PK; "Contract ID")
+        key(PK;"BLRContract ID")
         {
             Clustered = true;
         }
     }
     procedure EvaluatePaymentSchedule()
     var
-        PaymentScheduleRec: Record "Payment Schedule2";
-        PaymentScheduleRec2: Record "Payment Schedule2";
-        MergedRecord: Record "Payment Mode2";
+        PaymentScheduleRec: Record "BLRPaymentSchedule2";
+        PaymentScheduleRec2: Record "BLRPaymentSchedule2";
+        MergedRecord: Record "BLRPaymentMode2";
         TotalAmount: Decimal;
         TotalVAT: Decimal;
         GrandTotal: Decimal;
@@ -241,11 +241,11 @@ table 73209645 "Payment Mode"
         TotalAmount := 0;
         TotalVAT := 0;
         GrandTotal := 0;
-        PaymentScheduleRec.SetRange("Tenant ID", Rec."Tenant ID");
-        PaymentScheduleRec.SetRange("Contract ID", Rec."Contract ID");
+        PaymentScheduleRec.SetRange("BLRTenant ID", Rec."BLRTenant Id");
+        PaymentScheduleRec.SetRange("BLRContract ID", Rec."BLRContract ID");
         if PaymentScheduleRec.FindSet() then
             repeat
-                MinDueDate := PaymentScheduleRec."Due Date";
+                MinDueDate := PaymentScheduleRec."BLRDue Date";
                 if not DueDateList.Contains(MinDueDate) then
                     DueDateList.Add(MinDueDate);
             until PaymentScheduleRec.Next() = 0;
@@ -262,34 +262,34 @@ table 73209645 "Payment Mode"
             TotalAmount := 0;
             TotalVAT := 0;
             GrandTotal := 0;
-            PaymentScheduleRec2.SetRange("Due Date", MinDueDate);
-            PaymentScheduleRec2.SetRange("Tenant ID", Rec."Tenant ID");
-            PaymentScheduleRec2.SetRange("Contract ID", Rec."Contract ID");
+            PaymentScheduleRec2.SetRange("BLRDue Date", MinDueDate);
+            PaymentScheduleRec2.SetRange("BLRTenant ID", Rec."BLRTenant Id");
+            PaymentScheduleRec2.SetRange("BLRContract ID", Rec."BLRContract ID");
             if PaymentScheduleRec2.FindSet() then
                 repeat
-                    TotalAmount += PaymentScheduleRec2."Amount";
-                    TotalVAT += PaymentScheduleRec2."VAT Amount";
-                    GrandTotal += PaymentScheduleRec2."Amount Including VAT";
+                    TotalAmount += PaymentScheduleRec2."BLRAmount";
+                    TotalVAT += PaymentScheduleRec2."BLRVAT Amount";
+                    GrandTotal += PaymentScheduleRec2."BLRAmount Including VAT";
                 until PaymentScheduleRec2.Next() = 0;
             SequenceNo := GetNextSequenceNo();
             NewPaymentCode := GeneratePaymentCode(SequenceNo);
             MergedRecord.Reset();
-            MergedRecord.SetRange("Tenant ID", Rec."Tenant ID");
-            MergedRecord.SetRange("Contract ID", Rec."Contract ID");
-            MergedRecord.SetRange("Due Date", MinDueDate);
+            MergedRecord.SetRange("BLRTenant Id", Rec."BLRTenant Id");
+            MergedRecord.SetRange("BLRContract ID", Rec."BLRContract ID");
+            MergedRecord.SetRange("BLRDue Date", MinDueDate);
             if not MergedRecord.FindFirst() then begin
                 MergedRecord.Init();
-                MergedRecord."Tenant ID" := Rec."Tenant ID";
-                MergedRecord."Contract ID" := Rec."Contract ID";
-                MergedRecord."Tenant Email" := Rec."Tenant Email";
-                MergedRecord."Tenant Name" := Rec."Tenant Name";
-                MergedRecord."Payment Series" := NewPaymentCode;
-                MergedRecord."Amount" := TotalAmount;
-                MergedRecord."VAT Amount" := TotalVAT;
-                MergedRecord."Amount Including VAT" := GrandTotal;
-                MergedRecord."Due Date" := MinDueDate;
-                MergedRecord."Payment Status" := PaymentStatus::Scheduled;
-                MergedRecord."Payment Reminder" := Rec."Payment Reminder";
+                MergedRecord."BLRTenant Id" := Rec."BLRTenant Id";
+                MergedRecord."BLRContract ID" := Rec."BLRContract ID";
+                MergedRecord."BLRTenant Email" := Rec."BLRTenant Email";
+                MergedRecord."BLRTenant Name" := Rec."BLRTenant Name";
+                MergedRecord."BLRPayment Series" := NewPaymentCode;
+                MergedRecord."BLRAmount" := TotalAmount;
+                MergedRecord."BLRVAT Amount" := TotalVAT;
+                MergedRecord."BLRAmount Including VAT" := GrandTotal;
+                MergedRecord."BLRDue Date" := MinDueDate;
+                MergedRecord."BLRPayment Status" := PaymentStatus::Scheduled;
+                MergedRecord."BLRPayment Reminder" := Rec."BLRPayment Reminder";
                 MergedRecord.Insert();
                 Clear(MergedRecord);
             end
@@ -310,15 +310,15 @@ table 73209645 "Payment Mode"
 
     local procedure GetNextSequenceNo(): Integer
     var
-        MergedRecord: Record "Payment Mode2";
+        MergedRecord: Record "BLRPaymentMode2";
         MaxSequence: Integer;
         LastSequence: Text[10];
     begin
         MergedRecord.Reset();
-        MergedRecord.SetRange("Contract ID", Rec."Contract ID");
+        MergedRecord.SetRange("BLRContract ID", Rec."BLRContract ID");
         if MergedRecord.FindSet() then
             repeat
-                LastSequence := CopyStr(MergedRecord."Payment Series", 4, StrLen(MergedRecord."Payment Series"));
+                LastSequence := CopyStr(MergedRecord."BLRPayment Series", 4, StrLen(MergedRecord."BLRPayment Series"));
                 if Evaluate(MaxSequence, LastSequence) and (MaxSequence > MaxSequence) then
                     MaxSequence := MaxSequence;
             until MergedRecord.Next() = 0
@@ -335,9 +335,9 @@ table 73209645 "Payment Mode"
 
     procedure Deletepaymetnscheudlesubpage()
     var
-        Paymentmodesubpage: Record "Payment Mode2";
+        Paymentmodesubpage: Record "BLRPaymentMode2";
     begin
-        Paymentmodesubpage.SetRange("Contract ID", Rec."Contract ID");
+        Paymentmodesubpage.SetRange("BLRContract ID", Rec."BLRContract ID");
         if Paymentmodesubpage.FindSet() then
             repeat
                 Paymentmodesubpage.DeleteAll();

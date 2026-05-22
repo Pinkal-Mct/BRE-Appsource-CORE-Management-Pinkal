@@ -11,7 +11,7 @@ page 73209584 creditnote
     EntityName = 'creditNote';
     EntitySetName = 'creditNotes';
     PageType = API;
-    SourceTable = "Credit Note";
+    SourceTable = "BLRCreditNote";
     DeleteAllowed = true;
     ModifyAllowed = true;
     ODataKeyFields = SystemId;
@@ -23,31 +23,31 @@ page 73209584 creditnote
             repeater(General)
             {
 
-                field(contractAmount; Rec."Contract Amount")
+                field(contractAmount; Rec."BLRContract Amount")
                 {
                     Caption = 'Contract Amount';
                 }
-                field(contractEndDate; Rec."Contract End Date")
+                field(contractEndDate; Rec."BLRContract End Date")
                 {
                     Caption = 'Contract End Date';
                 }
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(contractStartDate; Rec."Contract Start Date")
+                field(contractStartDate; Rec."BLRContract Start Date")
                 {
                     Caption = 'Contract Start Date';
                 }
-                field(creditNoteType; Rec."Credit Note Type")
+                field(creditNoteType; Rec."BLRCredit Note Type")
                 {
                     Caption = 'Credit Note Type';
                 }
-                field(id; Rec.ID)
+                field(id; Rec."BLRID")
                 {
                     Caption = 'ID';
                 }
-                field(status; Rec.Status)
+                field(status; Rec."BLRStatus")
                 {
                     Caption = 'Status';
                 }
@@ -71,39 +71,39 @@ page 73209584 creditnote
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantEmail; Rec."Tenant Email")
+                field(tenantEmail; Rec."BLRTenant Email")
                 {
                     Caption = 'Tenant Email';
                 }
-                field(tenantID; Rec."Tenant ID")
+                field(tenantID; Rec."BLRTenant ID")
                 {
                     Caption = 'Tenant ID';
                 }
-                field(tenantName; Rec."Tenant Name")
+                field(tenantName; Rec."BLRTenant Name")
                 {
                     Caption = 'Tenant Name';
                 }
-                field(unitType; Rec."Unit Type")
+                field(unitType; Rec."BLRUnit Type")
                 {
                     Caption = 'Unit Type';
                 }
-                field("creditNoteDocument"; Rec."Credit Note Document")
+                field("creditNoteDocument"; Rec."BLRCredit Note Document")
                 {
                     Caption = 'Credit Note Document';
                 }
-                field("creditNoteURL"; Rec."Credit Note URL")
+                field("creditNoteURL"; Rec."BLRCredit Note URL")
                 {
                     Caption = 'Credit Note URL';
                 }
-                field("fcID"; Rec."FC ID")
+                field("fcID"; Rec."BLRFC ID")
                 {
                     Caption = 'FC ID';
                 }
-                field("creditNoteNo"; Rec."Credit Note No.")
+                field("creditNoteNo"; Rec."BLRCredit Note No.")
                 {
                     Caption = 'Credit Note No.';
                 }
-                field("reasonforRejection"; Rec."Reason for Rejection")
+                field("reasonforRejection"; Rec."BLRReason for Rejection")
                 {
                     Caption = 'Reason for Rejection';
                 }

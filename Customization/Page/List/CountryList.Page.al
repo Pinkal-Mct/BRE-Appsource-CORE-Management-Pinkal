@@ -1,7 +1,7 @@
 page 73209646 "Country List"
 {
     PageType = List;
-    SourceTable = Country;
+    SourceTable = "BLRCountry";
     ApplicationArea = All;
     Caption = 'Country List';
     UsageCategory = Lists;
@@ -13,25 +13,25 @@ page 73209646 "Country List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'The unique identifier for the country.';
                 }
-                field("Sl No."; Rec."Sl No.")
+                field("Sl No."; Rec."BLRSl No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Sl No.';
                     ToolTip = 'The serial number of the country.';
                 }
-                field("Country Code"; Rec."Country Code")
+                field("Country Code"; Rec."BLRCountry Code")
                 {
                     ApplicationArea = All;
                     Caption = 'Country Code';
                     ToolTip = 'The unique code assigned to the country.';
                 }
-                field("Country Name"; Rec."Country Name")
+                field("Country Name"; Rec."BLRCountry Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Country Name';

@@ -1,7 +1,7 @@
 page 73209622 "Company Data"
 {
     PageType = Card;
-    SourceTable = "Company Data";
+    SourceTable = "BLRCompanyData";
     ApplicationArea = All;
     Caption = 'Company Data';
     UsageCategory = Administration;
@@ -12,14 +12,14 @@ page 73209622 "Company Data"
         {
             group("Company Information")
             {
-                field("Company Name"; Rec."Company Name")
+                field("Company Name"; Rec."BLRCompany Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Company Name';
                     ToolTip = 'Specifies the name of the company.';
                 }
 
-                field("Company Logo"; Rec."Company Logo")
+                field("Company Logo"; Rec."BLRCompany Logo")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the logo of the company.';
@@ -37,8 +37,8 @@ page 73209622 "Company Data"
                         folderName := 'CompanyLogos';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Company Logo" := CopyStr(fileName, 1, StrLen(fileName));
-                            Rec."Logo URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec."BLRCompany Logo" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."BLRLogo URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
@@ -47,7 +47,7 @@ page 73209622 "Company Data"
 
                 }
 
-                field("Azure Blob URL"; Rec."Logo URL")
+                field("Azure Blob URL"; Rec."BLRLogo URL")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The URL of the company logo stored in Azure Blob Storage.';
@@ -57,7 +57,7 @@ page 73209622 "Company Data"
                     var
                         FileURL: Text;
                     begin
-                        FileURL := Rec."View Document URL";
+                        FileURL := Rec."BLRView Document URL";
 
                         if FileURL = '' then
                             Error('No document is available to view.');
@@ -66,25 +66,25 @@ page 73209622 "Company Data"
                     end;
                 }
 
-                field("Tenant id"; Rec."Tenant id")
+                field("Tenant id"; Rec."BLRTenant id")
                 {
                     ApplicationArea = All;
                     Caption = 'Tenant Id';
                     ToolTip = 'Specifies the Azure AD Tenant ID for the company.';
                 }
-                field("Environment Name"; Rec."Environment Name")
+                field("Environment Name"; Rec."BLREnvironment Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Environment Name';
                     ToolTip = 'Specifies the name of the environment for the company.';
                 }
-                field("API URL"; Rec."API URL")
+                field("API URL"; Rec."BLRAPI URL")
                 {
                     ApplicationArea = All;
                     Caption = 'API URL';
                     ToolTip = 'This is the API URL of portal';
                 }
-                field("Revenue Methods"; Rec."Revenue Methods")
+                field("Revenue Methods"; Rec."BLRRevenue Methods")
                 {
                     ApplicationArea = All;
                     Caption = 'Revenue Methods';
@@ -96,11 +96,11 @@ page 73209622 "Company Data"
             {
                 part("Workflow Frequency"; "Workflow Frequency Card")
                 {
-                    SubPageLink = "Company ID" = FIELD("Company ID");
+                    SubPageLink = "BLRCompany ID" = FIELD("BLRCompany ID");
                     ApplicationArea = All;
                 }
             }
-            field("Access Validity"; Rec."Access Validity")
+            field("Access Validity"; Rec."BLRAccess Validity")
             {
                 ApplicationArea = All;
                 Caption = 'Access Validity (Days)';
@@ -121,6 +121,6 @@ page 73209622 "Company Data"
         CompanyInfo: Record "Company Information";
     begin
         if CompanyInfo.Get() then
-            Rec."Company Name" := CompanyInfo.Name;
+            Rec."BLRCompany Name" := CompanyInfo.Name;
     end;
 }

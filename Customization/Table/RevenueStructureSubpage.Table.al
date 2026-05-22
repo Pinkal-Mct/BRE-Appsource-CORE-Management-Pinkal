@@ -1,33 +1,33 @@
-table 73209681 "Revenue Structure Subpage"
+table 73209681 "BLRRevenueStructureSubpage"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "Year"; Integer)
+        field(73209575; "BLRYear"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Year';
             Editable = false;
         }
-        field(73209576; "Period Start Date"; Date)
+        field(73209576; "BLRPeriod Start Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Start Date';
             Editable = false;
         }
-        field(73209577; "Period End Date"; Date)
+        field(73209577; "BLRPeriod End Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'End Date';
             Editable = false;
         }
-        field(73209578; "Number of Days"; Integer)
+        field(73209578; "BLRNumber of Days"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Number of Days';
             Editable = false;
         }
-        field(73209579; "Final Annual Amount"; Decimal)
+        field(73209579; "BLRFinal Annual Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Final Annual Amount';
@@ -35,7 +35,7 @@ table 73209681 "Revenue Structure Subpage"
             DecimalPlaces = 2 : 2;
 
         }
-        field(73209580; "Yearly No. of Installment"; Integer)
+        field(73209580; "BLRYearly No. of Installment"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Yearly No. of Instalment';
@@ -49,67 +49,67 @@ table 73209681 "Revenue Structure Subpage"
             end;
 
         }
-        field(73209581; "Entry No."; Integer)
+        field(73209581; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
         }
-        field(73209582; "RS ID"; Integer)
+        field(73209582; "BLRRS ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'RS ID';
         }
-        field(73209583; "Tenant Id"; Code[20])
+        field(73209583; "BLRTenant Id"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
-        field(73209584; "Total Amount"; Decimal)
+        field(73209584; "BLRTotal Amount"; Decimal)
         {
             Caption = 'Total Amount';
             Editable = false;
             FieldClass = FlowField;
-            CalcFormula = sum("Revenue Structure Subpage"."Final Annual Amount" where("Contract ID" = field("Contract Id"), "RS ID" = field("RS ID")));
+            CalcFormula = sum("BLRRevenueStructureSubpage"."BLRFinal Annual Amount" where("BLRContract ID" = field("BLRContract ID"), "BLRRS ID" = field("BLRRS ID")));
             DecimalPlaces = 2 : 2;
 
         }
-        field(73209585; "Link"; Text[50])
+        field(73209585; "BLRLink"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Update Data';
             InitValue = 'Update Data';
         }
-        field(73209586; "VAT Amount"; Decimal)
+        field(73209586; "BLRVAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'VAT Amount';
             DecimalPlaces = 2 : 2;
 
         }
-        field(73209587; "Amount Including VAT"; Decimal)
+        field(73209587; "BLRAmount Including VAT"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Amount Including VAT';
             DecimalPlaces = 2 : 2;
         }
-        field(73209588; "Secondary Item Type"; Text[100])
+        field(73209588; "BLRSecondary Item Type"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Secondary Item Type';
         }
-        field(73209589; "VAT %"; Option)
+        field(73209589; "BLRVAT %"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = "0","5";
             Caption = 'VAT %';
             Editable = false;
         }
-        field(73209590; "Contract ID"; Integer)
+        field(73209590; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
         }
-        field(73209591; "Payment Frequency"; Option)
+        field(73209591; "BLRPayment Frequency"; Option)
         {
             OptionMembers = " ",Monthly,Quarterly,"Half-Yearly",Yearly;
             DataClassification = CustomerContent;
@@ -120,16 +120,16 @@ table 73209681 "Revenue Structure Subpage"
                 installmentCalcEngine: Codeunit "Installment Calculation Engine";
                 PeriodDuration: Text;
             begin
-                if Rec."Payment Frequency" <> Rec."Payment Frequency"::" " then begin
-                    PeriodDuration := fetchMonth.CalculateLeaseDuration(Rec."Period Start Date", Rec."Period End Date");
-                    Rec.Validate("Yearly No. of Installment", installmentCalcEngine.CalculateInstallments(PeriodDuration, Format(Rec."Payment Frequency")));
+                if Rec."BLRPayment Frequency" <> Rec."BLRPayment Frequency"::" " then begin
+                    PeriodDuration := fetchMonth.CalculateLeaseDuration(Rec."BLRPeriod Start Date", Rec."BLRPeriod End Date");
+                    Rec.Validate("BLRYearly No. of Installment", installmentCalcEngine.CalculateInstallments(PeriodDuration, Format(Rec."BLRPayment Frequency")));
                 end;
             end;
         }
     }
     keys
     {
-        key(Key1; "Entry No.", "RS ID")
+        key(Key1;"BLREntry No.", "BLRRS ID")
         {
             Clustered = true;
         }

@@ -1,14 +1,13 @@
 codeunit 73209599 "Refund Settlement Posting Mgt."
 {
-    procedure PostRefundJournalLines(FinalSettlementRefund: Record "FinalSettlementRefund")
+    procedure PostRefundJournalLines(FinalSettlementRefund: Record "BLRFinalSettlementRefund")
     var
         GenJnlLine: Record "Gen. Journal Line";
-        TenantContract: Record "Final Calculation";
         BankAccount: Record "Bank Account";
         customer: Record Customer;
-        FinalcalculationRec: Record "Final Calculation"; // Adjust to your actual Contract table name
-        COASetup: Record "COA Setup";
-        customerpostinggroup: Record "Customer Posting Group";
+        FinalcalculationRec: Record "BLRFinalCalculation"; // Adjust to your actual Contract table name
+        COASetup: Record "BLRCOASetup";
+
         GenJnlPost: Codeunit "Gen. Jnl.-Post";
         GenJnlTemplate: Code[10];
         GenJnlBatch: Code[10];
@@ -16,9 +15,6 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
         DocNo: Code[20];
         PostingDate: Date;
         TenantReceivableAccount: Code[20];
-        RefundOtherDepositGL: Code[20];
-        RefundChillerDepositGL: Code[20];
-        RefundSecurityDepositGL: Code[20];
         NetRefundToTenant: Decimal;
         adjustsecurityDeposit: Decimal;
         adjustChillerDeposit: Decimal;
@@ -27,14 +23,11 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
         balAccountType: Enum "Gen. Journal Account Type";
         respectiveaccount: Code[20];
     begin
-        RefundOtherDepositGL := '4508';
-        RefundChillerDepositGL := '4508';
-        RefundSecurityDepositGL := '4502';
 
-        NetRefundToTenant := Round(FinalSettlementRefund."Net Refund to the Tenant");
-        adjustsecurityDeposit := FinalSettlementRefund."Adjust Security Deposit";
-        adjustChillerDeposit := FinalSettlementRefund."Adjust Chiller Deposit";
-        adjustotherDeposit := FinalSettlementRefund."Adjust other deposit";
+        NetRefundToTenant := Round(FinalSettlementRefund."BLRNet Refund to the Tenant");
+        adjustsecurityDeposit := FinalSettlementRefund."BLRAdjust Security Deposit";
+        adjustChillerDeposit := FinalSettlementRefund."BLRAdjust Chiller Deposit";
+        adjustotherDeposit := FinalSettlementRefund."BLRAdjust other deposit";
 
         PostingDate := Today();
         GenJnlTemplate := 'CASH RECE';
@@ -42,21 +35,21 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
         ClearJournalLines(GenJnlTemplate, GenJnlBatch);
 
         FinalcalculationRec.Reset();
-        FinalcalculationRec.SetRange("FC ID", FinalSettlementRefund."FC ID");
+        FinalcalculationRec.SetRange("BLRFC ID", FinalSettlementRefund."BLRFC ID");
         if not FinalcalculationRec.FindFirst() then
-            Error('Final Calculation not found for FC ID %1', FinalSettlementRefund."FC ID")
+            Error('Final Calculation not found for FC ID %1', FinalSettlementRefund."BLRFC ID")
         else
             if customer.FindFirst() then begin
-                customer.Validate("Gen. Bus. Posting Group", FinalcalculationRec."Unit Type");
-                customer.Validate("Customer Posting Group", FinalcalculationRec."Unit Type");
+                customer.Validate("Gen. Bus. Posting Group", FinalcalculationRec."BLRUnit Type");
+                customer.Validate("Customer Posting Group", FinalcalculationRec."BLRUnit Type");
                 customer.Modify();
                 TenantReceivableAccount := customer."No.";
             end;
 
-        if FinalSettlementRefund."Refund Payment mode" = 'Cash' then begin
+        if FinalSettlementRefund."BLRRefund Payment mode" = 'Cash' then begin
             COASetup.Get();
-            if COASetup.Cash <> '' then begin
-                respectiveaccount := COASetup.Cash;
+            if COASetup."BLRCash" <> '' then begin
+                respectiveaccount := COASetup."BLRCash";
                 balAccountType := balAccountType::"G/L Account";
             end
             else
@@ -65,7 +58,7 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
         else begin
             respectiveaccount := '';
             BankAccount.Reset();
-            BankAccount.SetRange("Search Name", FinalSettlementRefund."Deposit Bank");
+            BankAccount.SetRange("Search Name", FinalSettlementRefund."BLRDeposit Bank");
             if BankAccount.FindFirst() then
                 if BankAccount."Bank Acc. Posting Group" <> '' then begin
                     respectiveaccount := BankAccount."No.";
@@ -75,7 +68,7 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
                     Error('Bank Acc. Posting Group is blank in Bank Account %1', BankAccount."No.");
         end;
 
-        DocNo := 'RFND-' + Format(FinalSettlementRefund."Contract ID") + '-' + Format(FinalSettlementRefund."FC ID");
+        DocNo := 'RFND-' + Format(FinalSettlementRefund."BLRContract ID") + '-' + Format(FinalSettlementRefund."BLRFC ID");
 
         GenJnlLine.Reset();
         GenJnlLine.SetRange("Journal Template Name", GenJnlTemplate);
@@ -85,7 +78,7 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
         else
             LineNo := 10000;
 
-        if FinalSettlementRefund."Adjust other deposit" > 0 then begin
+        if FinalSettlementRefund."BLRAdjust other deposit" > 0 then begin
             AppliedAmount := Round(Min(adjustotherDeposit, NetRefundToTenant));
             GenJnlLine.Init();
             GenJnlLine."Journal Template Name" := 'CASH RECE';
@@ -96,9 +89,9 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
             GenJnlLine."Document No." := DocNo;
             GenJnlLine.Description := 'Refund Other Deposit';
             GenJnlLine.Validate("Account Type", GenJnlLine."Account Type"::Customer);
-            GenJnlLine.Validate("Account No.", FinalSettlementRefund."Tenant ID");
+            GenJnlLine.Validate("Account No.", FinalSettlementRefund."BLRTenant ID");
             GenJnlLine.Validate(Amount, Round(appliedamount));
-            GenJnlLine."Contract ID" := FinalSettlementRefund."Contract ID";
+            GenJnlLine."BLRContract ID" := FinalSettlementRefund."BLRContract ID";
             GenJnlLine.Validate("Bal. Account Type", balAccountType);
             GenJnlLine.Validate("Bal. Account No.", respectiveaccount);
             GenJnlLine.Insert(true);
@@ -107,7 +100,7 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
             LineNo += 10000;
         end;
 
-        if FinalSettlementRefund."Adjust Chiller Deposit" > 0 then begin
+        if FinalSettlementRefund."BLRAdjust Chiller Deposit" > 0 then begin
             AppliedAmount := Round(Min(adjustChillerDeposit, NetRefundToTenant));
             GenJnlLine.Init();
             GenJnlLine."Journal Template Name" := 'CASH RECE';
@@ -118,9 +111,9 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
             GenJnlLine."Document No." := DocNo;
             GenJnlLine.Description := 'Refund Chiller Deposit';
             GenJnlLine.Validate("Account Type", GenJnlLine."Account Type"::Customer);
-            GenJnlLine.Validate("Account No.", FinalSettlementRefund."Tenant ID");
+            GenJnlLine.Validate("Account No.", FinalSettlementRefund."BLRTenant ID");
             GenJnlLine.Validate(Amount, Round(appliedamount));
-            GenJnlLine."Contract ID" := FinalSettlementRefund."Contract ID";
+            GenJnlLine."BLRContract ID" := FinalSettlementRefund."BLRContract ID";
             GenJnlLine.Validate("Bal. Account Type", balAccountType);
             GenJnlLine.Validate("Bal. Account No.", respectiveaccount);
             GenJnlLine.Insert(true);
@@ -129,7 +122,7 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
             LineNo += 10000;
         end;
 
-        if FinalSettlementRefund."Adjust Security Deposit" > 0 then begin
+        if FinalSettlementRefund."BLRAdjust Security Deposit" > 0 then begin
             AppliedAmount := Round(Min(adjustsecurityDeposit, NetRefundToTenant));
             GenJnlLine.Init();
             GenJnlLine."Journal Template Name" := 'CASH RECE';
@@ -140,9 +133,9 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
             GenJnlLine."Document No." := DocNo;
             GenJnlLine.Description := 'Refund Security Deposit';
             GenJnlLine.Validate("Account Type", GenJnlLine."Account Type"::Customer);
-            GenJnlLine.Validate("Account No.", FinalSettlementRefund."Tenant ID");
+            GenJnlLine.Validate("Account No.", FinalSettlementRefund."BLRTenant ID");
             GenJnlLine.Validate(Amount, Round(appliedamount));
-            GenJnlLine."Contract ID" := FinalSettlementRefund."Contract ID";
+            GenJnlLine."BLRContract ID" := FinalSettlementRefund."BLRContract ID";
             GenJnlLine.Validate("Bal. Account Type", balAccountType);
             GenJnlLine.Validate("Bal. Account No.", respectiveaccount);
             GenJnlLine.Insert(true);
@@ -163,9 +156,9 @@ codeunit 73209599 "Refund Settlement Posting Mgt."
                 GenJnlLine."Document No." := DocNo;
                 GenJnlLine.Description := 'Refund to Tenant';
                 GenJnlLine.Validate("Account Type", GenJnlLine."Account Type"::Customer);
-                GenJnlLine.Validate("Account No.", FinalSettlementRefund."Tenant ID");
+                GenJnlLine.Validate("Account No.", FinalSettlementRefund."BLRTenant ID");
                 GenJnlLine.Validate(Amount, Round(appliedamount));
-                GenJnlLine."Contract ID" := FinalSettlementRefund."Contract ID";
+                GenJnlLine."BLRContract ID" := FinalSettlementRefund."BLRContract ID";
                 GenJnlLine.Validate("Bal. Account Type", balAccountType);
                 GenJnlLine.Validate("Bal. Account No.", respectiveaccount);
                 GenJnlLine.Insert(true);

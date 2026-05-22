@@ -1,7 +1,7 @@
 page 73209666 "Vendor Category List"
 {
     PageType = List;
-    SourceTable = "Vendor Category";
+    SourceTable = "BLRVendorCategory";
     ApplicationArea = All;
     Caption = 'Vendor Category List';
     UsageCategory = Lists;
@@ -13,13 +13,13 @@ page 73209666 "Vendor Category List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'Specifies the unique identifier for the vendor category.';
                 }
-                field("Vendor Category Type"; Rec."Vendor Category Type")
+                field("Vendor Category Type"; Rec."BLRVendor Category Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Vendor Category Name';

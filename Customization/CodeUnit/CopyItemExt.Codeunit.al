@@ -8,9 +8,9 @@ codeunit 73209587 "Copy Item Ext"
         NewUnitNo: Code[20];
     begin
         NewUnitNo := NoSeriesManagement.GetNextNo('UNITNO', 0D, true);
-        TargetItem.FixedNumber := NewUnitNo;
-        TargetItem."Unit Status" := TargetItem."Unit Status"::Free;
-        TargetItem.MergeSplitOption := TargetItem.MergeSplitOption::Single;
+        TargetItem.BLRFixedNumber := NewUnitNo;
+        TargetItem."BLRUnit Status" := TargetItem."BLRUnit Status"::Free;
+        TargetItem.BLRMergeSplitOption := TargetItem.BLRMergeSplitOption::Single;
         TargetItem.Modify();
 
         unitpage.AutoGenerateUnitName(TargetItem);

@@ -30,11 +30,11 @@ page 73209586 DocumentAttachment
                 {
                     Caption = 'Attached Date';
                 }
-                field(documentBLOB; Rec."Document BLOB")
+                field(documentBLOB; Rec."BLRDocument BLOB")
                 {
                     Caption = 'Document BLOB';
                 }
-                field(documentFile; Rec."Document File")
+                field(documentFile; Rec."BLRDocument File")
                 {
                     Caption = 'Document File';
                 }
@@ -50,7 +50,7 @@ page 73209586 DocumentAttachment
                 {
                     Caption = 'Flow to Service Trx';
                 }
-                field(documentName; Rec."Document Name")
+                field(documentName; Rec."BLRDocument Name")
                 {
                     Caption = 'Document Name';
                 }
@@ -62,11 +62,11 @@ page 73209586 DocumentAttachment
                 {
                     Caption = 'Document Type';
                 }
-                field(documentMedia; Rec.DocumentMedia)
+                field(documentMedia; Rec.BLRDocumentMedia)
                 {
                     Caption = 'DocumentMedia';
                 }
-                field(fieldNo; Rec."Field No.")
+                field(fieldNo; Rec."BLRField No.")
                 {
                     Caption = 'Field No.';
                 }
@@ -90,7 +90,7 @@ page 73209586 DocumentAttachment
                 {
                     Caption = 'Line No.';
                 }
-                field(mimeType; Rec."MIME Type")
+                field(mimeType; Rec."BLRMIME Type")
                 {
                     Caption = 'MIME Type';
                 }
@@ -98,7 +98,7 @@ page 73209586 DocumentAttachment
                 {
                     Caption = 'No.';
                 }
-                field("recordId"; Rec."Record Id")
+                field("recordId"; Rec."BLRRecord Id")
                 {
                     Caption = 'Record Id';
                 }
@@ -126,15 +126,15 @@ page 73209586 DocumentAttachment
                 {
                     Caption = 'Table ID';
                 }
-                field(tableName; Rec."Table Name")
+                field(tableName; Rec."BLRTable Name")
                 {
                     Caption = 'Table Name';
                 }
-                field(uploadDocument; Rec."Upload Document")
+                field(uploadDocument; Rec."BLRUpload Document")
                 {
                     Caption = 'Upload Document';
                 }
-                field(uploadDocumentType; Rec."Upload Document Type")
+                field(uploadDocumentType; Rec."BLRUpload Document Type")
                 {
                     Caption = 'Upload Document Type';
                 }

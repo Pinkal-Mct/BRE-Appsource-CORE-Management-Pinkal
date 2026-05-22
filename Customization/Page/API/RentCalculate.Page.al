@@ -11,7 +11,7 @@ page 73209609 RentCalculate
     EntityName = 'rentcalculatesub';
     EntitySetName = 'rentcalculatesubs';
     PageType = API;
-    SourceTable = "Rent Calculate Sub";
+    SourceTable = "BLRRentCalculateSub";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -22,35 +22,35 @@ page 73209609 RentCalculate
         {
             repeater(General)
             {
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(entryNo; Rec."Entry No.")
+                field(entryNo; Rec."BLREntry No.")
                 {
                     Caption = 'Entry No.';
                 }
-                field(finalAnnualAmount; Rec."Final Annual Amount")
+                field(finalAnnualAmount; Rec."BLRFinal Annual Amount")
                 {
                     Caption = 'Final Annual Amount';
                 }
-                field(numberOfDays; Rec."Number of Days")
+                field(numberOfDays; Rec."BLRNumber of Days")
                 {
                     Caption = 'Number of Days';
                 }
-                field(perDayRent; Rec."Per Day Rent")
+                field(perDayRent; Rec."BLRPer Day Rent")
                 {
                     Caption = 'Per Day Rent';
                 }
-                field(periodEndDate; Rec."Period End Date")
+                field(periodEndDate; Rec."BLRPeriod End Date")
                 {
                     Caption = 'End Date';
                 }
-                field(periodStartDate; Rec."Period Start Date")
+                field(periodStartDate; Rec."BLRPeriod Start Date")
                 {
                     Caption = 'Start Date';
                 }
-                field(rcID; Rec."RC ID")
+                field(rcID; Rec."BLRRC ID")
                 {
                     Caption = 'RC ID';
                 }
@@ -74,19 +74,19 @@ page 73209609 RentCalculate
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantId; Rec."Tenant Id")
+                field(tenantId; Rec."BLRTenant Id")
                 {
                     Caption = 'Tenant ID';
                 }
-                field(totalFinalAnnualAmount; Rec."Total Final Annual Amount")
+                field(totalFinalAnnualAmount; Rec."BLRTotal Final Annual Amount")
                 {
                     Caption = 'Total Final Annual Amount';
                 }
-                field(totalNumberOfDays; Rec."Total Number of Days")
+                field(totalNumberOfDays; Rec."BLRTotal Number of Days")
                 {
                     Caption = 'Total Number of Days';
                 }
-                field(year; Rec.Year)
+                field(year; Rec."BLRYear")
                 {
                     Caption = 'Year';
                 }

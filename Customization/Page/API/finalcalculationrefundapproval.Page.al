@@ -11,7 +11,7 @@ page 73209590 finalcalculationrefundapproval
     EntityName = 'fcRefundApproval';
     EntitySetName = 'fcRefundApprovals';
     PageType = API;
-    SourceTable = finalcalculation_refunApproval;
+    SourceTable = "BLRFinalCalcRefundApproval";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -22,47 +22,47 @@ page 73209590 finalcalculationrefundapproval
         {
             repeater(General)
             {
-                field(accountHolderName; Rec."Account Holder Name")
+                field(accountHolderName; Rec."BLRAccount Holder Name")
                 {
                     Caption = 'Account Holder Name';
                 }
-                field(accountNumber; Rec."Account Number")
+                field(accountNumber; Rec."BLRAccount Number")
                 {
                     Caption = 'Account Number';
                 }
-                field(bankName; Rec."Bank Name")
+                field(bankName; Rec."BLRBank Name")
                 {
                     Caption = 'Bank Name';
                 }
-                field(branchAddress; Rec."Branch Address")
+                field(branchAddress; Rec."BLRBranch Address")
                 {
                     Caption = 'Branch Name';
                 }
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(description; Rec.Description)
+                field(description; Rec."BLRDescription")
                 {
                     Caption = 'Description';
                 }
-                field(dueDate; Rec."Due Date")
+                field(dueDate; Rec."BLRDue Date")
                 {
                     Caption = 'Due Date';
                 }
-                field(ibanNumber; Rec."IBAN number")
+                field(ibanNumber; Rec."BLRIBAN number")
                 {
                     Caption = 'IBAN number';
                 }
-                field(id; Rec.ID)
+                field(id; Rec."BLRID")
                 {
                     Caption = 'ID';
                 }
-                field(status; Rec.Status)
+                field(status; Rec."BLRStatus")
                 {
                     Caption = 'Status';
                 }
-                field(swiftCode; Rec."Swift Code")
+                field(swiftCode; Rec."BLRSwift Code")
                 {
                     Caption = 'Swift Code';
                 }
@@ -86,23 +86,23 @@ page 73209590 finalcalculationrefundapproval
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantID; Rec."Tenant ID")
+                field(tenantID; Rec."BLRTenant ID")
                 {
                     Caption = 'Tenant ID';
                 }
-                field(tenantName; Rec."Tenant Name")
+                field(tenantName; Rec."BLRTenant Name")
                 {
                     Caption = 'Tenant Name';
                 }
-                field(totalAmount; Rec."Total Amount")
+                field(totalAmount; Rec."BLRTotal Amount")
                 {
                     Caption = 'Total Amount';
                 }
-                field("requestDate"; Rec."Request Date")
+                field("requestDate"; Rec."BLRRequest Date")
                 {
                     Caption = 'Request Date';
                 }
-                field(fcID; Rec.fcID)
+                field(fcID; Rec."BLRfcID")
                 {
                     Caption = 'fcID';
                 }

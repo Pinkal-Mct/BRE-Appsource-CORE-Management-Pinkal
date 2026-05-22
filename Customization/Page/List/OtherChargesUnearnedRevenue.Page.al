@@ -2,7 +2,7 @@ page 73209649 "OtherCharges-UnearnedRevenue"
 {
     PageType = ListPart;
     ApplicationArea = All;
-    SourceTable = "Other Charges UnearnedRevenue";
+    SourceTable = "BLROtherChargesUnearnedRevenue";
     Caption = 'Revenue Item';
 
     layout
@@ -11,19 +11,19 @@ page 73209649 "OtherCharges-UnearnedRevenue"
         {
             repeater(Group)
             {
-                field("No."; Rec."No.")
+                field("No."; Rec."BLRNo.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Unique identifier for the other charges unearned revenue.';
                     Visible = false;
                 }
-                field("Item Type"; Rec."Item Type")
+                field("Item Type"; Rec."BLRItem Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Type of item associated with the other charges unearned revenue.';
                     Caption = 'Item Type';
                 }
-                field("Entry No."; Rec."Entry No.")
+                field("Entry No."; Rec."BLREntry No.")
                 {
                     ApplicationArea = All;
                     Caption = 'Entry No.';
@@ -46,7 +46,7 @@ page 73209649 "OtherCharges-UnearnedRevenue"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."No." := No;
+        Rec."BLRNo." := No;
         exit(true);
     end;
 }

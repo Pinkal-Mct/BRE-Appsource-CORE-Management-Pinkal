@@ -11,7 +11,7 @@ page 73209601 paymentSchedule1
     EntityName = 'paymentSchedulef';
     EntitySetName = 'paymentSchedulefs';
     PageType = API;
-    SourceTable = "Payment Schedule";
+    SourceTable = "BLRPaymentSchedule";
     ODataKeyFields = SystemId;
     DeleteAllowed = true;
     ModifyAllowed = true;
@@ -23,7 +23,7 @@ page 73209601 paymentSchedule1
         {
             repeater(General)
             {
-                field(psId; Rec."Contract Id")
+                field(psId; Rec."BLRContract ID")
                 {
                     Caption = 'Contract Id';
                 }
@@ -47,7 +47,7 @@ page 73209601 paymentSchedule1
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantId; Rec."Tenant Id")
+                field(tenantId; Rec."BLRTenant Id")
                 {
                     Caption = 'Tenant Id';
                 }

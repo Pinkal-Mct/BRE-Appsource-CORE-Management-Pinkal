@@ -12,7 +12,7 @@ page 73209599 PaymentApproval
     EntitySetName = 'paymentApprovals';
     PageType = API;
     ODataKeyFields = SystemId;
-    SourceTable = "Approval Payment Request";
+    SourceTable = "BLRApprovalPaymentRequest";
 
     layout
     {
@@ -21,27 +21,27 @@ page 73209599 PaymentApproval
             repeater(General)
             {
 
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(id; Rec.ID)
+                field(id; Rec."BLRID")
                 {
                     Caption = 'ID';
                 }
-                field(manualautoStatus; Rec."Manual/Auto Status")
+                field(manualautoStatus; Rec."BLRManual/Auto Status")
                 {
                     Caption = 'Manual/Auto Status';
                 }
-                field(proposalID; Rec."Proposal ID")
+                field(proposalID; Rec."BLRProposal ID")
                 {
                     Caption = 'Proposal ID';
                 }
-                field(requestType; Rec."Request Type")
+                field(requestType; Rec."BLRRequest Type")
                 {
                     Caption = 'Request Type';
                 }
-                field(status; Rec.Status)
+                field(status; Rec."BLRStatus")
                 {
                     Caption = 'Status';
                 }
@@ -65,48 +65,48 @@ page 73209599 PaymentApproval
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantID; Rec."Tenant ID")
+                field(tenantID; Rec."BLRTenant ID")
                 {
                     Caption = 'Tenant ID';
                 }
-                field("changeAmount"; Rec."Change Amount")
+                field("changeAmount"; Rec."BLRChange Amount")
                 {
                     Caption = 'Change Amount';
                 }
-                field(description; Rec.Description)
+                field(description; Rec."BLRDescription")
                 {
                     Caption = 'Description';
                 }
-                field("paymentSeries"; Rec."Payment Series")
+                field("paymentSeries"; Rec."BLRPayment Series")
                 {
                     Caption = 'Payment Series';
                 }
-                field("changePaymentseries"; Rec."change Payment series")
+                field("changePaymentseries"; Rec."BLRchange Payment series")
                 {
                     Caption = 'change Payment series';
                 }
-                field("paymentmode"; Rec."Payment mode")
+                field("paymentmode"; Rec."BLRPayment mode")
                 {
                     Caption = 'Payment mode';
                 }
-                field(amount; Rec.Amount)
+                field(amount; Rec."BLRAmount")
                 {
                     Caption = 'Amount';
                 }
-                field("vatAmount"; Rec."Vat Amount")
+                field("vatAmount"; Rec."BLRVat Amount")
                 {
                     Caption = 'Vat Amount';
                 }
 
-                field("dueDate"; Rec."Due Date")
+                field("dueDate"; Rec."BLRDue Date")
                 {
                     Caption = 'Due Date';
                 }
-                field(items; Rec.Items)
+                field(items; Rec."BLRItems")
                 {
                     Caption = 'Items';
                 }
-                field(paymentModeId; Rec."Payment mode ID")
+                field(paymentModeId; Rec."BLRPayment mode ID")
                 {
                     Caption = 'Payment mode ID';
                 }

@@ -1,16 +1,16 @@
-table 73209709 "Vendor Category"
+table 73209709 "BLRVendorCategory"
 {
     DataClassification = SystemMetadata;
-    DataCaptionFields = ID;
+    DataCaptionFields = "BLRID";
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
-        field(73209576; "Vendor Category Type"; Text[100])
+        field(73209576; "BLRVendor Category Type"; Text[100])
         {
             DataClassification = SystemMetadata;
             Caption = 'Vendor Category Type';
@@ -18,14 +18,14 @@ table 73209709 "Vendor Category"
     }
     keys
     {
-        key(PK; "ID", "Vendor Category Type")
+        key(PK;"BLRID", "BLRVendor Category Type")
         {
             Clustered = true;
         }
     }
     fieldgroups
     {
-        fieldgroup(DropDown; ID, "Vendor Category Type")
+        fieldgroup(DropDown;"BLRID", "BLRVendor Category Type")
         {
         }
     }

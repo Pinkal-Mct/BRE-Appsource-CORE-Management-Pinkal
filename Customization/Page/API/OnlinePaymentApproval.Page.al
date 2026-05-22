@@ -11,7 +11,7 @@ page 73209597 OnlinePaymentApproval
     EntityName = 'onlinePaymentApproval';
     EntitySetName = 'onlinePaymentApprovals';
     PageType = API;
-    SourceTable = OnlinePaymentApproval;
+    SourceTable = "BLROnlinePaymentApproval";
 
     layout
     {
@@ -19,35 +19,35 @@ page 73209597 OnlinePaymentApproval
         {
             repeater(General)
             {
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(description; Rec.Description)
+                field(description; Rec."BLRDescription")
                 {
                     Caption = 'Description';
                 }
-                field(dueDate; Rec."Due Date")
+                field(dueDate; Rec."BLRDue Date")
                 {
                     Caption = 'Due Date';
                 }
-                field(id; Rec.ID)
+                field(id; Rec."BLRID")
                 {
                     Caption = 'ID';
                 }
-                field(paymentDate; Rec."Payment Date")
+                field(paymentDate; Rec."BLRPayment Date")
                 {
                     Caption = 'Payment Date';
                 }
-                field(paymentMode; Rec."Payment Mode")
+                field(paymentMode; Rec."BLRPayment Mode")
                 {
                     Caption = 'Payment Mode';
                 }
-                field(paymentSeries; Rec."Payment Series")
+                field(paymentSeries; Rec."BLRPayment Series")
                 {
                     Caption = 'Payment Series';
                 }
-                field("paymenttransactionID"; Rec."Payment transaction ID")
+                field("paymenttransactionID"; Rec."BLRPayment transaction ID")
                 {
                     Caption = 'Payment transaction ID';
                 }
@@ -71,19 +71,19 @@ page 73209597 OnlinePaymentApproval
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantID; Rec."Tenant ID")
+                field(tenantID; Rec."BLRTenant ID")
                 {
                     Caption = 'Tenant ID';
                 }
-                field("tenantName"; Rec."Tenant Name")
+                field("tenantName"; Rec."BLRTenant Name")
                 {
                     Caption = 'Tenant Name';
                 }
-                field(totalAmount; Rec."Total Amount")
+                field(totalAmount; Rec."BLRTotal Amount")
                 {
                     Caption = 'Amount with vat';
                 }
-                field(status; Rec.Status)
+                field(status; Rec."BLRStatus")
                 {
                     Caption = 'Status';
                 }

@@ -2,58 +2,58 @@ tableextension 73209592 "Vendor Ext" extends Vendor
 {
     fields
     {
-        field(73209575; "Country"; Text[100])
+        field(73209575; "BLRCountry"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Country';
-            TableRelation = Country;
+            TableRelation = "BLRCountry";
             trigger OnValidate()
             var
-                country: Record Country;
+                country: Record "BLRCountry";
             begin
-                if country.Get(Rec.Country) then
-                    Rec.Country := country."Country Code";
+                if country.Get(Rec."BLRCountry") then
+                    Rec."BLRCountry" := country."BLRCountry Code";
             end;
         }
-        field(73209576; "Emirate Name"; Text[50])
+        field(73209576; "BLREmirate Name"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Emirate';
-            TableRelation = Emirate.ID
-                 where("Country Code" = field(Country));
+            TableRelation = "BLREmirate"."BLRID"
+                 where("BLRCountry Code" = field("BLRCountry"));
             trigger OnValidate()
             var
-                emirate: Record "Emirate";
+                emirate: Record "BLREmirate";
                 emirateID: Integer;
             begin
-                Evaluate(emirateID, "Emirate Name");
-                emirate.SetRange(ID, emirateID);
+                Evaluate(emirateID, "BLREmirate Name");
+                emirate.SetRange("BLRID", emirateID);
                 if emirate.FindFirst() then begin
-                    "Emirate Name" := Format(emirate."Emirate Name");
-                    Community := '';
+                    "BLREmirate Name" := Format(emirate."BLREmirate Name");
+                    "BLRCommunity" := '';
                 end else
-                    Error('Invalid Emirate Name: %1', "Emirate Name");
+                    Error('Invalid Emirate Name: %1', "BLREmirate Name");
             end;
         }
-        field(73209577; "Community"; Text[100])
+        field(73209577; "BLRCommunity"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Community';
-            TableRelation = Community where("Emirate Name" = field("Emirate Name"));
+            TableRelation = "BLRCommunity" where("BLREmirate Name" = field("BLREmirate Name"));
 
             trigger OnValidate()
             var
-                communityRec: Record Community;
+                communityRec: Record "BLRCommunity";
             begin
-                if communityRec.Get(Community) then
-                    Community := communityRec."Community Name";
+                if communityRec.Get("BLRCommunity") then
+                    "BLRCommunity" := communityRec."BLRCommunity Name";
             end;
         }
-        field(73209578; "Vendor Category"; Text[100])
+        field(73209578; "BLRVendor Category"; Text[100])
         {
             DataClassification = CustomerContent;
             Caption = 'Vendor Category';
-            TableRelation = "Vendor Category"."Vendor Category Type";
+            TableRelation = "BLRVendorCategory"."BLRVendor Category Type";
         }
     }
 }

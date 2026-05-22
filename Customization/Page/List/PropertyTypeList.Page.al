@@ -1,7 +1,7 @@
 page 73209655 "Property Type List"
 {
     PageType = List;
-    SourceTable = "Property Type";
+    SourceTable = "BLRPropertyType";
     ApplicationArea = All;
     Caption = 'Property Type List';
     UsageCategory = Lists;
@@ -13,21 +13,21 @@ page 73209655 "Property Type List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'The unique identifier for the property type.';
                 }
-                field("Classification Name"; Rec."Classification Name")
+                field("Classification Name"; Rec."BLRClassification Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Classification';
-                    TableRelation = "Primary Classification";
+                    TableRelation = "BLRPrimaryClassification";
                     Lookup = true;
                     ToolTip = 'The primary classification of the property type.';
                 }
-                field("Property Type"; Rec."Property Type")
+                field("Property Type"; Rec."BLRProperty Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Type';

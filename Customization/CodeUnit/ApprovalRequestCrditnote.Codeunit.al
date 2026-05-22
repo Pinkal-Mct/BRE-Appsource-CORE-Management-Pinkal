@@ -1,12 +1,12 @@
 codeunit 73209576 "Approval Request Crdit note "
 {
-    procedure SubmitCreditNote(var RequestCreditNote: Record "Request Credit Note")
+    procedure SubmitCreditNote(var RequestCreditNote: Record "BLRRequestCreditNote")
     var
-        ApprovalStatusList: Record RequestCreditNoteApprovalList;
+        ApprovalStatusList: Record "BLRReqCreditNoteApprovalList";
         UserPersonalizationRec: Record "User Personalization";
         UserRec: Record User;
         CompanyInfo: Record "Company Information";
-        requestcreditnotegrid: Record "Request Credit Note Grid";
+        requestcreditnotegrid: Record "BLRRequestCreditNoteGrid";
         EmailMessage: Codeunit "Email Message";
         Email: Codeunit "Email";
         EmailList: List of [Text];
@@ -15,22 +15,22 @@ codeunit 73209576 "Approval Request Crdit note "
         AcutalRentAmount: Decimal;
         Totalreductionamount: Decimal;
     begin
-        requestcreditnotegrid.SetRange("Request No.", RequestCreditNote."Request No.");
-        requestcreditnotegrid.SetRange("Contract ID", RequestCreditNote."Contract ID");
+        requestcreditnotegrid.SetRange("BLRRequest No.", RequestCreditNote."BLRRequest No.");
+        requestcreditnotegrid.SetRange("BLRContract ID", RequestCreditNote."BLRContract ID");
         if requestcreditnotegrid.FindSet() then
             repeat
-                AcutalRentAmount += requestcreditnotegrid."Current Charges Amount";
-                Totalreductionamount += requestcreditnotegrid."Total Reduction";
+                AcutalRentAmount += requestcreditnotegrid."BLRCurrent Charges Amount";
+                Totalreductionamount += requestcreditnotegrid."BLRTotal Reduction";
             until requestcreditnotegrid.Next() = 0;
         ApprovalStatusList.Init();
-        ApprovalStatusList."Request No." := RequestCreditNote."Request No.";
-        ApprovalStatusList."Contract ID" := RequestCreditNote."Contract ID";
-        ApprovalStatusList."Tenant No." := RequestCreditNote."Tenant No.";
-        ApprovalStatusList."Total Rent Amount" := RequestCreditNote."Current Rent Amount";
-        ApprovalStatusList."Total Reduction Amount" := RequestCreditNote."Total Reduction";
-        ApprovalStatusList.Status := 'Pending';
+        ApprovalStatusList."BLRRequest No." := RequestCreditNote."BLRRequest No.";
+        ApprovalStatusList."BLRContract ID" := RequestCreditNote."BLRContract ID";
+        ApprovalStatusList."BLRTenant No." := RequestCreditNote."BLRTenant No.";
+        ApprovalStatusList."BLRTotal Rent Amount" := RequestCreditNote."BLRCurrent Rent Amount";
+        ApprovalStatusList."BLRTotal Reduction Amount" := RequestCreditNote."BLRTotal Reduction";
+        ApprovalStatusList."BLRStatus" := 'Pending';
         ApprovalStatusList.Insert();
-        RequestCreditNote.Status := RequestCreditNote.Status::Pending;
+        RequestCreditNote."BLRStatus" := RequestCreditNote."BLRStatus"::Pending;
         RequestCreditNote.Modify();
         fianancemanager := '';
         UserPersonalizationRec.SetRange("Profile ID", 'FINANCE MANAGER');
@@ -54,11 +54,11 @@ codeunit 73209576 "Approval Request Crdit note "
                 '<p>This is an automated notification from the system.</p>' +
                 '<p>A new Credit Note has been submitted with the following details:</p>' +
                 '<p>' +
-                '<b>Request No.:</b> ' + Format(RequestCreditNote."Request No.") + '<br/>' +
-                '<b>Contract ID: </b> ' + Format(RequestCreditNote."Contract ID") + '<br/>' +
-                '<b>Tenant No:</b> ' + RequestCreditNote."Tenant No." + '<br/>' +
-                '<b>Tenant Name: </b> ' + Format(RequestCreditNote."Customer Name") + '<br/>' +
-                '<b>Request Date: </b> ' + Format(RequestCreditNote."Request Date") + '<br/>' +
+                '<b>Request No.:</b> ' + Format(RequestCreditNote."BLRRequest No.") + '<br/>' +
+                '<b>Contract ID: </b> ' + Format(RequestCreditNote."BLRContract ID") + '<br/>' +
+                '<b>Tenant No:</b> ' + RequestCreditNote."BLRTenant No." + '<br/>' +
+                '<b>Tenant Name: </b> ' + Format(RequestCreditNote."BLRCustomer Name") + '<br/>' +
+                '<b>Request Date: </b> ' + Format(RequestCreditNote."BLRRequest Date") + '<br/>' +
                '<b>Total Rent Amount: </b> ' + Format(AcutalRentAmount) + '<br/>' +
                '<b>Total Reduction Amount: </b> ' + Format(Totalreductionamount) + '<br/>' +
                 '</p>' +
@@ -68,7 +68,7 @@ codeunit 73209576 "Approval Request Crdit note "
                 '</body></html>';
             EmailMessage.Create(
                     EmailList,
-                    'System Notification: Action Required - Review Credit Note for Approval - Contract ID ' + Format(RequestCreditNote."Contract ID"),
+                    'System Notification: Action Required - Review Credit Note for Approval - Contract ID ' + Format(RequestCreditNote."BLRContract ID"),
                     EmailBody,
                     true
                 );

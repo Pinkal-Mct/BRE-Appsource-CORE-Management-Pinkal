@@ -1,7 +1,7 @@
 page 73209668 "Vendor I/R DocumentSub"
 {
     PageType = ListPart;
-    SourceTable = "Vendor Contract Document";
+    SourceTable = "BLRVendorContractDocument";
     ApplicationArea = All;
     Caption = 'Vendor Invoice/Receipt Documents';
 
@@ -11,32 +11,32 @@ page 73209668 "Vendor I/R DocumentSub"
         {
             repeater("Documents")
             {
-                field("Vendor ID"; Rec."Vendor ID")
+                field("Vendor ID"; Rec."BLRVendor ID")
                 {
                     ApplicationArea = All;
                     Visible = false;
                     ToolTip = 'The ID of the vendor associated with this document.';
                 }
 
-                field("Amount"; Rec."Amount")
+                field("Amount"; Rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The amount associated with the vendor document.';
                 }
 
-                field("Payment Status"; Rec."Payment Status")
+                field("Payment Status"; Rec."BLRPayment Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The payment status of the vendor document.';
                 }
 
-                field("Invoice ID"; Rec."Invoice ID")
+                field("Invoice ID"; Rec."BLRInvoice ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The unique identifier for the vendor invoice.';
                 }
 
-                field("Invoice Document Upload"; Rec."Invoice Document Upload")
+                field("Invoice Document Upload"; Rec."BLRInvoice Document Upload")
                 {
                     ApplicationArea = All;
                     DrillDown = true;
@@ -54,15 +54,15 @@ page 73209668 "Vendor I/R DocumentSub"
                         folderName := 'PropertyDocuments';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Invoice Document Upload" := CopyStr(fileName, 1, StrLen(fileName));
-                            Rec."Invoice Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec."BLRInvoice Document Upload" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."BLRInvoice Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
                     end;
                 }
 
-                field("Invoice Document View"; Rec."Invoice Document View")
+                field("Invoice Document View"; Rec."BLRInvoice Document View")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -74,7 +74,7 @@ page 73209668 "Vendor I/R DocumentSub"
                         FileURL: Text;
                     begin
                         // Get the URL of the uploaded document
-                        FileURL := Rec."Invoice Document URL";
+                        FileURL := Rec."BLRInvoice Document URL";
 
                         // Check if the file URL is not empty
                         if FileURL = '' then
@@ -86,7 +86,7 @@ page 73209668 "Vendor I/R DocumentSub"
                     end;
                 }
 
-                field("Invoice Document URL"; Rec."Invoice Document URL")
+                field("Invoice Document URL"; Rec."BLRInvoice Document URL")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -94,13 +94,13 @@ page 73209668 "Vendor I/R DocumentSub"
                     ToolTip = 'The URL of the uploaded invoice document.';
                 }
 
-                field("Receipt ID"; Rec."Receipt ID")
+                field("Receipt ID"; Rec."BLRReceipt ID")
                 {
                     ApplicationArea = All;
                     ToolTip = 'The unique identifier for the vendor receipt.';
                 }
 
-                field("Receipt Document Upload"; Rec."Receipt Document Upload")
+                field("Receipt Document Upload"; Rec."BLRReceipt Document Upload")
                 {
                     ApplicationArea = All;
                     DrillDown = true;
@@ -117,15 +117,15 @@ page 73209668 "Vendor I/R DocumentSub"
                         folderName := 'PropertyDocuments';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Receipt Document Upload" := CopyStr(fileName, 1, StrLen(fileName));
-                            Rec."Receipt Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec."BLRReceipt Document Upload" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."BLRReceipt Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
                     end;
                 }
 
-                field("Receipt Document View"; Rec."Receipt Document View")
+                field("Receipt Document View"; Rec."BLRReceipt Document View")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -137,7 +137,7 @@ page 73209668 "Vendor I/R DocumentSub"
                         FileURL: Text;
                     begin
                         // Get the URL of the uploaded document
-                        FileURL := Rec."Receipt Document URL";
+                        FileURL := Rec."BLRReceipt Document URL";
 
                         // Check if the file URL is not empty
                         if FileURL = '' then
@@ -149,7 +149,7 @@ page 73209668 "Vendor I/R DocumentSub"
                     end;
                 }
 
-                field("Receipt Document URL"; Rec."Receipt Document URL")
+                field("Receipt Document URL"; Rec."BLRReceipt Document URL")
                 {
                     ApplicationArea = All;
                     Editable = false;
@@ -157,7 +157,7 @@ page 73209668 "Vendor I/R DocumentSub"
                     ToolTip = 'The URL of the uploaded receipt document.';
                 }
 
-                field("Entry No."; Rec."Entry No.")
+                field("Entry No."; Rec."BLREntry No.")
                 {
                     ApplicationArea = All;
                     Visible = false;
@@ -182,15 +182,15 @@ page 73209668 "Vendor I/R DocumentSub"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
-        vendor: Record "Vendor Profile";
+        vendor: Record "BLRVendorProfile";
         PaymentStatus: Enum "Payment Status";
     begin
-        Rec."Vendor ID" := VendorID;
+        Rec."BLRVendor ID" := VendorID;
 
-        vendor.SetRange("vendor ID", Rec."vendor ID");
+        vendor.SetRange("BLRVendor ID", Rec."BLRVendor ID");
         if not vendor.IsEmpty() then
-            if Rec."Payment Status" = PaymentStatus::" " then
-                Rec."Payment Status" := PaymentStatus::Scheduled;
+            if Rec."BLRPayment Status" = PaymentStatus::" " then
+                Rec."BLRPayment Status" := PaymentStatus::Scheduled;
 
     end;
 
@@ -199,13 +199,13 @@ page 73209668 "Vendor I/R DocumentSub"
 
     trigger OnModifyRecord(): Boolean
     var
-        vendor: Record "Vendor Profile";
+        vendor: Record "BLRVendorProfile";
         PaymentStatus: Enum "Payment Status";
     begin
-        vendor.SetRange("vendor ID", Rec."vendor ID");
+        vendor.SetRange("BLRVendor ID", Rec."BLRVendor ID");
         if not vendor.IsEmpty() then
-            if Rec."Payment Status" = PaymentStatus::" " then
-                Rec."Payment Status" := PaymentStatus::Scheduled;
+            if Rec."BLRPayment Status" = PaymentStatus::" " then
+                Rec."BLRPayment Status" := PaymentStatus::Scheduled;
 
     end;
 

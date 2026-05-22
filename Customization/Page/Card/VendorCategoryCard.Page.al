@@ -1,7 +1,7 @@
 page 73209638 "Vendor Category Card"
 {
     PageType = Card;
-    SourceTable = "Vendor Category";
+    SourceTable = "BLRVendorCategory";
     ApplicationArea = All;
     Caption = 'Vendor Category Card';
     UsageCategory = None;
@@ -13,13 +13,13 @@ page 73209638 "Vendor Category Card"
             group(Group)
             {
                 Caption = 'Vendor Category Details';
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the vendor category.';
                 }
-                field("Vendor Category Type"; Rec."Vendor Category Type")
+                field("Vendor Category Type"; Rec."BLRVendor Category Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Vendor Category Name';

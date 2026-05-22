@@ -102,27 +102,27 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                 ShowCaption = false;
                 Visible = Unitcharges or isVenderService;
 
-                field("Primary Item Type"; Rec."Primary Item Type")
+                field("Primary Item Type"; Rec."BLRPrimary Item Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Primary Item Type';
                 }
-                field("Category Types"; Rec."Category Types")
+                field("Category Types"; Rec."BLRCategory Types")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Category Types';
                 }
-                field("VAT Type"; Rec."VAT Type")
+                field("VAT Type"; Rec."BLRVAT Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'VAT Type';
                 }
-                field("VAT %"; Rec."VAT %")
+                field("VAT %"; Rec."BLRVAT %")
                 {
                     ApplicationArea = All;
                     ToolTip = 'VAT Percentage';
                 }
-                field("Charges Status"; Rec."Charges Status")
+                field("Charges Status"; Rec."BLRCharges Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Charges Status';
@@ -135,7 +135,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
             {
                 ShowCaption = false;
                 Visible = isUnitService or isUnitInventory;
-                field("Market Rate per Sq. Ft."; rec."Market Rate per Sq. Ft.")
+                field("Market Rate per Sq. Ft."; rec."BLRMarket Rate per Sq. Ft.")
                 {
                     ApplicationArea = All;
                     Editable = editablefalsefieldNonInventoryType;
@@ -149,7 +149,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
             {
                 ShowCaption = false;
                 Visible = isUnitService or isUnitInventory;
-                field("Unit Size"; rec."Unit Size")
+                field("Unit Size"; rec."BLRUnit Size")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Size';
@@ -165,7 +165,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
             {
                 ShowCaption = false;
                 Visible = isUnitService or isUnitInventory;
-                field("Amount"; rec."Amount")
+                field("Amount"; rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
@@ -180,7 +180,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
             {
                 ShowCaption = false;
                 Visible = isUnitService or isUnitInventory;
-                field("Primary Classification Type"; Rec."Primary Classification Type")
+                field("Primary Classification Type"; Rec."BLRPrimary Classification Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Classification Type';
@@ -196,7 +196,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                 Visible = isUnitService or isUnitInventory;
                 Caption = 'Unit Management';
 
-                field(FixedNumber; Rec.FixedNumber)
+                field(FixedNumber; Rec."BLRFixedNumber")
                 {
                     ApplicationArea = All;
                     Caption = 'FixedNumber';
@@ -204,7 +204,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                     Editable = false;
                     Visible = false;
                 }
-                field("Property ID"; Rec."Property ID")
+                field("Property ID"; Rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Property ID';
@@ -216,14 +216,14 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                     end;
                 }
 
-                field("Property Name"; Rec."Property Name")
+                field("Property Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Select the associated Property Name.';
                     Caption = 'Property Name';
                     Editable = false;
                 }
-                field("Country"; Rec.Country)
+                field("Country"; Rec."BLRCountry")
                 {
                     ApplicationArea = All;
                     Caption = 'Country';
@@ -236,7 +236,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                     end;
 
                 }
-                field(Emirate; Rec."Emirate Name")
+                field("Emirate"; Rec."BLREmirate Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Emirate';
@@ -248,7 +248,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                         AutoGenerateUnitName(Rec);
                     end;
                 }
-                field("Community"; Rec.Community)
+                field("Community"; Rec."BLRCommunity")
                 {
                     ApplicationArea = All;
                     Caption = 'Community';
@@ -260,32 +260,32 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                         AutoGenerateUnitName(Rec);
                     end;
                 }
-                field("Makani Number"; Rec."Makani Number")
+                field("Makani Number"; Rec."BLRMakani Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Makani Number';
                     ToolTip = 'Makani Number of the Unit';
                 }
-                field("Municipality Number"; Rec."Municipality Number")
+                field("Municipality Number"; Rec."BLRMunicipality Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Municipality Number';
                     ToolTip = 'Municipality Number of the Unit';
                 }
-                field("DEWA Number"; Rec."DEWA Number")
+                field("DEWA Number"; Rec."BLRDEWA Number")
                 {
                     ApplicationArea = All;
                     Caption = 'DEWA Number';
                     ToolTip = 'DEWA Number of the Unit';
                 }
-                field("Floor Number"; Rec."Floor Number")
+                field("Floor Number"; Rec."BLRFloor Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Floor Number';
                     ToolTip = 'Floor Number of the Unit';
                     Editable = editablefalsefieldNonInventoryType;
                 }
-                field("Unit Number"; Rec."Unit Number")
+                field("Unit Number"; Rec."BLRUnit Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Number';
@@ -297,14 +297,14 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                     end;
                 }
 
-                field("Unit ID"; Rec.UnitID)
+                field("Unit ID"; Rec.BLRUnitID)
                 {
                     ApplicationArea = All;
                     Caption = 'Unit ID';
                     ToolTip = 'Unique Identifier for the Unit';
                     Editable = false;
                 }
-                field("Unit Name"; Rec."Unit Name")
+                field("Unit Name"; Rec."BLRUnit Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Name';
@@ -312,7 +312,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                     Editable = false;
                 }
 
-                field("Usage Type"; rec."Usage Type")
+                field("Usage Type"; rec."BLRUsage Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Usage Type of the Unit';
@@ -320,27 +320,27 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                     Editable = false;
                 }
 
-                field("Unit Type"; rec."Unit Type")
+                field("Unit Type"; rec."BLRUnit Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Type of the Unit';
                     Lookup = true;
                     Editable = editablefalsefieldNonInventoryType;
                 }
-                field("Unit Address"; rec."Unit Address")
+                field("Unit Address"; rec."BLRUnit Address")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Address of the Unit';
                     Editable = editablefalsefieldNonInventoryType;
                 }
-                field("Merging/Splitting"; rec."MergeSplitOption")
+                field("Merging/Splitting"; rec."BLRMergeSplitOption")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Option for Merging or Splitting the Unit';
                     Editable = false;
                 }
 
-                field("Unit Status"; rec."Unit Status")
+                field("Unit Status"; rec."BLRUnit Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Current Status of the Unit';
@@ -349,7 +349,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
             }
             part("Document Attachments"; "Unit Document SubPage")
             {
-                SubPageLink = UnitID = FIELD("No.");
+                SubPageLink = "BLRUnitID" = FIELD("No.");
                 ApplicationArea = All;
                 Editable = editablefalsefieldNonInventoryType;
                 Visible = ShowFinancialFields and isUnitService and isVisible;
@@ -375,8 +375,8 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                 Visible = isService;
                 trigger OnAction()
                 var
-                    CustomLinesPage: Record "Revenue Structure Subpage";
-                    CustomLinesPage2: Record "Revenue Structure";
+                    CustomLinesPage: Record "BLRRevenueStructureSubpage";
+                    CustomLinesPage2: Record "BLRRevenueStructure";
                 begin
                     if CustomLinesPage.FindSet() then
                         CustomLinesPage.DeleteAll();
@@ -401,18 +401,18 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
         lCommunity: Text;
         Unitnumber: Text;
     begin
-        PropertyCode := FormatName(TargetItem."Property Name");
-        lCountry := Format(TargetItem.Country);
-        Emirates := Format(TargetItem."Emirate Name");
-        lCommunity := Format(TargetItem."Community");
-        Unitnumber := Format(TargetItem."Unit Number");
+        PropertyCode := FormatName(TargetItem."BLRProperty Name");
+        lCountry := Format(TargetItem."BLRCountry");
+        Emirates := Format(TargetItem."BLREmirate Name");
+        lCommunity := Format(TargetItem."BLRCommunity");
+        Unitnumber := Format(TargetItem."BLRUnit Number");
         CountryCode := FormatName(lCountry);
         EmiratesCode := FormatName(Emirates);
         CommunityCode := FormatName(lCommunity);
         UnitnumberCode := Format(Unitnumber);
-        TargetItem."Unit Name" := PropertyCode + '-SU-' + UnitnumberCode;
+        TargetItem."BLRUnit Name" := PropertyCode + '-SU-' + UnitnumberCode;
         UnitID := CountryCode + '-' + EmiratesCode + '-' + CommunityCode + '-' + PropertyCode + '-' + UnitnumberCode;
-        TargetItem.UnitID := CopyStr(UnitID, 1, StrLen(UnitID));
+        TargetItem."BLRUnitID" := CopyStr(UnitID, 1, StrLen(UnitID));
         TargetItem.Modify();
     end;
 
@@ -446,8 +446,8 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
 
     procedure EvaluateFastTabVisibility(): Boolean
     begin
-        if Rec."Item Template" = Enum::"Item Template Enum"::Service then
-            if Rec."Item type template" = Enum::"Item Type Template Enum"::"Unit Service" then
+        if Rec."BLRItem Template" = Enum::"Item Template Enum"::Service then
+            if Rec."BLRItem type template" = Enum::"Item Type Template Enum"::"Unit Service" then
                 exit(true)
             else
                 exit(false);
@@ -455,8 +455,8 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
 
     procedure EvaluateFastTabVisibilityService(): Boolean
     begin
-        if Rec."Item Template" = Enum::"Item Template Enum"::Service then
-            if Rec."Item type template" = Enum::"Item Type Template Enum"::"Vendor Service" then
+        if Rec."BLRItem Template" = Enum::"Item Template Enum"::Service then
+            if Rec."BLRItem type template" = Enum::"Item Type Template Enum"::"Vendor Service" then
                 exit(true)
             else
                 exit(false);
@@ -464,8 +464,8 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
 
     procedure UnitChargesFieldsVisiblity(): Boolean
     begin
-        if Rec."Item Template" = Enum::"Item Template Enum"::Service then
-            if Rec."Item type template" = Enum::"Item Type Template Enum"::"Secondary Item" then
+        if Rec."BLRItem Template" = Enum::"Item Template Enum"::Service then
+            if Rec."BLRItem type template" = Enum::"Item Type Template Enum"::"Secondary Item" then
                 exit(true)
             else
                 exit(false);
@@ -473,8 +473,8 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
 
     procedure InventoryUnitVisibility(): Boolean
     begin
-        if Rec."Item Template" = Enum::"Item Template Enum"::Inventory then
-            if Rec."Item type template" = Enum::"Item Type Template Enum"::"Unit Inventory" then
+        if Rec."BLRItem Template" = Enum::"Item Template Enum"::Inventory then
+            if Rec."BLRItem type template" = Enum::"Item Type Template Enum"::"Unit Inventory" then
                 exit(true)
             else
                 exit(false);
@@ -497,7 +497,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
         CurrPage."Document Attachments".Page.SetUnitId(Rec."No.");
         isVisible := true;
 
-        if Rec."Property Name" = '' then
+        if Rec."BLRProperty Name" = '' then
             exit
         else
             AutoGenerateUnitName(Rec);

@@ -1,14 +1,14 @@
 
 codeunit 73209591 "Final Settlement Posting Mgt."
 {
-    procedure PostFinalSettlementAmount(FinalSettlement: Record "FinalSettlement")
+    procedure PostFinalSettlementAmount(FinalSettlement: Record "BLRFinalSettlement")
     var
         GenJnlLine: Record "Gen. Journal Line";
         CustomerCard: Record Customer;
         BankAccount: Record "Bank Account";
         GLSetup: Record "General Ledger Setup";
-        FinalcalculationRec: Record "Final Calculation";
-        COASetup: Record "COA Setup";
+        FinalcalculationRec: Record "BLRFinalCalculation";
+        COASetup: Record "BLRCOASetup";
         PostedSalesInvoice: Record "Sales Invoice Header";
         GenJnlPost: Codeunit "Gen. Jnl.-Post";
         LineNo: Integer;
@@ -25,7 +25,7 @@ codeunit 73209591 "Final Settlement Posting Mgt."
         GLSetup.Get();
         GenJnlLine.DeleteAll();
         // Check if there's any amount to post
-        Amount := FinalSettlement."Receivable Total Amount";
+        Amount := FinalSettlement."BLRReceivable Total Amount";
         if Amount = 0 then
             Error('Final Settlement Amount is zero. Cannot post.');
 
@@ -37,29 +37,29 @@ codeunit 73209591 "Final Settlement Posting Mgt."
         JournalBatchName := 'DEFAULT';
 
         FinalcalculationRec.Reset();
-        FinalcalculationRec.SetRange("Contract ID", FinalSettlement."Contract ID");
+        FinalcalculationRec.SetRange("BLRContract ID", FinalSettlement."BLRContract ID");
         if not FinalcalculationRec.FindFirst() then
-            Error('Contract not found for Contract ID %1', FinalSettlement."Contract ID");
+            Error('Contract not found for Contract ID %1', FinalSettlement."BLRContract ID");
 
-        TenantName := FinalcalculationRec."Tenant Name";
+        TenantName := FinalcalculationRec."BLRTenant Name";
 
-        if FinalcalculationRec."Unit Type" <> '' then begin
+        if FinalcalculationRec."BLRUnit Type" <> '' then begin
             CustomerCard.Reset();
-            CustomerCard.SetRange("No.", FinalSettlement."Tenant ID");
+            CustomerCard.SetRange("No.", FinalSettlement."BLRTenant ID");
             if CustomerCard.FindFirst() then begin
-                CustomerCard.Validate("Gen. Bus. Posting Group", FinalcalculationRec."Unit Type");
-                CustomerCard.Validate("Customer Posting Group", FinalcalculationRec."Unit Type");
+                CustomerCard.Validate("Gen. Bus. Posting Group", FinalcalculationRec."BLRUnit Type");
+                CustomerCard.Validate("Customer Posting Group", FinalcalculationRec."BLRUnit Type");
                 CustomerCard.Modify();
             end;
         end;
 
-        PendingAmount := Round(FinalSettlement."Receivable from the Tenant", 0.01);
+        PendingAmount := Round(FinalSettlement."BLRReceivable from the Tenant", 0.01);
 
         // Find Bank Account
-        if FinalSettlement."Receivable Payment mode" = 'Cash' then begin
+        if FinalSettlement."BLRReceivable Payment mode" = 'Cash' then begin
             COASetup.Get();
-            if COASetup.Cash <> '' then begin
-                respectiveAccountNo := COASetup.Cash;
+            if COASetup."BLRCash" <> '' then begin
+                respectiveAccountNo := COASetup."BLRCash";
                 balAccountType := balAccountType::"G/L Account";
             end
             else
@@ -68,7 +68,7 @@ codeunit 73209591 "Final Settlement Posting Mgt."
         else begin
             respectiveAccountNo := '';
             BankAccount.Reset();
-            BankAccount.SetRange("Search Name", FinalSettlement."Deposit Bank");
+            BankAccount.SetRange("Search Name", FinalSettlement."BLRDeposit Bank");
             if BankAccount.FindFirst() then
                 if BankAccount."Bank Acc. Posting Group" <> '' then begin
                     respectiveAccountNo := BankAccount."No.";
@@ -79,13 +79,13 @@ codeunit 73209591 "Final Settlement Posting Mgt."
         end;
 
         // Generate Document No
-        DocNo := 'FS-' + Format(FinalSettlement."Contract ID") + '-' + Format(FinalSettlement."FC ID");
+        DocNo := 'FS-' + Format(FinalSettlement."BLRContract ID") + '-' + Format(FinalSettlement."BLRFC ID");
 
         // Start with first line number
         LineNo := 10000;
         ClearJournalLines(JournalTemplateName, JournalBatchName);
 
-        PostedSalesInvoice.SetRange("Contract ID", FinalSettlement."Contract ID");
+        PostedSalesInvoice.SetRange("BLRContract ID", FinalSettlement."BLRContract ID");
         if PostedSalesInvoice.FindSet() then
             repeat
                 PostedSalesInvoice.CalcFields("Remaining Amount");
@@ -108,7 +108,7 @@ codeunit 73209591 "Final Settlement Posting Mgt."
         // Clean up journal lines
         ClearJournalLines(JournalTemplateName, JournalBatchName);
 
-        Message('Final Settlement amount posted successfully. Total Receive: %1, Pending: %2', FinalcalculationRec."Total Receive", PendingAmount);
+        Message('Final Settlement amount posted successfully. Total Receive: %1, Pending: %2', FinalcalculationRec."BLRTotal Receive", PendingAmount);
     end;
 
     procedure ClearJournalLines(JournalTemplateName: Code[10]; JournalBatchName: Code[10])
@@ -123,7 +123,7 @@ codeunit 73209591 "Final Settlement Posting Mgt."
             GenJnlLine.DeleteAll(true);
     end;
 
-    procedure CreateCashGeneralLines(var GenJnlLine: Record "Gen. Journal Line"; JournalTemplateName: Code[10]; JournalBatchName: Code[10]; LineNo: Integer; DocNo: Code[20]; FinalSettlement: Record FinalSettlement; postedSalesInvoice: Code[20]; TenantName: Text[100]; respectiveAccountNo: Code[20]; balAccountType: Enum "Gen. Journal Account Type"; remainingAmount: Decimal)
+    procedure CreateCashGeneralLines(var GenJnlLine: Record "Gen. Journal Line"; JournalTemplateName: Code[10]; JournalBatchName: Code[10]; LineNo: Integer; DocNo: Code[20]; FinalSettlement: Record "BLRFinalSettlement"; postedSalesInvoice: Code[20]; TenantName: Text[100]; respectiveAccountNo: Code[20]; balAccountType: Enum "Gen. Journal Account Type"; remainingAmount: Decimal)
     begin
         GenJnlLine.Init();
         GenJnlLine."Journal Template Name" := JournalTemplateName;
@@ -133,9 +133,9 @@ codeunit 73209591 "Final Settlement Posting Mgt."
         GenJnlLine."Document No." := DocNo;
         GenJnlLine."Document Type" := GenJnlLine."Document Type"::Payment;
         GenJnlLine."Account Type" := GenJnlLine."Account Type"::Customer;
-        GenJnlLine."Account No." := FinalSettlement."Tenant ID";
+        GenJnlLine."Account No." := FinalSettlement."BLRTenant ID";
         GenJnlLine.Description := TenantName;
-        GenJnlLine."Contract ID" := FinalSettlement."Contract ID";
+        GenJnlLine."BLRContract ID" := FinalSettlement."BLRContract ID";
         if postedSalesInvoice <> '' then begin
             GenJnlLine."Applies-to Doc. Type" := GenJnlLine."Applies-to Doc. Type"::Invoice;
             GenJnlLine."Applies-to Doc. No." := PostedSalesInvoice;

@@ -54,8 +54,8 @@ codeunit 73209612 SendInvoiceToTenant
                  '<body>' +
                  '<p>Dear ' + pSalesInvHeader."Sell-to Customer Name" + ',</p>' +
                  '<h3>Invoice Details:</h3>' +
-                                   '<p><b>Contract ID:</b> ' + Format(pSalesInvHeader."Contract ID") + '<br/>' +
-                                   '<b>Property Name:</b> ' + pSalesInvHeader."Property Name" + '<br/>' +
+                                   '<p><b>Contract ID:</b> ' + Format(pSalesInvHeader."BLRContract ID") + '<br/>' +
+                                   '<b>Property Name:</b> ' + pSalesInvHeader."BLRProperty Name" + '<br/>' +
                                      '<b>Total Amount:</b> ' + Format(TotalAmount) + '<br/>' +
                                      '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
                  '</body>' +
@@ -71,8 +71,8 @@ codeunit 73209612 SendInvoiceToTenant
                  '<p>Dear ' + pSalesInvHeader."Sell-to Customer Name" + ',</p>' +
                  '<h3>Invoice Details:</h3>' +
                                    '<p><b>Invoice ID:</b> ' + pSalesInvHeader."No." + '<br/>' +
-                                   '<b>Contract ID:</b> ' + Format(pSalesInvHeader."Contract ID") + '<br/>' +
-                                                      '<b>Property Name:</b> ' + pSalesInvHeader."Property Name" + '<br/>' +
+                                   '<b>Contract ID:</b> ' + Format(pSalesInvHeader."BLRContract ID") + '<br/>' +
+                                                      '<b>Property Name:</b> ' + pSalesInvHeader."BLRProperty Name" + '<br/>' +
                                                         '<b>Total Amount:</b> ' + Format(TotalAmount) + '<br/>' +
                                                         '<p>Best regards,<br/>' + CompanyInfo.Name + '</p>' +
 

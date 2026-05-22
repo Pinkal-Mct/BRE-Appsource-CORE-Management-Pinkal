@@ -1,16 +1,16 @@
-table 73209659 "Primary Item"
+table 73209659 "BLRPrimaryItem"
 {
     DataClassification = SystemMetadata;
-    DataCaptionFields = ID;
+    DataCaptionFields = "BLRID";
     fields
     {
-        field(73209575; "ID"; Integer)
+        field(73209575; "BLRID"; Integer)
         {
             DataClassification = SystemMetadata;
             AutoIncrement = true;
             Editable = false;
         }
-        field(73209576; "Primary Item Type"; Text[100])
+        field(73209576; "BLRPrimary Item Type"; Text[100])
         {
             DataClassification = SystemMetadata;
             Caption = 'Primary Item Type';
@@ -18,14 +18,14 @@ table 73209659 "Primary Item"
     }
     keys
     {
-        key(PK; "ID", "Primary Item Type")
+        key(PK;"BLRID", "BLRPrimary Item Type")
         {
             Clustered = true;
         }
     }
     fieldgroups
     {
-        fieldgroup(DropDown; ID, "Primary Item Type")
+        fieldgroup(DropDown;"BLRID", "BLRPrimary Item Type")
         {
         }
     }

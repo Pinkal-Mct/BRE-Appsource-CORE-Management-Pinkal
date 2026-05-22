@@ -1,10 +1,10 @@
 codeunit 73209575 "Split Payment Handler"
 {
-    procedure ProcessSplitPayment(var SplitPaymentRec: Record "Split Payment Change")
+    procedure ProcessSplitPayment(var SplitPaymentRec: Record "BLRSplitPaymentChange")
     var
-        NewLine: Record "Split Payment Change";
-        AlreadySelected: Record "Split Payment Change";
-        PaymentSchedule2Rec: Record "Payment Schedule2";
+        NewLine: Record "BLRSplitPaymentChange";
+        AlreadySelected: Record "BLRSplitPaymentChange";
+        PaymentSchedule2Rec: Record "BLRPaymentSchedule2";
         UnselectedPaymentSeries: Text[100];
         TotalAmount: Decimal;
         TotalVATAmount: Decimal;
@@ -21,29 +21,29 @@ codeunit 73209575 "Split Payment Handler"
         Clear(TotalAmountInclVAT);
 
         PaymentSchedule2Rec.Reset();
-        PaymentSchedule2Rec.SetRange("Contract ID", SplitPaymentRec."Contract ID");
-        PaymentSchedule2Rec.SetRange("Payment Series", SplitPaymentRec."Split Payment Series");
+        PaymentSchedule2Rec.SetRange("BLRContract ID", SplitPaymentRec."BLRContract ID");
+        PaymentSchedule2Rec.SetRange("BLRPayment Series", SplitPaymentRec."BLRSplit Payment Series");
 
         if PaymentSchedule2Rec.FindSet() then
             repeat
-                CurrentItemType := PaymentSchedule2Rec."Secondary Item Type";
+                CurrentItemType := PaymentSchedule2Rec."BLRSecondary Item Type";
                 IsItemSelected := false;
 
                 // First check the record being modified (may not be saved yet)
-                if SplitPaymentRec."Secondary Item Type" <> '' then
-                    if StrPos(SplitPaymentRec."Secondary Item Type", CurrentItemType) <> 0 then
+                if SplitPaymentRec."BLRSecondary Item Type" <> '' then
+                    if StrPos(SplitPaymentRec."BLRSecondary Item Type", CurrentItemType) <> 0 then
                         IsItemSelected := true;
 
                 // If not found there, examine other existing lines in table
                 if not IsItemSelected then begin
                     AlreadySelected.Reset();
-                    AlreadySelected.SetRange("Contract ID", SplitPaymentRec."Contract ID");
-                    AlreadySelected.SetRange("Split Payment Series", SplitPaymentRec."Split Payment Series");
+                    AlreadySelected.SetRange("BLRContract ID", SplitPaymentRec."BLRContract ID");
+                    AlreadySelected.SetRange("BLRSplit Payment Series", SplitPaymentRec."BLRSplit Payment Series");
                     // exclude the current record from the search
-                    if SplitPaymentRec."Entry No." <> 0 then
-                        AlreadySelected.SetFilter("Entry No.", '<>%1', SplitPaymentRec."Entry No.");
+                    if SplitPaymentRec."BLREntry No." <> 0 then
+                        AlreadySelected.SetFilter("BLREntry No.", '<>%1', SplitPaymentRec."BLREntry No.");
 
-                    AlreadySelected.SetFilter("Secondary Item Type", '@*' + CurrentItemType + '*');
+                    AlreadySelected.SetFilter("BLRSecondary Item Type", '@*' + CurrentItemType + '*');
                     if not AlreadySelected.IsEmpty then
                         IsItemSelected := true;
                 end;
@@ -54,9 +54,9 @@ codeunit 73209575 "Split Payment Handler"
                         UnselectedPaymentSeries += ', ';
 
                     UnselectedPaymentSeries += CurrentItemType;
-                    TotalAmount += PaymentSchedule2Rec.Amount;
-                    TotalVATAmount += PaymentSchedule2Rec."VAT Amount";
-                    TotalAmountInclVAT += PaymentSchedule2Rec."Amount Including VAT";
+                    TotalAmount += PaymentSchedule2Rec."BLRAmount";
+                    TotalVATAmount += PaymentSchedule2Rec."BLRVAT Amount";
+                    TotalAmountInclVAT += PaymentSchedule2Rec."BLRAmount Including VAT";
                 end;
             until PaymentSchedule2Rec.Next() = 0;
 
@@ -65,13 +65,13 @@ codeunit 73209575 "Split Payment Handler"
         // -----------------------------------------
         if UnselectedPaymentSeries <> '' then begin
             NewLine.Init();
-            NewLine."Contract ID" := SplitPaymentRec."Contract ID";
-            NewLine."Tenant Id" := SplitPaymentRec."Tenant Id";
-            NewLine."Split Payment Series" := SplitPaymentRec."Split Payment Series";
-            NewLine."Secondary Item Type" := UnselectedPaymentSeries;
-            NewLine."Split Amount" := TotalAmount;
-            NewLine."Split VAT Amount" := TotalVATAmount;
-            NewLine."Split Amount Including VAT" := TotalAmountInclVAT;
+            NewLine."BLRContract ID" := SplitPaymentRec."BLRContract ID";
+            NewLine."BLRTenant Id" := SplitPaymentRec."BLRTenant Id";
+            NewLine."BLRSplit Payment Series" := SplitPaymentRec."BLRSplit Payment Series";
+            NewLine."BLRSecondary Item Type" := UnselectedPaymentSeries;
+            NewLine."BLRSplit Amount" := TotalAmount;
+            NewLine."BLRSplit VAT Amount" := TotalVATAmount;
+            NewLine."BLRSplit Amount Including VAT" := TotalAmountInclVAT;
             // Entry No. will be auto-generated by the system
             NewLine.Insert(true); // Use Insert(true) to allow triggers
         end;

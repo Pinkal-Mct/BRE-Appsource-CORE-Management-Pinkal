@@ -1,40 +1,40 @@
-table 73209675 "Revenue Recognition"
+table 73209675 "BLRRevenueRecognition"
 {
     DataClassification = CustomerContent;
 
     fields
     {
 
-        field(73209575; "RR Id"; Integer)
+        field(73209575; "BLRRR Id"; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
             Caption = 'RR Id';
         }
 
-        field(73209576; "Contract ID"; Integer)
+        field(73209576; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
-            TableRelation = "Tenancy Contract"."Contract ID";
+            TableRelation = "BLRTenancyContract"."BLRContract ID";
             Caption = 'Contract ID';
 
             trigger OnValidate()
             var
-                tenancyrec: Record "Tenancy Contract";
+                tenancyrec: Record "BLRTenancyContract";
             begin
-                tenancyrec.SetRange("Contract ID", Rec."Contract ID");
+                tenancyrec.SetRange("BLRContract ID", Rec."BLRContract ID");
                 if tenancyrec.FindFirst() then begin
-                    "Tenant Id" := tenancyrec."Tenant Id";
-                    "Start Date" := tenancyrec."Contract Start Date";
-                    "End Date" := tenancyrec."Contract End Date";
-                    "Contract Amount" := tenancyrec."Annual Rent Amount";
+                    "BLRTenant Id" := tenancyrec."BLRTenant Id";
+                    "BLRStart Date" := tenancyrec."BLRContract Start Date";
+                    "BLREnd Date" := tenancyrec."BLRContract End Date";
+                    "BLRContract Amount" := tenancyrec."BLRAnnual Rent Amount";
 
                 end else begin
                     // Clear the field if no record is found
-                    "Tenant Id" := '';
-                    "Start Date" := 0D;
-                    "End Date" := 0D;
-                    "Contract Amount" := 0;
+                    "BLRTenant Id" := '';
+                    "BLRStart Date" := 0D;
+                    "BLREnd Date" := 0D;
+                    "BLRContract Amount" := 0;
                 end;
 
                 CalculateMonthlyRevenue();
@@ -42,26 +42,26 @@ table 73209675 "Revenue Recognition"
             end;
         }
 
-        field(73209577; "Tenant Id"; Code[20])
+        field(73209577; "BLRTenant Id"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant Id';
-            TableRelation = "Lease Proposal Details"."Tenant ID";
+            TableRelation = "BLRLeaseProposalDetails"."BLRTenant ID";
             Editable = false; // Make it read-only for the user
 
         }
-        field(73209578; "Start Date"; Date)
+        field(73209578; "BLRStart Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'Start Date';
         }
-        field(73209579; "End Date"; Date)
+        field(73209579; "BLREnd Date"; Date)
         {
             DataClassification = CustomerContent;
             Caption = 'End Date';
         }
 
-        field(73209580; "Contract Amount"; Decimal)
+        field(73209580; "BLRContract Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract Amount';
@@ -71,7 +71,7 @@ table 73209675 "Revenue Recognition"
 
     keys
     {
-        key(PK; "RR ID")
+        key(PK;"BLRRR Id")
         {
             Clustered = true;
         }
@@ -79,41 +79,41 @@ table 73209675 "Revenue Recognition"
 
     local procedure CalculateMonthlyRevenue()
     var
-        SubpageRec: Record "Revenue Recognition Subpage";
+        SubpageRec: Record "BLRRevenueRecognitionSubpage";
 
     begin
         SubpageRec.DeleteAll();
 
         // Detect which rent grid contains records
-        if ProcessSingleUnit(Rec."Contract ID") then
+        if ProcessSingleUnit(Rec."BLRContract ID") then
             exit;
 
-        if ProcessMultiUnit(Rec."Contract ID") then
+        if ProcessMultiUnit(Rec."BLRContract ID") then
             exit;
 
-        if ProcessMergedSingleRent(Rec."Contract ID") then
+        if ProcessMergedSingleRent(Rec."BLRContract ID") then
             exit;
 
-        if ProcessMergedMultiRent(Rec."Contract ID") then
+        if ProcessMergedMultiRent(Rec."BLRContract ID") then
             exit;
 
-        ProcessSpecialRent(Rec."Contract ID");
+        ProcessSpecialRent(Rec."BLRContract ID");
     end;
 
     local procedure ProcessSingleUnit(ContractID: Integer): Boolean
     var
-        SingleUnitRent: Record "TC Single Unit Rent SubPage";
+        SingleUnitRent: Record "BLRTCSingleUnitRentSubPage";
     begin
-        SingleUnitRent.SetRange("Contract ID", ContractID);
+        SingleUnitRent.SetRange("BLRContract ID", ContractID);
 
         if not SingleUnitRent.FindSet() then
             exit(false);
 
         repeat
             ProcessRentLine(
-                SingleUnitRent."Start Date",
-                SingleUnitRent."End Date",
-                SingleUnitRent."Final Annual Amount");
+                SingleUnitRent."BLRStart Date",
+                SingleUnitRent."BLREnd Date",
+                SingleUnitRent."BLRFinal Annual Amount");
         until SingleUnitRent.Next() = 0;
 
         exit(true);
@@ -121,18 +121,18 @@ table 73209675 "Revenue Recognition"
 
     local procedure ProcessMultiUnit(ContractID: Integer): Boolean
     var
-        MultiUnitRent: Record "TC Single LumAnnualAmnt SP";
+        MultiUnitRent: Record "BLRTCSingleLumAnnualAmntSP";
     begin
-        MultiUnitRent.SetRange("Contract ID", ContractID);
+        MultiUnitRent.SetRange("BLRContract ID", ContractID);
 
         if not MultiUnitRent.FindSet() then
             exit(false);
 
         repeat
             ProcessRentLine(
-                MultiUnitRent."SL_Start Date",
-                MultiUnitRent."SL_End Date",
-                MultiUnitRent."SL_Final Annual Amount");
+                MultiUnitRent."BLRSL_Start Date",
+                MultiUnitRent."BLRSL_End Date",
+                MultiUnitRent."BLRSL_Final Annual Amount");
         until MultiUnitRent.Next() = 0;
 
         exit(true);
@@ -140,18 +140,18 @@ table 73209675 "Revenue Recognition"
 
     local procedure ProcessMergedSingleRent(ContractID: Integer): Boolean
     var
-        MergedSingleRent: Record "TC Merge SameSqure SubPage";
+        MergedSingleRent: Record "BLRTCMergeSameSqureSubPage";
     begin
-        MergedSingleRent.SetRange("Contract ID", ContractID);
+        MergedSingleRent.SetRange("BLRContract ID", ContractID);
 
         if not MergedSingleRent.FindSet() then
             exit(false);
 
         repeat
             ProcessRentLine(
-                MergedSingleRent."MS_Start Date",
-                MergedSingleRent."MS_End Date",
-                MergedSingleRent."MS_Final Annual Amount");
+                MergedSingleRent."BLRMS_Start Date",
+                MergedSingleRent."BLRMS_End Date",
+                MergedSingleRent."BLRMS_Final Annual Amount");
         until MergedSingleRent.Next() = 0;
 
         exit(true);
@@ -159,18 +159,18 @@ table 73209675 "Revenue Recognition"
 
     local procedure ProcessMergedMultiRent(ContractID: Integer): Boolean
     var
-        MergedMultiRent: Record "TC Merge DifferentSq SubPage";
+        MergedMultiRent: Record "BLRTCMergeDifferentSqSubPage";
     begin
-        MergedMultiRent.SetRange("Contract ID", ContractID);
+        MergedMultiRent.SetRange("BLRContract ID", ContractID);
 
         if not MergedMultiRent.FindSet() then
             exit(false);
 
         repeat
             ProcessRentLine(
-                MergedMultiRent."MD_Start Date",
-                MergedMultiRent."MD_End Date",
-                MergedMultiRent."MD_Final Annual Amount");
+                MergedMultiRent."BLRMD_Start Date",
+                MergedMultiRent."BLRMD_End Date",
+                MergedMultiRent."BLRMD_Final Annual Amount");
         until MergedMultiRent.Next() = 0;
 
         exit(true);
@@ -178,18 +178,18 @@ table 73209675 "Revenue Recognition"
 
     local procedure ProcessSpecialRent(ContractID: Integer): Boolean
     var
-        SpecialRent: Record "TC Merge LumAnnualAmount SP";
+        SpecialRent: Record "BLRTCMergeLumAnnualAmountSP";
     begin
-        SpecialRent.SetRange("Contract ID", ContractID);
+        SpecialRent.SetRange("BLRContract ID", ContractID);
 
         if not SpecialRent.FindSet() then
             exit(false);
 
         repeat
             ProcessRentLine(
-                SpecialRent."ML_Start Date",
-                SpecialRent."ML_End Date",
-                SpecialRent."ML_Final Annual Amount");
+                SpecialRent."BLRML_Start Date",
+                SpecialRent."BLRML_End Date",
+                SpecialRent."BLRML_Final Annual Amount");
         until SpecialRent.Next() = 0;
 
         exit(true);
@@ -197,8 +197,8 @@ table 73209675 "Revenue Recognition"
 
     local procedure ProcessRentLine(StartDate: Date; EndDate: Date; FinalAnnualAmount: Decimal)
     var
-        SubpageRec: Record "Revenue Recognition Subpage";
-        ExistingSubpageRec: Record "Revenue Recognition Subpage";
+        SubpageRec: Record "BLRRevenueRecognitionSubpage";
+        ExistingSubpageRec: Record "BLRRevenueRecognitionSubpage";
         TotalDays: Integer;
         DailyRate: Decimal;
         MonthDays: Integer;
@@ -249,23 +249,23 @@ table 73209675 "Revenue Recognition"
 
             MonthText := FORMAT(CurrentDate, 0, '<Month Text>') + '-' + FORMAT(CurrentDate, 0, '<Year>');
 
-            ExistingSubpageRec.SetRange("RR Id");
-            ExistingSubpageRec.SetRange(Month, MonthText);
+            ExistingSubpageRec.SetRange("BLRRR Id");
+            ExistingSubpageRec.SetRange("BLRMonth", MonthText);
             if ExistingSubpageRec.FindFirst() then begin
-                ExistingSubpageRec."No. of Days" += MonthDays;
-                ExistingSubpageRec."RR - Method 1 (Day)" += (MonthDays * DailyRate);
-                ExistingSubpageRec."RR - Method 2 (Month)" += MonthlyRate;
+                ExistingSubpageRec."BLRNo. of Days" += MonthDays;
+                ExistingSubpageRec."BLRRR - Method 1 (Day)" += (MonthDays * DailyRate);
+                ExistingSubpageRec."BLRRR - Method 2 (Month)" += MonthlyRate;
                 ExistingSubpageRec.Modify();
             end
             else begin
                 SubpageRec.Init();
-                SubpageRec."RR Id" := Rec."RR Id";
-                SubpageRec."Contract ID" := Rec."Contract ID";
-                SubpageRec."Tenant Id" := Rec."Tenant Id";
-                SubpageRec."Month" := MonthText;
-                SubpageRec."No. of Days" := MonthDays;
-                SubpageRec."RR - Method 1 (Day)" := (MonthDays * DailyRate);
-                SubpageRec."RR - Method 2 (Month)" := MonthlyRate;
+                SubpageRec."BLRRR Id" := Rec."BLRRR Id";
+                SubpageRec."BLRContract ID" := Rec."BLRContract ID";
+                SubpageRec."BLRTenant Id" := Rec."BLRTenant Id";
+                SubpageRec."BLRMonth" := MonthText;
+                SubpageRec."BLRNo. of Days" := MonthDays;
+                SubpageRec."BLRRR - Method 1 (Day)" := (MonthDays * DailyRate);
+                SubpageRec."BLRRR - Method 2 (Month)" := MonthlyRate;
                 SubpageRec.Insert();
                 Clear(SubpageRec);
             end;

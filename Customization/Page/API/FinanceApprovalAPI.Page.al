@@ -10,7 +10,7 @@ page 73209595 "FinanceApprovalAPI"
     EntitySetName = 'pdcApprovals';
     PageType = API;
     ODataKeyFields = SystemId; // Ensure the SystemId is exposed in the API
-    SourceTable = "PDC Approval";
+    SourceTable = "BLRPDCApproval";
 
 
     layout
@@ -19,17 +19,17 @@ page 73209595 "FinanceApprovalAPI"
         {
             repeater(Group)
             {
-                field(id; Rec.Id) { }
+                field(id; Rec."BLRId") { }
                 field(systemId; Rec.SystemId) { }
-                field(status; Rec.Status) { }
-                field("pdcId"; Rec."PDC Id") { }
-                field(tenantId; Rec.Tenant_Id) { }
-                field(contractId; Rec.Contract_Id) { }
-                field(checkNo; Rec.Check_No) { }
-                field(depositeBank; Rec.Deposite_Bank) { }
-                field(totalAmount; Rec.Total_Amount) { }
-                field(dueDate; Rec.Due_Date) { }
-                field(view; Rec.View) { }
+                field(status; Rec."BLRStatus") { }
+                field("pdcId"; Rec."BLRPDC Id") { }
+                field(tenantId; Rec."BLRTenant_Id") { }
+                field(contractId; Rec."BLRContract_Id") { }
+                field(checkNo; Rec."BLRCheck_No") { }
+                field(depositeBank; Rec."BLRDeposite_Bank") { }
+                field(totalAmount; Rec."BLRTotal_Amount") { }
+                field(dueDate; Rec."BLRDue_Date") { }
+                field(view; Rec."BLRView") { }
 
             }
         }

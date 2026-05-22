@@ -10,7 +10,7 @@ page 73209603 "Payment Series Data"
     EntityName = 'paymentSeriesdata';
     EntitySetName = 'paymentSeriesdatas';
     ODataKeyFields = SystemId; // Ensure the SystemId is exposed in the API
-    SourceTable = "Payment Series Details";
+    SourceTable = "BLRPaymentSeriesDetails";
 
     layout
     {
@@ -18,23 +18,23 @@ page 73209603 "Payment Series Data"
         {
             repeater(Group)
             {
-                field("paymentSeries"; Rec."payment Series") { }
+                field("paymentSeries"; Rec."BLRpayment Series") { }
                 field(systemId; Rec.SystemId) { }
-                field(amount; Rec.Amount) { }
-                field("dueDate"; Rec."Due Date") { }
-                field("paymentMode"; Rec."Payment Mode") { }
-                field("chequeNumber"; Rec."Cheque Number") { }
-                field("depositeBank"; Rec."Deposite Bank") { }
-                field("depositeStatus"; Rec."Deposite Status") { }
-                field("paymentStatus"; Rec."Payment Status") { }
-                field("chequeStatus"; Rec."Cheque Status") { }
-                field("oldCheque"; Rec."Old Cheque") { }
-                field(view; Rec.View) { }
-                field("viewDocumentURL"; Rec."View Document URL") { }
-                field("approvalStatus"; Rec."Approval Status") { }
-                field("paymentTransactionId"; Rec."Payment Transaction Id") { }
-                field("contractId"; Rec."Contract Id") { }
-                field("tenantId"; Rec."Tenant Id") { }
+                field(amount; Rec."BLRAmount") { }
+                field("dueDate"; Rec."BLRDue Date") { }
+                field("paymentMode"; Rec."BLRPayment Mode") { }
+                field("chequeNumber"; Rec."BLRCheque Number") { }
+                field("depositeBank"; Rec."BLRDeposite Bank") { }
+                field("depositeStatus"; Rec."BLRDeposite Status") { }
+                field("paymentStatus"; Rec."BLRPayment Status") { }
+                field("chequeStatus"; Rec."BLRCheque Status") { }
+                field("oldCheque"; Rec."BLROld Cheque") { }
+                field(view; Rec."BLRView") { }
+                field("viewDocumentURL"; Rec."BLRView Document URL") { }
+                field("approvalStatus"; Rec."BLRApproval Status") { }
+                field("paymentTransactionId"; Rec."BLRPayment Transaction Id") { }
+                field("contractId"; Rec."BLRContract Id") { }
+                field("tenantId"; Rec."BLRTenant Id") { }
 
 
             }

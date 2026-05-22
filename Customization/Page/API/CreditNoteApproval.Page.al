@@ -10,7 +10,7 @@ page 73209585 "Credit Note Approval"
     EntityName = 'creditNoteApproval';
     EntitySetName = 'creditNoteApprovals';
     PageType = API;
-    SourceTable = "Credit Note Approval";
+    SourceTable = "BLRCreditNoteApproval";
     DeleteAllowed = true;
     ModifyAllowed = true;
     ODataKeyFields = SystemId;
@@ -21,35 +21,35 @@ page 73209585 "Credit Note Approval"
         {
             repeater(General)
             {
-                field(creditnoteamount; Rec."Credit Note Amount")
+                field(creditnoteamount; Rec."BLRCredit Note Amount")
                 {
                     Caption = 'Credit Note Amount';
                 }
-                field(contractEndDate; Rec."Contract End Date")
+                field(contractEndDate; Rec."BLRContract End Date")
                 {
                     Caption = 'Contract End Date';
                 }
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(contractStartDate; Rec."Contract Start Date")
+                field(contractStartDate; Rec."BLRContract Start Date")
                 {
                     Caption = 'Contract Start Date';
                 }
-                field(creditNoteType; Rec."Credit Note Type")
+                field(creditNoteType; Rec."BLRCredit Note Type")
                 {
                     Caption = 'Credit Note Type';
                 }
-                field(fcID; Rec."FC ID")
+                field(fcID; Rec."BLRFC ID")
                 {
                     Caption = 'FC ID';
                 }
-                field(id; Rec.ID)
+                field(id; Rec."BLRID")
                 {
                     Caption = 'ID';
                 }
-                field(status; Rec.Status)
+                field(status; Rec."BLRStatus")
                 {
                     Caption = 'Status';
                 }
@@ -73,11 +73,11 @@ page 73209585 "Credit Note Approval"
                 {
                     Caption = 'SystemModifiedBy';
                 }
-                field(tenantID; Rec."Tenant ID")
+                field(tenantID; Rec."BLRTenant ID")
                 {
                     Caption = 'Tenant ID';
                 }
-                field(tenantName; Rec."Tenant Name")
+                field(tenantName; Rec."BLRTenant Name")
                 {
                     Caption = 'Tenant Name';
                 }

@@ -1,9 +1,9 @@
 codeunit 73209584 "Contract Renewal Request"
 {
-    [EventSubscriber(ObjectType::Table, Database::"Contract Renewal", 'OnAfterModifyEvent', '', false, false)]
-    local procedure OnAfterModifyTenancyContract(var Rec: Record "Contract Renewal"; xRec: Record "Contract Renewal"; RunTrigger: Boolean)
+    [EventSubscriber(ObjectType::Table, Database::"BLRContractRenewal", 'OnAfterModifyEvent', '', false, false)]
+    local procedure OnAfterModifyTenancyContract(var Rec: Record "BLRContractRenewal"; xRec: Record "BLRContractRenewal"; RunTrigger: Boolean)
     var
-        ApprovalStatusList: Record "Approval Contract Status";
+        ApprovalStatusList: Record "BLRApprovalContractStatus";
         UserPersonalizationRec: Record "User Personalization";
         CompanyInfo: Record "Company Information";
         UserRec: Record User;
@@ -14,14 +14,14 @@ codeunit 73209584 "Contract Renewal Request"
         TenancyContractStatus: Text;
         EmailBody: Text;
     begin
-        if Rec."Approval For Renewal" <> xRec."Approval For Renewal" then begin
+        if Rec."BLRApproval For Renewal" <> xRec."BLRApproval For Renewal" then begin
             ApprovalStatusList.Init();
-            ApprovalStatusList."Contract ID" := 0;
-            ApprovalStatusList.Status := 'Pending';
-            ApprovalStatusList."Renewal Contract ID" := Rec.Id;
-            ApprovalStatusList."Lease ID" := Rec."Created By";
-            TenancyContractStatus := GetTenancyStatusFromUpdateStatus(Format(Rec."Approval For Renewal"));
-            ApprovalStatusList."Tenancy Contract Status" := CopyStr(TenancyContractStatus, 1, StrLen(TenancyContractStatus));
+            ApprovalStatusList."BLRContract ID" := 0;
+            ApprovalStatusList."BLRStatus" := 'Pending';
+            ApprovalStatusList."BLRRenewal Contract ID" := Rec."BLRId";
+            ApprovalStatusList."BLRLease ID" := Rec."BLRCreated By";
+            TenancyContractStatus := GetTenancyStatusFromUpdateStatus(Format(Rec."BLRApproval For Renewal"));
+            ApprovalStatusList."BLRTenancy Contract Status" := CopyStr(TenancyContractStatus, 1, StrLen(TenancyContractStatus));
             ApprovalStatusList.Insert();
             LeaseManagerName := '';
             UserPersonalizationRec.SetRange("Profile ID", 'PROPERTY MANAGER');
@@ -43,7 +43,7 @@ codeunit 73209584 "Contract Renewal Request"
                         '<html><body>' +
                         '<p>Dear Property Manager,</p>' +
                         '<p>This is an automated notification from the system.</p>' +
-                        '<p>A recent update has been made to the Contract Renewal with <b>Renewal Contract ID - ' + Format(Rec.Id) + '</b>.</p>' +
+                        '<p>A recent update has been made to the Contract Renewal with <b>Renewal Contract ID - ' + Format(Rec."BLRId") + '</b>.</p>' +
                         '<p>Please review the <b>Approval Contract Status List</b> and take the necessary action as required.</p>' +
                         '<p>To proceed, please log in to the system and review the pending status under the <b>Approval Contract Status List</b> section.</p>' +
                         '<p>This is a system-generated email. Please do not reply to this message.</p>' +
@@ -51,7 +51,7 @@ codeunit 73209584 "Contract Renewal Request"
                         '</body></html>';
                 EmailMessage.Create(
                     EmailList,
-                    'System Notification: Action Required - Review Approval Contract Renewal Status For Approval - Contract ID - ' + Format(Rec."Contract ID"),
+                    'System Notification: Action Required - Review Approval Contract Renewal Status For Approval - Contract ID - ' + Format(Rec."BLRContract ID"),
                     EmailBody,
                     true
                 );

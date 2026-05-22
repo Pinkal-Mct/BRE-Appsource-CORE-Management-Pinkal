@@ -2,7 +2,7 @@ page 73209611 "tenantContractApi"
 {
     PageType = API;
     DelayedInsert = true;
-    SourceTable = "Tenancy Contract";
+    SourceTable = "BLRTenancyContract";
     APIPublisher = 'realestate';
     APIGroup = 'tenants';
     APIVersion = 'v2.0';
@@ -22,80 +22,80 @@ page 73209611 "tenantContractApi"
             {
                 Caption = 'System Identifier';
             }
-            field("contractID"; Rec."Contract ID") { }
-            field("proposalID"; Rec."Proposal ID") { }
-            field("propertyName"; Rec."Property Name") { }
-            field("unitName1"; Rec."Unit Name") { }
-            field("ejariName"; Rec."Ejari Name") { }
-            field("propertyClassification"; Rec."Property Classification") { }
-            field("propertyType"; Rec."Property Type") { }
-            field("annualRentAmount"; rec."Annual Rent Amount") { }
-            field("contractDate"; rec."Contract Date") { }
-            field("contractStartDate"; rec."Contract Start Date") { }
-            field("contractEndDate"; rec."Contract End Date") { }
-            field("contractTenor"; rec."Contract Tenor") { }
-            field("baseUnitofMeasure"; rec."Base Unit of Measure") { }
-            field("unitSqFeet"; rec."Unit Sq. Feet") { }
-            field("gracePeriod"; rec."Grace Period") { }
-            field("graceStartDate"; rec."Grace Start Date") { }
-            field("graceEndDate"; rec."Grace End Date") { }
-            field("tenantID"; rec."Tenant ID") { }
-            field("propertyID"; rec."Property ID") { }
-            field("unitID"; rec."Unit ID") { }
-            field("emiratesID"; rec."Emirates ID") { }
-            field("contactNumber"; rec."Contact Number") { }
-            field("emailAddress"; rec."Email Address") { }
-            field("paymentFrequency"; rec."Payment Frequency") { }
-            field("paymentMethod"; rec."Payment Method") { }
-            field("tenantContractStatus"; rec."Tenant Contract Status") { }
-            field("unitIDD"; rec.UnitID) { }
-            field("handoverisCompleted"; rec."Handover is Completed") { }
-            field("mergeUnitID"; rec."Merge Unit ID") { }
-            field("rentAmount"; rec."Rent Amount") { }
-            field("updateContractStatus"; rec."Update Contract Status") { }
-            field("createdBy"; rec."Created By") { }
-            field("ownersName"; Rec."Owner's Name") { }
-            field("lessorsName"; Rec."Lessor's Name") { }
-            field("lessorsEmiratesID"; Rec."Lessor's Emirates ID") { }
-            field("licenseNo"; Rec."License No.") { }
-            field("licensingAuthority"; Rec."Licensing Authority") { }
-            field("lessorsEmail"; Rec."Lessor's Email") { }
-            field("lessorsPhone"; Rec."Lessor's Phone") { }
-            field("unitName"; Rec."Unit Name") { }
-            field("tenantLicenseNo"; Rec."Tenant_License No.") { }
-            field("tenantLicensingAuthority"; Rec."Tenant_Licensing Authority") { }
-            field("securityDepositAmount"; Rec."Security Deposit Amount") { }
-            field("unitNumber"; Rec."Unit Number") { }
-            field("makaniNumber"; Rec."Makani Number") { }
-            field(emirate; Rec.Emirate) { }
-            field(community; Rec.Community) { }
-            field("dEWANumber"; Rec."DEWA Number") { }
-            field("propertySize"; Rec."Property Size") { }
-            field(id; Rec.ID) { }
-            field("suspendedReasonlist"; Rec."Suspended Reason list") { }
-            field("noofInstallments"; Rec."No of Installments") { }
-            field("tenantName"; Rec."Customer Name") { }
-            field("uploadDocument"; Rec."Upload Document") { }
-            field("viewDocument"; Rec."view Document") { }
-            field("renewalContractStatus"; Rec."Renewal Contract Status") { }
-            field("yesOrNo"; Rec."Yes/No") { }
+            field("contractID"; Rec."BLRContract ID") { }
+            field("proposalID"; Rec."BLRProposal ID") { }
+            field("propertyName"; Rec."BLRProperty Name") { }
+            field("unitName1"; Rec."BLRUnit Name") { }
+            field("ejariName"; Rec."BLREjari Name") { }
+            field("propertyClassification"; Rec."BLRProperty Classification") { }
+            field("propertyType"; Rec."BLRProperty Type") { }
+            field("annualRentAmount"; rec."BLRAnnual Rent Amount") { }
+            field("contractDate"; rec."BLRContract Date") { }
+            field("contractStartDate"; rec."BLRContract Start Date") { }
+            field("contractEndDate"; rec."BLRContract End Date") { }
+            field("contractTenor"; rec."BLRContract Tenor") { }
+            field("baseUnitofMeasure"; rec."BLRBase Unit of Measure") { }
+            field("unitSqFeet"; rec."BLRUnit Sq. Feet") { }
+            field("gracePeriod"; rec."BLRGrace Period") { }
+            field("graceStartDate"; rec."BLRGrace Start Date") { }
+            field("graceEndDate"; rec."BLRGrace End Date") { }
+            field("tenantID"; rec."BLRTenant ID") { }
+            field("propertyID"; rec."BLRProperty ID") { }
+            field("unitID"; rec."BLRUnit ID") { }
+            field("emiratesID"; rec."BLREmirates ID") { }
+            field("contactNumber"; rec."BLRContact Number") { }
+            field("emailAddress"; rec."BLREmail Address") { }
+            field("paymentFrequency"; rec."BLRPayment Frequency") { }
+            field("paymentMethod"; rec."BLRPayment Method") { }
+            field("tenantContractStatus"; rec."BLRTenant Contract Status") { }
+            field("unitIDD"; rec."BLRUnitID") { }
+            field("handoverisCompleted"; rec."BLRHandover is Completed") { }
+            field("mergeUnitID"; rec."BLRMerge Unit ID") { }
+            field("rentAmount"; rec."BLRRent Amount") { }
+            field("updateContractStatus"; rec."BLRUpdate Contract Status") { }
+            field("createdBy"; rec."BLRCreated By") { }
+            field("ownersName"; Rec."BLROwner's Name") { }
+            field("lessorsName"; Rec."BLRLessor's Name") { }
+            field("lessorsEmiratesID"; Rec."BLRLessor's Emirates ID") { }
+            field("licenseNo"; Rec."BLRLicense No.") { }
+            field("licensingAuthority"; Rec."BLRLicensing Authority") { }
+            field("lessorsEmail"; Rec."BLRLessor's Email") { }
+            field("lessorsPhone"; Rec."BLRLessor's Phone") { }
+            field("unitName"; Rec."BLRUnit Name") { }
+            field("tenantLicenseNo"; Rec."BLRTenant_License No.") { }
+            field("tenantLicensingAuthority"; Rec."BLRTenant_Licensing Authority") { }
+            field("securityDepositAmount"; Rec."BLRSecurity Deposit Amount") { }
+            field("unitNumber"; Rec."BLRUnit Number") { }
+            field("makaniNumber"; Rec."BLRMakani Number") { }
+            field(emirate; Rec."BLREmirate") { }
+            field(community; Rec."BLRCommunity") { }
+            field("dEWANumber"; Rec."BLRDEWA Number") { }
+            field("propertySize"; Rec."BLRProperty Size") { }
+            field(id; Rec."BLRID") { }
+            field("suspendedReasonlist"; Rec."BLRSuspended Reason list") { }
+            field("noofInstallments"; Rec."BLRNo of Installments") { }
+            field("tenantName"; Rec."BLRCustomer Name") { }
+            field("uploadDocument"; Rec."BLRUpload Document") { }
+            field("viewDocument"; Rec."BLRview Document") { }
+            field("renewalContractStatus"; Rec."BLRRenewal Contract Status") { }
+            field("yesOrNo"; Rec."BLRYes/No") { }
 
-            field("renewalNotificationtoTenant"; rec."Renewal Notification to Tenant")
+            field("renewalNotificationtoTenant"; rec."BLRRenewalNotiftoTenant")
             {
                 Caption = 'Renewal Notification to Tenant';
             }
 
-            field("tenantLoyaltyCheckReminder"; rec."Tenant Loyalty Check Reminder")
+            field("tenantLoyaltyCheckReminder"; rec."BLRTenantLoyaltyCheckReminder")
             {
 
                 Caption = 'Tenant Loyalty Check Reminder';
             }
 
-            field("paymentReminder"; rec."Payment Reminder")
+            field("paymentReminder"; rec."BLRPayment Reminder")
             {
                 Caption = 'Payment Reminder';
             }
-            field("previousStatus"; Rec."Previous Status")
+            field("previousStatus"; Rec."BLRPrevious Status")
             {
                 Caption = 'Previous Status';
             }

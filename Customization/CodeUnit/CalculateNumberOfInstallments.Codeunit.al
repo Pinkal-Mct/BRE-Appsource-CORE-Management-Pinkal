@@ -1,51 +1,51 @@
 codeunit 73209579 "Installment Calculation Engine"
 {
-    procedure CalculateTotalInstallments(var prevenuestructuresubpage: Record "Revenue Structure Subpage")
+    procedure CalculateTotalInstallments(var prevenuestructuresubpage: Record "BLRRevenueStructureSubpage")
     var
-        revenuestructure: Record "Revenue Structure";
-        revenuestructuresubpage: Record "Revenue Structure Subpage";
+        revenuestructure: Record "BLRRevenueStructure";
+        revenuestructuresubpage: Record "BLRRevenueStructureSubpage";
         getinstallments: Integer;
         Totalinstallments: Integer;
     begin
         Totalinstallments := 0;
-        revenuestructure.SetRange("RS ID", prevenuestructuresubpage."RS ID");
-        revenuestructure.SetRange("Contract ID", prevenuestructuresubpage."Contract Id");
+        revenuestructure.SetRange("BLRRS ID", prevenuestructuresubpage."BLRRS ID");
+        revenuestructure.SetRange("BLRContract ID", prevenuestructuresubpage."BLRContract ID");
         if revenuestructure.FindSet() then begin
-            getinstallments := prevenuestructuresubpage."Yearly No. of Installment";
+            getinstallments := prevenuestructuresubpage."BLRYearly No. of Installment";
             Totalinstallments += getinstallments;
-            revenuestructuresubpage.SetRange("RS ID", revenuestructure."RS ID");
+            revenuestructuresubpage.SetRange("BLRRS ID", revenuestructure."BLRRS ID");
             if revenuestructuresubpage.FindSet() then
                 repeat
-                    if revenuestructuresubpage."Entry No." <> prevenuestructuresubpage."Entry No." then begin
-                        getinstallments := revenuestructuresubpage."Yearly No. of Installment";
+                    if revenuestructuresubpage."BLREntry No." <> prevenuestructuresubpage."BLREntry No." then begin
+                        getinstallments := revenuestructuresubpage."BLRYearly No. of Installment";
                         Totalinstallments += getinstallments;
                     end;
                 until revenuestructuresubpage.Next() = 0;
-            revenuestructure."Number of Installments" := Totalinstallments;
+            revenuestructure."BLRNumber of Installments" := Totalinstallments;
             revenuestructure.Modify();
         end;
     end;
 
-    procedure BeforeDeleteCalculateInstallments(var prevenuestructuresubpage: Record "Revenue Structure Subpage")
+    procedure BeforeDeleteCalculateInstallments(var prevenuestructuresubpage: Record "BLRRevenueStructureSubpage")
     var
-        revenuestructure: Record "Revenue Structure";
-        revenuestructuresubpage: Record "Revenue Structure Subpage";
+        revenuestructure: Record "BLRRevenueStructure";
+        revenuestructuresubpage: Record "BLRRevenueStructureSubpage";
         getinstallments: Integer;
         Totalinstallments: Integer;
     begin
         Totalinstallments := 0;
-        revenuestructure.SetRange("RS ID", prevenuestructuresubpage."RS ID");
-        revenuestructure.SetRange("Contract ID", prevenuestructuresubpage."Contract Id");
+        revenuestructure.SetRange("BLRRS ID", prevenuestructuresubpage."BLRRS ID");
+        revenuestructure.SetRange("BLRContract ID", prevenuestructuresubpage."BLRContract ID");
         if revenuestructure.FindSet() then begin
-            revenuestructuresubpage.SetRange("RS ID", revenuestructure."RS ID");
+            revenuestructuresubpage.SetRange("BLRRS ID", revenuestructure."BLRRS ID");
             if revenuestructuresubpage.FindSet() then
                 repeat
-                    if revenuestructuresubpage."Entry No." <> prevenuestructuresubpage."Entry No." then begin
-                        getinstallments := revenuestructuresubpage."Yearly No. of Installment";
+                    if revenuestructuresubpage."BLREntry No." <> prevenuestructuresubpage."BLREntry No." then begin
+                        getinstallments := revenuestructuresubpage."BLRYearly No. of Installment";
                         Totalinstallments += getinstallments;
                     end;
                 until revenuestructuresubpage.Next() = 0;
-            revenuestructure."Number of Installments" := Totalinstallments;
+            revenuestructure."BLRNumber of Installments" := Totalinstallments;
             revenuestructure.Modify();
         end;
     end;

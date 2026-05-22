@@ -1,26 +1,26 @@
-table 73209637 "Module Setup"
+table 73209637 "BLRModuleSetup"
 {
     DataClassification = SystemMetadata;
 
     fields
     {
 
-        field(73209575; "Module Name"; Code[50])
+        field(73209575; "BLRModule Name"; Code[50])
         {
             DataClassification = SystemMetadata;
         }
-        field(73209576; "Is Active"; Boolean)
+        field(73209576; "BLRIs Active"; Boolean)
         {
             DataClassification = SystemMetadata;
         }
 
-        field(73209577; "Extension Name"; Code[50])
+        field(73209577; "BLRExtension Name"; Code[50])
         {
             DataClassification = SystemMetadata;
             Caption = 'Extension Name';
         }
 
-        field(73209578; "Business Unit Code"; Code[20])
+        field(73209578; "BLRBusiness Unit Code"; Code[20])
         {
             DataClassification = SystemMetadata;
             Caption = 'Business Unit Code';
@@ -30,7 +30,7 @@ table 73209637 "Module Setup"
 
     keys
     {
-        key(Key1; "Module Name")
+        key(Key1;"BLRModule Name")
         {
             Clustered = true;
         }

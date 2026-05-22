@@ -26,11 +26,11 @@ page 73209608 postedSalesInvoice
                 {
                     Caption = 'Allow Line Disc.';
                 }
-                field("viewDocumentURL"; Rec."View Document URL")
+                field("viewDocumentURL"; Rec."BLRView Document URL")
                 {
                     Caption = 'View Document URL';
                 }
-                field("viewInvoice"; Rec."View Invoice")
+                field("viewInvoice"; Rec."BLRView Invoice")
                 {
                     Caption = 'View Invoice';
                 }
@@ -62,7 +62,7 @@ page 73209608 postedSalesInvoice
                 {
                     Caption = 'Applies-to Doc. Type';
                 }
-                field(approvalStatus; Rec."Approval Status")
+                field(approvalStatus; Rec."BLRApproval Status")
                 {
                     Caption = 'Approval Status';
                 }
@@ -142,15 +142,15 @@ page 73209608 postedSalesInvoice
                 {
                     Caption = 'Company Bank Account Code';
                 }
-                field(contractID; Rec."Contract ID")
+                field(contractID; Rec."BLRContract ID")
                 {
                     Caption = 'Contract ID';
                 }
-                field(contractPeriod; Rec."Contract Period")
+                field(contractPeriod; Rec."BLRContract Period")
                 {
                     Caption = 'Contract Period';
                 }
-                field(contractTenure; Rec."Contract Tenure")
+                field(contractTenure; Rec."BLRContract Tenure")
                 {
                     Caption = 'Contract Tenure';
                 }
@@ -182,11 +182,11 @@ page 73209608 postedSalesInvoice
                 {
                     Caption = 'Customer Disc. Group';
                 }
-                field(customerPO; Rec."Customer P.O")
+                field(customerPO; Rec."BLRCustomer P.O")
                 {
                     Caption = 'Customer P.O';
                 }
-                field(customerPODate; Rec."Customer P.O Date")
+                field(customerPODate; Rec."BLRCustomer P.O Date")
                 {
                     Caption = 'Customer P.O Date';
                 }
@@ -390,7 +390,7 @@ page 73209608 postedSalesInvoice
                 {
                     Caption = 'Promised Pay Date';
                 }
-                field(propertyName; Rec."Property Name")
+                field(propertyName; Rec."BLRProperty Name")
                 {
                     Caption = 'Property Name';
                 }
@@ -402,7 +402,7 @@ page 73209608 postedSalesInvoice
                 {
                     Caption = 'Reason Code';
                 }
-                field(reasonForRejection; Rec."Reason For Rejection")
+                field(reasonForRejection; Rec."BLRReason For Rejection")
                 {
                     Caption = 'Reason For Rejection';
                 }
@@ -578,7 +578,7 @@ page 73209608 postedSalesInvoice
                 {
                     Caption = 'Tax Liable';
                 }
-                field(tenantName; Rec."Tenant Name")
+                field(tenantName; Rec."BLRTenant Name")
                 {
                     Caption = 'Tenant Name';
                 }
@@ -594,7 +594,7 @@ page 73209608 postedSalesInvoice
                 {
                     Caption = 'Transport Method';
                 }
-                field(unitName; Rec."Unit Name")
+                field(unitName; Rec."BLRUnit Name")
                 {
                     Caption = 'Unit Name';
                 }

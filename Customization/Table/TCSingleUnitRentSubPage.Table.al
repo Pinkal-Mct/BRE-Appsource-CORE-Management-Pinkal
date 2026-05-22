@@ -1,118 +1,118 @@
-table 73209701 "TC Single Unit Rent SubPage"
+table 73209701 "BLRTCSingleUnitRentSubPage"
 {
     DataClassification = CustomerContent;
     fields
     {
-        field(73209575; "Id"; Integer)
+        field(73209575; "BLRId"; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209576; "Merged Unit ID"; Code[20])
+        field(73209576; "BLRMerged Unit ID"; Code[20])
         {
             DataClassification = CustomerContent;
         }
-        field(73209577; "Unit ID"; Code[100])
+        field(73209577; "BLRUnit ID"; Code[100])
         {
             DataClassification = CustomerContent;
             trigger OnValidate()
             var
-                LeaseProposal: Record "Contract Renewal";
+                LeaseProposal: Record "BLRContractRenewal";
             begin
-                if LeaseProposal.Get("Id", "Unit ID") then begin
-                    Rec."Unit ID" := LeaseProposal."Unit Name";
-                    Rec."Start Date" := LeaseProposal."Contract Start Date";
-                    Rec."End Date" := LeaseProposal."Contract End Date";
-                    Rec."Unit Sq Ft" := LeaseProposal."Unit Sq. Feet";
-                    Rec."Rate per Sq.Ft" := LeaseProposal."Rent Amount";
-                    Rec."Number of Days" := Rec."End Date" - Rec."Start Date";
+                if LeaseProposal.Get("BLRId", "BLRUnit ID") then begin
+                    Rec."BLRUnit ID" := LeaseProposal."BLRUnit Name";
+                    Rec."BLRStart Date" := LeaseProposal."BLRContract Start Date";
+                    Rec."BLREnd Date" := LeaseProposal."BLRContract End Date";
+                    Rec."BLRUnit Sq Ft" := LeaseProposal."BLRUnit Sq. Feet";
+                    Rec."BLRRate per Sq.Ft" := LeaseProposal."BLRRent Amount";
+                    Rec."BLRNumber of Days" := Rec."BLREnd Date" - Rec."BLRStart Date";
                     Modify(true);
                 end else
-                    Error('No matching Lease Proposal found for the selected Unit ID.');
+                    Error('No matching Lease Proposal found for the selected "BLRUnit ID".');
             end;
         }
-        field(73209578; "Year"; Integer)
+        field(73209578; "BLRYear"; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209579; "Start Date"; Date)
+        field(73209579; "BLRStart Date"; Date)
         {
             DataClassification = CustomerContent;
         }
-        field(73209580; "End Date"; Date)
+        field(73209580; "BLREnd Date"; Date)
         {
             DataClassification = CustomerContent;
         }
-        field(73209581; "Number of Days"; Integer)
+        field(73209581; "BLRNumber of Days"; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209582; "Unit Sq Ft"; Decimal)
+        field(73209582; "BLRUnit Sq Ft"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209583; "Rate per Sq.Ft"; Decimal)
+        field(73209583; "BLRRate per Sq.Ft"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209584; "Rent Increase %"; Decimal)
+        field(73209584; "BLRRent Increase %"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209585; "Annual Amount"; Decimal)
+        field(73209585; "BLRAnnual Amount"; Decimal)
         {
             DataClassification = CustomerContent;
             DecimalPlaces = 2 : 2;
         }
-        field(73209586; "Round off"; Decimal)
+        field(73209586; "BLRRound off"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209587; "Final Annual Amount"; Decimal)
+        field(73209587; "BLRFinal Annual Amount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209588; "Per Day Rent"; Decimal)
+        field(73209588; "BLRPer Day Rent"; Decimal)
         {
             DataClassification = CustomerContent;
         }
-        field(73209589; "Single Unit Rent1"; Code[100])
+        field(73209589; "BLRSingle Unit Rent1"; Code[100])
         {
             DataClassification = CustomerContent;
             InitValue = 'Click Here For Get Data.';
             Caption = 'Click Here For Get Data.';
         }
-        field(73209590; "Line No."; Integer)
+        field(73209590; "BLRLine No."; Integer)
         {
             DataClassification = CustomerContent;
         }
-        field(73209591; "TotalFinalAmount"; Decimal)
+        field(73209591; "BLRTotalFinalAmount"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = sum("TC Single Unit Rent SubPage"."Final Annual Amount" where("Id" = field("Id")));
+            CalcFormula = sum("BLRTCSingleUnitRentSubPage"."BLRFinal Annual Amount" where("BLRId" = field("BLRId")));
         }
-        field(73209592; "TotalAnnualAmount"; Decimal)
+        field(73209592; "BLRTotalAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = sum("TC Single Unit Rent SubPage"."Annual Amount" where("Id" = field("Id")));
+            CalcFormula = sum("BLRTCSingleUnitRentSubPage"."BLRAnnual Amount" where("BLRId" = field("BLRId")));
         }
-        field(73209593; "TotalRoundOff"; Decimal)
+        field(73209593; "BLRTotalRoundOff"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = sum("TC Single Unit Rent SubPage"."Round off" where("Id" = field("Id")));
+            CalcFormula = sum("BLRTCSingleUnitRentSubPage"."BLRRound off" where("BLRId" = field("BLRId")));
         }
-        field(73209594; "TotalFirstAnnualAmount"; Decimal)
+        field(73209594; "BLRTotalFirstAnnualAmount"; Decimal)
         {
             FieldClass = FlowField;
-            CalcFormula = sum("TC Single Unit Rent SubPage"."Final Annual Amount" where("Id" = field("Id"), Year = const(1)));
+            CalcFormula = sum("BLRTCSingleUnitRentSubPage"."BLRFinal Annual Amount" where("BLRId" = field("BLRId"), "BLRYear" = const(1)));
         }
-        field(73209595; "Contract Id"; Integer)
+        field(73209595; "BLRContract Id"; Integer)
         {
             DataClassification = CustomerContent;
         }
     }
     keys
     {
-        key(PK; "Id", "Line No.")
+        key(PK;"BLRId", "BLRLine No.")
         {
             Clustered = true;
         }

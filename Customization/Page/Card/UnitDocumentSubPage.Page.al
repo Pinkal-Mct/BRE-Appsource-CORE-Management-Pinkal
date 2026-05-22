@@ -3,7 +3,7 @@ page 73209637 "Unit Document SubPage"
     PageType = ListPart;
     ApplicationArea = All;
     UsageCategory = Administration;
-    SourceTable = "Unit Document Details";
+    SourceTable = "BLRUnitDocumentDetails";
     Caption = 'Unit Document SubPage';
 
     layout
@@ -12,17 +12,17 @@ page 73209637 "Unit Document SubPage"
         {
             repeater(Group)
             {
-                field("Document Type"; Rec."Document Type")
+                field("Document Type"; Rec."BLRDocument Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the type of document associated with the unit.';
                 }
-                field("Document Name"; Rec."Document Name")
+                field("Document Name"; Rec."BLRDocument Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the name of the document associated with the unit.';
                 }
-                field("Upload Document"; Rec."Upload Document")
+                field("Upload Document"; Rec."BLRUpload Document")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the uploaded document for the unit.';
@@ -38,15 +38,15 @@ page 73209637 "Unit Document SubPage"
                         folderName := 'UnitDocuments';
                         fileName := azureBlobUploader.ValidateDocument(uploadResult, folderName);
                         if fileName <> '' then begin
-                            Rec."Upload Document" := CopyStr(fileName, 1, StrLen(fileName));
-                            Rec."View Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
+                            Rec."BLRUpload Document" := CopyStr(fileName, 1, StrLen(fileName));
+                            Rec."BLRView Document URL" := CopyStr(uploadResult, 1, StrLen(uploadResult));
                             Rec.Modify();
                             Message('File uploaded successfully: %1', fileName);
                         end;
                     end;
                 }
 
-                field("View & Download"; Rec."View & Download")
+                field("View & Download"; Rec."BLRView & Download")
                 {
                     ApplicationArea = All;
                     ToolTip = 'View or download the uploaded document.';
@@ -56,7 +56,7 @@ page 73209637 "Unit Document SubPage"
                     var
                         FileURL: Text;
                     begin
-                        FileURL := Rec."View Document URL";
+                        FileURL := Rec."BLRView Document URL";
 
                         if FileURL = '' then
                             Error('No document is available to view.');
@@ -64,7 +64,7 @@ page 73209637 "Unit Document SubPage"
                         OpenFileInBrowser(FileURL);
                     end;
                 }
-                field(Download; Rec.Download)
+                field(Download; Rec."BLRDownload")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Download the uploaded document.';
@@ -76,7 +76,7 @@ page 73209637 "Unit Document SubPage"
                     var
                         DownloadUrl: Text;
                     begin
-                        DownloadUrl := Rec."View Document URL";
+                        DownloadUrl := Rec."BLRView Document URL";
 
                         if DownloadUrl = '' then
                             Error('No document is available to download.');
@@ -103,7 +103,7 @@ page 73209637 "Unit Document SubPage"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec.UnitID := unitId;
+        Rec."BLRUnitID" := unitId;
     end;
 
     var

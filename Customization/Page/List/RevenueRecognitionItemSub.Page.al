@@ -2,7 +2,7 @@ page 73209660 "Revenue Recognition Item Sub"
 {
     PageType = ListPart;
     ApplicationArea = All;
-    SourceTable = "Revenue Recognition Item";
+    SourceTable = "BLRRevenueRecognitionItem";
     Caption = 'Revenue Item';
 
     layout
@@ -11,19 +11,19 @@ page 73209660 "Revenue Recognition Item Sub"
         {
             repeater(Group)
             {
-                field("RR_No."; Rec."RR_No.")
+                field("RR_No."; Rec."BLRRR_No.")
                 {
                     ToolTip = 'The unique identifier for the revenue recognition record.';
                     ApplicationArea = All;
                     Visible = false;
                 }
-                field("Item Type"; Rec."Item Type")
+                field("Item Type"; Rec."BLRItem Type")
                 {
                     ToolTip = 'The type of item associated with the revenue recognition.';
                     ApplicationArea = All;
                     Caption = 'Item Type';
                 }
-                field("Entry No."; Rec."Entry No.")
+                field("Entry No."; Rec."BLREntry No.")
                 {
                     ToolTip = 'The unique entry number for the revenue recognition item.';
                     ApplicationArea = All;
@@ -48,23 +48,23 @@ page 73209660 "Revenue Recognition Item Sub"
                 Enabled = CanPost;
                 trigger OnAction()
                 var
-                    revenueAllocation: Record "Revenue Allocation Details";
-                    companydata: Record "Company Data";
+                    revenueAllocation: Record "BLRRevenueAllocationDetails";
+                    companydata: Record "BLRCompanyData";
                     ConfirmFetch: Boolean;
                     RevenueStartDate: Date;
                 begin
                     if companydata.FindFirst() then
-                        if companydata."Revenue Methods" = companydata."Revenue Methods"::"Per Day Rent" then begin
+                        if companydata."BLRRevenue Methods" = companydata."BLRRevenue Methods"::"Per Day Rent" then begin
                             // Get the current Revenue Allocation record details
                             if not GetCurrentRevenueAllocation(RevenueAllocation) then begin
                                 Message('Unable to get Revenue Allocation details. Please ensure you are on a valid record.');
                                 exit;
                             end;
-                            RevenueStartDate := DMY2Date(1, RevenueAllocation.Month, RevenueAllocation."Financial Year");
+                            RevenueStartDate := DMY2Date(1, RevenueAllocation."BLRMonth", RevenueAllocation."BLRFinancial Year");
 
                             // Confirm before fetching details
                             ConfirmFetch := Confirm('Do you want to fetch revenue details for the selected Item Type(s) for %1 %2?',
-                                false, Format(RevenueAllocation.Month), RevenueAllocation."Financial Year");
+                                false, Format(RevenueAllocation."BLRMonth"), RevenueAllocation."BLRFinancial Year");
 
                             if ConfirmFetch then begin
                                 // Call the fetch procedure with current allocation details
@@ -74,16 +74,16 @@ page 73209660 "Revenue Recognition Item Sub"
                                 Message('Revenue details have been fetched successfully.');
                             end;
                         end else
-                            if companydata."Revenue Methods" = companydata."Revenue Methods"::"Fixed Monthly Rent" then begin
+                            if companydata."BLRRevenue Methods" = companydata."BLRRevenue Methods"::"Fixed Monthly Rent" then begin
                                 if not GetCurrentRevenueAllocation(RevenueAllocation) then begin
                                     Message('Unable to get Revenue Allocation details. Please ensure you are on a valid record.');
                                     exit;
                                 end;
-                                RevenueStartDate := DMY2Date(1, RevenueAllocation.Month, RevenueAllocation."Financial Year");
+                                RevenueStartDate := DMY2Date(1, RevenueAllocation."BLRMonth", RevenueAllocation."BLRFinancial Year");
 
                                 // Confirm before fetching details
                                 ConfirmFetch := Confirm('Do you want to fetch revenue details for the selected Item Type(s) for %1 %2?',
-                                    false, Format(RevenueAllocation.Month), RevenueAllocation."Financial Year");
+                                    false, Format(RevenueAllocation."BLRMonth"), RevenueAllocation."BLRFinancial Year");
 
                                 if ConfirmFetch then begin
                                     // Call the fetch procedure with current allocation details
@@ -105,15 +105,15 @@ page 73209660 "Revenue Recognition Item Sub"
     end;
 
     // Get current Revenue Allocation record
-    local procedure GetCurrentRevenueAllocation(var RevenueAllocation: Record "Revenue Allocation Details"): Boolean
+    local procedure GetCurrentRevenueAllocation(var RevenueAllocation: Record "BLRRevenueAllocationDetails"): Boolean
     begin
         // Get the current RR_No from the record
-        if Rec."RR_No." = 0 then
+        if Rec."BLRRR_No." = 0 then
             exit(false);
 
         // Find the Revenue Allocation record using RR_No
         RevenueAllocation.Reset();
-        RevenueAllocation.SetRange("No.", Rec."RR_No.");
+        RevenueAllocation.SetRange("BLRNo.", Rec."BLRRR_No.");
         if RevenueAllocation.FindFirst() then
             exit(true);
 
@@ -122,17 +122,17 @@ page 73209660 "Revenue Recognition Item Sub"
 
     procedure ClearSubgridData()
     var
-        RevenueItemDetail: Record "Revenue Recognition Details";
+        RevenueItemDetail: Record "BLRRevenueRecognitionDetails";
     begin
         // Clear existing details for this Revenue Recognition record
-        RevenueItemDetail.SetRange("RR_No.", Rec."RR_No.");
+        RevenueItemDetail.SetRange("BLRRR_No.", Rec."BLRRR_No.");
         RevenueItemDetail.DeleteAll(true);
     end;
 
-    procedure FetchContractDetails(RevenueAllocation: Record "Revenue Allocation Details"; RevenueStartdate: Date)
+    procedure FetchContractDetails(RevenueAllocation: Record "BLRRevenueAllocationDetails"; RevenueStartdate: Date)
     var
-        TenancyContract: Record "Tenancy Contract";
-        RevenueStructure: Record "Revenue Structure";
+        TenancyContract: Record "BLRTenancyContract";
+        RevenueStructure: Record "BLRRevenueStructure";
         SelectedItemTypes: List of [Text];
         ProcessedContractCount: Integer;
         ContractProcessed: Boolean;
@@ -155,29 +155,29 @@ page 73209660 "Revenue Recognition Item Sub"
         ProcessedContractCount := 0;
 
         // Calculate month start and end dates
-        RevenueAllocationStartDate := DMY2Date(1, RevenueAllocation.Month, RevenueAllocation."Financial Year");
+        RevenueAllocationStartDate := DMY2Date(1, RevenueAllocation."BLRMonth", RevenueAllocation."BLRFinancial Year");
         RevenueAllocationEndDate := CalcDate('<CM>', RevenueAllocationStartDate);
 
         // Process active contracts directly from Revenue Structure
         if TenancyContract.FindSet() then
             repeat
-                if TenancyContract."Tenant Contract Status" = TenancyContract."Tenant Contract Status"::Terminated then
+                if TenancyContract."BLRTenant Contract Status" = TenancyContract."BLRTenant Contract Status"::Terminated then
                     continue;
                 // NEW: Check if contract should be processed based on status and dates
-                if ShouldProcessContract(TenancyContract, RevenueAllocation.Month, RevenueAllocation."Financial Year") then
+                if ShouldProcessContract(TenancyContract, RevenueAllocation."BLRMonth", RevenueAllocation."BLRFinancial Year") then
                     // Check if contract is active during the selected period
-                    if (TenancyContract."Contract Start Date" <= RevenueAllocationEndDate) and
-                       (TenancyContract."Contract End Date" >= RevenueAllocationStartDate) then begin
+                    if (TenancyContract."BLRContract Start Date" <= RevenueAllocationEndDate) and
+                       (TenancyContract."BLRContract End Date" >= RevenueAllocationStartDate) then begin
 
                         // Reset flag for each contract
                         ContractProcessed := false;
 
                         // Get revenue structure details directly for this contract
                         RevenueStructure.Reset();
-                        RevenueStructure.SetRange("Contract ID", TenancyContract."Contract ID");
+                        RevenueStructure.SetRange("BLRContract ID", TenancyContract."BLRContract ID");
 
                         // Filter by selected Item Types
-                        RevenueStructure.SetFilter("Secondary Item Type", GetItemTypeFilter(SelectedItemTypes));
+                        RevenueStructure.SetFilter("BLRSecondary Item Type", GetItemTypeFilter(SelectedItemTypes));
 
                         if RevenueStructure.FindSet() then
                             repeat
@@ -190,7 +190,7 @@ page 73209660 "Revenue Recognition Item Sub"
                         // Increment processed contract counter if at least one structure was found
                         // if ContractProcessed then
                         //     ProcessedContractCount += 1;
-                        ProcessCreditNoteEntries(RevenueAllocationStartDate, RevenueAllocationEndDate, RevenueAllocation.Month, RevenueAllocation."Financial Year", RevenueStartDate, TenancyContract);
+                        ProcessCreditNoteEntries(RevenueAllocationStartDate, RevenueAllocationEndDate, RevenueAllocation."BLRMonth", RevenueAllocation."BLRFinancial Year", RevenueStartDate, TenancyContract);
                     end;
             until TenancyContract.Next() = 0;
 
@@ -212,11 +212,11 @@ page 73209660 "Revenue Recognition Item Sub"
     end;
 
     // Enhanced procedure to process ALL missed revenue allocations dynamically
-    local procedure ProcessAllMissedRevenueAllocations(pCurrentAllocation: Record "Revenue Allocation Details")
+    local procedure ProcessAllMissedRevenueAllocations(pCurrentAllocation: Record "BLRRevenueAllocationDetails")
     var
-        TenancyContract: Record "Tenancy Contract";
-        RevenueStructure: Record "Revenue Structure";
-        RevenueAllocation: Record "Revenue Allocation Details";
+        TenancyContract: Record "BLRTenancyContract";
+        RevenueStructure: Record "BLRRevenueStructure";
+        RevenueAllocation: Record "BLRRevenueAllocationDetails";
         PreviousAllocationMonth: Integer;
         PreviousAllocationYear: Integer;
         PreviousAllocationStartDate: Date;
@@ -228,8 +228,8 @@ page 73209660 "Revenue Recognition Item Sub"
         GetSelectedItemTypes(SelectedItemTypes);
 
         // Calculate previous month dynamically
-        PreviousAllocationMonth := pCurrentAllocation.Month - 1;
-        PreviousAllocationYear := pCurrentAllocation."Financial Year";
+        PreviousAllocationMonth := pCurrentAllocation."BLRMonth" - 1;
+        PreviousAllocationYear := pCurrentAllocation."BLRFinancial Year";
 
         // Handle year transition
         if PreviousAllocationMonth = 0 then begin
@@ -246,35 +246,35 @@ page 73209660 "Revenue Recognition Item Sub"
 
         // Find ALL contracts that started in previous month (date 2-31)
         TenancyContract.Reset();
-        TenancyContract.SetFilter("Contract Start Date", '%1..%2',
+        TenancyContract.SetFilter("BLRContract Start Date", '%1..%2',
             DMY2Date(2, PreviousAllocationMonth, PreviousAllocationYear),
             PreviousAllocationEndDate);
 
         if TenancyContract.FindSet() then
             repeat
                 // Additional check: Contract should be active during previous month
-                if (TenancyContract."Contract Start Date" <= PreviousAllocationEndDate) and
-                   (TenancyContract."Contract End Date" >= PreviousAllocationStartDate) then
+                if (TenancyContract."BLRContract Start Date" <= PreviousAllocationEndDate) and
+                   (TenancyContract."BLRContract End Date" >= PreviousAllocationStartDate) then
 
                     // Check if this contract was missed in previous allocation
                     if IsMissedRevenueAllocationForContract(
-                        TenancyContract."Contract ID",
+                        TenancyContract."BLRContract ID",
                         PreviousAllocationMonth,
                         PreviousAllocationYear,
-                        pCurrentAllocation.Month,
-                        pCurrentAllocation."Financial Year"
+                        pCurrentAllocation."BLRMonth",
+                        pCurrentAllocation."BLRFinancial Year"
                     ) then begin
 
                         // Get revenue structure for this contract
                         RevenueStructure.Reset();
-                        RevenueStructure.SetRange("Contract ID", TenancyContract."Contract ID");
-                        RevenueStructure.SetFilter("Secondary Item Type", GetItemTypeFilter(SelectedItemTypes));
+                        RevenueStructure.SetRange("BLRContract ID", TenancyContract."BLRContract ID");
+                        RevenueStructure.SetFilter("BLRSecondary Item Type", GetItemTypeFilter(SelectedItemTypes));
 
                         if RevenueStructure.FindFirst() then begin
                             // Create temporary allocation record for missed month
                             RevenueAllocation := pCurrentAllocation;
-                            RevenueAllocation.Month := PreviousAllocationMonth;
-                            RevenueAllocation."Financial Year" := PreviousAllocationYear;
+                            RevenueAllocation."BLRMonth" := PreviousAllocationMonth;
+                            RevenueAllocation."BLRFinancial Year" := PreviousAllocationYear;
 
                             // Create missed revenue allocation for this contract
                             CreateMissedRevenueAllocationForContract(
@@ -302,25 +302,25 @@ page 73209660 "Revenue Recognition Item Sub"
         currentYear: Integer
     ): Boolean
     var
-        ExistingRevenue: Record "Revenue Recognition Details";
+        ExistingRevenue: Record "BLRRevenueRecognitionDetails";
         RegularAllocationExists: Boolean;
         MissedAllocationExists: Boolean;
     begin
         // Check if regular revenue was already allocated for this contract in this month
         ExistingRevenue.Reset();
-        ExistingRevenue.SetRange("Contract Id", ContractID);
-        ExistingRevenue.SetRange("Posting Month", currentMonth);
-        ExistingRevenue.SetRange("Posting Year", currentYear);
-        ExistingRevenue.SetFilter("Posting Period", '<>%1', 'MISSED*'); // Exclude missed allocations
+        ExistingRevenue.SetRange("BLRContract Id", ContractID);
+        ExistingRevenue.SetRange("BLRPosting Month", currentMonth);
+        ExistingRevenue.SetRange("BLRPosting Year", currentYear);
+        ExistingRevenue.SetFilter("BLRPosting Period", '<>%1', 'MISSED*'); // Exclude missed allocations
 
         RegularAllocationExists := not ExistingRevenue.IsEmpty;
 
         // Check if missed allocation already exists for this contract
         ExistingRevenue.Reset();
-        ExistingRevenue.SetRange("Contract Id", ContractID);
-        ExistingRevenue.SetRange("Posting Month", CheckMonth);
-        ExistingRevenue.SetRange("Posting Year", CheckYear);
-        ExistingRevenue.SetFilter("Posting Period", '%1', 'MISSED*'); // Only missed allocations
+        ExistingRevenue.SetRange("BLRContract Id", ContractID);
+        ExistingRevenue.SetRange("BLRPosting Month", CheckMonth);
+        ExistingRevenue.SetRange("BLRPosting Year", CheckYear);
+        ExistingRevenue.SetFilter("BLRPosting Period", '%1', 'MISSED*'); // Only missed allocations
 
         MissedAllocationExists := not ExistingRevenue.IsEmpty;
 
@@ -330,11 +330,11 @@ page 73209660 "Revenue Recognition Item Sub"
 
     // Create missed revenue allocation for a specific contract
     local procedure CreateMissedRevenueAllocationForContract(
-        pTenancyContract: Record "Tenancy Contract";
-        pMissedAllocation: Record "Revenue Allocation Details"
+        pTenancyContract: Record "BLRTenancyContract";
+        pMissedAllocation: Record "BLRRevenueAllocationDetails"
     )
     var
-        RevenueStructureSubpage: Record "Revenue Structure Subpage";
+        RevenueStructureSubpage: Record "BLRRevenueStructureSubpage";
         SelectedItemTypes: List of [Text];
         ItemType: Text;
     begin
@@ -345,8 +345,8 @@ page 73209660 "Revenue Recognition Item Sub"
         foreach ItemType in SelectedItemTypes do begin
             // Get revenue structure subpage for this item type
             RevenueStructureSubpage.Reset();
-            RevenueStructureSubpage.SetRange("Contract ID", pTenancyContract."Contract ID");
-            RevenueStructureSubpage.SetRange("Secondary Item Type", ItemType);
+            RevenueStructureSubpage.SetRange("BLRContract ID", pTenancyContract."BLRContract ID");
+            RevenueStructureSubpage.SetRange("BLRSecondary Item Type", ItemType);
 
             if RevenueStructureSubpage.FindFirst() then
                 // Create missed revenue allocation record
@@ -356,14 +356,14 @@ page 73209660 "Revenue Recognition Item Sub"
 
     // Enhanced missed revenue allocation creation with better contract detection
     local procedure CreateSingleMissedRevenueAllocation(
-        pTenancyContract: Record "Tenancy Contract";
-        pRevenueStructureSubpage: Record "Revenue Structure Subpage";
-        pMissedAllocation: Record "Revenue Allocation Details";
+        pTenancyContract: Record "BLRTenancyContract";
+        pRevenueStructureSubpage: Record "BLRRevenueStructureSubpage";
+        pMissedAllocation: Record "BLRRevenueAllocationDetails";
         pItemType: Text
     )
     var
-        FinalCalculation: Record "Final Calculation";
-        RevenueRecognitionDetails: Record "Revenue Recognition Details";
+        FinalCalculation: Record "BLRFinalCalculation";
+        RevenueRecognitionDetails: Record "BLRRevenueRecognitionDetails";
         NextEntryNo: Integer;
         NoOfDays: Integer;
         TerminationDate: Date;
@@ -375,34 +375,34 @@ page 73209660 "Revenue Recognition Item Sub"
     begin
 
         // Get contract start day to verify it's in range 2-31
-        ContractStartDay := Date2DMY(pTenancyContract."Contract Start Date", 1);
-        ContractStartInMonth := Date2DMY(pTenancyContract."Contract Start Date", 2);
+        ContractStartDay := Date2DMY(pTenancyContract."BLRContract Start Date", 1);
+        ContractStartInMonth := Date2DMY(pTenancyContract."BLRContract Start Date", 2);
 
         // Only process if contract started on day 2-31 of the previous month
-        if (ContractStartInMonth = pMissedAllocation.Month) and (ContractStartDay >= 2) then begin
+        if (ContractStartInMonth = pMissedAllocation."BLRMonth") and (ContractStartDay >= 2) then begin
 
             // Get termination date for this contract
             FinalCalculation.Reset();
-            FinalCalculation.SetRange("Contract ID", pTenancyContract."Contract ID");
+            FinalCalculation.SetRange("BLRContract ID", pTenancyContract."BLRContract ID");
             if FinalCalculation.FindFirst() then
-                TerminationDate := FinalCalculation."Termination Date"
+                TerminationDate := FinalCalculation."BLRTermination Date"
             else
                 TerminationDate := 0D;
 
             // Check if contract was suspended in the missed month
             IsContractSuspended := IsContractSuspendedInPeriod(
-                pTenancyContract."Contract ID",
-                pMissedAllocation.Month,
-                pMissedAllocation."Financial Year",
+                pTenancyContract."BLRContract ID",
+                pMissedAllocation."BLRMonth",
+                pMissedAllocation."BLRFinancial Year",
                 SuspensionDate
             );
 
             // Calculate number of days for missed allocation
             NoOfDays := CalculatePerfectNoOfDays(
-                pTenancyContract."Contract Start Date",
-                pTenancyContract."Contract End Date",
-                pMissedAllocation.Month,
-                pMissedAllocation."Financial Year",
+                pTenancyContract."BLRContract Start Date",
+                pTenancyContract."BLRContract End Date",
+                pMissedAllocation."BLRMonth",
+                pMissedAllocation."BLRFinancial Year",
                 TerminationDate,
                 IsContractSuspended,
                 SuspensionDate
@@ -413,76 +413,76 @@ page 73209660 "Revenue Recognition Item Sub"
                 // Get next entry number
                 RevenueRecognitionDetails.Reset();
                 if RevenueRecognitionDetails.FindLast() then
-                    NextEntryNo := RevenueRecognitionDetails."Entry No." + 1
+                    NextEntryNo := RevenueRecognitionDetails."BLREntry No." + 1
                 else
                     NextEntryNo := 1;
 
                 // Create new Revenue Recognition Detail record for missed allocation
                 RevenueRecognitionDetails.Init();
-                RevenueRecognitionDetails."Entry No." := NextEntryNo;
-                RevenueRecognitionDetails."RR_No." := Rec."RR_No.";
+                RevenueRecognitionDetails."BLREntry No." := NextEntryNo;
+                RevenueRecognitionDetails."BLRRR_No." := Rec."BLRRR_No.";
 
                 // Copy contract details
-                RevenueRecognitionDetails."Contract Id" := pTenancyContract."Contract ID";
-                RevenueRecognitionDetails."Property Name" := pTenancyContract."Property Name";
-                RevenueRecognitionDetails."Customer Name" := pTenancyContract."Customer Name";
-                RevenueRecognitionDetails."Contract Start Date" := pTenancyContract."Contract Start Date";
-                RevenueRecognitionDetails."Contract End Date" := pTenancyContract."Contract End Date";
-                RevenueRecognitionDetails."Owner Name" := pTenancyContract."Owner's Name";
-                RevenueRecognitionDetails."Contract Tenure" := pTenancyContract."Contract Tenor";
-                RevenueRecognitionDetails."Grace Days" := pTenancyContract."Grace Period";
-                RevenueRecognitionDetails."Grace Start Date" := pTenancyContract."Grace Start Date";
-                RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
-                RevenueRecognitionDetails."Unit Type" := pTenancyContract."Usage Type";
-                RevenueRecognitionDetails."Description" := 'Missed Revenue';
+                RevenueRecognitionDetails."BLRContract Id" := pTenancyContract."BLRContract ID";
+                RevenueRecognitionDetails."BLRProperty Name" := pTenancyContract."BLRProperty Name";
+                RevenueRecognitionDetails."BLRCustomer Name" := pTenancyContract."BLRCustomer Name";
+                RevenueRecognitionDetails."BLRContract Start Date" := pTenancyContract."BLRContract Start Date";
+                RevenueRecognitionDetails."BLRContract End Date" := pTenancyContract."BLRContract End Date";
+                RevenueRecognitionDetails."BLROwner Name" := pTenancyContract."BLROwner's Name";
+                RevenueRecognitionDetails."BLRContract Tenure" := pTenancyContract."BLRContract Tenor";
+                RevenueRecognitionDetails."BLRGrace Days" := pTenancyContract."BLRGrace Period";
+                RevenueRecognitionDetails."BLRGrace Start Date" := pTenancyContract."BLRGrace Start Date";
+                RevenueRecognitionDetails."BLRGrace End Date" := pTenancyContract."BLRGrace End Date";
+                RevenueRecognitionDetails."BLRUnit Type" := pTenancyContract."BLRUsage Type";
+                RevenueRecognitionDetails."BLRDescription" := 'Missed Revenue';
 
                 case
-                    pTenancyContract."Praposal Type Selected" of
-                    pTenancyContract."Praposal Type Selected"::"Single Unit":
-                        RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Unit Name";
-                    pTenancyContract."Praposal Type Selected"::"Merge Unit":
-                        RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Single Unit Name";
+                    pTenancyContract."BLRPraposal Type Selected" of
+                    pTenancyContract."BLRPraposal Type Selected"::"Single Unit":
+                        RevenueRecognitionDetails."BLRSingle Unit Names" := pTenancyContract."BLRUnit Name";
+                    pTenancyContract."BLRPraposal Type Selected"::"Merge Unit":
+                        RevenueRecognitionDetails."BLRSingle Unit Names" := pTenancyContract."BLRSingle Unit Name";
                     else
-                        RevenueRecognitionDetails."Single Unit Names" := '';
+                        RevenueRecognitionDetails."BLRSingle Unit Names" := '';
                 end;
 
                 // Add missed allocation period details
-                RevenueRecognitionDetails."Posting Month" := pMissedAllocation.Month;
-                RevenueRecognitionDetails."Posting Year" := pMissedAllocation."Financial Year";
+                RevenueRecognitionDetails."BLRPosting Month" := pMissedAllocation."BLRMonth";
+                RevenueRecognitionDetails."BLRPosting Year" := pMissedAllocation."BLRFinancial Year";
 
                 // Mark as missed revenue allocation with contract start date info
-                // RevenueRecognitionDetails."Posting Period" :=
-                //     'MISSED: ' + FORMAT(pMissedAllocation.Month) + '/' + FORMAT(pMissedAllocation."Financial Year") +
-                //     ' (Started: ' + FORMAT(pTenancyContract."Contract Start Date") + ')';
+                // RevenueRecognitionDetails."BLRPosting Period" :=
+                //     'MISSED: ' + FORMAT(pMissedAllocation."BLRMonth") + '/' + FORMAT(pMissedAllocation."BLRFinancial Year") +
+                //     ' (Started: ' + FORMAT(pTenancyContract."BLRContract Start Date") + ')';
 
-                RevenueRecognitionDetails."Posting Period" := GetMonthName(pMissedAllocation.Month) + ' ' +
-                                      Format(pMissedAllocation."Financial Year") + ' ' + '-' + ' ' + GetMonthName(pMissedAllocation.Month) + ' ' + Format(pMissedAllocation."Financial Year");
+                RevenueRecognitionDetails."BLRPosting Period" := GetMonthName(pMissedAllocation."BLRMonth") + ' ' +
+                                      Format(pMissedAllocation."BLRFinancial Year") + ' ' + '-' + ' ' + GetMonthName(pMissedAllocation."BLRMonth") + ' ' + Format(pMissedAllocation."BLRFinancial Year");
 
                 // Set termination date and number of days
-                RevenueRecognitionDetails."Termination Date" := TerminationDate;
-                RevenueRecognitionDetails."No Of Days" := NoOfDays;
+                RevenueRecognitionDetails."BLRTermination Date" := TerminationDate;
+                RevenueRecognitionDetails."BLRNo Of Days" := NoOfDays;
 
                 // Get suspension details
-                GetSuspensionDetails(pTenancyContract."Contract ID", RevenueRecognitionDetails);
+                GetSuspensionDetails(pTenancyContract."BLRContract ID", RevenueRecognitionDetails);
 
                 // Set revenue structure details from subpage
-                RevenueRecognitionDetails."Multi Year Start Date" := pRevenueStructureSubpage."Period Start Date";
-                RevenueRecognitionDetails."Multi Year End Date" := pRevenueStructureSubpage."Period End Date";
-                RevenueRecognitionDetails."Annual Amount" := pRevenueStructureSubpage."Final Annual Amount";
-                RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
-                RevenueRecognitionDetails."Item Type" := CopyStr(pItemType, 1, StrLen(pItemType));
-                RevenueRecognitionDetails."Contract Amount" := pRevenueStructureSubpage."Final Annual Amount";
+                RevenueRecognitionDetails."BLRMulti Year Start Date" := pRevenueStructureSubpage."BLRPeriod Start Date";
+                RevenueRecognitionDetails."BLRMulti Year End Date" := pRevenueStructureSubpage."BLRPeriod End Date";
+                RevenueRecognitionDetails."BLRAnnual Amount" := pRevenueStructureSubpage."BLRFinal Annual Amount";
+                RevenueRecognitionDetails."BLRFinal Annual Amount" := RevenueRecognitionDetails."BLRAnnual Amount";
+                RevenueRecognitionDetails."BLRItem Type" := CopyStr(pItemType, 1, StrLen(pItemType));
+                RevenueRecognitionDetails."BLRContract Amount" := pRevenueStructureSubpage."BLRFinal Annual Amount";
 
                 // Calculate amounts
-                Yearlydays := RevenueRecognitionDetails."Multi Year End Date" - RevenueRecognitionDetails."Multi Year Start Date" + 1;
+                Yearlydays := RevenueRecognitionDetails."BLRMulti Year End Date" - RevenueRecognitionDetails."BLRMulti Year Start Date" + 1;
                 if Yearlydays > 0 then
-                    RevenueRecognitionDetails."Per Day Rent" := RevenueRecognitionDetails."Annual Amount" / Yearlydays
+                    RevenueRecognitionDetails."BLRPer Day Rent" := RevenueRecognitionDetails."BLRAnnual Amount" / Yearlydays
                 else
-                    RevenueRecognitionDetails."Per Day Rent" := 0;
+                    RevenueRecognitionDetails."BLRPer Day Rent" := 0;
 
-                RevenueRecognitionDetails."Total Value" := RevenueRecognitionDetails."No Of Days" * RevenueRecognitionDetails."Per Day Rent";
-                RevenueRecognitionDetails."Owner Share" := RevenueRecognitionDetails."Total Value";
-                RevenueRecognitionDetails."Revenue Start Date" := DMY2Date(1, RevenueRecognitionDetails."Posting Month", RevenueRecognitionDetails."Posting Year");
+                RevenueRecognitionDetails."BLRTotal Value" := RevenueRecognitionDetails."BLRNo Of Days" * RevenueRecognitionDetails."BLRPer Day Rent";
+                RevenueRecognitionDetails."BLROwner Share" := RevenueRecognitionDetails."BLRTotal Value";
+                RevenueRecognitionDetails."BLRRevenue Start Date" := DMY2Date(1, RevenueRecognitionDetails."BLRPosting Month", RevenueRecognitionDetails."BLRPosting Year");
 
                 // Insert the missed revenue record
                 RevenueRecognitionDetails.Insert(true);
@@ -574,20 +574,20 @@ page 73209660 "Revenue Recognition Item Sub"
 
 
     // UPDATED: Function to check if contract should be processed
-    local procedure ShouldProcessContract(pTenancyContract: Record "Tenancy Contract"; pAllocationMonth: Integer; pAllocationYear: Integer): Boolean
+    local procedure ShouldProcessContract(pTenancyContract: Record "BLRTenancyContract"; pAllocationMonth: Integer; pAllocationYear: Integer): Boolean
     begin
         // 1. If Active - Always process
-        if pTenancyContract."Tenant Contract Status" = pTenancyContract."Tenant Contract Status"::Active then
+        if pTenancyContract."BLRTenant Contract Status" = pTenancyContract."BLRTenant Contract Status"::Active then
             exit(true);
 
         // 2. If Suspended - Check if suspension date falls in selected month/year
-        if pTenancyContract."Tenant Contract Status" = pTenancyContract."Tenant Contract Status"::Suspended then
-            if HasSuspensionInSelectedPeriod(pTenancyContract."Contract ID", pAllocationMonth, pAllocationYear) then
+        if pTenancyContract."BLRTenant Contract Status" = pTenancyContract."BLRTenant Contract Status"::Suspended then
+            if HasSuspensionInSelectedPeriod(pTenancyContract."BLRContract ID", pAllocationMonth, pAllocationYear) then
                 exit(true);
 
         // 3. If Terminated - Check if termination date falls in selected month/year
-        if pTenancyContract."Tenant Contract Status" = pTenancyContract."Tenant Contract Status"::Terminated then
-            if HasTerminationInSelectedPeriod(pTenancyContract."Contract ID", pAllocationMonth, pAllocationYear) then
+        if pTenancyContract."BLRTenant Contract Status" = pTenancyContract."BLRTenant Contract Status"::Terminated then
+            if HasTerminationInSelectedPeriod(pTenancyContract."BLRContract ID", pAllocationMonth, pAllocationYear) then
                 exit(true);
 
         // Default: Don't process
@@ -597,7 +597,7 @@ page 73209660 "Revenue Recognition Item Sub"
     // NEW: Check if suspension date falls in selected month/year
     local procedure HasSuspensionInSelectedPeriod(pContractID: Integer; pAllocationMonth: Integer; pAllocationYear: Integer): Boolean
     var
-        SuspendedReasonList: Record SuspendReasonTable;
+        SuspendedReasonList: Record "BLRSuspendReasonTable";
         SelectedMonthStart: Date;
         SelectedMonthEnd: Date;
     begin
@@ -607,10 +607,10 @@ page 73209660 "Revenue Recognition Item Sub"
 
         // Check if suspension date falls within selected period
         SuspendedReasonList.Reset();
-        SuspendedReasonList.SetRange("Contract ID", pContractID);
+        SuspendedReasonList.SetRange("BLRContract ID", pContractID);
         if SuspendedReasonList.FindFirst() then
-            if (SuspendedReasonList.DateEffective >= SelectedMonthStart) and
-               (SuspendedReasonList.DateEffective <= SelectedMonthEnd) then
+            if (SuspendedReasonList."BLRDateEffective" >= SelectedMonthStart) and
+               (SuspendedReasonList."BLRDateEffective" <= SelectedMonthEnd) then
                 exit(true);
 
         exit(false);
@@ -619,7 +619,7 @@ page 73209660 "Revenue Recognition Item Sub"
     // NEW: Check if termination date falls in selected month/year
     local procedure HasTerminationInSelectedPeriod(pContractID: Integer; pAllocationMonth: Integer; pAllocationYear: Integer): Boolean
     var
-        FinalCalculation: Record "Final Calculation";
+        FinalCalculation: Record "BLRFinalCalculation";
         SelectedMonthStart: Date;
         SelectedMonthEnd: Date;
     begin
@@ -629,11 +629,11 @@ page 73209660 "Revenue Recognition Item Sub"
 
         // Check if termination date falls within selected period
         FinalCalculation.Reset();
-        FinalCalculation.SetRange("Contract ID", pContractID);
+        FinalCalculation.SetRange("BLRContract ID", pContractID);
         if FinalCalculation.FindFirst() then
-            if (FinalCalculation."Termination Date" <> 0D) and
-               (FinalCalculation."Termination Date" >= SelectedMonthStart) and
-               (FinalCalculation."Termination Date" <= SelectedMonthEnd) then
+            if (FinalCalculation."BLRTermination Date" <> 0D) and
+               (FinalCalculation."BLRTermination Date" >= SelectedMonthStart) and
+               (FinalCalculation."BLRTermination Date" <= SelectedMonthEnd) then
                 exit(true);
 
         exit(false);
@@ -642,19 +642,19 @@ page 73209660 "Revenue Recognition Item Sub"
 
     local procedure GetSelectedItemTypes(var pItemTypes: List of [Text])
     var
-        RevenueRecognitionItem: Record "Revenue Recognition Item";
+        RevenueRecognitionItem: Record "BLRRevenueRecognitionItem";
     begin
         // Set filter to get all selected Item Types
-        RevenueRecognitionItem.SetRange("RR_No.", Rec."RR_No.");
+        RevenueRecognitionItem.SetRange("BLRRR_No.", Rec."BLRRR_No.");
 
         // Find all records for this Revenue Recognition
         if RevenueRecognitionItem.FindSet() then
             repeat
                 // Only add non-empty Item Types
-                if RevenueRecognitionItem."Item Type" <> '' then
+                if RevenueRecognitionItem."BLRItem Type" <> '' then
                     // Check if Item Type is not already in the list
-                    if not pItemTypes.Contains(RevenueRecognitionItem."Item Type") then
-                        pItemTypes.Add(RevenueRecognitionItem."Item Type");
+                    if not pItemTypes.Contains(RevenueRecognitionItem."BLRItem Type") then
+                        pItemTypes.Add(RevenueRecognitionItem."BLRItem Type");
             until RevenueRecognitionItem.Next() = 0;
     end;
 
@@ -781,13 +781,13 @@ page 73209660 "Revenue Recognition Item Sub"
         var pSuspensionEndDate: Date
     ): Boolean
     var
-        SuspendedReasonList: Record SuspendReasonTable;
+        SuspendedReasonList: Record "BLRSuspendReasonTable";
     begin
         SuspendedReasonList.Reset();
-        SuspendedReasonList.SetRange("Contract ID", pContractID);
+        SuspendedReasonList.SetRange("BLRContract ID", pContractID);
         if SuspendedReasonList.FindFirst() then begin
-            pSuspensionStartDate := SuspendedReasonList.DateEffective;
-            pSuspensionEndDate := SuspendedReasonList.SuspensionEndDate;
+            pSuspensionStartDate := SuspendedReasonList."BLRDateEffective";
+            pSuspensionEndDate := SuspendedReasonList."BLRSuspensionEndDate";
 
             // Check if contract was suspended and then became active within the allocation period
             if (pSuspensionStartDate <> 0D) and (pSuspensionEndDate <> 0D) then
@@ -810,7 +810,7 @@ page 73209660 "Revenue Recognition Item Sub"
         var pSuspensionDate: Date
     ): Boolean
     var
-        SuspendedReasonList: Record SuspendReasonTable;
+        SuspendedReasonList: Record "BLRSuspendReasonTable";
         SelectedMonthStart: Date;
         SelectedMonthEnd: Date;
     begin
@@ -820,12 +820,12 @@ page 73209660 "Revenue Recognition Item Sub"
 
         // Check if contract is suspended
         SuspendedReasonList.Reset();
-        SuspendedReasonList.SetRange("Contract ID", pContractID);
+        SuspendedReasonList.SetRange("BLRContract ID", pContractID);
         if SuspendedReasonList.FindFirst() then
             // Check if suspension date falls within selected month/year
-            if (SuspendedReasonList.DateEffective >= SelectedMonthStart) and
-               (SuspendedReasonList.DateEffective <= SelectedMonthEnd) then begin
-                pSuspensionDate := SuspendedReasonList.DateEffective;
+            if (SuspendedReasonList."BLRDateEffective" >= SelectedMonthStart) and
+               (SuspendedReasonList."BLRDateEffective" <= SelectedMonthEnd) then begin
+                pSuspensionDate := SuspendedReasonList."BLRDateEffective";
                 exit(true);
             end;
 
@@ -878,13 +878,13 @@ page 73209660 "Revenue Recognition Item Sub"
 
     // MODIFIED: Update your existing CreateRevenueRecognitionDetailDirect procedure
     local procedure CreateRevenueRecognitionDetailDirect(
-           pTenancyContract: Record "Tenancy Contract";
-           pRevenueStructure: Record "Revenue Structure";
-           pRevenueAllocation: Record "Revenue Allocation Details"; RevenueStartDate: Date
+           pTenancyContract: Record "BLRTenancyContract";
+           pRevenueStructure: Record "BLRRevenueStructure";
+           pRevenueAllocation: Record "BLRRevenueAllocationDetails"; RevenueStartDate: Date
        )
     var
-        revenuestructuredetails: Record "Revenue Structure Subpage";
-        FinalCalculation: Record "Final Calculation";
+        revenuestructuredetails: Record "BLRRevenueStructureSubpage";
+        FinalCalculation: Record "BLRFinalCalculation";
         NoOfDays: Integer;
         RevenueAllocationStartDate: Date;
         RevenueAllocationEndDate: Date;
@@ -897,44 +897,44 @@ page 73209660 "Revenue Recognition Item Sub"
         IsContractSuspended: Boolean;
     begin
         // Calculate month start and end dates
-        RevenueAllocationStartDate := DMY2Date(1, pRevenueAllocation.Month, pRevenueAllocation."Financial Year");
+        RevenueAllocationStartDate := DMY2Date(1, pRevenueAllocation."BLRMonth", pRevenueAllocation."BLRFinancial Year");
         RevenueAllocationEndDate := CalcDate('<CM>', RevenueAllocationStartDate);
 
         // Get termination date for this contract
         FinalCalculation.Reset();
-        FinalCalculation.SetRange("Contract ID", pTenancyContract."Contract ID");
+        FinalCalculation.SetRange("BLRContract ID", pTenancyContract."BLRContract ID");
         if FinalCalculation.FindFirst() then
-            TerminationDate := FinalCalculation."Termination Date"
+            TerminationDate := FinalCalculation."BLRTermination Date"
         else
             TerminationDate := 0D;
 
         // NEW: Check if contract is suspended in selected month/year
         IsContractSuspended := IsContractSuspendedInPeriod(
-            pTenancyContract."Contract ID",
-            pRevenueAllocation.Month,
-            pRevenueAllocation."Financial Year",
+            pTenancyContract."BLRContract ID",
+            pRevenueAllocation."BLRMonth",
+            pRevenueAllocation."BLRFinancial Year",
             SuspensionDate
         );
 
         // Calculate number of days based on suspension status
         if IsContractSuspended then
             NoOfDays := CalculateSuspendedContractDays(
-            pTenancyContract."Contract Start Date",
-            pTenancyContract."Contract End Date",
-            pRevenueAllocation.Month,
-            pRevenueAllocation."Financial Year", SuspensionDate)
+            pTenancyContract."BLRContract Start Date",
+            pTenancyContract."BLRContract End Date",
+            pRevenueAllocation."BLRMonth",
+            pRevenueAllocation."BLRFinancial Year", SuspensionDate)
         else
             // For normal contracts, use existing logic
             NoOfDays := CalculateNoOfDays(
-                pTenancyContract."Contract Start Date",
-                pTenancyContract."Contract End Date",
-                pRevenueAllocation.Month,
-                pRevenueAllocation."Financial Year",
+                pTenancyContract."BLRContract Start Date",
+                pTenancyContract."BLRContract End Date",
+                pRevenueAllocation."BLRMonth",
+                pRevenueAllocation."BLRFinancial Year",
                 TerminationDate);
 
         // Keep existing logic for suspension to active scenario
         if HasSuspensionToActiveScenario(
-            pTenancyContract."Contract ID",
+            pTenancyContract."BLRContract ID",
             RevenueAllocationStartDate,
             RevenueAllocationEndDate,
             SuspensionStartDate,
@@ -985,16 +985,16 @@ page 73209660 "Revenue Recognition Item Sub"
 
     // NEW: Common procedure to create revenue record
     local procedure CreateRevenueRecord(
-        pTenancyContract: Record "Tenancy Contract";
-        pRevenueStructure: Record "Revenue Structure";
-        pRevenueAllocation: Record "Revenue Allocation Details";
-        var revenuestructuredetails: Record "Revenue Structure Subpage";
+        pTenancyContract: Record "BLRTenancyContract";
+        pRevenueStructure: Record "BLRRevenueStructure";
+        pRevenueAllocation: Record "BLRRevenueAllocationDetails";
+        var revenuestructuredetails: Record "BLRRevenueStructureSubpage";
         NoOfDays: Integer;
         RevenueStartDate: Date;
         IsSuspendedPeriodAllocation: Boolean
     )
     var
-        RevenueRecognitionDetails: Record "Revenue Recognition Details";
+        RevenueRecognitionDetails: Record "BLRRevenueRecognitionDetails";
         NextEntryNo: Integer;
         ActualNoOfDays: Integer;
         Yearlydays: Integer;
@@ -1004,61 +1004,61 @@ page 73209660 "Revenue Recognition Item Sub"
         // Get next entry number
         RevenueRecognitionDetails.Reset();
         if RevenueRecognitionDetails.FindLast() then
-            NextEntryNo := RevenueRecognitionDetails."Entry No." + 1
+            NextEntryNo := RevenueRecognitionDetails."BLREntry No." + 1
         else
             NextEntryNo := 1;
 
-        FirstDayOfTargetMonth := DMY2Date(1, pRevenueAllocation.Month, pRevenueAllocation."Financial Year");
+        FirstDayOfTargetMonth := DMY2Date(1, pRevenueAllocation."BLRMonth", pRevenueAllocation."BLRFinancial Year");
         LastDayOfTargetMonth := CALCDATE('<CM>', FirstDayOfTargetMonth) - 1;
 
         // Create new Revenue Recognition Detail record
         RevenueRecognitionDetails.Init();
-        RevenueRecognitionDetails."Entry No." := NextEntryNo;
-        RevenueRecognitionDetails."RR_No." := Rec."RR_No.";
+        RevenueRecognitionDetails."BLREntry No." := NextEntryNo;
+        RevenueRecognitionDetails."BLRRR_No." := Rec."BLRRR_No.";
 
         // Copy contract details
-        RevenueRecognitionDetails."Contract Id" := pTenancyContract."Contract ID";
-        RevenueRecognitionDetails."Property Name" := pTenancyContract."Property Name";
-        RevenueRecognitionDetails."Customer Name" := pTenancyContract."Customer Name";
-        RevenueRecognitionDetails."Contract Start Date" := pTenancyContract."Contract Start Date";
-        RevenueRecognitionDetails."Contract End Date" := pTenancyContract."Contract End Date";
-        RevenueRecognitionDetails."Contract Amount" := pRevenueStructure.Amount;
-        RevenueRecognitionDetails."Owner Name" := pTenancyContract."Owner's Name";
-        RevenueRecognitionDetails."Contract Tenure" := pTenancyContract."Contract Tenor";
-        RevenueRecognitionDetails."Grace Days" := pTenancyContract."Grace Period";
-        RevenueRecognitionDetails."Grace Start Date" := pTenancyContract."Grace Start Date";
-        RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
-        RevenueRecognitionDetails."Unit Type" := pTenancyContract."Usage Type";
-        RevenueRecognitionDetails."Item Type" := pRevenueStructure."Secondary Item Type";
-        RevenueRecognitionDetails."Revenue Start Date" := RevenueStartDate;
-        RevenueRecognitionDetails."Description" := 'Regular';
+        RevenueRecognitionDetails."BLRContract Id" := pTenancyContract."BLRContract ID";
+        RevenueRecognitionDetails."BLRProperty Name" := pTenancyContract."BLRProperty Name";
+        RevenueRecognitionDetails."BLRCustomer Name" := pTenancyContract."BLRCustomer Name";
+        RevenueRecognitionDetails."BLRContract Start Date" := pTenancyContract."BLRContract Start Date";
+        RevenueRecognitionDetails."BLRContract End Date" := pTenancyContract."BLRContract End Date";
+        RevenueRecognitionDetails."BLRContract Amount" := pRevenueStructure."BLRAmount";
+        RevenueRecognitionDetails."BLROwner Name" := pTenancyContract."BLROwner's Name";
+        RevenueRecognitionDetails."BLRContract Tenure" := pTenancyContract."BLRContract Tenor";
+        RevenueRecognitionDetails."BLRGrace Days" := pTenancyContract."BLRGrace Period";
+        RevenueRecognitionDetails."BLRGrace Start Date" := pTenancyContract."BLRGrace Start Date";
+        RevenueRecognitionDetails."BLRGrace End Date" := pTenancyContract."BLRGrace End Date";
+        RevenueRecognitionDetails."BLRUnit Type" := pTenancyContract."BLRUsage Type";
+        RevenueRecognitionDetails."BLRItem Type" := pRevenueStructure."BLRSecondary Item Type";
+        RevenueRecognitionDetails."BLRRevenue Start Date" := RevenueStartDate;
+        RevenueRecognitionDetails."BLRDescription" := 'Regular';
 
         case
-                    pTenancyContract."Praposal Type Selected" of
-            pTenancyContract."Praposal Type Selected"::"Single Unit":
-                RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Unit Name";
-            pTenancyContract."Praposal Type Selected"::"Merge Unit":
-                RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Single Unit Name";
+                    pTenancyContract."BLRPraposal Type Selected" of
+            pTenancyContract."BLRPraposal Type Selected"::"Single Unit":
+                RevenueRecognitionDetails."BLRSingle Unit Names" := pTenancyContract."BLRUnit Name";
+            pTenancyContract."BLRPraposal Type Selected"::"Merge Unit":
+                RevenueRecognitionDetails."BLRSingle Unit Names" := pTenancyContract."BLRSingle Unit Name";
             else
-                RevenueRecognitionDetails."Single Unit Names" := '';
+                RevenueRecognitionDetails."BLRSingle Unit Names" := '';
         end;
 
         // Add allocation period details
-        RevenueRecognitionDetails."Posting Month" := pRevenueAllocation.Month;
-        RevenueRecognitionDetails."Posting Year" := pRevenueAllocation."Financial Year";
+        RevenueRecognitionDetails."BLRPosting Month" := pRevenueAllocation."BLRMonth";
+        RevenueRecognitionDetails."BLRPosting Year" := pRevenueAllocation."BLRFinancial Year";
 
         // NEW: Add Description to differentiate regular vs suspended period allocation
         if IsSuspendedPeriodAllocation then
-            RevenueRecognitionDetails."Posting Period" := Format(RevenueRecognitionDetails."Posting Month") +
-           ' ' + Format(RevenueRecognitionDetails."Posting Year") + ' ' + '-' + ' ' +
-           Format(RevenueRecognitionDetails."Posting Month") + ' ' + Format(RevenueRecognitionDetails."Posting Year")
+            RevenueRecognitionDetails."BLRPosting Period" := Format(RevenueRecognitionDetails."BLRPosting Month") +
+           ' ' + Format(RevenueRecognitionDetails."BLRPosting Year") + ' ' + '-' + ' ' +
+           Format(RevenueRecognitionDetails."BLRPosting Month") + ' ' + Format(RevenueRecognitionDetails."BLRPosting Year")
         else
-            RevenueRecognitionDetails."Posting Period" := Format(RevenueRecognitionDetails."Posting Month") +
-            ' ' + Format(RevenueRecognitionDetails."Posting Year") + ' ' + '-' + ' ' +
-            Format(RevenueRecognitionDetails."Posting Month") + ' ' + Format(RevenueRecognitionDetails."Posting Year");
+            RevenueRecognitionDetails."BLRPosting Period" := Format(RevenueRecognitionDetails."BLRPosting Month") +
+            ' ' + Format(RevenueRecognitionDetails."BLRPosting Year") + ' ' + '-' + ' ' +
+            Format(RevenueRecognitionDetails."BLRPosting Month") + ' ' + Format(RevenueRecognitionDetails."BLRPosting Year");
 
         // Get termination date from Final Calculation by Contract ID match
-        GetTerminationDate(pTenancyContract."Contract ID", RevenueRecognitionDetails);
+        GetTerminationDate(pTenancyContract."BLRContract ID", RevenueRecognitionDetails);
 
         // IMPORTANT: For suspension scenarios, use the passed NoOfDays directly
         // For regular scenarios, recalculate using the standard function
@@ -1068,44 +1068,44 @@ page 73209660 "Revenue Recognition Item Sub"
         else
             // Use the standard calculation for regular allocation
             ActualNoOfDays := CalculateNoOfDays(
-                pTenancyContract."Contract Start Date",
-                pTenancyContract."Contract End Date",
-                pRevenueAllocation.Month,
-                pRevenueAllocation."Financial Year",
-                RevenueRecognitionDetails."Termination Date");
+                pTenancyContract."BLRContract Start Date",
+                pTenancyContract."BLRContract End Date",
+                pRevenueAllocation."BLRMonth",
+                pRevenueAllocation."BLRFinancial Year",
+                RevenueRecognitionDetails."BLRTermination Date");
 
-        RevenueRecognitionDetails."No Of Days" := ActualNoOfDays;
-        GetSuspensionDetails(pTenancyContract."Contract ID", RevenueRecognitionDetails);
+        RevenueRecognitionDetails."BLRNo Of Days" := ActualNoOfDays;
+        GetSuspensionDetails(pTenancyContract."BLRContract ID", RevenueRecognitionDetails);
 
         revenuestructuredetails.Reset();
-        revenuestructuredetails.SetRange("Contract ID", RevenueRecognitionDetails."Contract ID");
-        revenuestructuredetails.SetRange("Secondary Item Type", pRevenueStructure."Secondary Item Type");
+        revenuestructuredetails.SetRange("BLRContract ID", RevenueRecognitionDetails."BLRContract Id");
+        revenuestructuredetails.SetRange("BLRSecondary Item Type", pRevenueStructure."BLRSecondary Item Type");
         if revenuestructuredetails.FindSet() then
             repeat
-                if ((revenuestructuredetails."Period Start Date" >= FirstDayOfTargetMonth) and
-       (revenuestructuredetails."Period Start Date" <= LastDayOfTargetMonth)) OR
-        ((revenuestructuredetails."Period End Date" <= LastDayOfTargetMonth) and
-       (revenuestructuredetails."Period End Date" >= FirstDayOfTargetMonth)) OR
-       ((revenuestructuredetails."Period Start Date" <= FirstDayOfTargetMonth) and
-       (revenuestructuredetails."Period End Date" >= LastDayOfTargetMonth)) then begin
-                    RevenueRecognitionDetails."Multi Year Start Date" := revenuestructuredetails."Period Start Date";
-                    RevenueRecognitionDetails."Multi Year End Date" := revenuestructuredetails."Period End Date";
+                if ((revenuestructuredetails."BLRPeriod Start Date" >= FirstDayOfTargetMonth) and
+       (revenuestructuredetails."BLRPeriod Start Date" <= LastDayOfTargetMonth)) OR
+        ((revenuestructuredetails."BLRPeriod End Date" <= LastDayOfTargetMonth) and
+       (revenuestructuredetails."BLRPeriod End Date" >= FirstDayOfTargetMonth)) OR
+       ((revenuestructuredetails."BLRPeriod Start Date" <= FirstDayOfTargetMonth) and
+       (revenuestructuredetails."BLRPeriod End Date" >= LastDayOfTargetMonth)) then begin
+                    RevenueRecognitionDetails."BLRMulti Year Start Date" := revenuestructuredetails."BLRPeriod Start Date";
+                    RevenueRecognitionDetails."BLRMulti Year End Date" := revenuestructuredetails."BLRPeriod End Date";
 
 
-                    if revenuestructuredetails."VAT %" = 1 then
-                        revenuestructuredetails."VAT %" := 5
+                    if revenuestructuredetails."BLRVAT %" = 1 then
+                        revenuestructuredetails."BLRVAT %" := 5
                     else
-                        revenuestructuredetails."VAT %" := 0;
+                        revenuestructuredetails."BLRVAT %" := 0;
 
-                    RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount";
-                    RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
+                    RevenueRecognitionDetails."BLRAnnual Amount" := revenuestructuredetails."BLRFinal Annual Amount";
+                    RevenueRecognitionDetails."BLRFinal Annual Amount" := RevenueRecognitionDetails."BLRAnnual Amount";
                 end;
             until revenuestructuredetails.Next() = 0;
 
-        Yearlydays := RevenueRecognitionDetails."Multi Year End Date" - RevenueRecognitionDetails."Multi Year Start Date" + 1;
-        RevenueRecognitionDetails."Per Day Rent" := RevenueRecognitionDetails."Annual Amount" / Yearlydays;
-        RevenueRecognitionDetails."Total Value" := RevenueRecognitionDetails."No Of Days" * RevenueRecognitionDetails."Per Day Rent";
-        RevenueRecognitionDetails."Owner Share" := RevenueRecognitionDetails."Total Value";
+        Yearlydays := RevenueRecognitionDetails."BLRMulti Year End Date" - RevenueRecognitionDetails."BLRMulti Year Start Date" + 1;
+        RevenueRecognitionDetails."BLRPer Day Rent" := RevenueRecognitionDetails."BLRAnnual Amount" / Yearlydays;
+        RevenueRecognitionDetails."BLRTotal Value" := RevenueRecognitionDetails."BLRNo Of Days" * RevenueRecognitionDetails."BLRPer Day Rent";
+        RevenueRecognitionDetails."BLROwner Share" := RevenueRecognitionDetails."BLRTotal Value";
 
         // Insert the record
         RevenueRecognitionDetails.Insert(true);
@@ -1113,14 +1113,14 @@ page 73209660 "Revenue Recognition Item Sub"
 
 
     // New procedure to process credit note entries with debugging
-    procedure ProcessCreditNoteEntries(SelectedMonthStart: Date; SelectedMonthEnd: Date; MonthNo: Integer; FinancialYear: Integer; RevenueStartDate: Date; ContractRec: Record "Tenancy Contract")
+    procedure ProcessCreditNoteEntries(SelectedMonthStart: Date; SelectedMonthEnd: Date; MonthNo: Integer; FinancialYear: Integer; RevenueStartDate: Date; ContractRec: Record "BLRTenancyContract")
     var
         SalesCrMemoHeader: Record "Sales Cr.Memo Header";
         SalesCreditMemoLines: Record "Sales Cr.Memo Line";
-        //ContractRec: Record "Tenancy Contract";
-        RevenueRecognitionDetails: Record "Revenue Recognition Details";
-        ExistingRevenueRec: Record "Revenue Recognition Details";
-        SuspensionRec: Record SuspendReasonTable;
+        //ContractRec: Record "BLRTenancyContract";
+        RevenueRecognitionDetails: Record "BLRRevenueRecognitionDetails";
+        ExistingRevenueRec: Record "BLRRevenueRecognitionDetails";
+        SuspensionRec: Record "BLRSuspendReasonTable";
         CalculatedDays: Integer;
         Noofdays: Integer;
         SelectedItemTypes: List of [Text];
@@ -1138,7 +1138,7 @@ page 73209660 "Revenue Recognition Item Sub"
 
             TotalCreditNote := 0;
             SalesCrMemoHeader.Reset();
-            SalesCrMemoHeader.SetRange("Contract ID", ContractRec."Contract ID");
+            SalesCrMemoHeader.SetRange("BLRContract ID", ContractRec."BLRContract ID");
             if SalesCrMemoHeader.FindSet() then
                 repeat
                     SalesCreditMemoLines.Reset();
@@ -1165,29 +1165,29 @@ page 73209660 "Revenue Recognition Item Sub"
                 RevenueRecognitionDetails.Init();
 
                 // Set primary key fields first
-                RevenueRecognitionDetails."RR_No." := Rec."RR_No.";
-                RevenueRecognitionDetails."Contract ID" := ContractRec."Contract ID";
-                RevenueRecognitionDetails."Property Name" := ContractRec."Property Name";
-                RevenueRecognitionDetails."Contract Tenure" := ContractRec."Contract Tenor";
-                RevenueRecognitionDetails."Unit Type" := ContractRec."Usage Type";
-                RevenueRecognitionDetails."Customer Name" := ContractRec."Customer Name";
-                RevenueRecognitionDetails."Contract Start Date" := ContractRec."Contract Start Date";
-                RevenueRecognitionDetails."Contract End Date" := ContractRec."Contract End Date";
-                RevenueRecognitionDetails."Grace Days" := ContractRec."Grace Period";
-                RevenueRecognitionDetails."Grace Start Date" := ContractRec."Grace Start Date";
-                RevenueRecognitionDetails."Grace End Date" := ContractRec."Grace End Date";
-                RevenueRecognitionDetails."Owner Name" := ContractRec."Owner's Name";
-                RevenueRecognitionDetails."Revenue Start Date" := RevenueStartDate;
+                RevenueRecognitionDetails."BLRRR_No." := Rec."BLRRR_No.";
+                RevenueRecognitionDetails."BLRContract Id" := ContractRec."BLRContract ID";
+                RevenueRecognitionDetails."BLRProperty Name" := ContractRec."BLRProperty Name";
+                RevenueRecognitionDetails."BLRContract Tenure" := ContractRec."BLRContract Tenor";
+                RevenueRecognitionDetails."BLRUnit Type" := ContractRec."BLRUsage Type";
+                RevenueRecognitionDetails."BLRCustomer Name" := ContractRec."BLRCustomer Name";
+                RevenueRecognitionDetails."BLRContract Start Date" := ContractRec."BLRContract Start Date";
+                RevenueRecognitionDetails."BLRContract End Date" := ContractRec."BLRContract End Date";
+                RevenueRecognitionDetails."BLRGrace Days" := ContractRec."BLRGrace Period";
+                RevenueRecognitionDetails."BLRGrace Start Date" := ContractRec."BLRGrace Start Date";
+                RevenueRecognitionDetails."BLRGrace End Date" := ContractRec."BLRGrace End Date";
+                RevenueRecognitionDetails."BLROwner Name" := ContractRec."BLROwner's Name";
+                RevenueRecognitionDetails."BLRRevenue Start Date" := RevenueStartDate;
 
-                case ContractRec."Praposal Type Selected" of
-                    ContractRec."Praposal Type Selected"::"Single Unit":
-                        RevenueRecognitionDetails."Single Unit Names" := ContractRec."Unit Name";
+                case ContractRec."BLRPraposal Type Selected" of
+                    ContractRec."BLRPraposal Type Selected"::"Single Unit":
+                        RevenueRecognitionDetails."BLRSingle Unit Names" := ContractRec."BLRUnit Name";
 
-                    ContractRec."Praposal Type Selected"::"Merge Unit":
-                        RevenueRecognitionDetails."Single Unit Names" := ContractRec."Single Unit Name";
+                    ContractRec."BLRPraposal Type Selected"::"Merge Unit":
+                        RevenueRecognitionDetails."BLRSingle Unit Names" := ContractRec."BLRSingle Unit Name";
 
                     else
-                        RevenueRecognitionDetails."Single Unit Names" := '';
+                        RevenueRecognitionDetails."BLRSingle Unit Names" := '';
                 end;
 
                 //   PostingDate := DMY2Date(1, MonthNo, FinancialYear);
@@ -1195,44 +1195,44 @@ page 73209660 "Revenue Recognition Item Sub"
 
                 // Add Termination Date
                 // if TerminationDate = 0D then
-                RevenueRecognitionDetails."Termination Date" := 0D;
+                RevenueRecognitionDetails."BLRTermination Date" := 0D;
                 // else
-                //  RevenueRecognitionDetails."Termination Date" := TerminationDate;
+                //  RevenueRecognitionDetails."BLRTermination Date" := TerminationDate;
 
                 // Add suspension information
                 SuspensionRec.Reset();
-                SuspensionRec.SetRange("Contract ID", ContractRec."Contract ID");
+                SuspensionRec.SetRange("BLRContract ID", ContractRec."BLRContract ID");
                 if SuspensionRec.FindFirst() then begin
-                    RevenueRecognitionDetails."Suspension Start Date" := SuspensionRec.DateEffective;
-                    RevenueRecognitionDetails."Suspension End Date" := SuspensionRec.SuspensionEndDate;
+                    RevenueRecognitionDetails."BLRSuspension Start Date" := SuspensionRec."BLRDateEffective";
+                    RevenueRecognitionDetails."BLRSuspension End Date" := SuspensionRec."BLRSuspensionEndDate";
                 end;
 
                 ExistingRevenueRec.Reset();
-                ExistingRevenueRec.SetRange("Contract ID", RevenueRecognitionDetails."Contract ID");
+                ExistingRevenueRec.SetRange("BLRContract Id", RevenueRecognitionDetails."BLRContract Id");
                 if ExistingRevenueRec.FindFirst() then begin
-                    Noofdays := ExistingRevenueRec."No Of Days";
-                    RevenueRecognitionDetails."Multi Year Start Date" := ExistingRevenueRec."Multi Year Start Date";
-                    RevenueRecognitionDetails."Multi Year End Date" := ExistingRevenueRec."Multi Year End Date";
-                    RevenueRecognitionDetails."Item Type" := ExistingRevenueRec."Item Type";
+                    Noofdays := ExistingRevenueRec."BLRNo Of Days";
+                    RevenueRecognitionDetails."BLRMulti Year Start Date" := ExistingRevenueRec."BLRMulti Year Start Date";
+                    RevenueRecognitionDetails."BLRMulti Year End Date" := ExistingRevenueRec."BLRMulti Year End Date";
+                    RevenueRecognitionDetails."BLRItem Type" := ExistingRevenueRec."BLRItem Type";
                 end;
 
 
-                CalculatedDays := (RevenueRecognitionDetails."Multi Year End Date" - RevenueRecognitionDetails."Multi Year Start Date" + 1);
+                CalculatedDays := (RevenueRecognitionDetails."BLRMulti Year End Date" - RevenueRecognitionDetails."BLRMulti Year Start Date" + 1);
 
-                RevenueRecognitionDetails."No Of Days" := Noofdays;
-                RevenueRecognitionDetails."Posting Month" := MonthNo;
-                RevenueRecognitionDetails."Posting Year" := FinancialYear;
-                RevenueRecognitionDetails."Posting Period" := Format(RevenueRecognitionDetails."Posting Month") +
-      ' ' + Format(RevenueRecognitionDetails."Posting Year") + ' ' + '-' + ' ' +
-      Format(RevenueRecognitionDetails."Posting Month") + ' ' + Format(RevenueRecognitionDetails."Posting Year");
-                RevenueRecognitionDetails."Owner Name" := ContractRec."Owner's Name";
-                RevenueRecognitionDetails."Contract Amount" := -TotalCreditNote;
-                RevenueRecognitionDetails."Annual Amount" := -TotalCreditNote;
-                RevenueRecognitionDetails."Final Annual Amount" := -TotalCreditNote;
-                RevenueRecognitionDetails."Per Day Rent" := Round(RevenueRecognitionDetails."Annual Amount" / CalculatedDays);
-                RevenueRecognitionDetails."Total Value" := RevenueRecognitionDetails."Per Day Rent" * Noofdays;
-                RevenueRecognitionDetails."Owner Share" := RevenueRecognitionDetails."Per Day Rent" * Noofdays;
-                RevenueRecognitionDetails."Description" := 'Credit Note'; // Or whatever indicates this is a credit note entry
+                RevenueRecognitionDetails."BLRNo Of Days" := Noofdays;
+                RevenueRecognitionDetails."BLRPosting Month" := MonthNo;
+                RevenueRecognitionDetails."BLRPosting Year" := FinancialYear;
+                RevenueRecognitionDetails."BLRPosting Period" := Format(RevenueRecognitionDetails."BLRPosting Month") +
+      ' ' + Format(RevenueRecognitionDetails."BLRPosting Year") + ' ' + '-' + ' ' +
+      Format(RevenueRecognitionDetails."BLRPosting Month") + ' ' + Format(RevenueRecognitionDetails."BLRPosting Year");
+                RevenueRecognitionDetails."BLROwner Name" := ContractRec."BLROwner's Name";
+                RevenueRecognitionDetails."BLRContract Amount" := -TotalCreditNote;
+                RevenueRecognitionDetails."BLRAnnual Amount" := -TotalCreditNote;
+                RevenueRecognitionDetails."BLRFinal Annual Amount" := -TotalCreditNote;
+                RevenueRecognitionDetails."BLRPer Day Rent" := Round(RevenueRecognitionDetails."BLRAnnual Amount" / CalculatedDays);
+                RevenueRecognitionDetails."BLRTotal Value" := RevenueRecognitionDetails."BLRPer Day Rent" * Noofdays;
+                RevenueRecognitionDetails."BLROwner Share" := RevenueRecognitionDetails."BLRPer Day Rent" * Noofdays;
+                RevenueRecognitionDetails."BLRDescription" := 'Credit Note'; // Or whatever indicates this is a credit note entry
                 RevenueRecognitionDetails.Insert();
                 Clear(RevenueRecognitionDetails);
             end;
@@ -1241,32 +1241,32 @@ page 73209660 "Revenue Recognition Item Sub"
         end;
     end;
 
-    local procedure GetTerminationDate(ContractID: Integer; var RevenueRecognitionDetails: Record "Revenue Recognition Details")
+    local procedure GetTerminationDate(ContractID: Integer; var RevenueRecognitionDetails: Record "BLRRevenueRecognitionDetails")
     var
-        FinalCalculation: Record "Final Calculation";
+        FinalCalculation: Record "BLRFinalCalculation";
     begin
         FinalCalculation.Reset();
-        FinalCalculation.SetRange("Contract ID", ContractID);
+        FinalCalculation.SetRange("BLRContract ID", ContractID);
         if FinalCalculation.FindFirst() then
-            RevenueRecognitionDetails."Termination Date" := FinalCalculation."Termination Date";
+            RevenueRecognitionDetails."BLRTermination Date" := FinalCalculation."BLRTermination Date";
     end;
 
-    local procedure GetSuspensionDetails(ContractID: Integer; var RevenueRecognitionDetails: Record "Revenue Recognition Details")
+    local procedure GetSuspensionDetails(ContractID: Integer; var RevenueRecognitionDetails: Record "BLRRevenueRecognitionDetails")
     var
-        SuspendedReasonList: Record SuspendReasonTable;
+        SuspendedReasonList: Record "BLRSuspendReasonTable";
     begin
         SuspendedReasonList.Reset();
-        SuspendedReasonList.SetRange("Contract ID", ContractID);
+        SuspendedReasonList.SetRange("BLRContract ID", ContractID);
         if SuspendedReasonList.FindFirst() then begin
-            RevenueRecognitionDetails."Suspension Start Date" := SuspendedReasonList.DateEffective;
-            RevenueRecognitionDetails."Suspension End Date" := SuspendedReasonList.SuspensionEndDate;
+            RevenueRecognitionDetails."BLRSuspension Start Date" := SuspendedReasonList."BLRDateEffective";
+            RevenueRecognitionDetails."BLRSuspension End Date" := SuspendedReasonList."BLRSuspensionEndDate";
         end;
     end;
 
-    procedure FetchContractDetailss(RevenueAllocation: Record "Revenue Allocation Details"; RevenueStartDate: Date)
+    procedure FetchContractDetailss(RevenueAllocation: Record "BLRRevenueAllocationDetails"; RevenueStartDate: Date)
     var
-        TenancyContract: Record "Tenancy Contract";
-        RevenueStructure: Record "Revenue Structure";
+        TenancyContract: Record "BLRTenancyContract";
+        RevenueStructure: Record "BLRRevenueStructure";
         SelectedItemTypes: List of [Text];
         RevenueAllocationStartDate: Date;
         RevenueAllocationEndDate: Date;
@@ -1284,23 +1284,23 @@ page 73209660 "Revenue Recognition Item Sub"
         end;
 
         // Calculate month start and end dates
-        RevenueAllocationStartDate := DMY2Date(1, RevenueAllocation.Month, RevenueAllocation."Financial Year");
+        RevenueAllocationStartDate := DMY2Date(1, RevenueAllocation."BLRMonth", RevenueAllocation."BLRFinancial Year");
         RevenueAllocationEndDate := CalcDate('<CM>', RevenueAllocationStartDate);
 
         // Process active contracts directly from Revenue Structure
         if TenancyContract.FindSet() then
             repeat
                 // NEW: Check if contract should be processed based on status and dates
-                if ShouldProcessContracts(TenancyContract, RevenueAllocation.Month, RevenueAllocation."Financial Year") then
+                if ShouldProcessContracts(TenancyContract, RevenueAllocation."BLRMonth", RevenueAllocation."BLRFinancial Year") then
                     // Check if contract is active during the selected period
-                    if (TenancyContract."Contract Start Date" <= RevenueAllocationEndDate) and
-                       (TenancyContract."Contract End Date" >= RevenueAllocationStartDate) then begin
+                    if (TenancyContract."BLRContract Start Date" <= RevenueAllocationEndDate) and
+                       (TenancyContract."BLRContract End Date" >= RevenueAllocationStartDate) then begin
                         // Get revenue structure details directly for this contract
                         RevenueStructure.Reset();
-                        RevenueStructure.SetRange("Contract ID", TenancyContract."Contract ID");
+                        RevenueStructure.SetRange("BLRContract ID", TenancyContract."BLRContract ID");
 
                         // Filter by selected Item Types
-                        RevenueStructure.SetFilter("Secondary Item Type", GetItemTypeFilters(SelectedItemTypes));
+                        RevenueStructure.SetFilter("BLRSecondary Item Type", GetItemTypeFilters(SelectedItemTypes));
 
                         if RevenueStructure.FindSet() then
                             repeat
@@ -1308,7 +1308,7 @@ page 73209660 "Revenue Recognition Item Sub"
                                 CreateRevenueRecognitionDetailDirects(TenancyContract, RevenueStructure, RevenueAllocation, RevenueStartDate);
 
                             until RevenueStructure.Next() = 0;
-                        ProcessCreditNoteEntriess(RevenueAllocationStartDate, RevenueAllocationEndDate, RevenueAllocation.Month, RevenueAllocation."Financial Year", RevenueStartDate, TenancyContract);
+                        ProcessCreditNoteEntriess(RevenueAllocationStartDate, RevenueAllocationEndDate, RevenueAllocation."BLRMonth", RevenueAllocation."BLRFinancial Year", RevenueStartDate, TenancyContract);
                     end;
             until TenancyContract.Next() = 0;
 
@@ -1321,11 +1321,11 @@ page 73209660 "Revenue Recognition Item Sub"
     end;
 
     // Enhanced procedure to process ALL missed revenue allocations dynamically
-    local procedure ProcessAllMissedRevenueAllocationss(pCurrentAllocation: Record "Revenue Allocation Details")
+    local procedure ProcessAllMissedRevenueAllocationss(pCurrentAllocation: Record "BLRRevenueAllocationDetails")
     var
-        TenancyContract: Record "Tenancy Contract";
-        RevenueStructure: Record "Revenue Structure";
-        RevenueAllocation: Record "Revenue Allocation Details";
+        TenancyContract: Record "BLRTenancyContract";
+        RevenueStructure: Record "BLRRevenueStructure";
+        RevenueAllocation: Record "BLRRevenueAllocationDetails";
         PreviousAllocationMonth: Integer;
         PreviousAllocationYear: Integer;
         PreviousAllocationStartDate: Date;
@@ -1337,8 +1337,8 @@ page 73209660 "Revenue Recognition Item Sub"
         GetSelectedItemTypess(SelectedItemTypes);
 
         // Calculate previous month dynamically
-        PreviousAllocationMonth := pCurrentAllocation.Month - 1;
-        PreviousAllocationYear := pCurrentAllocation."Financial Year";
+        PreviousAllocationMonth := pCurrentAllocation."BLRMonth" - 1;
+        PreviousAllocationYear := pCurrentAllocation."BLRFinancial Year";
 
         // Handle year transition
         if PreviousAllocationMonth = 0 then begin
@@ -1355,35 +1355,35 @@ page 73209660 "Revenue Recognition Item Sub"
 
         // Find ALL contracts that started in previous month (date 2-31)
         TenancyContract.Reset();
-        TenancyContract.SetFilter("Contract Start Date", '%1..%2',
+        TenancyContract.SetFilter("BLRContract Start Date", '%1..%2',
             DMY2Date(2, PreviousAllocationMonth, PreviousAllocationYear),
             PreviousAllocationEndDate);
 
         if TenancyContract.FindSet() then
             repeat
                 // Additional check: Contract should be active during previous month
-                if (TenancyContract."Contract Start Date" <= PreviousAllocationEndDate) and
-                   (TenancyContract."Contract End Date" >= PreviousAllocationStartDate) then
+                if (TenancyContract."BLRContract Start Date" <= PreviousAllocationEndDate) and
+                   (TenancyContract."BLRContract End Date" >= PreviousAllocationStartDate) then
 
                     // Check if this contract was missed in previous allocation
                     if IsMissedRevenueAllocationForContracts(
-                        TenancyContract."Contract ID",
+                        TenancyContract."BLRContract ID",
                         PreviousAllocationMonth,
                         PreviousAllocationYear,
-                        pCurrentAllocation.Month,
-                        pCurrentAllocation."Financial Year"
+                        pCurrentAllocation."BLRMonth",
+                        pCurrentAllocation."BLRFinancial Year"
                     ) then begin
 
                         // Get revenue structure for this contract
                         RevenueStructure.Reset();
-                        RevenueStructure.SetRange("Contract ID", TenancyContract."Contract ID");
-                        RevenueStructure.SetFilter("Secondary Item Type", GetItemTypeFilter(SelectedItemTypes));
+                        RevenueStructure.SetRange("BLRContract ID", TenancyContract."BLRContract ID");
+                        RevenueStructure.SetFilter("BLRSecondary Item Type", GetItemTypeFilter(SelectedItemTypes));
 
                         if RevenueStructure.FindFirst() then begin
                             // Create temporary allocation record for missed month
                             RevenueAllocation := pCurrentAllocation;
-                            RevenueAllocation.Month := PreviousAllocationMonth;
-                            RevenueAllocation."Financial Year" := PreviousAllocationYear;
+                            RevenueAllocation."BLRMonth" := PreviousAllocationMonth;
+                            RevenueAllocation."BLRFinancial Year" := PreviousAllocationYear;
 
                             // Create missed revenue allocation for this contract
                             CreateMissedRevenueAllocationForContracts(
@@ -1411,25 +1411,25 @@ page 73209660 "Revenue Recognition Item Sub"
         currentYear: Integer
     ): Boolean
     var
-        ExistingRevenue: Record "Revenue Recognition Details";
+        ExistingRevenue: Record "BLRRevenueRecognitionDetails";
         RegularAllocationExists: Boolean;
         MissedAllocationExists: Boolean;
     begin
         // Check if regular revenue was already allocated for this contract in this month
         ExistingRevenue.Reset();
-        ExistingRevenue.SetRange("Contract Id", ContractID);
-        ExistingRevenue.SetRange("Posting Month", currentMonth);
-        ExistingRevenue.SetRange("Posting Year", currentYear);
-        ExistingRevenue.SetFilter("Posting Period", '<>%1', 'MISSED*'); // Exclude missed allocations
+        ExistingRevenue.SetRange("BLRContract Id", ContractID);
+        ExistingRevenue.SetRange("BLRPosting Month", currentMonth);
+        ExistingRevenue.SetRange("BLRPosting Year", currentYear);
+        ExistingRevenue.SetFilter("BLRPosting Period", '<>%1', 'MISSED*'); // Exclude missed allocations
 
         RegularAllocationExists := not ExistingRevenue.IsEmpty;
 
         // Check if missed allocation already exists for this contract
         ExistingRevenue.Reset();
-        ExistingRevenue.SetRange("Contract Id", ContractID);
-        ExistingRevenue.SetRange("Posting Month", CheckMonth);
-        ExistingRevenue.SetRange("Posting Year", CheckYear);
-        ExistingRevenue.SetFilter("Posting Period", '%1', 'MISSED*'); // Only missed allocations
+        ExistingRevenue.SetRange("BLRContract Id", ContractID);
+        ExistingRevenue.SetRange("BLRPosting Month", CheckMonth);
+        ExistingRevenue.SetRange("BLRPosting Year", CheckYear);
+        ExistingRevenue.SetFilter("BLRPosting Period", '%1', 'MISSED*'); // Only missed allocations
 
         MissedAllocationExists := not ExistingRevenue.IsEmpty;
 
@@ -1439,11 +1439,11 @@ page 73209660 "Revenue Recognition Item Sub"
 
     // Create missed revenue allocation for a specific contract
     local procedure CreateMissedRevenueAllocationForContracts(
-        pTenancyContract: Record "Tenancy Contract";
-        pMissedAllocation: Record "Revenue Allocation Details"
+        pTenancyContract: Record "BLRTenancyContract";
+        pMissedAllocation: Record "BLRRevenueAllocationDetails"
     )
     var
-        RevenueStructureSubpage: Record "Revenue Structure Subpage";
+        RevenueStructureSubpage: Record "BLRRevenueStructureSubpage";
         SelectedItemTypes: List of [Text];
         ItemType: Text;
     begin
@@ -1454,8 +1454,8 @@ page 73209660 "Revenue Recognition Item Sub"
         foreach ItemType in SelectedItemTypes do begin
             // Get revenue structure subpage for this item type
             RevenueStructureSubpage.Reset();
-            RevenueStructureSubpage.SetRange("Contract ID", pTenancyContract."Contract ID");
-            RevenueStructureSubpage.SetRange("Secondary Item Type", ItemType);
+            RevenueStructureSubpage.SetRange("BLRContract ID", pTenancyContract."BLRContract ID");
+            RevenueStructureSubpage.SetRange("BLRSecondary Item Type", ItemType);
 
             if RevenueStructureSubpage.FindFirst() then
                 // Create missed revenue allocation record
@@ -1469,14 +1469,14 @@ page 73209660 "Revenue Recognition Item Sub"
 
     // Enhanced missed revenue allocation creation with better contract detection
     local procedure CreateSingleMissedRevenueAllocations(
-        pTenancyContract: Record "Tenancy Contract";
-        pRevenueStructureSubpage: Record "Revenue Structure Subpage";
-        pMissedAllocation: Record "Revenue Allocation Details";
+        pTenancyContract: Record "BLRTenancyContract";
+        pRevenueStructureSubpage: Record "BLRRevenueStructureSubpage";
+        pMissedAllocation: Record "BLRRevenueAllocationDetails";
         pItemType: Text
     )
     var
-        RevenueRecognitionDetails: Record "Revenue Recognition Details";
-        FinalCalculation: Record "Final Calculation";
+        RevenueRecognitionDetails: Record "BLRRevenueRecognitionDetails";
+        FinalCalculation: Record "BLRFinalCalculation";
         NextEntryNo: Integer;
         NoOfDays: Integer;
         TerminationDate: Date;
@@ -1488,34 +1488,34 @@ page 73209660 "Revenue Recognition Item Sub"
     begin
 
         // Get contract start day to verify it's in range 2-31
-        ContractStartDay := Date2DMY(pTenancyContract."Contract Start Date", 1);
-        ContractStartInMonth := Date2DMY(pTenancyContract."Contract Start Date", 2);
+        ContractStartDay := Date2DMY(pTenancyContract."BLRContract Start Date", 1);
+        ContractStartInMonth := Date2DMY(pTenancyContract."BLRContract Start Date", 2);
 
         // Only process if contract started on day 2-31 of the previous month
-        if (ContractStartInMonth = pMissedAllocation.Month) and (ContractStartDay >= 2) then begin
+        if (ContractStartInMonth = pMissedAllocation."BLRMonth") and (ContractStartDay >= 2) then begin
 
             // Get termination date for this contract
             FinalCalculation.Reset();
-            FinalCalculation.SetRange("Contract ID", pTenancyContract."Contract ID");
+            FinalCalculation.SetRange("BLRContract ID", pTenancyContract."BLRContract ID");
             if FinalCalculation.FindFirst() then
-                TerminationDate := FinalCalculation."Termination Date"
+                TerminationDate := FinalCalculation."BLRTermination Date"
             else
                 TerminationDate := 0D;
 
             // Check if contract was suspended in the missed month
             IsContractSuspended := IsContractSuspendedInPeriods(
-                pTenancyContract."Contract ID",
-                pMissedAllocation.Month,
-                pMissedAllocation."Financial Year",
+                pTenancyContract."BLRContract ID",
+                pMissedAllocation."BLRMonth",
+                pMissedAllocation."BLRFinancial Year",
                 SuspensionDate
             );
 
             // Calculate number of days for missed allocation
             NoOfDays := CalculatePerfectNoOfDayss(
-                pTenancyContract."Contract Start Date",
-                pTenancyContract."Contract End Date",
-                pMissedAllocation.Month,
-                pMissedAllocation."Financial Year",
+                pTenancyContract."BLRContract Start Date",
+                pTenancyContract."BLRContract End Date",
+                pMissedAllocation."BLRMonth",
+                pMissedAllocation."BLRFinancial Year",
                 TerminationDate,
                 IsContractSuspended,
                 SuspensionDate
@@ -1526,69 +1526,69 @@ page 73209660 "Revenue Recognition Item Sub"
                 // Get next entry number
                 RevenueRecognitionDetails.Reset();
                 if RevenueRecognitionDetails.FindLast() then
-                    NextEntryNo := RevenueRecognitionDetails."Entry No." + 1
+                    NextEntryNo := RevenueRecognitionDetails."BLREntry No." + 1
                 else
                     NextEntryNo := 1;
 
                 // Create new Revenue Recognition Detail record for missed allocation
                 RevenueRecognitionDetails.Init();
-                RevenueRecognitionDetails."Entry No." := NextEntryNo;
-                RevenueRecognitionDetails."RR_No." := Rec."RR_No.";
+                RevenueRecognitionDetails."BLREntry No." := NextEntryNo;
+                RevenueRecognitionDetails."BLRRR_No." := Rec."BLRRR_No.";
 
                 // Copy contract details
-                RevenueRecognitionDetails."Contract Id" := pTenancyContract."Contract ID";
-                RevenueRecognitionDetails."Property Name" := pTenancyContract."Property Name";
-                RevenueRecognitionDetails."Customer Name" := pTenancyContract."Customer Name";
-                RevenueRecognitionDetails."Contract Start Date" := pTenancyContract."Contract Start Date";
-                RevenueRecognitionDetails."Contract End Date" := pTenancyContract."Contract End Date";
-                RevenueRecognitionDetails."Owner Name" := pTenancyContract."Owner's Name";
-                RevenueRecognitionDetails."Contract Tenure" := pTenancyContract."Contract Tenor";
-                RevenueRecognitionDetails."Grace Days" := pTenancyContract."Grace Period";
-                RevenueRecognitionDetails."Grace Start Date" := pTenancyContract."Grace Start Date";
-                RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
-                RevenueRecognitionDetails."Unit Type" := pTenancyContract."Usage Type";
-                RevenueRecognitionDetails."Description" := 'Missed Revenue';
+                RevenueRecognitionDetails."BLRContract Id" := pTenancyContract."BLRContract ID";
+                RevenueRecognitionDetails."BLRProperty Name" := pTenancyContract."BLRProperty Name";
+                RevenueRecognitionDetails."BLRCustomer Name" := pTenancyContract."BLRCustomer Name";
+                RevenueRecognitionDetails."BLRContract Start Date" := pTenancyContract."BLRContract Start Date";
+                RevenueRecognitionDetails."BLRContract End Date" := pTenancyContract."BLRContract End Date";
+                RevenueRecognitionDetails."BLROwner Name" := pTenancyContract."BLROwner's Name";
+                RevenueRecognitionDetails."BLRContract Tenure" := pTenancyContract."BLRContract Tenor";
+                RevenueRecognitionDetails."BLRGrace Days" := pTenancyContract."BLRGrace Period";
+                RevenueRecognitionDetails."BLRGrace Start Date" := pTenancyContract."BLRGrace Start Date";
+                RevenueRecognitionDetails."BLRGrace End Date" := pTenancyContract."BLRGrace End Date";
+                RevenueRecognitionDetails."BLRUnit Type" := pTenancyContract."BLRUsage Type";
+                RevenueRecognitionDetails."BLRDescription" := 'Missed Revenue';
 
                 // Set unit names based on proposal type
                 case
-                    pTenancyContract."Praposal Type Selected" of
-                    pTenancyContract."Praposal Type Selected"::"Single Unit":
-                        RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Unit Name";
-                    pTenancyContract."Praposal Type Selected"::"Merge Unit":
-                        RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Single Unit Name";
+                    pTenancyContract."BLRPraposal Type Selected" of
+                    pTenancyContract."BLRPraposal Type Selected"::"Single Unit":
+                        RevenueRecognitionDetails."BLRSingle Unit Names" := pTenancyContract."BLRUnit Name";
+                    pTenancyContract."BLRPraposal Type Selected"::"Merge Unit":
+                        RevenueRecognitionDetails."BLRSingle Unit Names" := pTenancyContract."BLRSingle Unit Name";
                     else
-                        RevenueRecognitionDetails."Single Unit Names" := '';
+                        RevenueRecognitionDetails."BLRSingle Unit Names" := '';
                 end;
 
                 // Add missed allocation period details
-                RevenueRecognitionDetails."Posting Month" := pMissedAllocation.Month;
-                RevenueRecognitionDetails."Posting Year" := pMissedAllocation."Financial Year";
-                RevenueRecognitionDetails."Posting Period" := GetMonthName(pMissedAllocation.Month) + ' ' +
-                                       Format(pMissedAllocation."Financial Year") + ' ' + '-' + ' ' + GetMonthName(pMissedAllocation.Month) + ' ' + Format(pMissedAllocation."Financial Year");
+                RevenueRecognitionDetails."BLRPosting Month" := pMissedAllocation."BLRMonth";
+                RevenueRecognitionDetails."BLRPosting Year" := pMissedAllocation."BLRFinancial Year";
+                RevenueRecognitionDetails."BLRPosting Period" := GetMonthName(pMissedAllocation."BLRMonth") + ' ' +
+                                       Format(pMissedAllocation."BLRFinancial Year") + ' ' + '-' + ' ' + GetMonthName(pMissedAllocation."BLRMonth") + ' ' + Format(pMissedAllocation."BLRFinancial Year");
 
 
                 // Set termination date and number of days
-                RevenueRecognitionDetails."Termination Date" := TerminationDate;
-                RevenueRecognitionDetails."No Of Days" := NoOfDays;
+                RevenueRecognitionDetails."BLRTermination Date" := TerminationDate;
+                RevenueRecognitionDetails."BLRNo Of Days" := NoOfDays;
 
                 // Get suspension details
-                GetSuspensionDetails(pTenancyContract."Contract ID", RevenueRecognitionDetails);
+                GetSuspensionDetails(pTenancyContract."BLRContract ID", RevenueRecognitionDetails);
 
                 // Set revenue structure details from subpage
-                RevenueRecognitionDetails."Multi Year Start Date" := pRevenueStructureSubpage."Period Start Date";
-                RevenueRecognitionDetails."Multi Year End Date" := pRevenueStructureSubpage."Period End Date";
-                RevenueRecognitionDetails."Annual Amount" := pRevenueStructureSubpage."Final Annual Amount";
-                RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
-                RevenueRecognitionDetails."Item Type" := CopyStr(pItemType, 1, StrLen(pItemType));
-                RevenueRecognitionDetails."Contract Amount" := pRevenueStructureSubpage."Final Annual Amount";
+                RevenueRecognitionDetails."BLRMulti Year Start Date" := pRevenueStructureSubpage."BLRPeriod Start Date";
+                RevenueRecognitionDetails."BLRMulti Year End Date" := pRevenueStructureSubpage."BLRPeriod End Date";
+                RevenueRecognitionDetails."BLRAnnual Amount" := pRevenueStructureSubpage."BLRFinal Annual Amount";
+                RevenueRecognitionDetails."BLRFinal Annual Amount" := RevenueRecognitionDetails."BLRAnnual Amount";
+                RevenueRecognitionDetails."BLRItem Type" := CopyStr(pItemType, 1, StrLen(pItemType));
+                RevenueRecognitionDetails."BLRContract Amount" := pRevenueStructureSubpage."BLRFinal Annual Amount";
 
-                permonthrent := RevenueRecognitionDetails."Final Annual Amount" / 12;
+                permonthrent := RevenueRecognitionDetails."BLRFinal Annual Amount" / 12;
                 // Calculate amounts
-                RevenueRecognitionDetails."Per Month Rent" := Calculatepermonthrents(permonthrent, NoOfDays, pMissedAllocation.Month, pMissedAllocation."Financial Year"); // Use the per day rent passed from the grid
+                RevenueRecognitionDetails."BLRPer Month Rent" := Calculatepermonthrents(permonthrent, NoOfDays, pMissedAllocation."BLRMonth", pMissedAllocation."BLRFinancial Year"); // Use the per day rent passed from the grid
 
-                RevenueRecognitionDetails."Total Value" := RevenueRecognitionDetails."No Of Days" * RevenueRecognitionDetails."Per Day Rent";
-                RevenueRecognitionDetails."Owner Share" := RevenueRecognitionDetails."Total Value";
-                RevenueRecognitionDetails."Revenue Start Date" := DMY2Date(1, RevenueRecognitionDetails."Posting Month", RevenueRecognitionDetails."Posting Year");
+                RevenueRecognitionDetails."BLRTotal Value" := RevenueRecognitionDetails."BLRNo Of Days" * RevenueRecognitionDetails."BLRPer Day Rent";
+                RevenueRecognitionDetails."BLROwner Share" := RevenueRecognitionDetails."BLRTotal Value";
+                RevenueRecognitionDetails."BLRRevenue Start Date" := DMY2Date(1, RevenueRecognitionDetails."BLRPosting Month", RevenueRecognitionDetails."BLRPosting Year");
                 // Insert the missed revenue record
                 RevenueRecognitionDetails.Insert(true);
             end;
@@ -1647,20 +1647,20 @@ page 73209660 "Revenue Recognition Item Sub"
 
 
     // UPDATED: Function to check if contract should be processed
-    local procedure ShouldProcessContracts(pTenancyContract: Record "Tenancy Contract"; pAllocationMonth: Integer; pAllocationYear: Integer): Boolean
+    local procedure ShouldProcessContracts(pTenancyContract: Record "BLRTenancyContract"; pAllocationMonth: Integer; pAllocationYear: Integer): Boolean
     begin
         // 1. If Active - Always process
-        if pTenancyContract."Tenant Contract Status" = pTenancyContract."Tenant Contract Status"::Active then
+        if pTenancyContract."BLRTenant Contract Status" = pTenancyContract."BLRTenant Contract Status"::Active then
             exit(true);
 
         // 2. If Suspended - Check if suspension date falls in selected month/year
-        if pTenancyContract."Tenant Contract Status" = pTenancyContract."Tenant Contract Status"::Suspended then
-            if HasSuspensionInSelectedPeriods(pTenancyContract."Contract ID", pAllocationMonth, pAllocationYear) then
+        if pTenancyContract."BLRTenant Contract Status" = pTenancyContract."BLRTenant Contract Status"::Suspended then
+            if HasSuspensionInSelectedPeriods(pTenancyContract."BLRContract ID", pAllocationMonth, pAllocationYear) then
                 exit(true);
 
         // 3. If Terminated - Check if termination date falls in selected month/year
-        if pTenancyContract."Tenant Contract Status" = pTenancyContract."Tenant Contract Status"::Terminated then
-            if HasTerminationInSelectedPeriods(pTenancyContract."Contract ID", pAllocationMonth, pAllocationYear) then
+        if pTenancyContract."BLRTenant Contract Status" = pTenancyContract."BLRTenant Contract Status"::Terminated then
+            if HasTerminationInSelectedPeriods(pTenancyContract."BLRContract ID", pAllocationMonth, pAllocationYear) then
                 exit(true);
 
         // Default: Don't process
@@ -1670,7 +1670,7 @@ page 73209660 "Revenue Recognition Item Sub"
     // NEW: Check if suspension date falls in selected month/year
     local procedure HasSuspensionInSelectedPeriods(pContractID: Integer; pAllocationMonth: Integer; pAllocationYear: Integer): Boolean
     var
-        SuspendedReasonList: Record SuspendReasonTable;
+        SuspendedReasonList: Record "BLRSuspendReasonTable";
         SelectedMonthStart: Date;
         SelectedMonthEnd: Date;
     begin
@@ -1680,10 +1680,10 @@ page 73209660 "Revenue Recognition Item Sub"
 
         // Check if suspension date falls within selected period
         SuspendedReasonList.Reset();
-        SuspendedReasonList.SetRange("Contract ID", pContractID);
+        SuspendedReasonList.SetRange("BLRContract ID", pContractID);
         if SuspendedReasonList.FindFirst() then
-            if (SuspendedReasonList.DateEffective >= SelectedMonthStart) and
-               (SuspendedReasonList.DateEffective <= SelectedMonthEnd) then
+            if (SuspendedReasonList."BLRDateEffective" >= SelectedMonthStart) and
+               (SuspendedReasonList."BLRDateEffective" <= SelectedMonthEnd) then
                 exit(true);
 
         exit(false);
@@ -1692,7 +1692,7 @@ page 73209660 "Revenue Recognition Item Sub"
     // NEW: Check if termination date falls in selected month/year
     local procedure HasTerminationInSelectedPeriods(pContractID: Integer; pAllocationMonth: Integer; pAllocationYear: Integer): Boolean
     var
-        FinalCalculation: Record "Final Calculation";
+        FinalCalculation: Record "BLRFinalCalculation";
         SelectedMonthStart: Date;
         SelectedMonthEnd: Date;
     begin
@@ -1702,11 +1702,11 @@ page 73209660 "Revenue Recognition Item Sub"
 
         // Check if termination date falls within selected period
         FinalCalculation.Reset();
-        FinalCalculation.SetRange("Contract ID", pContractID);
+        FinalCalculation.SetRange("BLRContract ID", pContractID);
         if FinalCalculation.FindFirst() then
-            if (FinalCalculation."Termination Date" <> 0D) and
-               (FinalCalculation."Termination Date" >= SelectedMonthStart) and
-               (FinalCalculation."Termination Date" <= SelectedMonthEnd) then
+            if (FinalCalculation."BLRTermination Date" <> 0D) and
+               (FinalCalculation."BLRTermination Date" >= SelectedMonthStart) and
+               (FinalCalculation."BLRTermination Date" <= SelectedMonthEnd) then
                 exit(true);
 
         exit(false);
@@ -1714,19 +1714,19 @@ page 73209660 "Revenue Recognition Item Sub"
 
     local procedure GetSelectedItemTypess(var pItemTypes: List of [Text])
     var
-        RevenueRecognitionItem: Record "Revenue Recognition Item";
+        RevenueRecognitionItem: Record "BLRRevenueRecognitionItem";
     begin
         // Set filter to get all selected Item Types
-        RevenueRecognitionItem.SetRange("RR_No.", Rec."RR_No.");
+        RevenueRecognitionItem.SetRange("BLRRR_No.", Rec."BLRRR_No.");
 
         // Find all records for this Revenue Recognition
         if RevenueRecognitionItem.FindSet() then
             repeat
                 // Only add non-empty Item Types
-                if RevenueRecognitionItem."Item Type" <> '' then
+                if RevenueRecognitionItem."BLRItem Type" <> '' then
                     // Check if Item Type is not already in the list
-                    if not pItemTypes.Contains(RevenueRecognitionItem."Item Type") then
-                        pItemTypes.Add(RevenueRecognitionItem."Item Type");
+                    if not pItemTypes.Contains(RevenueRecognitionItem."BLRItem Type") then
+                        pItemTypes.Add(RevenueRecognitionItem."BLRItem Type");
             until RevenueRecognitionItem.Next() = 0;
     end;
 
@@ -1854,13 +1854,13 @@ page 73209660 "Revenue Recognition Item Sub"
         var pSuspensionEndDate: Date
     ): Boolean
     var
-        SuspendedReasonList: Record SuspendReasonTable;
+        SuspendedReasonList: Record "BLRSuspendReasonTable";
     begin
         SuspendedReasonList.Reset();
-        SuspendedReasonList.SetRange("Contract ID", pContractID);
+        SuspendedReasonList.SetRange("BLRContract ID", pContractID);
         if SuspendedReasonList.FindFirst() then begin
-            pSuspensionStartDate := SuspendedReasonList.DateEffective;
-            pSuspensionEndDate := SuspendedReasonList.SuspensionEndDate;
+            pSuspensionStartDate := SuspendedReasonList."BLRDateEffective";
+            pSuspensionEndDate := SuspendedReasonList."BLRSuspensionEndDate";
 
             // Check if contract was suspended and then became active within the allocation period
             if (pSuspensionStartDate <> 0D) and (pSuspensionEndDate <> 0D) then
@@ -1882,7 +1882,7 @@ page 73209660 "Revenue Recognition Item Sub"
         var pSuspensionDate: Date
     ): Boolean
     var
-        SuspendedReasonList: Record SuspendReasonTable;
+        SuspendedReasonList: Record "BLRSuspendReasonTable";
         SelectedMonthStart: Date;
         SelectedMonthEnd: Date;
     begin
@@ -1892,12 +1892,12 @@ page 73209660 "Revenue Recognition Item Sub"
 
         // Check if contract is suspended
         SuspendedReasonList.Reset();
-        SuspendedReasonList.SetRange("Contract ID", pContractID);
+        SuspendedReasonList.SetRange("BLRContract ID", pContractID);
         if SuspendedReasonList.FindFirst() then
             // Check if suspension date falls within selected month/year
-            if (SuspendedReasonList.DateEffective >= SelectedMonthStart) and
-               (SuspendedReasonList.DateEffective <= SelectedMonthEnd) then begin
-                pSuspensionDate := SuspendedReasonList.DateEffective;
+            if (SuspendedReasonList."BLRDateEffective" >= SelectedMonthStart) and
+               (SuspendedReasonList."BLRDateEffective" <= SelectedMonthEnd) then begin
+                pSuspensionDate := SuspendedReasonList."BLRDateEffective";
                 exit(true);
             end;
 
@@ -1948,14 +1948,14 @@ page 73209660 "Revenue Recognition Item Sub"
     end;
 
     local procedure CreateRevenueRecognitionDetailDirects(
-        pTenancyContract: Record "Tenancy Contract";
-        pRevenueStructure: Record "Revenue Structure";
-        pRevenueAllocation: Record "Revenue Allocation Details";
+        pTenancyContract: Record "BLRTenancyContract";
+        pRevenueStructure: Record "BLRRevenueStructure";
+        pRevenueAllocation: Record "BLRRevenueAllocationDetails";
          RevenueStartDate: Date
     )
     var
-        FinalCalculation: Record "Final Calculation";
-        revenuestructuredetails: Record "Revenue Structure Subpage";
+        FinalCalculation: Record "BLRFinalCalculation";
+        revenuestructuredetails: Record "BLRRevenueStructureSubpage";
         PostingDate: Date;
         NoOfDays: Integer;
         RevenueAllocationStartDate: Date;
@@ -1969,25 +1969,25 @@ page 73209660 "Revenue Recognition Item Sub"
         IsContractSuspended: Boolean;
     begin
         // Calculate month start and end dates
-        RevenueAllocationStartDate := DMY2Date(1, pRevenueAllocation.Month, pRevenueAllocation."Financial Year");
+        RevenueAllocationStartDate := DMY2Date(1, pRevenueAllocation."BLRMonth", pRevenueAllocation."BLRFinancial Year");
         RevenueAllocationEndDate := CalcDate('<CM>', RevenueAllocationStartDate);
 
         // Convert Posting Month + Year to Date (assume 1st of that month)
-        PostingDate := DMY2Date(1, pRevenueAllocation.Month, pRevenueAllocation."Financial Year");
+        PostingDate := DMY2Date(1, pRevenueAllocation."BLRMonth", pRevenueAllocation."BLRFinancial Year");
 
         // Get termination date for this contract
         FinalCalculation.Reset();
-        FinalCalculation.SetRange("Contract ID", pTenancyContract."Contract ID");
+        FinalCalculation.SetRange("BLRContract ID", pTenancyContract."BLRContract ID");
         if FinalCalculation.FindFirst() then
-            TerminationDate := FinalCalculation."Termination Date"
+            TerminationDate := FinalCalculation."BLRTermination Date"
         else
             TerminationDate := 0D;
 
         // NEW: Check if contract is suspended in selected month/year
         IsContractSuspended := IsContractSuspendedInPeriods(
-            pTenancyContract."Contract ID",
-            pRevenueAllocation.Month,
-            pRevenueAllocation."Financial Year",
+            pTenancyContract."BLRContract ID",
+            pRevenueAllocation."BLRMonth",
+            pRevenueAllocation."BLRFinancial Year",
             SuspensionDate
         );
 
@@ -1995,24 +1995,24 @@ page 73209660 "Revenue Recognition Item Sub"
         if IsContractSuspended then
             // For suspended contracts, calculate days only till suspension date
             NoOfDays := CalculateSuspendedContractDayss(
-                pTenancyContract."Contract Start Date",
-                pTenancyContract."Contract End Date",
-                pRevenueAllocation.Month,
-                pRevenueAllocation."Financial Year",
+                pTenancyContract."BLRContract Start Date",
+                pTenancyContract."BLRContract End Date",
+                pRevenueAllocation."BLRMonth",
+                pRevenueAllocation."BLRFinancial Year",
                 SuspensionDate)
         else
             // For normal contracts, use existing logic
             NoOfDays := CalculateNoOfDayss(
-                pTenancyContract."Contract Start Date",
-                pTenancyContract."Contract End Date",
-                pRevenueAllocation.Month,
-                pRevenueAllocation."Financial Year",
+                pTenancyContract."BLRContract Start Date",
+                pTenancyContract."BLRContract End Date",
+                pRevenueAllocation."BLRMonth",
+                pRevenueAllocation."BLRFinancial Year",
                 TerminationDate
             );
 
         // Keep existing logic for suspension to active scenario
         if HasSuspensionToActiveScenarios(
-            pTenancyContract."Contract ID",
+            pTenancyContract."BLRContract ID",
             RevenueAllocationStartDate,
             RevenueAllocationEndDate,
             SuspensionStartDate,
@@ -2065,17 +2065,17 @@ page 73209660 "Revenue Recognition Item Sub"
 
     // NEW: Common procedure to create revenue record
     local procedure CreateRevenueRecords(
-        pTenancyContract: Record "Tenancy Contract";
-        pRevenueStructure: Record "Revenue Structure";
-        pRevenueAllocation: Record "Revenue Allocation Details";
-        var revenuestructuredetails: Record "Revenue Structure Subpage";
+        pTenancyContract: Record "BLRTenancyContract";
+        pRevenueStructure: Record "BLRRevenueStructure";
+        pRevenueAllocation: Record "BLRRevenueAllocationDetails";
+        var revenuestructuredetails: Record "BLRRevenueStructureSubpage";
         PostingDate: Date;
         NoOfDays: Integer;
          RevenueStartDate: Date;
         IsSuspendedPeriodAllocation: Boolean
     )
     var
-        RevenueRecognitionDetails: Record "Revenue Recognition Details";
+        RevenueRecognitionDetails: Record "BLRRevenueRecognitionDetails";
         NextEntryNo: Integer;
         ActualNoOfDays: Integer;
         permonthrent: Decimal;
@@ -2085,107 +2085,107 @@ page 73209660 "Revenue Recognition Item Sub"
         // Get next entry number
         RevenueRecognitionDetails.Reset();
         if RevenueRecognitionDetails.FindLast() then
-            NextEntryNo := RevenueRecognitionDetails."Entry No." + 1
+            NextEntryNo := RevenueRecognitionDetails."BLREntry No." + 1
         else
             NextEntryNo := 1;
 
-        PostingDate := DMY2Date(1, pRevenueAllocation.Month, pRevenueAllocation."Financial Year");
+        PostingDate := DMY2Date(1, pRevenueAllocation."BLRMonth", pRevenueAllocation."BLRFinancial Year");
 
-        FirstDayOfTargetMonth := DMY2Date(1, pRevenueAllocation.Month, pRevenueAllocation."Financial Year");
+        FirstDayOfTargetMonth := DMY2Date(1, pRevenueAllocation."BLRMonth", pRevenueAllocation."BLRFinancial Year");
         LastDayOfTargetMonth := CALCDATE('<CM>', FirstDayOfTargetMonth);
 
         RevenueRecognitionDetails.Init();
-        RevenueRecognitionDetails."Entry No." := NextEntryNo;
-        RevenueRecognitionDetails."RR_No." := Rec."RR_No.";
+        RevenueRecognitionDetails."BLREntry No." := NextEntryNo;
+        RevenueRecognitionDetails."BLRRR_No." := Rec."BLRRR_No.";
 
         // Copy contract details
-        RevenueRecognitionDetails."Contract Id" := pTenancyContract."Contract ID";
-        RevenueRecognitionDetails."Property Name" := pTenancyContract."Property Name";
-        RevenueRecognitionDetails."Customer Name" := pTenancyContract."Customer Name";
-        RevenueRecognitionDetails."Contract Start Date" := pTenancyContract."Contract Start Date";
-        RevenueRecognitionDetails."Contract End Date" := pTenancyContract."Contract End Date";
-        RevenueRecognitionDetails."Contract Amount" := pRevenueStructure.Amount;
-        RevenueRecognitionDetails."Owner Name" := pTenancyContract."Owner's Name";
-        RevenueRecognitionDetails."Contract Tenure" := pTenancyContract."Contract Tenor";
-        RevenueRecognitionDetails."Grace Days" := pTenancyContract."Grace Period";
-        RevenueRecognitionDetails."Grace Start Date" := pTenancyContract."Grace Start Date";
-        RevenueRecognitionDetails."Grace End Date" := pTenancyContract."Grace End Date";
-        RevenueRecognitionDetails."Unit Type" := pTenancyContract."Usage Type";
-        RevenueRecognitionDetails."Item Type" := pRevenueStructure."Secondary Item Type";
-        RevenueRecognitionDetails."Description" := 'Regular';
-        RevenueRecognitionDetails."Revenue Start Date" := RevenueStartDate;
+        RevenueRecognitionDetails."BLRContract Id" := pTenancyContract."BLRContract ID";
+        RevenueRecognitionDetails."BLRProperty Name" := pTenancyContract."BLRProperty Name";
+        RevenueRecognitionDetails."BLRCustomer Name" := pTenancyContract."BLRCustomer Name";
+        RevenueRecognitionDetails."BLRContract Start Date" := pTenancyContract."BLRContract Start Date";
+        RevenueRecognitionDetails."BLRContract End Date" := pTenancyContract."BLRContract End Date";
+        RevenueRecognitionDetails."BLRContract Amount" := pRevenueStructure."BLRAmount";
+        RevenueRecognitionDetails."BLROwner Name" := pTenancyContract."BLROwner's Name";
+        RevenueRecognitionDetails."BLRContract Tenure" := pTenancyContract."BLRContract Tenor";
+        RevenueRecognitionDetails."BLRGrace Days" := pTenancyContract."BLRGrace Period";
+        RevenueRecognitionDetails."BLRGrace Start Date" := pTenancyContract."BLRGrace Start Date";
+        RevenueRecognitionDetails."BLRGrace End Date" := pTenancyContract."BLRGrace End Date";
+        RevenueRecognitionDetails."BLRUnit Type" := pTenancyContract."BLRUsage Type";
+        RevenueRecognitionDetails."BLRItem Type" := pRevenueStructure."BLRSecondary Item Type";
+        RevenueRecognitionDetails."BLRDescription" := 'Regular';
+        RevenueRecognitionDetails."BLRRevenue Start Date" := RevenueStartDate;
 
 
         case
-                    pTenancyContract."Praposal Type Selected" of
-            pTenancyContract."Praposal Type Selected"::"Single Unit":
-                RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Unit Name";
-            pTenancyContract."Praposal Type Selected"::"Merge Unit":
-                RevenueRecognitionDetails."Single Unit Names" := pTenancyContract."Single Unit Name";
+                    pTenancyContract."BLRPraposal Type Selected" of
+            pTenancyContract."BLRPraposal Type Selected"::"Single Unit":
+                RevenueRecognitionDetails."BLRSingle Unit Names" := pTenancyContract."BLRUnit Name";
+            pTenancyContract."BLRPraposal Type Selected"::"Merge Unit":
+                RevenueRecognitionDetails."BLRSingle Unit Names" := pTenancyContract."BLRSingle Unit Name";
             else
-                RevenueRecognitionDetails."Single Unit Names" := '';
+                RevenueRecognitionDetails."BLRSingle Unit Names" := '';
         end;
 
         // Add allocation period details
-        RevenueRecognitionDetails."Posting Month" := pRevenueAllocation.Month;
-        RevenueRecognitionDetails."Posting Year" := pRevenueAllocation."Financial Year";
+        RevenueRecognitionDetails."BLRPosting Month" := pRevenueAllocation."BLRMonth";
+        RevenueRecognitionDetails."BLRPosting Year" := pRevenueAllocation."BLRFinancial Year";
 
         // NEW: Add description to differentiate regular vs suspended period allocation
         if IsSuspendedPeriodAllocation then
-            RevenueRecognitionDetails."Posting Period" := Format(RevenueRecognitionDetails."Posting Month") +
-            ' ' + Format(RevenueRecognitionDetails."Posting Year") + ' ' + '-' + ' ' +
-            Format(RevenueRecognitionDetails."Posting Month") + ' ' + Format(RevenueRecognitionDetails."Posting Year")
+            RevenueRecognitionDetails."BLRPosting Period" := Format(RevenueRecognitionDetails."BLRPosting Month") +
+            ' ' + Format(RevenueRecognitionDetails."BLRPosting Year") + ' ' + '-' + ' ' +
+            Format(RevenueRecognitionDetails."BLRPosting Month") + ' ' + Format(RevenueRecognitionDetails."BLRPosting Year")
 
         else
-            RevenueRecognitionDetails."Posting Period" := Format(RevenueRecognitionDetails."Posting Month") +
-           ' ' + Format(RevenueRecognitionDetails."Posting Year") + ' ' + '-' + ' ' +
-           Format(RevenueRecognitionDetails."Posting Month") + ' ' + Format(RevenueRecognitionDetails."Posting Year");
+            RevenueRecognitionDetails."BLRPosting Period" := Format(RevenueRecognitionDetails."BLRPosting Month") +
+           ' ' + Format(RevenueRecognitionDetails."BLRPosting Year") + ' ' + '-' + ' ' +
+           Format(RevenueRecognitionDetails."BLRPosting Month") + ' ' + Format(RevenueRecognitionDetails."BLRPosting Year");
 
         // Get termination date from Final Calculation by Contract ID match
-        GetTerminationDates(pTenancyContract."Contract ID", RevenueRecognitionDetails);
+        GetTerminationDates(pTenancyContract."BLRContract ID", RevenueRecognitionDetails);
 
         if IsSuspendedPeriodAllocation then
             ActualNoOfDays := NoOfDays
         else
             ActualNoOfDays := CalculateNoOfDays(
-                pTenancyContract."Contract Start Date",
-                pTenancyContract."Contract End Date",
-                pRevenueAllocation.Month,
-                pRevenueAllocation."Financial Year",
-                RevenueRecognitionDetails."Termination Date");
+                pTenancyContract."BLRContract Start Date",
+                pTenancyContract."BLRContract End Date",
+                pRevenueAllocation."BLRMonth",
+                pRevenueAllocation."BLRFinancial Year",
+                RevenueRecognitionDetails."BLRTermination Date");
 
-        RevenueRecognitionDetails."No Of Days" := ActualNoOfDays;
+        RevenueRecognitionDetails."BLRNo Of Days" := ActualNoOfDays;
 
-        GetSuspensionDetailss(pTenancyContract."Contract ID", RevenueRecognitionDetails);
+        GetSuspensionDetailss(pTenancyContract."BLRContract ID", RevenueRecognitionDetails);
 
         revenuestructuredetails.Reset();
-        revenuestructuredetails.SetRange("Contract ID", RevenueRecognitionDetails."Contract ID");
-        revenuestructuredetails.SetRange("Secondary Item Type", pRevenueStructure."Secondary Item Type");
+        revenuestructuredetails.SetRange("BLRContract ID", RevenueRecognitionDetails."BLRContract Id");
+        revenuestructuredetails.SetRange("BLRSecondary Item Type", pRevenueStructure."BLRSecondary Item Type");
         if revenuestructuredetails.FindSet() then
             repeat
-                if ((revenuestructuredetails."Period Start Date" >= FirstDayOfTargetMonth) and
-      (revenuestructuredetails."Period Start Date" <= LastDayOfTargetMonth)) OR
-       ((revenuestructuredetails."Period End Date" <= LastDayOfTargetMonth) and
-      (revenuestructuredetails."Period End Date" >= FirstDayOfTargetMonth)) OR
-      ((revenuestructuredetails."Period Start Date" <= FirstDayOfTargetMonth) and
-      (revenuestructuredetails."Period End Date" >= LastDayOfTargetMonth)) then begin
-                    RevenueRecognitionDetails."Multi Year Start Date" := revenuestructuredetails."Period Start Date";
-                    RevenueRecognitionDetails."Multi Year End Date" := revenuestructuredetails."Period End Date";
+                if ((revenuestructuredetails."BLRPeriod Start Date" >= FirstDayOfTargetMonth) and
+      (revenuestructuredetails."BLRPeriod Start Date" <= LastDayOfTargetMonth)) OR
+       ((revenuestructuredetails."BLRPeriod End Date" <= LastDayOfTargetMonth) and
+      (revenuestructuredetails."BLRPeriod End Date" >= FirstDayOfTargetMonth)) OR
+      ((revenuestructuredetails."BLRPeriod Start Date" <= FirstDayOfTargetMonth) and
+      (revenuestructuredetails."BLRPeriod End Date" >= LastDayOfTargetMonth)) then begin
+                    RevenueRecognitionDetails."BLRMulti Year Start Date" := revenuestructuredetails."BLRPeriod Start Date";
+                    RevenueRecognitionDetails."BLRMulti Year End Date" := revenuestructuredetails."BLRPeriod End Date";
 
-                    if revenuestructuredetails."VAT %" = 1 then
-                        revenuestructuredetails."VAT %" := 5
+                    if revenuestructuredetails."BLRVAT %" = 1 then
+                        revenuestructuredetails."BLRVAT %" := 5
                     else
-                        revenuestructuredetails."VAT %" := 0;
+                        revenuestructuredetails."BLRVAT %" := 0;
 
-                    RevenueRecognitionDetails."Annual Amount" := revenuestructuredetails."Final Annual Amount";
-                    RevenueRecognitionDetails."Final Annual Amount" := RevenueRecognitionDetails."Annual Amount";
+                    RevenueRecognitionDetails."BLRAnnual Amount" := revenuestructuredetails."BLRFinal Annual Amount";
+                    RevenueRecognitionDetails."BLRFinal Annual Amount" := RevenueRecognitionDetails."BLRAnnual Amount";
                 end;
             until revenuestructuredetails.Next() = 0;
 
-        permonthrent := RevenueRecognitionDetails."Final Annual Amount" / 12;
-        RevenueRecognitionDetails."Per Month Rent" := calculatepermonthrent(permonthrent, ActualNoOfDays, pRevenueAllocation.Month, pRevenueAllocation."Financial Year"); // Use the per day rent passed from the grid
-        RevenueRecognitionDetails."Total Value" := RevenueRecognitionDetails."No Of Days" * RevenueRecognitionDetails."Per Month Rent";
-        RevenueRecognitionDetails."Owner Share" := RevenueRecognitionDetails."Total Value";
+        permonthrent := RevenueRecognitionDetails."BLRFinal Annual Amount" / 12;
+        RevenueRecognitionDetails."BLRPer Month Rent" := calculatepermonthrent(permonthrent, ActualNoOfDays, pRevenueAllocation."BLRMonth", pRevenueAllocation."BLRFinancial Year"); // Use the per day rent passed from the grid
+        RevenueRecognitionDetails."BLRTotal Value" := RevenueRecognitionDetails."BLRNo Of Days" * RevenueRecognitionDetails."BLRPer Month Rent";
+        RevenueRecognitionDetails."BLROwner Share" := RevenueRecognitionDetails."BLRTotal Value";
         // Insert the record
         RevenueRecognitionDetails.Insert(true);
     end;
@@ -2194,13 +2194,13 @@ page 73209660 "Revenue Recognition Item Sub"
            SelectedMonthEnd: Date;
            MonthNo: Integer;
            FinancialYear: Integer;
-           RevenueStartDate: Date; ContractRec: Record "Tenancy Contract")
+           RevenueStartDate: Date; ContractRec: Record "BLRTenancyContract")
     var
         SalesCrMemoHeader: Record "Sales Cr.Memo Header";
         SalesCreditMemoLines: Record "Sales Cr.Memo Line";
-        RevenueRecognitionDetails: Record "Revenue Recognition Details";
-        ExistingRevenueRec: Record "Revenue Recognition Details";
-        SuspensionRec: Record SuspendReasonTable;
+        RevenueRecognitionDetails: Record "BLRRevenueRecognitionDetails";
+        ExistingRevenueRec: Record "BLRRevenueRecognitionDetails";
+        SuspensionRec: Record "BLRSuspendReasonTable";
         NoOfDays: Integer;
         permonthrent: Decimal;
         SelectedItemTypes: List of [Text];
@@ -2212,7 +2212,7 @@ page 73209660 "Revenue Recognition Item Sub"
 
         TotalCreditNote := 0;
         SalesCrMemoHeader.Reset();
-        SalesCrMemoHeader.SetRange("Contract ID", ContractRec."Contract ID");
+        SalesCrMemoHeader.SetRange("BLRContract ID", ContractRec."BLRContract ID");
         if SalesCrMemoHeader.FindSet() then
             repeat
                 SalesCreditMemoLines.Reset();
@@ -2237,30 +2237,30 @@ page 73209660 "Revenue Recognition Item Sub"
             RevenueRecognitionDetails.Init();
 
             // Set primary key fields first
-            RevenueRecognitionDetails."RR_No." := Rec."RR_No.";
-            RevenueRecognitionDetails."Contract ID" := ContractRec."Contract ID";
-            RevenueRecognitionDetails."Property Name" := ContractRec."Property Name";
-            RevenueRecognitionDetails."Contract Tenure" := ContractRec."Contract Tenor";
-            RevenueRecognitionDetails."Unit Type" := ContractRec."Usage Type";
-            RevenueRecognitionDetails."Customer Name" := ContractRec."Customer Name";
-            RevenueRecognitionDetails."Contract Start Date" := ContractRec."Contract Start Date";
-            RevenueRecognitionDetails."Contract End Date" := ContractRec."Contract End Date";
-            RevenueRecognitionDetails."Grace Days" := ContractRec."Grace Period";
-            RevenueRecognitionDetails."Grace Start Date" := ContractRec."Grace Start Date";
-            RevenueRecognitionDetails."Grace End Date" := ContractRec."Grace End Date";
-            RevenueRecognitionDetails."Owner Name" := ContractRec."Owner's Name";
-            RevenueRecognitionDetails."Revenue Start Date" := RevenueStartDate;
+            RevenueRecognitionDetails."BLRRR_No." := Rec."BLRRR_No.";
+            RevenueRecognitionDetails."BLRContract Id" := ContractRec."BLRContract ID";
+            RevenueRecognitionDetails."BLRProperty Name" := ContractRec."BLRProperty Name";
+            RevenueRecognitionDetails."BLRContract Tenure" := ContractRec."BLRContract Tenor";
+            RevenueRecognitionDetails."BLRUnit Type" := ContractRec."BLRUsage Type";
+            RevenueRecognitionDetails."BLRCustomer Name" := ContractRec."BLRCustomer Name";
+            RevenueRecognitionDetails."BLRContract Start Date" := ContractRec."BLRContract Start Date";
+            RevenueRecognitionDetails."BLRContract End Date" := ContractRec."BLRContract End Date";
+            RevenueRecognitionDetails."BLRGrace Days" := ContractRec."BLRGrace Period";
+            RevenueRecognitionDetails."BLRGrace Start Date" := ContractRec."BLRGrace Start Date";
+            RevenueRecognitionDetails."BLRGrace End Date" := ContractRec."BLRGrace End Date";
+            RevenueRecognitionDetails."BLROwner Name" := ContractRec."BLROwner's Name";
+            RevenueRecognitionDetails."BLRRevenue Start Date" := RevenueStartDate;
 
             // Set unit names based on Proposal Type
-            case ContractRec."Praposal Type Selected" of
-                ContractRec."Praposal Type Selected"::"Single Unit":
-                    RevenueRecognitionDetails."Single Unit Names" := ContractRec."Unit Name";
+            case ContractRec."BLRPraposal Type Selected" of
+                ContractRec."BLRPraposal Type Selected"::"Single Unit":
+                    RevenueRecognitionDetails."BLRSingle Unit Names" := ContractRec."BLRUnit Name";
 
-                ContractRec."Praposal Type Selected"::"Merge Unit":
-                    RevenueRecognitionDetails."Single Unit Names" := ContractRec."Single Unit Name";
+                ContractRec."BLRPraposal Type Selected"::"Merge Unit":
+                    RevenueRecognitionDetails."BLRSingle Unit Names" := ContractRec."BLRSingle Unit Name";
 
                 else
-                    RevenueRecognitionDetails."Single Unit Names" := '';
+                    RevenueRecognitionDetails."BLRSingle Unit Names" := '';
             end;
 
 
@@ -2269,47 +2269,47 @@ page 73209660 "Revenue Recognition Item Sub"
 
             // Add Termination Date
             // if TerminationDate = 0D then
-            RevenueRecognitionDetails."Termination Date" := 0D;
+            RevenueRecognitionDetails."BLRTermination Date" := 0D;
             // else
-            //     RevenueRecognitionDetails."Termination Date" := TerminationDate;
+            //     RevenueRecognitionDetails."BLRTermination Date" := TerminationDate;
 
             // Add suspension information
             SuspensionRec.Reset();
-            SuspensionRec.SetRange("Contract ID", ContractRec."Contract ID");
+            SuspensionRec.SetRange("BLRContract ID", ContractRec."BLRContract ID");
             if SuspensionRec.FindFirst() then begin
-                RevenueRecognitionDetails."Suspension Start Date" := SuspensionRec.DateEffective;
-                RevenueRecognitionDetails."Suspension End Date" := SuspensionRec.SuspensionEndDate;
+                RevenueRecognitionDetails."BLRSuspension Start Date" := SuspensionRec."BLRDateEffective";
+                RevenueRecognitionDetails."BLRSuspension End Date" := SuspensionRec."BLRSuspensionEndDate";
             end;
 
             ExistingRevenueRec.Reset();
-            ExistingRevenueRec.SetRange("Contract ID", RevenueRecognitionDetails."Contract ID");
+            ExistingRevenueRec.SetRange("BLRContract Id", RevenueRecognitionDetails."BLRContract Id");
             if ExistingRevenueRec.FindFirst() then begin
-                Noofdays := ExistingRevenueRec."No Of Days";
-                RevenueRecognitionDetails."Multi Year Start Date" := ExistingRevenueRec."Multi Year Start Date";
-                RevenueRecognitionDetails."Multi Year End Date" := ExistingRevenueRec."Multi Year End Date";
-                RevenueRecognitionDetails."Item Type" := ExistingRevenueRec."Item Type";
+                Noofdays := ExistingRevenueRec."BLRNo Of Days";
+                RevenueRecognitionDetails."BLRMulti Year Start Date" := ExistingRevenueRec."BLRMulti Year Start Date";
+                RevenueRecognitionDetails."BLRMulti Year End Date" := ExistingRevenueRec."BLRMulti Year End Date";
+                RevenueRecognitionDetails."BLRItem Type" := ExistingRevenueRec."BLRItem Type";
             end;
 
 
-            //   CalculatedDays := (RevenueRecognitionDetails."Multi Year End Date" - RevenueRecognitionDetails."Multi Year Start Date" + 1);
+            //   CalculatedDays := (RevenueRecognitionDetails."BLRMulti Year End Date" - RevenueRecognitionDetails."BLRMulti Year Start Date" + 1);
 
-            RevenueRecognitionDetails."No Of Days" := NoOfDays;
-            RevenueRecognitionDetails."Posting Month" := MonthNo;
-            RevenueRecognitionDetails."Posting Year" := FinancialYear;
-            RevenueRecognitionDetails."Posting Period" := Format(RevenueRecognitionDetails."Posting Month") +
-  ' ' + Format(RevenueRecognitionDetails."Posting Year") + ' ' + '-' + ' ' +
-  Format(RevenueRecognitionDetails."Posting Month") + ' ' + Format(RevenueRecognitionDetails."Posting Year");
-            RevenueRecognitionDetails."Owner Name" := ContractRec."Owner's Name";
+            RevenueRecognitionDetails."BLRNo Of Days" := NoOfDays;
+            RevenueRecognitionDetails."BLRPosting Month" := MonthNo;
+            RevenueRecognitionDetails."BLRPosting Year" := FinancialYear;
+            RevenueRecognitionDetails."BLRPosting Period" := Format(RevenueRecognitionDetails."BLRPosting Month") +
+  ' ' + Format(RevenueRecognitionDetails."BLRPosting Year") + ' ' + '-' + ' ' +
+  Format(RevenueRecognitionDetails."BLRPosting Month") + ' ' + Format(RevenueRecognitionDetails."BLRPosting Year");
+            RevenueRecognitionDetails."BLROwner Name" := ContractRec."BLROwner's Name";
 
-            RevenueRecognitionDetails."Contract Amount" := -TotalCreditNote;
-            RevenueRecognitionDetails."Annual Amount" := -TotalCreditNote;
-            RevenueRecognitionDetails."Final Annual Amount" := -TotalCreditNote;
+            RevenueRecognitionDetails."BLRContract Amount" := -TotalCreditNote;
+            RevenueRecognitionDetails."BLRAnnual Amount" := -TotalCreditNote;
+            RevenueRecognitionDetails."BLRFinal Annual Amount" := -TotalCreditNote;
 
-            permonthrent := RevenueRecognitionDetails."Annual Amount" / 12;
-            RevenueRecognitionDetails."Per Month Rent" := Calculatepermonthrentss(permonthrent, Noofdays, MonthNo, FinancialYear);
-            RevenueRecognitionDetails."Total Value" := RevenueRecognitionDetails."Per Month Rent";
-            RevenueRecognitionDetails."Owner Share" := RevenueRecognitionDetails."Per Month Rent";
-            RevenueRecognitionDetails."Description" := 'Credit Note'; // Or whatever indicates this is a credit note entry
+            permonthrent := RevenueRecognitionDetails."BLRAnnual Amount" / 12;
+            RevenueRecognitionDetails."BLRPer Month Rent" := Calculatepermonthrentss(permonthrent, Noofdays, MonthNo, FinancialYear);
+            RevenueRecognitionDetails."BLRTotal Value" := RevenueRecognitionDetails."BLRPer Month Rent";
+            RevenueRecognitionDetails."BLROwner Share" := RevenueRecognitionDetails."BLRPer Month Rent";
+            RevenueRecognitionDetails."BLRDescription" := 'Credit Note'; // Or whatever indicates this is a credit note entry
             RevenueRecognitionDetails.Insert();
             Clear(RevenueRecognitionDetails);
         end;
@@ -2321,32 +2321,32 @@ page 73209660 "Revenue Recognition Item Sub"
 
 
     // Get termination date from Final Calculation table
-    local procedure GetTerminationDates(ContractID: Integer; var RevenueRecognitionDetails: Record "Revenue Recognition Details")
+    local procedure GetTerminationDates(ContractID: Integer; var RevenueRecognitionDetails: Record "BLRRevenueRecognitionDetails")
     var
-        FinalCalculation: Record "Final Calculation";
+        FinalCalculation: Record "BLRFinalCalculation";
     begin
         FinalCalculation.Reset();
-        FinalCalculation.SetRange("Contract ID", ContractID);
+        FinalCalculation.SetRange("BLRContract ID", ContractID);
         if FinalCalculation.FindFirst() then
-            RevenueRecognitionDetails."Termination Date" := FinalCalculation."Termination Date";
+            RevenueRecognitionDetails."BLRTermination Date" := FinalCalculation."BLRTermination Date";
     end;
 
     // Get suspension details from Suspended Reason table
-    local procedure GetSuspensionDetailss(ContractID: Integer; var RevenueRecognitionDetails: Record "Revenue Recognition Details")
+    local procedure GetSuspensionDetailss(ContractID: Integer; var RevenueRecognitionDetails: Record "BLRRevenueRecognitionDetails")
     var
-        SuspendedReasonList: Record SuspendReasonTable;
+        SuspendedReasonList: Record "BLRSuspendReasonTable";
     begin
         SuspendedReasonList.Reset();
-        SuspendedReasonList.SetRange("Contract ID", ContractID);
+        SuspendedReasonList.SetRange("BLRContract ID", ContractID);
         if SuspendedReasonList.FindFirst() then begin
-            RevenueRecognitionDetails."Suspension Start Date" := SuspendedReasonList.DateEffective;
-            RevenueRecognitionDetails."Suspension End Date" := SuspendedReasonList.SuspensionEndDate;
+            RevenueRecognitionDetails."BLRSuspension Start Date" := SuspendedReasonList."BLRDateEffective";
+            RevenueRecognitionDetails."BLRSuspension End Date" := SuspendedReasonList."BLRSuspensionEndDate";
         end;
     end;
 
     procedure Calculatepermonthrent(permonthrent: Decimal; ActualNoOfDays: Integer; MonthNo: Integer; FinancialYear: Integer): Decimal
     var
-        revenuerecognition: Record "Revenue Recognition";
+        revenuerecognition: Record "BLRRevenueRecognition";
         MonthlyRate: Decimal;
     begin
 
@@ -2359,7 +2359,7 @@ page 73209660 "Revenue Recognition Item Sub"
 
     procedure Calculatepermonthrents(permonthrent: Decimal; NoOfDays: Integer; MonthNo: Integer; FinancialYear: Integer): Decimal
     var
-        revenuerecognition: Record "Revenue Recognition";
+        revenuerecognition: Record "BLRRevenueRecognition";
         MonthlyRate: Decimal;
     begin
 
@@ -2372,7 +2372,7 @@ page 73209660 "Revenue Recognition Item Sub"
 
     procedure Calculatepermonthrentss(permonthrent: Decimal; NoOfDays: Integer; MonthNo: Integer; FinancialYear: Integer): Decimal
     var
-        revenuerecognition: Record "Revenue Recognition";
+        revenuerecognition: Record "BLRRevenueRecognition";
         MonthlyRate: Decimal;
     begin
 
@@ -2385,14 +2385,14 @@ page 73209660 "Revenue Recognition Item Sub"
 
     procedure UpdateCanPost()
     var
-        RevenueAllocation: Record "Revenue Allocation Details";
+        RevenueAllocation: Record "BLRRevenueAllocationDetails";
     begin
         Clear(CanPost);
 
         // Link Revenue Allocation with your current record
-        RevenueAllocation.SetRange("No.", Rec."RR_No.");  // adjust if different link field
+        RevenueAllocation.SetRange("BLRNo.", Rec."BLRRR_No.");  // adjust if different link field
         if RevenueAllocation.FindFirst() then
-            CanPost := (RevenueAllocation.Status = RevenueAllocation.Status::Pending)
+            CanPost := (RevenueAllocation."BLRStatus" = RevenueAllocation."BLRStatus"::Pending)
         else
             CanPost := false; // No record found = cannot post
     end;
@@ -2413,7 +2413,7 @@ page 73209660 "Revenue Recognition Item Sub"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        Rec."RR_No." := RRID;
+        Rec."BLRRR_No." := RRID;
         exit(true);
     end;
 }

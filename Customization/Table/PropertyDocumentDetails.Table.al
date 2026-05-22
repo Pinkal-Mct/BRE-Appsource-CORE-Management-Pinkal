@@ -1,40 +1,40 @@
-table 73209660 "Property Document Details"
+table 73209660 "BLRPropertyDocumentDetails"
 {
     DataClassification = CustomerContent;
 
     fields
     {
-        field(73209575; "PropertyID"; code[20])
+        field(73209575; "BLRPropertyID"; code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'PropertyID';
         }
-        field(73209576; "Document Type"; Enum "Property Document Type Enum")
+        field(73209576; "BLRDocument Type"; Enum "Property Document Type Enum")
         {
             DataClassification = CustomerContent;
             Caption = 'Document Type';
         }
 
-        field(73209577; "Document Name"; Text[50])
+        field(73209577; "BLRDocument Name"; Text[50])
         {
             DataClassification = CustomerContent;
             Caption = 'Document Name';
         }
 
-        field(73209578; "Upload Document"; Text[250])
+        field(73209578; "BLRUpload Document"; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'Upload Document';
         }
 
-        field(73209579; "Entry No."; Integer)
+        field(73209579; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
             Caption = 'Entry No';
         }
 
-        field(73209580; "View & Download"; Text[220])
+        field(73209580; "BLRView & Download"; Text[220])
         {
             DataClassification = CustomerContent;
 
@@ -42,14 +42,14 @@ table 73209660 "Property Document Details"
 
         }
 
-        field(73209581; "Download"; Text[20])
+        field(73209581; "BLRDownload"; Text[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Download';
             InitValue = 'Download';
         }
 
-        field(73209582; "View Document URL"; Text[250])
+        field(73209582; "BLRView Document URL"; Text[250])
         {
             DataClassification = CustomerContent;
             Caption = 'View Document URL';
@@ -59,7 +59,7 @@ table 73209660 "Property Document Details"
 
     keys
     {
-        key(Key1; "Entry No.", "PropertyID")
+        key(Key1;"BLREntry No.", "BLRPropertyID")
         {
             Clustered = true;
         }

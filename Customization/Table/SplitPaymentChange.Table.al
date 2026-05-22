@@ -1,61 +1,61 @@
-table 73209689 "Split Payment Change"
+table 73209689 "BLRSplitPaymentChange"
 {
     DataClassification = CustomerContent;
     fields
     {
 
-        field(73209575; "Contract ID"; Integer)
+        field(73209575; "BLRContract ID"; Integer)
         {
             DataClassification = CustomerContent;
             Caption = 'Contract ID';
 
         }
-        field(73209576; "Split Payment Series"; Text[100])
+        field(73209576; "BLRSplit Payment Series"; Text[100])
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209577; "Secondary Item Type"; Text[100])
+        field(73209577; "BLRSecondary Item Type"; Text[100])
         {
             DataClassification = CustomerContent;
         }
-        field(73209578; "Split Due Date"; Date)
-        {
-            DataClassification = CustomerContent;
-        }
-
-        field(73209579; "Split Payment Mode"; Text[150])
-        {
-            DataClassification = CustomerContent;
-            TableRelation = "Payment Type"."Payment Method";
-        }
-
-        field(73209580; "Split Amount"; Decimal)
+        field(73209578; "BLRSplit Due Date"; Date)
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209581; "Split VAT Amount"; Decimal)
+        field(73209579; "BLRSplit Payment Mode"; Text[150])
+        {
+            DataClassification = CustomerContent;
+            TableRelation = "BLRPaymentType"."BLRPayment Method";
+        }
+
+        field(73209580; "BLRSplit Amount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209582; "Split Amount Including VAT"; Decimal)
+        field(73209581; "BLRSplit VAT Amount"; Decimal)
         {
             DataClassification = CustomerContent;
         }
 
-        field(73209583; "Entry No."; Integer)
+        field(73209582; "BLRSplit Amount Including VAT"; Decimal)
+        {
+            DataClassification = CustomerContent;
+        }
+
+        field(73209583; "BLREntry No."; Integer)
         {
             DataClassification = CustomerContent;
             AutoIncrement = true;
         }
-        field(73209584; "Tenant Id"; Code[20])
+        field(73209584; "BLRTenant Id"; Code[20])
         {
             DataClassification = CustomerContent;
             Caption = 'Tenant ID';
         }
-        field(73209585; "Deposit Bank Name"; Text[100])
+        field(73209585; "BLRDeposit Bank Name"; Text[100])
         {
             DataClassification = AccountData;
             TableRelation = "Bank Account";
@@ -64,12 +64,12 @@ table 73209689 "Split Payment Change"
             var
                 BankAccountRec: Record "Bank Account";
             begin
-                if "Deposit Bank Name" <> '' then
-                    if BankAccountRec.Get("Deposit Bank Name") then
-                        "Deposit Bank Name" := BankAccountRec."Name";
+                if "BLRDeposit Bank Name" <> '' then
+                    if BankAccountRec.Get("BLRDeposit Bank Name") then
+                        "BLRDeposit Bank Name" := BankAccountRec."Name";
             end;
         }
-        field(73209586; "Cheque Number"; Text[20])
+        field(73209586; "BLRCheque Number"; Text[20])
         {
             DataClassification = AccountData;
             Caption = 'Cheque Number';
@@ -78,7 +78,7 @@ table 73209689 "Split Payment Change"
 
     keys
     {
-        key(Key1; "Entry No.", "Contract ID")
+        key(Key1;"BLREntry No.", "BLRContract ID")
         {
             Clustered = true;
         }

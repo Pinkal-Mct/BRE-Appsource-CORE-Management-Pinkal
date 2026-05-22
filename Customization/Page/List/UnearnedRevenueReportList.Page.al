@@ -1,7 +1,7 @@
 page 73209664 "Unearned Revenue Report List"
 {
     PageType = List;
-    SourceTable = "Unearned Revenue Report";
+    SourceTable = "BLRUnearnedRevenueReport";
     ApplicationArea = All;
     Caption = 'Unearned Revenue Report List';
     UsageCategory = Lists;
@@ -14,19 +14,19 @@ page 73209664 "Unearned Revenue Report List"
         {
             repeater(Group)
             {
-                field("No."; Rec."No.")
+                field("No."; Rec."BLRNo.")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'Unique identifier for the unearned revenue report.';
                 }
-                field("Starting Date Year"; Rec."Starting Date Year")
+                field("Starting Date Year"; Rec."BLRStarting Date Year")
                 {
                     ApplicationArea = All;
                     Caption = 'Starting Date Year';
                     ToolTip = 'The starting date of the year for the unearned revenue report.';
                 }
-                field("Ending Date Year"; Rec."Ending Date Year")
+                field("Ending Date Year"; Rec."BLREnding Date Year")
                 {
                     ApplicationArea = All;
                     Caption = 'Ending Date Year';

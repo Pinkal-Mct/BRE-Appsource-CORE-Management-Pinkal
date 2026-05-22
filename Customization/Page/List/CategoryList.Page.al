@@ -1,7 +1,7 @@
 page 73209642 "Category List"
 {
     PageType = List;
-    SourceTable = "Category Type";
+    SourceTable = "BLRCategoryType";
     ApplicationArea = All;
     Caption = 'Category List';
     UsageCategory = Lists;
@@ -13,22 +13,22 @@ page 73209642 "Category List"
         {
             repeater(Group)
             {
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Caption = 'ID';
                     ToolTip = 'Specifies the unique identifier for the category type.';
                 }
-                field("Primary Item Type"; Rec."Primary Item Type")
+                field("Primary Item Type"; Rec."BLRPrimary Item Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Item';
-                    TableRelation = "Primary Item";
+                    TableRelation = "BLRPrimaryItem";
                     // Display the Primary Classification description
                     Lookup = true; // Enable lookup to Primary Classification
                     ToolTip = 'Specifies the primary item type associated with this category.';
                 }
-                field("Category Types"; Rec."Category Types")
+                field("Category Types"; Rec."BLRCategory Types")
                 {
                     ApplicationArea = All;
                     Caption = 'Category Types';

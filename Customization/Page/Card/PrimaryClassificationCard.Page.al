@@ -1,7 +1,7 @@
 page 73209629 "Primary Classification Card"
 {
     PageType = Card;
-    SourceTable = "Primary Classification";
+    SourceTable = "BLRPrimaryClassification";
     ApplicationArea = All;
     Caption = 'Primary Classification Card';
     UsageCategory = None;
@@ -13,13 +13,13 @@ page 73209629 "Primary Classification Card"
             group(Group)
             {
                 Caption = 'Primary Classification Details';
-                field("ID"; Rec."ID")
+                field("ID"; Rec."BLRID")
                 {
                     ApplicationArea = All;
                     Editable = false;
                     ToolTip = 'Specifies the unique identifier for the primary classification.';
                 }
-                field("Classification Name"; Rec."Classification Name")
+                field("Classification Name"; Rec."BLRClassification Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Classification Name';

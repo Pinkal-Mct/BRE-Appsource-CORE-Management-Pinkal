@@ -2,7 +2,7 @@ codeunit 73209578 "Azure AD Blob Storage"
 {
     procedure ValidateDocument(var pUploadResult: Text; pFolderName: Text): Text
     var
-        azureConfig: Record AzureConfiguration;
+        azureConfig: Record "BLRAzureConfiguration";
         inStream: InStream;
         fileName: Text;
         validFormats: List of [Text];
@@ -30,7 +30,7 @@ codeunit 73209578 "Azure AD Blob Storage"
 
     procedure UploadDocumentToBlob(var InStream: InStream; FileName: Text; FolderName: Text): Text
     var
-        ConfigRecord: Record "AzureConfiguration";
+        ConfigRecord: Record "BLRAzureConfiguration";
         TypeHelper: Codeunit "Type Helper";
         AccessToken: Text;
         BlobUrl: Text;
@@ -51,8 +51,8 @@ codeunit 73209578 "Azure AD Blob Storage"
         if not ConfigRecord.FindFirst() then
             Error('Azure configuration is missing. Please set up the configuration.');
 
-        StorageAccount := ConfigRecord."Storage Account Name";
-        ContainerName := ConfigRecord."Default Container";
+        StorageAccount := ConfigRecord."BLRStorage Account Name";
+        ContainerName := ConfigRecord."BLRDefault Container";
 
         if StorageAccount = '' then Error('Storage Account Name is missing in Azure configuration.');
         if ContainerName = '' then Error('Container name cannot be empty.');
@@ -104,7 +104,7 @@ codeunit 73209578 "Azure AD Blob Storage"
 
     local procedure GetAzureADToken(): Text
     var
-        ConfigRecord: Record "AzureConfiguration";
+        ConfigRecord: Record "BLRAzureConfiguration";
         HttpClient: HttpClient;
         RequestContent: HttpContent;
         ResponseMessage: HttpResponseMessage;
@@ -120,12 +120,12 @@ codeunit 73209578 "Azure AD Blob Storage"
         TestAzureADConnectivity();
         if not ConfigRecord.FindFirst() then
             Error('Azure configuration is missing. Please set up the configuration.');
-        TenantID := ConfigRecord."Tenant ID";
+        TenantID := ConfigRecord."BLRTenant ID";
         TokenEndpoint := StrSubstNo(tokenEndpointLbl, TenantID);
         RequestBody :=
             'grant_type=client_credentials' +
-            '&client_id=' + ManualUrlEncode(ConfigRecord."Client ID") +
-            '&client_secret=' + ManualUrlEncode(ConfigRecord."Client Secret") +
+            '&client_id=' + ManualUrlEncode(ConfigRecord."BLRClient ID") +
+            '&client_secret=' + ManualUrlEncode(ConfigRecord."BLRClient Secret") +
             '&scope=' + ManualUrlEncode('https://storage.azure.com/.default');
         RequestContent.WriteFrom(RequestBody);
         RequestContent.GetHeaders(Headers);
