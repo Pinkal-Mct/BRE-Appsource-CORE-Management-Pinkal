@@ -216,7 +216,7 @@ table 73209645 "BLRPaymentMode"
     }
     keys
     {
-        key(PK;"BLRContract ID")
+        key(PK; "BLRContract ID")
         {
             Clustered = true;
         }
@@ -236,7 +236,7 @@ table 73209645 "BLRPaymentMode"
         i: Integer;
         SortedDueDateList: List of [Date];
         TempDate: Date;
-        PaymentStatus: Enum "Payment Status";
+        PaymentStatus: Enum "BLRPayment Status";
     begin
         TotalAmount := 0;
         TotalVAT := 0;

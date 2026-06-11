@@ -1,4 +1,4 @@
-page 73209637 "Unit Document SubPage"
+page 73209637 "BLRUnit Document SubPage"
 {
     PageType = ListPart;
     ApplicationArea = All;
@@ -30,7 +30,7 @@ page 73209637 "Unit Document SubPage"
                     DrillDown = true;
                     trigger OnDrillDown()
                     var
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                         fileName: Text;
                         uploadResult: Text;
                         folderName: Text;

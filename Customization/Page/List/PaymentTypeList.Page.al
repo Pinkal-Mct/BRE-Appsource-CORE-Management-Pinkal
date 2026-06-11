@@ -1,4 +1,4 @@
-page 73209652 "Payment Type List"
+page 73209652 "BLRPayment Type List"
 {
     PageType = List;
     SourceTable = "BLRPaymentType";
@@ -34,7 +34,7 @@ page 73209652 "Payment Type List"
         paymentType: Text[100];
     begin
         Rec.Reset();
-        foreach paymentType in Enum::"Default Payment Type".Names() do begin
+        foreach paymentType in Enum::"BLRDefault Payment Type".Names() do begin
             Rec.SetRange("BLRPayment Method", paymentType);
             if not Rec.FindFirst() then begin
                 Rec.Init();

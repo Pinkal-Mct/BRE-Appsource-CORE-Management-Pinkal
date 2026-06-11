@@ -1,4 +1,4 @@
-tableextension 73209583 "Item Ledger Entry Ext." extends "Item Ledger Entry"
+tableextension 73209583 "BLRItem Ledger Entry Ext." extends "Item Ledger Entry"
 
 {
     fields

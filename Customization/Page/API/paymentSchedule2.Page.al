@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 
-page 73209602 paymentSchedule2
+page 73209602 BLRpaymentSchedule2
 {
     APIGroup = 'tenants';
     APIPublisher = 'realestate';

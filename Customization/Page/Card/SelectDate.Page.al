@@ -1,4 +1,4 @@
-page 73209635 "Select Date"
+page 73209635 "BLRSelect Date"
 {
     PageType = StandardDialog;
     ApplicationArea = All;

@@ -12,7 +12,7 @@ table 73209642 "BLROverDuePaymentmode"
             AutoIncrement = true;
         }
 
-        field(73209576; "BLRStatus"; Enum "Approval Status Enum")
+        field(73209576; "BLRStatus"; Enum "BLRApproval Status Enum")
         {
             DataClassification = CustomerContent;
             Caption = 'Status';
@@ -41,7 +41,7 @@ table 73209642 "BLROverDuePaymentmode"
             Caption = 'Due Date';
         }
 
-        field(73209581; "BLRPayment Status"; Enum "Payment Status")
+        field(73209581; "BLRPayment Status"; Enum "BLRPayment Status")
         {
             Caption = 'Payment Status';
             DataClassification = CustomerContent;
@@ -55,7 +55,7 @@ table 73209642 "BLROverDuePaymentmode"
 
     keys
     {
-        key(PK;"BLRID")
+        key(PK; "BLRID")
         {
             Clustered = false;
         }
@@ -64,7 +64,7 @@ table 73209642 "BLROverDuePaymentmode"
 
     trigger OnInsert()
     var
-        overduepaymentapproval: Codeunit OverduePaymentReq;
+        overduepaymentapproval: Codeunit BLROverduePaymentReq;
     begin
         overduepaymentapproval.SendApprovalrequest(Rec);
     end;

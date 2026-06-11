@@ -1,4 +1,4 @@
-codeunit 73209603 "Revenue Allocation Posting"
+codeunit 73209603 "BLRRevenue Allocation Posting"
 {
     Subtype = Normal;
 

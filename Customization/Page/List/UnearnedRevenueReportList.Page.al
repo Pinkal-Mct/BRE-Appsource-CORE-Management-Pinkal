@@ -1,4 +1,4 @@
-page 73209664 "Unearned Revenue Report List"
+page 73209664 "BLRUnearnedRevenueReportList"
 {
     PageType = List;
     SourceTable = "BLRUnearnedRevenueReport";

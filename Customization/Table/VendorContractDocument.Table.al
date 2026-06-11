@@ -14,7 +14,7 @@ table 73209710 "BLRVendorContractDocument"
             DataClassification = CustomerContent;
             Caption = 'Amount';
         }
-        field(73209577; "BLRPayment Status"; Enum "Payment Status")
+        field(73209577; "BLRPayment Status"; Enum "BLRPayment Status")
         {
             DataClassification = CustomerContent;
             Caption = 'Payment Status';
@@ -73,7 +73,7 @@ table 73209710 "BLRVendorContractDocument"
     }
     keys
     {
-        key(PK;"BLREntry No.", "BLRVendor ID")
+        key(PK; "BLREntry No.", "BLRVendor ID")
         {
             Clustered = true;
         }

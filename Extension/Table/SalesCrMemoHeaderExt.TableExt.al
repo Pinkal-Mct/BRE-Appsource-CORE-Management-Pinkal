@@ -1,4 +1,4 @@
-tableextension 73209585 "Sales Cr. Memo Header Ext" extends "Sales Cr.Memo Header"
+tableextension 73209585 "BLRSales Cr. Memo Header Ext" extends "Sales Cr.Memo Header"
 {
     fields
     {

@@ -1,4 +1,4 @@
-page 73209657 "Revenue Allocation List"
+page 73209657 "BLRRevenue Allocation List"
 {
     PageType = List;
     SourceTable = "BLRRevenueAllocationDetails";

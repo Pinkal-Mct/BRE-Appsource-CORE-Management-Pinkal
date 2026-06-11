@@ -2,7 +2,7 @@ namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
 using Microsoft.Sales.History;
 
-page 73209613 "Terminated credit note"
+page 73209613 "BLRTerminated credit note"
 {
     APIGroup = 'finalcal';
     APIPublisher = 'realestate';

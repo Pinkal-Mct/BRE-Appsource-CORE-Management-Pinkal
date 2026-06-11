@@ -1,4 +1,4 @@
-codeunit 73209605 "SendApprovalToFinanceManager"
+codeunit 73209605 "BLRSendApprovalFinanceManager"
 {
     procedure SendPaymentModeApprovalToFinanceManger(PaymentTransactionId: Code[50]; TenantId: Code[20]; ContractId: Integer; IsUpdate: Boolean)
     var

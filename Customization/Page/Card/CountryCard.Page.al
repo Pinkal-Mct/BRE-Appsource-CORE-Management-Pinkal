@@ -1,4 +1,4 @@
-page 73209623 "Country Card"
+page 73209623 "BLRCountry Card"
 {
     PageType = Card;
     SourceTable = "BLRCountry";

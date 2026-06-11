@@ -1,4 +1,4 @@
-page 73209656 "RevenueAllocationApproval List"
+page 73209656 "BLRRevenueAllocaApprovalList"
 {
     PageType = List;
     SourceTable = "BLRRevenueAllocationApproval";
@@ -81,8 +81,8 @@ page 73209656 "RevenueAllocationApproval List"
                 trigger OnAction()
                 var
                     revenueallocation: Record "BLRRevenueAllocationDetails";
-                    Fetchmonth: Codeunit "Fetch Month";
-                    RevenueAllocationPosting: Codeunit "Revenue Allocation Posting";
+                    Fetchmonth: Codeunit "BLRFetch Month";
+                    RevenueAllocationPosting: Codeunit "BLRRevenue Allocation Posting";
                     Previewcheck: Boolean;
                     GetMonthNo: Integer;
                 begin
@@ -108,9 +108,9 @@ page 73209656 "RevenueAllocationApproval List"
                 trigger OnAction()
                 var
                     revenueallocation: Record "BLRRevenueAllocationDetails";
-                    RevenueAllocationPosting: Codeunit "Revenue Allocation Posting";
-                    approvalRevenuerequest: Codeunit "Approval Revenue Allocation";
-                    Fetchmonth: Codeunit "Fetch Month";
+                    RevenueAllocationPosting: Codeunit "BLRRevenue Allocation Posting";
+                    approvalRevenuerequest: Codeunit "BLRApproval Revenue Allocation";
+                    Fetchmonth: Codeunit "BLRFetch Month";
                     GetMonthNo: Integer;
                     previewcheck: Boolean;
                 begin
@@ -151,7 +151,7 @@ page 73209656 "RevenueAllocationApproval List"
                 trigger OnAction()
                 var
                     revenueallocation: Record "BLRRevenueAllocationDetails";
-                    approvalRevenuerequest: Codeunit "Approval Revenue Allocation";
+                    approvalRevenuerequest: Codeunit "BLRApproval Revenue Allocation";
                 begin
                     if Rec."BLRStatus" = Rec."BLRStatus"::Reject then
                         Error('This entry is already rejected');

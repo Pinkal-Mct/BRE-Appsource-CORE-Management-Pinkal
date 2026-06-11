@@ -1,4 +1,4 @@
-enum 73209593 "Tenant Document Type Enum"
+enum 73209593 "BLRTenant Document Type Enum"
 {
     Extensible = false;
     value(0; " ")

@@ -1,4 +1,4 @@
-page 73209622 "Company Data"
+page 73209622 "BLRCompany Data"
 {
     PageType = Card;
     SourceTable = "BLRCompanyData";
@@ -28,7 +28,7 @@ page 73209622 "Company Data"
 
                     trigger OnDrillDown()
                     var
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                         fileName: Text;
                         uploadResult: Text;
                         folderName: Text;
@@ -94,7 +94,7 @@ page 73209622 "Company Data"
 
             group("WorkflowFrequency")
             {
-                part("Workflow Frequency"; "Workflow Frequency Card")
+                part("Workflow Frequency"; "BLRWorkflow Frequency Card")
                 {
                     SubPageLink = "BLRCompany ID" = FIELD("BLRCompany ID");
                     ApplicationArea = All;

@@ -1,4 +1,4 @@
-tableextension 73209587 "Sales Invoice Header Ext" extends "Sales Invoice Header"
+tableextension 73209587 "BLRSales Invoice Header Ext" extends "Sales Invoice Header"
 {
     fields
     {

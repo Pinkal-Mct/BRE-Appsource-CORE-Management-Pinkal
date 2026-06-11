@@ -1,4 +1,4 @@
-page 73209627 "Owner Profile Card"
+page 73209627 "BLROwner Profile Card"
 {
     PageType = Card;
     SourceTable = "BLROwnerProfile";
@@ -155,7 +155,7 @@ page 73209627 "Owner Profile Card"
             }
 
             // Add the Document Attachment Subpage here
-            part("Document Attachments"; "Owner Document Subpage")
+            part("Document Attachments"; "BLROwner Document Subpage")
             {
                 SubPageLink = "BLROwnerId" = FIELD("BLROwner ID"); // Link to filter attachments for this owner only
                 ApplicationArea = All;

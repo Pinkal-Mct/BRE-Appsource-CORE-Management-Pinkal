@@ -1,4 +1,4 @@
-tableextension 73209577 "Customer Ext" extends Customer
+tableextension 73209577 "BLRCustomer Ext" extends Customer
 {
     fields
     {
@@ -43,7 +43,7 @@ tableextension 73209577 "Customer Ext" extends Customer
             Caption = 'Licensing Authority';
             DataClassification = OrganizationIdentifiableInformation;
         }
-        field(73209583; "BLRCode Area"; Enum "UAE Phone Code Area")
+        field(73209583; "BLRCode Area"; Enum "BLRUAE Phone Code Area")
         {
             DataClassification = CustomerContent;
             Caption = 'Code Area';
@@ -93,7 +93,7 @@ tableextension 73209577 "Customer Ext" extends Customer
                     "BLRApprove" := false;
             end;
         }
-        field(73209591; "BLRCustomer Type"; Enum "Customer Type Enum")
+        field(73209591; "BLRCustomer Type"; Enum "BLRCustomer Type Enum")
         {
             Caption = 'Customer Type';
             DataClassification = CustomerContent;

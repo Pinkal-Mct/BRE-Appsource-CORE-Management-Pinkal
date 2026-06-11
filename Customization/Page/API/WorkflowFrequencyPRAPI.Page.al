@@ -1,4 +1,4 @@
-page 73209616 "Workflow Frequency PR API"
+page 73209616 "BLRWorkflow Frequency PR API"
 {
     PageType = API;
     SourceTable = "BLRWorkflowFrequencyPR";

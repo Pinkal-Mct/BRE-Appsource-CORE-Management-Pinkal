@@ -1,4 +1,4 @@
-page 73209649 "OtherCharges-UnearnedRevenue"
+page 73209649 "BLROtherChargesUnearnedRevenue"
 {
     PageType = ListPart;
     ApplicationArea = All;

@@ -1,4 +1,4 @@
-enum 73209589 "Property Document Type Enum"
+enum 73209589 "BLRProperty Document Type Enum"
 {
     Extensible = false;
     value(0; " ")

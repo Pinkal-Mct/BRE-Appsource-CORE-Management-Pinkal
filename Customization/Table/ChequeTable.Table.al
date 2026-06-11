@@ -24,7 +24,7 @@ table 73209593 "BLRChequeTable"
             DataClassification = AccountData;
             Caption = 'Cheque Amount';
         }
-        field(73209579; "BLRChequeStatus"; Enum "PDC Status Type Enum")
+        field(73209579; "BLRChequeStatus"; Enum "BLRPDC Status Type Enum")
         {
             DataClassification = AccountData;
             Caption = 'Cheque Status';
@@ -33,7 +33,7 @@ table 73209593 "BLRChequeTable"
 
     keys
     {
-        key(PK;"BLRChequeID")
+        key(PK; "BLRChequeID")
         {
             Clustered = true;
         }

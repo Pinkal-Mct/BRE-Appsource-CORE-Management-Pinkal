@@ -1,4 +1,4 @@
-codeunit 73209595 LeaseManagerSendMail
+codeunit 73209595 BLRLeaseManagerSendMail
 {
     trigger OnRun()
     var

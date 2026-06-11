@@ -13,7 +13,7 @@ table 73209713 "BLRVendorProfileTemplate"
         {
             DataClassification = SystemMetadata;
         }
-        field(73209577; "BLRModule"; Enum "Module Enum")
+        field(73209577; "BLRModule"; Enum "BLRModule Enum")
         {
             DataClassification = SystemMetadata;
         }
@@ -26,7 +26,7 @@ table 73209713 "BLRVendorProfileTemplate"
     }
     keys
     {
-        key(PK;"BLRCode")
+        key(PK; "BLRCode")
         {
             Clustered = true;
         }

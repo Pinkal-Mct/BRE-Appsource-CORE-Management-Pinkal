@@ -1,4 +1,4 @@
-page 73209619 "Category Card"
+page 73209619 "BLRCategory Card"
 {
     PageType = Card;
     SourceTable = "BLRCategoryType";

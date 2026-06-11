@@ -35,7 +35,7 @@ table 73209670 "BLRRevenueAllocationApproval"
     }
     keys
     {
-        key(PK;"BLRRA_ID")
+        key(PK; "BLRRA_ID")
         {
             Clustered = false;
         }
@@ -43,7 +43,7 @@ table 73209670 "BLRRevenueAllocationApproval"
 
     trigger OnInsert()
     var
-        approvalRevenuerequest: Codeunit "Approval Revenue Allocation";
+        approvalRevenuerequest: Codeunit "BLRApproval Revenue Allocation";
     begin
         approvalRevenuerequest.SendRevenueApprovalrequest(Rec);
     end;

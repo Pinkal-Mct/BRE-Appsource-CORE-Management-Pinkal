@@ -1,4 +1,4 @@
-codeunit 73209612 SendInvoiceToTenant
+codeunit 73209612 BLRSendInvoiceToTenant
 {
     procedure SendInvoice(pSalesInvHeader: Record "Sales Invoice Header"; FileName: Text[250]; InStream: InStream)
     var

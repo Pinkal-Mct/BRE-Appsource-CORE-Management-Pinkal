@@ -1,4 +1,4 @@
-tableextension 73209591 "VAT Entry Ext." extends "VAT Entry"
+tableextension 73209591 "BLRVAT Entry Ext." extends "VAT Entry"
 {
     fields
     {

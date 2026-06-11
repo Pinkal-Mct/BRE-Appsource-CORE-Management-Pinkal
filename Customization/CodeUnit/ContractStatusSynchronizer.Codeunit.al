@@ -1,4 +1,4 @@
-codeunit 73209586 "Contract Status Synchronizer"
+codeunit 73209586 "BLRContractStatusSynchronizer"
 {
     procedure SyncToTenancyContract(ContractStatusRec: Record "BLRApprovalContractStatus")
     var

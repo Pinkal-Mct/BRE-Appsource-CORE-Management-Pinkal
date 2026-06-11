@@ -1,4 +1,4 @@
-tableextension 73209581 "Item Ext" extends Item
+tableextension 73209581 "BLRItem Ext" extends Item
 {
     Caption = 'Unit';
     DataCaptionFields = "No.";
@@ -192,17 +192,17 @@ tableextension 73209581 "Item Ext" extends Item
             DataClassification = CustomerContent;
             TableRelation = "BLRPrimaryClassification"."BLRClassification Name";
         }
-        field(73209600; "BLRItem Type"; Enum "Module Enum")
+        field(73209600; "BLRItem Type"; Enum "BLRModule Enum")
         {
             Caption = 'Item Type';
             DataClassification = CustomerContent;
         }
-        field(73209601; "BLRItem Template"; Enum "Item Template Enum")
+        field(73209601; "BLRItem Template"; Enum "BLRItem Template Enum")
         {
             Caption = 'Item Template';
             DataClassification = CustomerContent;
         }
-        field(73209602; "BLRItem type template"; Enum "Item Type Template Enum")
+        field(73209602; "BLRItem type template"; Enum "BLRItem Type Template Enum")
         {
             Caption = 'Item type template';
             DataClassification = CustomerContent;

@@ -12,7 +12,7 @@ table 73209703 "BLRTenancyContractSubpage"
         {
             DataClassification = CustomerContent;
             Caption = 'Secondary Item';
-            TableRelation = Item where("BLRItem Type Template" = const("Item Type Template Enum"::"Secondary Item"));
+            TableRelation = Item where("BLRItem Type Template" = const("BLRItem Type Template Enum"::"Secondary Item"));
             Editable = false;
             trigger OnValidate()
             var

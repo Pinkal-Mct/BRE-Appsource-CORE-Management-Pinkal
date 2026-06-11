@@ -43,7 +43,7 @@ page 73209633 "Revenue Allocation Card"
             group("Revenue Allocation Report Details")
             {
                 Caption = 'Revenue Allocation Report Details';
-                part("Revenue Allocation Details"; "Revenue Allocation SubGrid")
+                part("Revenue Allocation Details"; "BLRRevenue Allocation SubGrid")
                 {
                     SubPageLink = "BLRHeader No." = field("BLRNo.");
                 }
@@ -95,7 +95,7 @@ page 73209633 "Revenue Allocation Card"
             group("Revenue Recognition Detail")
             {
                 Caption = 'Revenue Recognition Details';
-                part("Revenue Recognition Details"; "Revenue Recognition Detail Sub")
+                part("Revenue Recognition Details"; "BLRRevenueRecognitionDetailSub")
                 {
                     SubPageLink = "BLRRR_No." = field("BLRNo.");
                     UpdatePropagation = Both;
@@ -697,7 +697,9 @@ page 73209633 "Revenue Allocation Card"
             SingleUnitRent.SetRange("BLRContract Id", ContractRec."BLRContract ID");
             if SingleUnitRent.FindSet() then
                 repeat
-                    if (SingleUnitRent."BLRStart Date" <= PreviousMonthEnd) and (SingleUnitRent."BLREnd Date" >= ContractStartDate) then
+                    if (SingleUnitRent."BLRStart Date" <= PreviousMonthEnd) and (SingleUnitRent."BLREnd Date" >= ContractStartDate) and
+              not HasPreviousMonthAllocationLine(ContractRec."BLRContract ID", PreviousMonthNo, PreviousYearNo,
+                   SingleUnitRent."BLRStart Date", SingleUnitRent."BLREnd Date", SingleUnitRent."BLRFinal Annual Amount") then
                         InsertMissedAllocationLine(
                             ContractRec,
                             SingleUnitRent."BLRStart Date",
@@ -721,7 +723,9 @@ page 73209633 "Revenue Allocation Card"
             MultiUnitRent.SetRange("BLRContract Id", ContractRec."BLRContract ID");
             if MultiUnitRent.FindSet() then
                 repeat
-                    if (MultiUnitRent."BLRSL_Start Date" <= PreviousMonthEnd) and (MultiUnitRent."BLRSL_End Date" >= ContractStartDate) then
+                    if (MultiUnitRent."BLRSL_Start Date" <= PreviousMonthEnd) and (MultiUnitRent."BLRSL_End Date" >= ContractStartDate) and
+       not HasPreviousMonthAllocationLine(ContractRec."BLRContract ID", PreviousMonthNo, PreviousYearNo,
+            MultiUnitRent."BLRSL_Start Date", MultiUnitRent."BLRSL_End Date", MultiUnitRent."BLRSL_Final Annual Amount") then
                         InsertMissedAllocationLine(
                             ContractRec,
                             MultiUnitRent."BLRSL_Start Date",
@@ -745,7 +749,9 @@ page 73209633 "Revenue Allocation Card"
             MergedSingleRent.SetRange("BLRContract Id", ContractRec."BLRContract ID");
             if MergedSingleRent.FindSet() then
                 repeat
-                    if (MergedSingleRent."BLRMS_Start Date" <= PreviousMonthEnd) and (MergedSingleRent."BLRMS_End Date" >= ContractStartDate) then
+                    if (MergedSingleRent."BLRMS_Start Date" <= PreviousMonthEnd) and (MergedSingleRent."BLRMS_End Date" >= ContractStartDate) and
+       not HasPreviousMonthAllocationLine(ContractRec."BLRContract ID", PreviousMonthNo, PreviousYearNo,
+            MergedSingleRent."BLRMS_Start Date", MergedSingleRent."BLRMS_End Date", MergedSingleRent."BLRMS_Final Annual Amount") then
                         InsertMissedAllocationLine(
                             ContractRec,
                             MergedSingleRent."BLRMS_Start Date",
@@ -769,7 +775,9 @@ page 73209633 "Revenue Allocation Card"
             MergedMultiRent.SetRange("BLRContract Id", ContractRec."BLRContract ID");
             if MergedMultiRent.FindSet() then
                 repeat
-                    if (MergedMultiRent."BLRMD_Start Date" <= PreviousMonthEnd) and (MergedMultiRent."BLRMD_End Date" >= ContractStartDate) then
+                    if (MergedMultiRent."BLRMD_Start Date" <= PreviousMonthEnd) and (MergedMultiRent."BLRMD_End Date" >= ContractStartDate) and
+       not HasPreviousMonthAllocationLine(ContractRec."BLRContract ID", PreviousMonthNo, PreviousYearNo,
+            MergedMultiRent."BLRMD_Start Date", MergedMultiRent."BLRMD_End Date", MergedMultiRent."BLRMD_Final Annual Amount") then
                         InsertMissedAllocationLine(
                             ContractRec,
                             MergedMultiRent."BLRMD_Start Date",
@@ -793,7 +801,9 @@ page 73209633 "Revenue Allocation Card"
             SpecialRent.SetRange("BLRContract Id", ContractRec."BLRContract ID");
             if SpecialRent.FindSet() then
                 repeat
-                    if (SpecialRent."BLRML_Start Date" <= PreviousMonthEnd) and (SpecialRent."BLRML_End Date" >= ContractStartDate) then
+                    if (SpecialRent."BLRML_Start Date" <= PreviousMonthEnd) and (SpecialRent."BLRML_End Date" >= ContractStartDate) and
+       not HasPreviousMonthAllocationLine(ContractRec."BLRContract ID", PreviousMonthNo, PreviousYearNo,
+            SpecialRent."BLRML_Start Date", SpecialRent."BLRML_End Date", SpecialRent."BLRML_Final Annual Amount") then
                         InsertMissedAllocationLine(
                             ContractRec,
                             SpecialRent."BLRML_Start Date",
@@ -834,7 +844,7 @@ page 73209633 "Revenue Allocation Card"
     var
         FilteredContractRec: Record "BLRRevenueAllocationSubGrid";
         SuspensionRec: Record "BLRSuspendReasonTable";
-        FetchMonth: Codeunit "Fetch Month";
+        FetchMonth: Codeunit "BLRFetch Month";
         NewLineNo: Integer;
         PerDayRentWithoutGracePeriod: Decimal;
         PerDayRentWithGracePeriod: Decimal;
@@ -1024,6 +1034,27 @@ page 73209633 "Revenue Allocation Card"
         end;
     end;
 
+    procedure HasPreviousMonthAllocationLine(
+         ContractId: Integer;
+         PreviousMonthNo: Integer;
+         PreviousYearNo: Integer;
+         MultiYearStartDate: Date;
+         MultiYearEndDate: Date;
+         FinalAnnualAmount: Decimal): Boolean
+    var
+        PrevAllocLine: Record "BLRRevenueAllocationSubGrid";
+    begin
+        PrevAllocLine.Reset();
+        PrevAllocLine.SetRange("BLRContract Id", ContractId);
+        PrevAllocLine.SetRange("BLRPosting Month", PreviousMonthNo);
+        PrevAllocLine.SetRange("BLRPosting Year", PreviousYearNo);
+        PrevAllocLine.SetRange("BLRMulti Year Start Date", MultiYearStartDate);
+        PrevAllocLine.SetRange("BLRMulti Year End Date", MultiYearEndDate);
+        PrevAllocLine.SetRange("BLRFinal Annual Amount", FinalAnnualAmount);
+        if not PrevAllocLine.IsEmpty() then
+            exit(true);
+        exit(false);
+    end;
     //---------------Fetch Contracts--------------//
 
     // Then modify the FetchContracts procedure to use this
@@ -1769,7 +1800,7 @@ page 73209633 "Revenue Allocation Card"
     procedure CalculatePerMonthRent(annualAmount: Decimal; CalculatedDays: Integer; MonthNo: Integer; FinancialYear: Integer; ContractRec: Record "BLRTenancyContract"; MultiYearStartDate: Date; MultiYearEndDate: Date): Decimal
     var
         revenuerecognition: Record "BLRRevenueRecognition";
-        FetchMonth: Codeunit "Fetch Month";
+        FetchMonth: Codeunit "BLRFetch Month";
         MonthlyBase: Decimal;
         MonthlyRate: Decimal;
         DaysInMonth: Integer;

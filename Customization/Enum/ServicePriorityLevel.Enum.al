@@ -1,4 +1,4 @@
-enum 73209592 "Service Priority Level"
+enum 73209592 "BLRService Priority Level"
 {
     Extensible = true;
     value(0; Low)

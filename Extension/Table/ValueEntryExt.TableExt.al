@@ -1,4 +1,4 @@
-tableextension 73209590 "Value Entry Ext." extends "Value Entry"
+tableextension 73209590 "BLRValue Entry Ext." extends "Value Entry"
 {
     fields
     {

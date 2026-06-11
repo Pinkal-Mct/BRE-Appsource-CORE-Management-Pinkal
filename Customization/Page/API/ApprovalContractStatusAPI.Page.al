@@ -1,4 +1,4 @@
-page 73209577 "Approval Contract Status API"
+page 73209577 "BLRApprovalContractStatusAPI"
 {
     PageType = API;
     SourceTable = "BLRApprovalContractStatus";

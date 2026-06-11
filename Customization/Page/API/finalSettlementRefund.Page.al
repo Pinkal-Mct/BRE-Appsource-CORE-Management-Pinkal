@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 73209594 finalSettlementRefund
+page 73209594 BLRfinalSettlementRefund
 {
     APIGroup = 'finalcal';
     APIPublisher = 'realestste';

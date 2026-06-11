@@ -1,4 +1,4 @@
-page 73209653 "Primary Classification List"
+page 73209653 "BLRPrimary Classification List"
 {
     PageType = List;
     SourceTable = "BLRPrimaryClassification";

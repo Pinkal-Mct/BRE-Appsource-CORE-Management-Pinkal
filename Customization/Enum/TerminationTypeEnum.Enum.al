@@ -1,4 +1,4 @@
-enum 73209594 "Termination Type Enum"
+enum 73209594 "BLRTermination Type Enum"
 {
     Extensible = true;
     value(0; " ")

@@ -121,7 +121,7 @@ table 73209695 "BLRSuspendReasonTable"
             trigger OnValidate()
             var
                 TenancyContract: Record "BLRTenancyContract";
-                PropertyManagerApproval: Codeunit "Property Manager Approval";
+                PropertyManagerApproval: Codeunit "BLRProperty Manager Approval";
             begin
                 if "BLRContract ID" = 0 then
                     Error('Contract ID must be specified.');
@@ -253,7 +253,7 @@ table 73209695 "BLRSuspendReasonTable"
     }
     keys
     {
-        key(PK;"BLRID")
+        key(PK; "BLRID")
         {
             Clustered = true;
         }
@@ -261,7 +261,7 @@ table 73209695 "BLRSuspendReasonTable"
 
     fieldgroups
     {
-        fieldgroup(DropDown;"BLRTenantID", "BLRTenantName", "BLRContract ID", "BLREmailAddress")
+        fieldgroup(DropDown; "BLRTenantID", "BLRTenantName", "BLRContract ID", "BLREmailAddress")
         {
 
         }

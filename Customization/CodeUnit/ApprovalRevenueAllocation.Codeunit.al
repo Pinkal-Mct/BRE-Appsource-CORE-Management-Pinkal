@@ -1,4 +1,4 @@
-codeunit 73209577 "Approval Revenue Allocation"
+codeunit 73209577 "BLRApproval Revenue Allocation"
 {
     procedure SendRevenueApprovalrequest(Rec: Record "BLRRevenueAllocationApproval"): Text;
     var

@@ -15,8 +15,8 @@ codeunit 73209594 "Item Temaplate Management"
         ItemTempl: Record "Item Templ.";
         itemTemplMgt: Codeunit "Item Templ. Mgt.";
         itemTemplPage: Page "Item Templ. List";
-        itemDialogBox: Page "Item Dialog Box";
-        itemCategory: Enum "Item Template Enum";
+        itemDialogBox: Page "BLRItem Dialog Box";
+        itemCategory: Enum "BLRItem Template Enum";
     begin
         if itemDialogBox.RunModal() = Action::OK then
             itemCategory := itemDialogBox.GetItemCategory()

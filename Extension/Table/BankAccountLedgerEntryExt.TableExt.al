@@ -1,4 +1,4 @@
-tableextension 73209575 "Bank Account Ledger Entry Ext." extends "Bank Account Ledger Entry"
+tableextension 73209575 "BLRBankAccountLedgerEntryExt." extends "Bank Account Ledger Entry"
 {
     fields
     {

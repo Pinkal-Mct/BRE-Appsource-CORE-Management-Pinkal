@@ -1,4 +1,4 @@
-page 73209642 "Category List"
+page 73209642 "BLRCategory List"
 {
     PageType = List;
     SourceTable = "BLRCategoryType";

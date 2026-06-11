@@ -1,4 +1,4 @@
-codeunit 73209588 "Create Excel Report"
+codeunit 73209588 "BLRCreate Excel Report"
 {
 
     var
@@ -39,7 +39,7 @@ codeunit 73209588 "Create Excel Report"
     procedure CreateTableHeaderDynamic(var pExcelBuffer: Record "Excel Buffer"; var pRowNo: Integer; var pColumnNo: Integer; var pRecRef: RecordRef)
     var
         field: Record Field;
-        checkField: Codeunit "Check Field";
+        checkField: Codeunit "BLRCheck Field";
     begin
         field.SetRange(TableNo, pRecRef.Number);
         if field.FindSet() then
@@ -59,7 +59,7 @@ codeunit 73209588 "Create Excel Report"
     var
         field: Record Field;
         fieldRef: FieldRef;
-        checkField: Codeunit "Check Field";
+        checkField: Codeunit "BLRCheck Field";
     begin
         if pRecRef.FindSet() then
             repeat
@@ -88,7 +88,7 @@ codeunit 73209588 "Create Excel Report"
     procedure AddTotalsDynamic(var pExcelBuffer: Record "Excel Buffer"; pRowNo: Integer; var pRecRef: RecordRef)
     var
         field: Record Field;
-        checkField: Codeunit "Check Field";
+        checkField: Codeunit "BLRCheck Field";
         colPos: Integer;
         totalValue: Decimal;
     begin

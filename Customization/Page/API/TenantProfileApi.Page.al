@@ -1,4 +1,4 @@
-page 73209612 "tenantProfileAPI"
+page 73209612 "BLRtenantProfileAPI"
 {
     PageType = API;
     DelayedInsert = true;

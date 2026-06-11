@@ -1,4 +1,4 @@
-enum 73209581 "Item Template Enum"
+enum 73209581 "BLRItem Template Enum"
 {
     Extensible = true;
     Caption = 'Item Template Enum';

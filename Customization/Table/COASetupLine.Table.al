@@ -17,7 +17,7 @@ table 73209595 "BLRCOASetupLine"
         field(73209577; "BLRSecondary Item"; Text[100])
         {
             DataClassification = SystemMetadata;
-            TableRelation = Item where("BLRItem Type Template" = const("Item Type Template Enum"::"Secondary Item"));
+            TableRelation = Item where("BLRItem Type Template" = const("BLRItem Type Template Enum"::"Secondary Item"));
 
             trigger onValidate()
             begin

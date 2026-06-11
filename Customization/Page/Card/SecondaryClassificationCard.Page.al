@@ -1,4 +1,4 @@
-page 73209634 "Secondary Classification Card"
+page 73209634 "BLRSecondaryClassificationCard"
 {
     PageType = Card;
     SourceTable = "BLRSecondaryClassification";

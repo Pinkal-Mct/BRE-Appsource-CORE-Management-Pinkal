@@ -1,4 +1,4 @@
-page 73209595 "FinanceApprovalAPI"
+page 73209595 "BLRFinanceApprovalAPI"
 {
     APIGroup = 'finance';
     APIPublisher = 'realestate';

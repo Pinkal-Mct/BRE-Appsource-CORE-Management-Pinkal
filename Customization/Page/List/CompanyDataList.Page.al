@@ -1,4 +1,4 @@
-page 73209645 "Company Data List"
+page 73209645 "BLRCompany Data List"
 {
     PageType = List;
     SourceTable = "BLRCompanyData";

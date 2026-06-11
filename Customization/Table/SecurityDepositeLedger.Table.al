@@ -86,7 +86,7 @@ table 73209685 "BLRSecurityDepositeLedger"
             DataClassification = CustomerContent;
             Caption = 'Refundable Amount';
         }
-        field(73209589; "BLRApproval Status"; Enum "Approval Status Enum")
+        field(73209589; "BLRApproval Status"; Enum "BLRApproval Status Enum")
         {
             DataClassification = CustomerContent;
             Caption = 'Approval Status';
@@ -106,7 +106,7 @@ table 73209685 "BLRSecurityDepositeLedger"
 
     keys
     {
-        key(Key1;"BLRLedger ID")
+        key(Key1; "BLRLedger ID")
         {
             Clustered = true;
         }

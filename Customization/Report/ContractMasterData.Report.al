@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 using System.Utilities;
-report 73209575 ContractMasterData
+report 73209575 BLRContractMasterData
 {
     ApplicationArea = All;
     Caption = 'ContractMasterData';

@@ -186,7 +186,7 @@ table 73209600 "BLRContractRenewal"
             trigger OnValidate()
             var
                 TenancyContractRec: Record "BLRTenancyContract";
-                emailrec: Codeunit "Send Contract Renewal Email";
+                emailrec: Codeunit "BLRSend Contract Renewal Email";
             begin
                 if "BLRRenewal Contract Status" = "BLRRenewal Contract Status"::"Renewal of Original Contract ID" then begin
                     TenancyContractRec.SetRange("BLRContract ID", "BLRContract ID");
@@ -1065,7 +1065,7 @@ table 73209600 "BLRContractRenewal"
     }
     keys
     {
-        key(PK;"BLRId")
+        key(PK; "BLRId")
         {
             Clustered = true;
         }
@@ -1073,7 +1073,7 @@ table 73209600 "BLRContractRenewal"
 
     fieldgroups
     {
-        fieldgroup(DropDown;"BLRId", "BLRUnit Name", "BLRProperty Name", "BLRTenant Full Name", "BLRTenant ID", "BLRUnit Number")
+        fieldgroup(DropDown; "BLRId", "BLRUnit Name", "BLRProperty Name", "BLRTenant Full Name", "BLRTenant ID", "BLRUnit Number")
         {
 
         }

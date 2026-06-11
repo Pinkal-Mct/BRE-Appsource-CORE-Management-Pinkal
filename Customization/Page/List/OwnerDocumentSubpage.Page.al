@@ -1,4 +1,4 @@
-page 73209650 "Owner Document Subpage"
+page 73209650 "BLROwner Document Subpage"
 {
     PageType = ListPart;
     ApplicationArea = All;
@@ -31,7 +31,7 @@ page 73209650 "Owner Document Subpage"
                     ToolTip = 'Upload Document';
                     trigger OnDrillDown()
                     var
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                         fileName: Text;
                         uploadResult: Text;
                         folderName: Text;

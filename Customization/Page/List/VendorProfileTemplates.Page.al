@@ -1,10 +1,10 @@
-page 73209669 "Vendor Profile Templates"
+page 73209669 "BLRVendor Profile Templates"
 {
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "BLRVendorProfileTemplate";
-    CardPageId = "Vendor Profile Template";
+    CardPageId = "BLRVendor Profile Template";
 
     layout
     {

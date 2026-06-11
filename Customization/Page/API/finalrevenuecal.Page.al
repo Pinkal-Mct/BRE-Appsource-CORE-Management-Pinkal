@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 73209592 finalrevenuecal
+page 73209592 BLRfinalrevenuecal
 {
     APIGroup = 'finalcal';
     APIPublisher = 'realestate';

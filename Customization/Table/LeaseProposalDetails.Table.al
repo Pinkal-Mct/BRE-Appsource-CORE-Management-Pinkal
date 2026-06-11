@@ -301,7 +301,7 @@ table 73209628 "BLRLeaseProposalDetails"
                 ItemRec: Record Item;
                 MergeUnitRec: Record "BLRMergedUnits";
                 MergeUnitLeaseGrid: Record "BLRSubLeaseMergedUnits";
-                emailrec: Codeunit "Send Proposal Email";
+                emailrec: Codeunit "BLRSend Proposal Email";
             begin
                 if "BLRUnit ID" <> '' then begin
                     if ItemRec.Get("BLRUnit ID") then

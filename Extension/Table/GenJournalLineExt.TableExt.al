@@ -1,4 +1,4 @@
-tableextension 73209579 "Gen. Journal Line Ext." extends "Gen. Journal Line"
+tableextension 73209579 "BLRGen. Journal Line Ext." extends "Gen. Journal Line"
 
 {
     fields
@@ -8,7 +8,7 @@ tableextension 73209579 "Gen. Journal Line Ext." extends "Gen. Journal Line"
             Caption = 'Contract ID';
             DataClassification = CustomerContent;
         }
-        field(73209576; "BLRItem Description"; Enum "Deposit Type")
+        field(73209576; "BLRItem Description"; Enum "BLRDeposit Type")
         {
             Caption = 'Item Description';
             DataClassification = CustomerContent;

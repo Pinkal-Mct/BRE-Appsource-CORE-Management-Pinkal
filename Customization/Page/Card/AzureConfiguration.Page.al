@@ -1,4 +1,4 @@
-page 73209617 "Azure Configuration"
+page 73209617 "BLRAzure Configuration"
 {
     PageType = Card;
     ApplicationArea = All;
@@ -68,7 +68,7 @@ page 73209617 "Azure Configuration"
 
                 trigger OnAction()
                 var
-                    AzureADBlob: Codeunit "Azure AD Blob Storage";
+                    AzureADBlob: Codeunit "BLRAzure AD Blob Storage";
                     TempBlob: Codeunit "Temp Blob";
                     InStream: InStream;
                     OutStream: OutStream;

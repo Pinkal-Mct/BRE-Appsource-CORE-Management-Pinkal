@@ -1,4 +1,4 @@
-codeunit 73209611 "FS Refundable Payment Receipt"
+codeunit 73209611 "BLRFSRefundablePaymentReceipt"
 {
     procedure SendEmail(Rec: Record "BLRFinalSettlementRefund"): Text;
     var

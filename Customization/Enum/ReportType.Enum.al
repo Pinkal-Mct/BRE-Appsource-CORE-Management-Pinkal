@@ -1,4 +1,4 @@
-enum 73209591 "Report Type"
+enum 73209591 "BLRReport Type"
 {
     Extensible = true;
 

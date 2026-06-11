@@ -12,7 +12,7 @@ table 73209575 "BLRAdditionalChargesSub"
         {
             DataClassification = CustomerContent;
             Caption = 'Secondary Item';
-            TableRelation = Item WHERE("BLRItem type template" = const("Item Type Template Enum"::"Secondary Item"), "BLRCharges Status" = CONST("Additional Charges"));
+            TableRelation = Item WHERE("BLRItem type template" = const("BLRItem Type Template Enum"::"Secondary Item"), "BLRCharges Status" = CONST("Additional Charges"));
             trigger OnValidate()
             var
                 SecondaryItemRec: Record "Item";

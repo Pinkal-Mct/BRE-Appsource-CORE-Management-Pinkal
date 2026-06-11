@@ -1,4 +1,4 @@
-codeunit 73209601 RejectSalesInvoice
+codeunit 73209601 BLRRejectSalesInvoice
 {
     procedure SendInvoiceToLeaseManager(Rec: Record "Sales Header")
     var

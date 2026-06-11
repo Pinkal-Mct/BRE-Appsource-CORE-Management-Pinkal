@@ -8,7 +8,7 @@ table 73209613 "BLRDocumentUploadDetails"
             DataClassification = CustomerContent;
             Caption = 'OwnerId';
         }
-        field(73209576; "BLRDocument Type"; Enum "Document Type Enum")
+        field(73209576; "BLRDocument Type"; Enum "BLRDocument Type Enum")
         {
             DataClassification = CustomerContent;
             Caption = 'Document Type';
@@ -46,7 +46,7 @@ table 73209613 "BLRDocumentUploadDetails"
     }
     keys
     {
-        key(Key1;"BLREntry No.", "BLROwnerId")
+        key(Key1; "BLREntry No.", "BLROwnerId")
         {
             Clustered = true;
         }

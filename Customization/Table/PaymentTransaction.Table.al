@@ -29,7 +29,7 @@ table 73209651 "BLRPaymentTransaction"
             DataClassification = CustomerContent;
         }
 
-        field(73209579; "BLRApproval Status"; Enum "Approval Status Enum")
+        field(73209579; "BLRApproval Status"; Enum "BLRApproval Status Enum")
         {
             DataClassification = CustomerContent;
         }
@@ -37,7 +37,7 @@ table 73209651 "BLRPaymentTransaction"
 
     keys
     {
-        key(Key1;"BLRPT Id")
+        key(Key1; "BLRPT Id")
         {
             Clustered = true;
         }

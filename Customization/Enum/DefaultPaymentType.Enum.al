@@ -1,4 +1,4 @@
-enum 73209577 "Default Payment Type"
+enum 73209577 "BLRDefault Payment Type"
 {
     Extensible = true;
 

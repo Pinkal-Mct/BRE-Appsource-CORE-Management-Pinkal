@@ -1,4 +1,4 @@
-codeunit 73209614 "Send PaymentMode Email"
+codeunit 73209614 "BLRSend PaymentMode Email"
 {
     procedure SendEmail(Rec: Record "BLRPaymentMode2"): Text;
     var

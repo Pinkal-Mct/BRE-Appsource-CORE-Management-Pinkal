@@ -1,9 +1,9 @@
-codeunit 73209585 "Contract Renewal Response"
+codeunit 73209585 "BLRContract Renewal Response"
 {
     procedure SyncToTenancyContractRenewal(ContractStatusRec: Record "BLRApprovalContractStatus")
     var
         ContractRenewal: Record "BLRContractRenewal";
-        RenewalHandler: Codeunit "Contract Renewal Response";
+        RenewalHandler: Codeunit "BLRContract Renewal Response";
     begin
         ContractRenewal.Reset();
         ContractRenewal.SetRange("BLRId", ContractStatusRec."BLRRenewal Contract ID");
@@ -33,7 +33,7 @@ codeunit 73209585 "Contract Renewal Response"
     procedure ProcessContractRenewal(RenewalRec: Record "BLRContractRenewal")
     var
         TenancyContractRec: Record "BLRTenancyContract";
-        EmailRec: Codeunit "Send Contract Renewal Email";
+        EmailRec: Codeunit "BLRSend Contract Renewal Email";
         ContractIDInt: Integer;
     begin
         if RenewalRec."BLRRenewal Contract Status" = RenewalRec."BLRRenewal Contract Status"::"Renewal of Original Contract ID" then

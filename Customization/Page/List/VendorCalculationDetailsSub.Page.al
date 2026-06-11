@@ -1,4 +1,4 @@
-page 73209665 "Vendor Calculation Details Sub"
+page 73209665 "BLRVendorCalculationDetailsSub"
 {
     PageType = ListPart;
     SourceTable = "BLRVendorCalculationDetails";

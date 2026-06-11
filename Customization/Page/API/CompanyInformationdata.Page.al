@@ -2,7 +2,7 @@ namespace PropertyManagement.PropertyManagement;
 
 using Microsoft.Foundation.Company;
 
-page 73209581 CompanyInformationdata
+page 73209581 BLRCompanyInformationdata
 {
     APIGroup = 'company';
     APIPublisher = 'realestate';

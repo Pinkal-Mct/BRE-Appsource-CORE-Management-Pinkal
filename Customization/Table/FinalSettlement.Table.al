@@ -57,7 +57,7 @@ table 73209622 "BLRFinalSettlement"
             Caption = 'Payment mode';
             TableRelation = "BLRPaymentType"."BLRPayment Method";
         }
-        field(73209584; "BLRReceivable Payment Status"; Enum "Payment Status")
+        field(73209584; "BLRReceivable Payment Status"; Enum "BLRPayment Status")
         {
             DataClassification = CustomerContent;
             Caption = 'Payment Status';
@@ -66,9 +66,9 @@ table 73209622 "BLRFinalSettlement"
             var
                 paymentmode2Grid: Record "BLRFinalSettlement";
                 TempBlob: Codeunit "Temp Blob";
-                Email: Codeunit "FS_Receivable Payment Receipt";
-                FinalSettlementPosting: Codeunit "Final Settlement Posting Mgt.";
-                azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                Email: Codeunit "BLRFS_ReceivablePaymentReceipt";
+                FinalSettlementPosting: Codeunit "BLRFinalSettlementPostingMgt.";
+                azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                 RecRef: RecordRef;
                 fileName: Text[250];
                 uploadResult: Text;
@@ -77,7 +77,7 @@ table 73209622 "BLRFinalSettlement"
                 ReportID: Integer;
                 OutStream: OutStream;
             begin
-                if Rec."BLRReceivable Payment Status" = Enum::"Payment Status"::Received then
+                if Rec."BLRReceivable Payment Status" = Enum::"BLRPayment Status"::Received then
                     if (Rec."BLRReceivable Due Date" = 0D) or (Rec."BLRReceivable Due Date" > Today()) then begin
                         Rec."BLRReceivable Payment Status" := xRec."BLRReceivable Payment Status";
                         Error('Receivable Due Date is required. It must be today or in the past to mark payment status as Received.');
@@ -209,7 +209,7 @@ table 73209622 "BLRFinalSettlement"
     }
     keys
     {
-        key(PK;"BLRFC ID")
+        key(PK; "BLRFC ID")
         {
             Clustered = true;
         }

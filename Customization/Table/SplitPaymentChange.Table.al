@@ -78,7 +78,7 @@ table 73209689 "BLRSplitPaymentChange"
 
     keys
     {
-        key(Key1;"BLREntry No.", "BLRContract ID")
+        key(Key1; "BLREntry No.", "BLRContract ID")
         {
             Clustered = true;
         }
@@ -87,7 +87,7 @@ table 73209689 "BLRSplitPaymentChange"
 
     trigger OnModify()
     var
-        SplitPaymentHandler: Codeunit "Split Payment Handler";
+        SplitPaymentHandler: Codeunit "BLRSplit Payment Handler";
     begin
         SplitPaymentHandler.ProcessSplitPayment(Rec);
     end;

@@ -1,4 +1,4 @@
-codeunit 73209578 "Azure AD Blob Storage"
+codeunit 73209578 "BLRAzure AD Blob Storage"
 {
     procedure ValidateDocument(var pUploadResult: Text; pFolderName: Text): Text
     var

@@ -1,4 +1,4 @@
-codeunit 73209592 "FS_Receivable Payment Receipt"
+codeunit 73209592 "BLRFS_ReceivablePaymentReceipt"
 {
     procedure SendEmail(Rec: Record "BLRFinalSettlement"): Text;
     var

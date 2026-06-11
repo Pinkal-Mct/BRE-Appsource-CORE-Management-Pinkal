@@ -1,4 +1,4 @@
-page 73209631 "Property Type Card"
+page 73209631 "BLRProperty Type Card"
 {
     PageType = Card;
     SourceTable = "BLRPropertyType";

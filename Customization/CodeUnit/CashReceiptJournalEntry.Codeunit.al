@@ -1,4 +1,4 @@
-codeunit 73209580 "Cash Receipt Journal Entry"
+codeunit 73209580 "BLRCash Receipt Journal Entry"
 {
     Subtype = Normal;
     trigger OnRun()

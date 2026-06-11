@@ -1,4 +1,4 @@
-page 73209615 "UserSettingAPI"
+page 73209615 "BLRUserSettingAPI"
 {
     PageType = API;
     SourceTable = "User Personalization";

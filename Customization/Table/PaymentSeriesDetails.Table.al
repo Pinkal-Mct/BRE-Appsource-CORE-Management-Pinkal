@@ -50,12 +50,12 @@ table 73209650 "BLRPaymentSeriesDetails"
             Caption = 'Deposit Status';
             DataClassification = CustomerContent;
         }
-        field(73209583; "BLRPayment Status"; Enum "Payment Status")
+        field(73209583; "BLRPayment Status"; Enum "BLRPayment Status")
         {
             DataClassification = CustomerContent;
             Caption = 'Payment Status';
         }
-        field(73209584; "BLRCheque Status"; Enum "PDC Status Type Enum")
+        field(73209584; "BLRCheque Status"; Enum "BLRPDC Status Type Enum")
         {
             DataClassification = AccountData;
             Caption = 'Cheque Status';
@@ -77,7 +77,7 @@ table 73209650 "BLRPaymentSeriesDetails"
             Caption = 'View Document URL';
         }
 
-        field(73209588; "BLRApproval Status"; Enum "Approval Status Enum")
+        field(73209588; "BLRApproval Status"; Enum "BLRApproval Status Enum")
         {
             DataClassification = CustomerContent;
         }
@@ -97,7 +97,7 @@ table 73209650 "BLRPaymentSeriesDetails"
 
     keys
     {
-        key(Key1;"BLREntry No.")
+        key(Key1; "BLREntry No.")
         {
             Clustered = true;
         }

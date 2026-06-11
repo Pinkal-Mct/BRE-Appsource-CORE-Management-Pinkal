@@ -11,8 +11,8 @@ codeunit 73209606 "Send Contract Email"
         InStream: InStream;
         FileName: Text[250];
         ReportID: Integer;
-        Emirate: Enum Emirates;
-        CurrentEmirateValue: Enum Emirates;
+        Emirate: Enum BLREmirates;
+        CurrentEmirateValue: Enum BLREmirates;
         Leaseamount: Decimal;
     begin
         if Evaluate(CurrentEmirateValue, Rec."BLREmirate") then

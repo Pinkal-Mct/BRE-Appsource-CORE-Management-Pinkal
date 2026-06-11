@@ -34,13 +34,13 @@ table 73209654 "BLRPDCTransaction"
             DataClassification = CustomerContent;
         }
 
-        field(73209581; "BLRCheque Status"; Enum "PDC Status Type Enum")
+        field(73209581; "BLRCheque Status"; Enum "BLRPDC Status Type Enum")
         {
             DataClassification = AccountData;
             trigger OnValidate()
             var
-                CashReceiptJournalCodeunit: Codeunit "Cash Receipt Journal Entry";
-                selectDate: Page "Select Date";
+                CashReceiptJournalCodeunit: Codeunit "BLRCash Receipt Journal Entry";
+                selectDate: Page "BLRSelect Date";
             begin
                 if Rec."BLRCheque Status" = Rec."BLRCheque Status"::Cancelled then
                     if xRec."BLRCheque Status" = xRec."BLRCheque Status"::"Cheque Received" then
@@ -77,7 +77,7 @@ table 73209654 "BLRPDCTransaction"
             end;
         }
 
-        field(73209586; "BLRApproval Status"; Enum "Approval Status Enum")
+        field(73209586; "BLRApproval Status"; Enum "BLRApproval Status Enum")
         {
             DataClassification = CustomerContent;
         }
@@ -160,7 +160,7 @@ table 73209654 "BLRPDCTransaction"
     }
     keys
     {
-        key(PK;"BLRPDC ID")
+        key(PK; "BLRPDC ID")
         {
             Clustered = true;
         }

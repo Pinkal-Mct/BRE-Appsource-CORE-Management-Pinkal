@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 
-page 73209600 paymentdata
+page 73209600 BLRpaymentdata
 {
     APIGroup = 'payment';
     APIPublisher = 'realestate';

@@ -1,4 +1,4 @@
-page 73209661 "Secondary Classification List"
+page 73209661 "BLRSecondaryClassificationList"
 {
     PageType = List;
     SourceTable = "BLRSecondaryClassification";

@@ -1,4 +1,4 @@
-codeunit 73209616 "Send Payment Reciept"
+codeunit 73209616 "BLRSend Payment Reciept"
 {
     Subtype = Normal;
     procedure GenerateAndSendReceipt(CustLedgerEntry: Record "Cust. Ledger Entry")

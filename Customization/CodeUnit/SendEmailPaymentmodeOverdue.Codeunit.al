@@ -1,4 +1,4 @@
-codeunit 73209609 "Send Email Paymentmode Overdue"
+codeunit 73209609 "BLRSendEmailPaymentmodeOverdue"
 {
     procedure SendEmailOverdue(Rec: Record "BLROverDuePaymentmode"): Text;
     var

@@ -1,4 +1,4 @@
-page 73209632 "Report Request"
+page 73209632 "BLRReport Request"
 {
     PageType = Card;
     ApplicationArea = All;
@@ -34,15 +34,15 @@ page 73209632 "Report Request"
                 trigger OnAction()
                 begin
                     case reportType of
-                        Enum::"Report Type"::"Security Deposit Report":
-                            Report.Run(Report::"Security Deposit");
-                        Enum::"Report Type"::"PDC Transaction Report":
-                            Report.Run(Report::"PDC Transaction Report");
-                        Enum::"Report Type"::"Contract Master Data Report":
-                            Report.Run(Report::ContractMasterData);
-                        Enum::"Report Type"::"Revenue Allocation Report":
+                        Enum::"BLRReport Type"::"Security Deposit Report":
+                            Report.Run(Report::"BLRSecurity Deposit");
+                        Enum::"BLRReport Type"::"PDC Transaction Report":
+                            Report.Run(Report::"BLRPDC Transaction Report");
+                        Enum::"BLRReport Type"::"Contract Master Data Report":
+                            Report.Run(Report::BLRContractMasterData);
+                        Enum::"BLRReport Type"::"Revenue Allocation Report":
                             RedirectToRevenueAlloationReport();
-                        Enum::"Report Type"::"Unearned Revenue Report":
+                        Enum::"BLRReport Type"::"Unearned Revenue Report":
                             RedirectToUnearnedRevenueReport();
                         else
                             Error('Please select a valid report type.');
@@ -58,18 +58,18 @@ page 73209632 "Report Request"
     }
 
     var
-        reportType: Enum "Report Type";
+        reportType: Enum "BLRReport Type";
 
     procedure RedirectToRevenueAlloationReport()
     var
-        revenueAllocationList: Page "Revenue Allocation List";
+        revenueAllocationList: Page "BLRRevenue Allocation List";
     begin
         revenueAllocationList.Run();
     end;
 
     procedure RedirectToUnearnedRevenueReport()
     var
-        unearnedRevenueReportList: Page "Unearned Revenue Report List";
+        unearnedRevenueReportList: Page "BLRUnearnedRevenueReportList";
     begin
         unearnedRevenueReportList.Run();
     end;

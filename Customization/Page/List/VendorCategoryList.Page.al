@@ -1,4 +1,4 @@
-page 73209666 "Vendor Category List"
+page 73209666 "BLRVendor Category List"
 {
     PageType = List;
     SourceTable = "BLRVendorCategory";

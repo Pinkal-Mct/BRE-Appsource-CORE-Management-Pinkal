@@ -9,7 +9,7 @@ table 73209707 "BLRUnitDocumentDetails"
             DataClassification = CustomerContent;
             Caption = 'UnitID';
         }
-        field(73209576; "BLRDocument Type"; Enum "Unit Document Type Enum")
+        field(73209576; "BLRDocument Type"; Enum "BLRUnit Document Type Enum")
         {
             DataClassification = CustomerContent;
             Caption = 'Document Type';
@@ -53,7 +53,7 @@ table 73209707 "BLRUnitDocumentDetails"
 
     keys
     {
-        key(Key1;"BLRUnitID", "BLREntry No.")
+        key(Key1; "BLRUnitID", "BLREntry No.")
         {
             Clustered = true;
         }

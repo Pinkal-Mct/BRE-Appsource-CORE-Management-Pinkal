@@ -39,7 +39,7 @@ table 73209629 "BLRManagementFeeCalcHeader"
             trigger OnLookup()
             var
                 YearRec: Record Integer;
-                integerList: Page "Integer List";
+                integerList: Page "BLRInteger List";
                 CurrYear: Integer;
             begin
                 CurrYear := Date2DMY(Today(), 3);
@@ -125,7 +125,7 @@ table 73209629 "BLRManagementFeeCalcHeader"
 
     keys
     {
-        key(PK;"BLREntry No.")
+        key(PK; "BLREntry No.")
         {
             Clustered = true;
         }

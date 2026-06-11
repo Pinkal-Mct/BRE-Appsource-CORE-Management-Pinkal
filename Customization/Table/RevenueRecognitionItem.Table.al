@@ -13,7 +13,7 @@ table 73209677 "BLRRevenueRecognitionItem"
         {
             DataClassification = CustomerContent;
             Caption = 'Item Type';
-            TableRelation = Item WHERE("BLRItem type template" = const("Item Type Template Enum"::"Secondary Item"), "BLRCharges Status" = CONST("Regular Charges"));
+            TableRelation = Item WHERE("BLRItem type template" = const("BLRItem Type Template Enum"::"Secondary Item"), "BLRCharges Status" = CONST("Regular Charges"));
             trigger OnValidate()
             var
                 SecondaryItemRec: Record Item;

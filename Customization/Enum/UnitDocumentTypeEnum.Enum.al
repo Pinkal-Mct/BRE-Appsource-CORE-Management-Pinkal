@@ -1,4 +1,4 @@
-enum 73209596 "Unit Document Type Enum"
+enum 73209596 "BLRUnit Document Type Enum"
 {
     Extensible = false;
     value(0; " ")

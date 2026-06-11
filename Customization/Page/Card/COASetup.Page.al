@@ -1,4 +1,4 @@
-page 73209620 "COA Setup"
+page 73209620 "BLRCOA Setup"
 {
     PageType = Card;
     ApplicationArea = All;
@@ -97,7 +97,7 @@ page 73209620 "COA Setup"
                     ToolTip = 'Specifies the G/L account for post-dated checks liabilities.';
                 }
             }
-            part(COASetupLines; "COA Setup List")
+            part(COASetupLines; "BLRCOA Setup List")
             {
                 ApplicationArea = All;
                 Caption = 'COA Setup Lines';

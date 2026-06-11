@@ -1,4 +1,4 @@
-codeunit 73209613 "Send Mail to FM Credit Note"
+codeunit 73209613 "BLRSend Mail to FM Credit Note"
 {
     procedure SendMailToFM(Rec: Record "Sales Header")
     var

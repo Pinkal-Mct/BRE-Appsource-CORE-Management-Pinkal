@@ -1,4 +1,4 @@
-page 73209647 "Emirate List"
+page 73209647 "BLREmirate List"
 {
     PageType = List;
     SourceTable = "BLREmirate";

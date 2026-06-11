@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 
-page 73209580 CompanyData
+page 73209580 BLRCompanyData
 {
     APIGroup = 'tenants';
     APIPublisher = 'realestate';

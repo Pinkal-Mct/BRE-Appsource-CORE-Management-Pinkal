@@ -1,4 +1,4 @@
-page 73209655 "Property Type List"
+page 73209655 "BLRProperty Type List"
 {
     PageType = List;
     SourceTable = "BLRPropertyType";

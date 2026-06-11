@@ -1,4 +1,4 @@
-tableextension 73209580 "G/L Entry Ext." extends "G/L Entry"
+tableextension 73209580 "BLRG/L Entry Ext." extends "G/L Entry"
 
 {
     fields

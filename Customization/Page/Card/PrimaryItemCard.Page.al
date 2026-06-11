@@ -1,4 +1,4 @@
-page 73209630 "Primary Item Card"
+page 73209630 "BLRPrimary Item Card"
 {
     PageType = Card;
     SourceTable = "BLRPrimaryItem";

@@ -1,4 +1,4 @@
-codeunit 73209610 "Send Email To PropertyManager"
+codeunit 73209610 "BLRSendEmailToPropertyManager"
 {
     procedure SendEmail(Rec: Record "BLRContractEndProcessApproval"): Text;
     var

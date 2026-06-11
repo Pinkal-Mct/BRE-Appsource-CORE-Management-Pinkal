@@ -1,4 +1,4 @@
-codeunit 73209576 "Approval Request Crdit note "
+codeunit 73209576 "BLRApprovalRequestCrditnote "
 {
     procedure SubmitCreditNote(var RequestCreditNote: Record "BLRRequestCreditNote")
     var

@@ -1,4 +1,4 @@
-tableextension 73209586 "Sales Header Ext" extends "Sales Header"
+tableextension 73209586 "BLRSales Header Ext" extends "Sales Header"
 {
     fields
     {

@@ -1,4 +1,4 @@
-page 73209663 "Sub Unearned Revenue Card"
+page 73209663 "BLRSub Unearned Revenue Card"
 {
     PageType = ListPart;
     ApplicationArea = All;
@@ -148,7 +148,7 @@ page 73209663 "Sub Unearned Revenue Card"
 
                 trigger OnAction()
                 var
-                    createExcelReport: Codeunit "Create Excel Report";
+                    createExcelReport: Codeunit "BLRCreate Excel Report";
                 begin
                     createExcelReport.GenerateExcelReportForAnyTable(73209694, 73209576, Rec."BLRHeader No.");
                 end;

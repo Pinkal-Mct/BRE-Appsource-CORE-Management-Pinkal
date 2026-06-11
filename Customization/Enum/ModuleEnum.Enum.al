@@ -1,4 +1,4 @@
-enum 73209583 "Module Enum"
+enum 73209583 "BLRModule Enum"
 {
     Extensible = true;
     Caption = 'Item Type';

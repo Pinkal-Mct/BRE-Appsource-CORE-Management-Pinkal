@@ -43,7 +43,7 @@ table 73209681 "BLRRevenueStructureSubpage"
 
             trigger OnValidate()
             var
-                calculateinstallmentstotal: Codeunit "Installment Calculation Engine";
+                calculateinstallmentstotal: Codeunit "BLRInstallmentCalculationEng";
             begin
                 calculateinstallmentstotal.CalculateTotalInstallments(Rec);
             end;
@@ -116,8 +116,8 @@ table 73209681 "BLRRevenueStructureSubpage"
 
             trigger OnValidate()
             var
-                fetchMonth: Codeunit "Fetch Month";
-                installmentCalcEngine: Codeunit "Installment Calculation Engine";
+                fetchMonth: Codeunit "BLRFetch Month";
+                installmentCalcEngine: Codeunit "BLRInstallmentCalculationEng";
                 PeriodDuration: Text;
             begin
                 if Rec."BLRPayment Frequency" <> Rec."BLRPayment Frequency"::" " then begin
@@ -129,7 +129,7 @@ table 73209681 "BLRRevenueStructureSubpage"
     }
     keys
     {
-        key(Key1;"BLREntry No.", "BLRRS ID")
+        key(Key1; "BLREntry No.", "BLRRS ID")
         {
             Clustered = true;
         }
@@ -137,7 +137,7 @@ table 73209681 "BLRRevenueStructureSubpage"
 
     trigger OnDelete()
     var
-        installmentCalcEngine: Codeunit "Installment Calculation Engine";
+        installmentCalcEngine: Codeunit "BLRInstallmentCalculationEng";
     begin
         installmentCalcEngine.BeforeDeleteCalculateInstallments(Rec);
     end;

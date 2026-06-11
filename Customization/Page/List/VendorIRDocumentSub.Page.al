@@ -1,4 +1,4 @@
-page 73209668 "Vendor I/R DocumentSub"
+page 73209668 "BLRVendor I/R DocumentSub"
 {
     PageType = ListPart;
     SourceTable = "BLRVendorContractDocument";
@@ -45,7 +45,7 @@ page 73209668 "Vendor I/R DocumentSub"
 
                     trigger OnDrillDown()
                     var
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                         fileName: Text;
                         uploadResult: Text;
                         folderName: Text;
@@ -109,7 +109,7 @@ page 73209668 "Vendor I/R DocumentSub"
 
                     trigger OnDrillDown()
                     var
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                         fileName: Text;
                         uploadResult: Text;
                         folderName: Text;
@@ -183,7 +183,7 @@ page 73209668 "Vendor I/R DocumentSub"
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     var
         vendor: Record "BLRVendorProfile";
-        PaymentStatus: Enum "Payment Status";
+        PaymentStatus: Enum "BLRPayment Status";
     begin
         Rec."BLRVendor ID" := VendorID;
 
@@ -200,7 +200,7 @@ page 73209668 "Vendor I/R DocumentSub"
     trigger OnModifyRecord(): Boolean
     var
         vendor: Record "BLRVendorProfile";
-        PaymentStatus: Enum "Payment Status";
+        PaymentStatus: Enum "BLRPayment Status";
     begin
         vendor.SetRange("BLRVendor ID", Rec."BLRVendor ID");
         if not vendor.IsEmpty() then

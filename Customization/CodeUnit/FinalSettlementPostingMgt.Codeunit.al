@@ -1,5 +1,5 @@
 
-codeunit 73209591 "Final Settlement Posting Mgt."
+codeunit 73209591 "BLRFinalSettlementPostingMgt."
 {
     procedure PostFinalSettlementAmount(FinalSettlement: Record "BLRFinalSettlement")
     var

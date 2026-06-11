@@ -1,4 +1,4 @@
-codeunit 73209583 "Contract Renewal Notifier"
+codeunit 73209583 "BLRContract Renewal Notifier"
 {
     Subtype = Normal;
     trigger OnRun()

@@ -1,4 +1,4 @@
-codeunit 73209582 "Contract End Status Updater"
+codeunit 73209582 "BLRContract End Status Updater"
 {
     Subtype = Normal;
     trigger OnRun()

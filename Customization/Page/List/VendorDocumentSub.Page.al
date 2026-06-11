@@ -1,4 +1,4 @@
-page 73209667 "Vendor Document Sub"
+page 73209667 "BLRVendor Document Sub"
 {
     PageType = ListPart;
     SourceTable = "BLRVendorDocument";
@@ -40,7 +40,7 @@ page 73209667 "Vendor Document Sub"
                     Editable = false;
                     trigger OnDrillDown()
                     var
-                        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                         fileName: Text;
                         uploadResult: Text;
                         folderName: Text;

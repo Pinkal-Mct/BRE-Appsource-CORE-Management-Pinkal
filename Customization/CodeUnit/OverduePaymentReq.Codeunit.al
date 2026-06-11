@@ -1,4 +1,4 @@
-codeunit 73209596 "OverduePaymentReq"
+codeunit 73209596 "BLROverduePaymentReq"
 {
     procedure SendApprovalrequest(Rec: Record "BLROverDuePaymentmode"): Text;
     var

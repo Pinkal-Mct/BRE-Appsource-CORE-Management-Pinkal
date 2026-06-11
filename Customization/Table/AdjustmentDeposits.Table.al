@@ -10,7 +10,7 @@ table 73209576 "BLRAdjustmentDeposits"
             DataClassification = CustomerContent;
         }
 
-        field(73209576; "BLRItem Description"; Enum "Deposit Type")
+        field(73209576; "BLRItem Description"; Enum "BLRDeposit Type")
         {
             DataClassification = CustomerContent;
         }
@@ -52,7 +52,7 @@ table 73209576 "BLRAdjustmentDeposits"
 
     keys
     {
-        key(PK;"BLREntry No.", "BLRContract Id")
+        key(PK; "BLREntry No.", "BLRContract Id")
         {
             Clustered = true;
         }

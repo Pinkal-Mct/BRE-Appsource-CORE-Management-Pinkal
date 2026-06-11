@@ -328,6 +328,28 @@ page 73209660 "Revenue Recognition Item Sub"
         exit(RegularAllocationExists and not MissedAllocationExists);
     end;
 
+    local procedure HasPreviousMonthRevenueRecognitionLine(
+           ContractID: Integer;
+           PostingMonth: Integer;
+           PostingYear: Integer;
+           MultiYearStartDate: Date;
+           MultiYearEndDate: Date;
+           FinalAnnualAmount: Decimal;
+           ItemType: Text
+       ): Boolean
+    var
+        ExistingRevenue: Record "BLRRevenueRecognitionDetails";
+    begin
+        ExistingRevenue.Reset();
+        ExistingRevenue.SetRange("BLRContract Id", ContractID);
+        ExistingRevenue.SetRange("BLRPosting Month", PostingMonth);
+        ExistingRevenue.SetRange("BLRPosting Year", PostingYear);
+        ExistingRevenue.SetRange("BLRMulti Year Start Date", MultiYearStartDate);
+        ExistingRevenue.SetRange("BLRMulti Year End Date", MultiYearEndDate);
+        ExistingRevenue.SetRange("BLRFinal Annual Amount", FinalAnnualAmount);
+        ExistingRevenue.SetRange("BLRItem Type", ItemType);
+        exit(not ExistingRevenue.IsEmpty);
+    end;
     // Create missed revenue allocation for a specific contract
     local procedure CreateMissedRevenueAllocationForContract(
         pTenancyContract: Record "BLRTenancyContract";
@@ -1493,7 +1515,16 @@ page 73209660 "Revenue Recognition Item Sub"
 
         // Only process if contract started on day 2-31 of the previous month
         if (ContractStartInMonth = pMissedAllocation."BLRMonth") and (ContractStartDay >= 2) then begin
-
+            if HasPreviousMonthRevenueRecognitionLine(
+                           pTenancyContract."BLRContract ID",
+                           pMissedAllocation.BLRMonth,
+                           pMissedAllocation."BLRFinancial Year",
+                           pRevenueStructureSubpage."BLRPeriod Start Date",
+                           pRevenueStructureSubpage."BLRPeriod End Date",
+                           pRevenueStructureSubpage."BLRFinal Annual Amount",
+                           pItemType
+                       ) then
+                exit;
             // Get termination date for this contract
             FinalCalculation.Reset();
             FinalCalculation.SetRange("BLRContract ID", pTenancyContract."BLRContract ID");

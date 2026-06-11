@@ -1,4 +1,4 @@
-codeunit 73209589 "Credit Memo Generate"
+codeunit 73209589 "BLRCredit Memo Generate"
 {
     Subtype = Normal;
     procedure GenerateCreditMemo(RequestCreditnoteGrid: Record "BLRRequestCreditNoteGrid")
@@ -128,7 +128,7 @@ codeunit 73209589 "Credit Memo Generate"
     var
         ConfigRecord: Record "BLRAzureConfiguration";
         SalesHeader1: Record "Sales Header";
-        azureBlobUploader: Codeunit "Azure AD Blob Storage";
+        azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
         TempBlob: Codeunit "Temp Blob";
         RecRef: RecordRef;
         InStream: InStream;

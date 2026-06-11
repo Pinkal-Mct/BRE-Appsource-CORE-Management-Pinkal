@@ -1,4 +1,4 @@
-enum 73209584 "Part Type Enum"
+enum 73209584 "BLRPart Type Enum"
 {
     Extensible = true;
     Caption = 'Part Type';

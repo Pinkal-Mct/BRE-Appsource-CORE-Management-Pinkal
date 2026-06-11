@@ -1,4 +1,4 @@
-tableextension 73209578 "Document Attachment Ext" extends "Document Attachment"
+tableextension 73209578 "BLRDocument Attachment Ext" extends "Document Attachment"
 {
     fields
     {

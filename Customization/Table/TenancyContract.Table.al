@@ -764,7 +764,7 @@ table 73209702 "BLRTenancyContract"
         {
             DataClassification = CustomerContent;
         }
-        field(73209662; "BLRApproval Stauts"; Enum "Approval Status Enum")
+        field(73209662; "BLRApproval Stauts"; Enum "BLRApproval Status Enum")
         {
             DataClassification = CustomerContent;
         }

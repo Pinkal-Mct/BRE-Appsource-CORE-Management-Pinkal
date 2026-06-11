@@ -1,4 +1,4 @@
-codeunit 73209620 "Tenant Loyalty Reminder"
+codeunit 73209620 "BLRTenant Loyalty Reminder"
 {
     Subtype = Normal;
     trigger OnRun()

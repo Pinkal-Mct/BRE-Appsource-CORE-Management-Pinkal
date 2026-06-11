@@ -1,4 +1,4 @@
-page 73209628 "Payment Type Card"
+page 73209628 "BLRPayment Type Card"
 {
     PageType = Card;
     SourceTable = "BLRPaymentType";

@@ -1,4 +1,4 @@
-page 73209606 "PDC Transaction Data"
+page 73209606 "BLRPDC Transaction Data"
 {
     PageType = API;
     APIGroup = 'finance';

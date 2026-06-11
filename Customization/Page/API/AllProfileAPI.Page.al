@@ -1,4 +1,4 @@
-page 73209576 "All Profile API"
+page 73209576 "BLRAll Profile API"
 {
     PageType = API;
     SourceTable = "All Profile";

@@ -16,7 +16,7 @@ table 73209624 "BLRFinAdjContractReduction"
         field(73209577; "BLRRevenue Description"; Text[100])
         {
             DataClassification = CustomerContent;
-            TableRelation = Item WHERE("BLRItem type template" = const("Item Type Template Enum"::"Secondary Item"));
+            TableRelation = Item WHERE("BLRItem type template" = const("BLRItem Type Template Enum"::"Secondary Item"));
             trigger OnValidate()
             var
                 SecondaryItemRec: Record "Item";

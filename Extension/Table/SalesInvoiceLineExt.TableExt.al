@@ -1,4 +1,4 @@
-tableextension 73209588 "Sales Invoice Line Ext" extends "Sales Invoice Line"
+tableextension 73209588 "BLRSales Invoice Line Ext" extends "Sales Invoice Line"
 {
     fields
     {

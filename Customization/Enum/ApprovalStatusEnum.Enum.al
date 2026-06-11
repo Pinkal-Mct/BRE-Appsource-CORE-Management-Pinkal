@@ -1,4 +1,4 @@
-enum 73209575 "Approval Status Enum"
+enum 73209575 "BLRApproval Status Enum"
 {
     Extensible = true;
     value(0; "Pending")

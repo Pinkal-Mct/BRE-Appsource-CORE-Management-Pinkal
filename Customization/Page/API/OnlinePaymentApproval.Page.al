@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 73209597 OnlinePaymentApproval
+page 73209597 BLROnlinePaymentApproval
 {
     APIGroup = 'payment';
     APIPublisher = 'realestate';

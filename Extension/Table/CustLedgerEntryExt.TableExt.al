@@ -1,4 +1,4 @@
-tableextension 73209576 "Cust. Ledger Entry Ext." extends "Cust. Ledger Entry"
+tableextension 73209576 "BLRCust. Ledger Entry Ext." extends "Cust. Ledger Entry"
 
 {
     fields

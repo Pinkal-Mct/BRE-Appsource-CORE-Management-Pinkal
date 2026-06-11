@@ -1,4 +1,4 @@
-page 73209654 "Primary Item List"
+page 73209654 "BLRPrimary Item List"
 {
     PageType = List;
     SourceTable = "BLRPrimaryItem";

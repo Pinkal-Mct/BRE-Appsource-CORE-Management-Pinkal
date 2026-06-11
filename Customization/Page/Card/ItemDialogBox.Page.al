@@ -1,4 +1,4 @@
-page 73209625 "Item Dialog Box"
+page 73209625 "BLRItem Dialog Box"
 {
     PageType = StandardDialog;
     ApplicationArea = All;
@@ -20,12 +20,12 @@ page 73209625 "Item Dialog Box"
         }
     }
 
-    procedure GetItemCategory(): Enum "Item Template Enum"
+    procedure GetItemCategory(): Enum "BLRItem Template Enum"
     begin
         exit(ItemCategory);
     end;
 
     var
-        ItemCategory: Enum "Item Template Enum";
+        ItemCategory: Enum "BLRItem Template Enum";
 }
 

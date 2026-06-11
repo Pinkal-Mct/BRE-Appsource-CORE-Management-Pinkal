@@ -1,4 +1,4 @@
-page 73209651 "Owner Profile List"
+page 73209651 "BLROwner Profile List"
 {
     PageType = List;
     SourceTable = "BLROwnerProfile";
@@ -73,7 +73,7 @@ page 73209651 "Owner Profile List"
                 ToolTip = 'Create a new owner profile.';
                 trigger OnAction()
                 begin
-                    Page.RunModal(Page::"Owner Profile Card");
+                    Page.RunModal(Page::"BLROwner Profile Card");
                 end;
             }
         }

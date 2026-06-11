@@ -1,4 +1,4 @@
-enum 73209578 "Deposit Type"
+enum 73209578 "BLRDeposit Type"
 {
     Extensible = true;
 

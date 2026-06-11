@@ -1,4 +1,4 @@
-codeunit 73209593 GenerateConsolidatedInvoices
+codeunit 73209593 BLRGenerateConsolidatedInvoice
 {
     trigger OnRun()
     var

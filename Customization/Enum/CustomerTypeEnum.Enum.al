@@ -1,4 +1,4 @@
-enum 73209576 "Customer Type Enum"
+enum 73209576 "BLRCustomer Type Enum"
 {
     Extensible = true;
     value(0; "Tenant")

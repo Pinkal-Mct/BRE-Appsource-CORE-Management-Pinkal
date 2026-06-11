@@ -1,4 +1,4 @@
-page 73209636 "Unearned Revenue Report Card"
+page 73209636 "BLRUnearnedRevenueReportCard"
 {
     PageType = Card;
     SourceTable = "BLRUnearnedRevenueReport";
@@ -32,7 +32,7 @@ page 73209636 "Unearned Revenue Report Card"
             group("Unearned Rent Revenue Report Report Details")
             {
                 Caption = 'Unearned Rent Revenue Report Details';
-                part("Unearned Rent Revenue Report Details"; "Sub Unearned Revenue Card")
+                part("Unearned Rent Revenue Report Details"; "BLRSub Unearned Revenue Card")
                 {
                     SubPageLink = "BLRHeader No." = field("BLRNo.");
                 }
@@ -88,7 +88,7 @@ page 73209636 "Unearned Revenue Report Card"
             group("Other Charges Details")
             {
                 Caption = 'Other Charges Details';
-                part("Other Charges Unearned Revenue"; "OtherCharges-UnearnedRevenue")
+                part("Other Charges Unearned Revenue"; "BLROtherChargesUnearnedRevenue")
                 {
                     SubPageLink = "BLRNo." = field("BLRNo.");
                 }
@@ -96,7 +96,7 @@ page 73209636 "Unearned Revenue Report Card"
             group("Unearned Other Charges Revenue Report Report Details")
             {
                 Caption = 'Unearned Other Charges Revenue Report Details';
-                part("Unearned Other Charges Revenue Report Details"; "Sub Unearned Charges")
+                part("Unearned Other Charges Revenue Report Details"; "BLRSubUnearnedCharges")
                 {
                     SubPageLink = "BLRHeader No." = field("BLRNo.");
                 }

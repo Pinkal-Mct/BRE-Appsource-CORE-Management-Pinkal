@@ -1,4 +1,4 @@
-page 73209614 "UsersAPI"
+page 73209614 "BLRUsersAPI"
 {
     PageType = API;
     SourceTable = "User";

@@ -30,7 +30,7 @@ table 73209614 "BLREmirate"
                     "BLRCountry Code" := country."BLRCountry Code";
             end;
         }
-        field(73209578; "BLREmirate Name"; Enum Emirates)
+        field(73209578; "BLREmirate Name"; Enum BLREmirates)
         {
             DataClassification = SystemMetadata;
             Caption = 'Emirate Name';
@@ -38,14 +38,14 @@ table 73209614 "BLREmirate"
     }
     keys
     {
-        key(PK;"BLRID")
+        key(PK; "BLRID")
         {
             Clustered = true;
         }
     }
     fieldgroups
     {
-        fieldgroup(DropDown;"BLRSl No.", "BLRID", "BLREmirate Name", "BLRCountry Code")
+        fieldgroup(DropDown; "BLRSl No.", "BLRID", "BLREmirate Name", "BLRCountry Code")
         {
         }
     }

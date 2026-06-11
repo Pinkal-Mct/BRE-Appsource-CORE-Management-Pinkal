@@ -1,4 +1,4 @@
-page 73209644 "Community List"
+page 73209644 "BLRCommunity List"
 {
     PageType = List;
     SourceTable = "BLRCommunity";

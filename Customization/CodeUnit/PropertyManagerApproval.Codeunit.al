@@ -1,4 +1,4 @@
-codeunit 73209598 "Property Manager Approval"
+codeunit 73209598 "BLRProperty Manager Approval"
 {
     procedure UpdateContractStatus(var Rec: Record "BLRTenancyContract"; NewStatus: Option)
     var

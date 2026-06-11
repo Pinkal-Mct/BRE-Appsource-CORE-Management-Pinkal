@@ -1,4 +1,4 @@
-page 73209583 "contractRenewalApi"
+page 73209583 "BLRcontractRenewalApi"
 {
     PageType = API;
     DelayedInsert = true;

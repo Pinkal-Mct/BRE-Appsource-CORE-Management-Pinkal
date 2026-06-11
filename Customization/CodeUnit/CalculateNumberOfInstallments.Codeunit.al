@@ -1,4 +1,4 @@
-codeunit 73209579 "Installment Calculation Engine"
+codeunit 73209579 "BLRInstallmentCalculationEng"
 {
     procedure CalculateTotalInstallments(var prevenuestructuresubpage: Record "BLRRevenueStructureSubpage")
     var
@@ -53,7 +53,7 @@ codeunit 73209579 "Installment Calculation Engine"
 
     procedure CalculateInstallments(DurationText: Text; Frequency: Text) NoofInstallmets: Integer
     var
-        fetchMonth: Codeunit "Fetch Month";
+        fetchMonth: Codeunit "BLRFetch Month";
         Years, Months, Days : Integer;
         TotalMonths, MonthsPerInstallment, Installments : Integer;
     begin

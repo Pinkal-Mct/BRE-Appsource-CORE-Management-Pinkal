@@ -1,4 +1,4 @@
-codeunit 73209575 "Split Payment Handler"
+codeunit 73209575 "BLRSplit Payment Handler"
 {
     procedure ProcessSplitPayment(var SplitPaymentRec: Record "BLRSplitPaymentChange")
     var

@@ -168,7 +168,7 @@ table 73209646 "BLRPaymentMode2"
             Caption = 'Deposit Status';
         }
 
-        field(73209584; "BLRPayment Status"; Enum "Payment Status")
+        field(73209584; "BLRPayment Status"; Enum "BLRPayment Status")
         {
             DataClassification = CustomerContent;
             //OptionMembers = "Scheduled","Due","Received","Overdue","Cancelled";
@@ -181,10 +181,10 @@ table 73209646 "BLRPaymentMode2"
                 PDCTransRec: Record "BLRPDCTransaction";
                 CashReceiptJournalCodeunit: Codeunit 73209580;
                 Email: Codeunit "Send Payment Receipt";
-                emailrec: Codeunit "Send PaymentMode Email";
-                azureBlobUploader: Codeunit "Azure AD Blob Storage";
+                emailrec: Codeunit "BLRSend PaymentMode Email";
+                azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                 TempBlob: Codeunit "Temp Blob";
-                selectDate: Page "Select Date";
+                selectDate: Page "BLRSelect Date";
                 RecRef: RecordRef;
                 fileName: Text[250];
                 uploadResult: Text[250];
@@ -271,7 +271,7 @@ table 73209646 "BLRPaymentMode2"
 
         }
 
-        field(73209585; "BLRCheque Status"; Enum "PDC Status Type Enum")
+        field(73209585; "BLRCheque Status"; Enum "BLRPDC Status Type Enum")
         {
             DataClassification = AccountData;
             // OptionMembers = "-","Cheque Received","Cleared","Deposited","Due & cheque not deposited","Retrieved","Returned","Replaced & Received","Deferred";
@@ -411,7 +411,7 @@ table 73209646 "BLRPaymentMode2"
             DataClassification = CustomerContent;
         }
 
-        field(73209601; "BLRApproval Status"; Enum "Approval Status Enum")
+        field(73209601; "BLRApproval Status"; Enum "BLRApproval Status Enum")
         {
             DataClassification = CustomerContent;
             trigger OnValidate()
@@ -616,7 +616,7 @@ table 73209646 "BLRPaymentMode2"
 
     keys
     {
-        key(Key1;"BLREntry No.")
+        key(Key1; "BLREntry No.")
         {
             Clustered = true;
         }
@@ -624,7 +624,7 @@ table 73209646 "BLRPaymentMode2"
 
     fieldgroups
     {
-        fieldgroup(DropDown;"BLRPayment Series", "BLRAmount")
+        fieldgroup(DropDown; "BLRPayment Series", "BLRAmount")
         {
             Caption = 'Dropdown';
 
@@ -634,7 +634,7 @@ table 73209646 "BLRPaymentMode2"
 
     trigger OnModify()
     var
-        emailrec: Codeunit "Send PaymentMode Email";
+        emailrec: Codeunit "BLRSend PaymentMode Email";
     begin
         // Ã¢Å“â€¦ Check if "BLRPayment Status" has changed
         if Rec."BLRPayment Status" <> xRec."BLRPayment Status" then

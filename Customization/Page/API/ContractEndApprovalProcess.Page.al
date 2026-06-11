@@ -1,6 +1,6 @@
 namespace BREPropertyManagemenMeghatMaster.BREPropertyManagemenMeghatMaster;
 
-page 73209582 ContractEndApprovalProcess
+page 73209582 BLRContractEndApprovalProcess
 {
     APIGroup = 'payment';
     APIPublisher = 'realestate';

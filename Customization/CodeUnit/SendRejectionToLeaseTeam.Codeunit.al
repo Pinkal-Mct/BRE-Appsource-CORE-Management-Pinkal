@@ -1,4 +1,4 @@
-codeunit 73209618 "SendRejectionToLeaseTeam"
+codeunit 73209618 "BLRSendRejectionToLeaseTeam"
 {
     procedure SendPaymentRejectionToLeaseManager(PaymentModeId: Integer; PaymentId: Code[20]; ContractId: Integer)
     var

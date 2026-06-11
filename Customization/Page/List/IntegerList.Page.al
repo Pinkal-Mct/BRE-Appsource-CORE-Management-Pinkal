@@ -1,4 +1,4 @@
-page 73209648 "Integer List"
+page 73209648 "BLRInteger List"
 {
     PageType = List;
     ApplicationArea = All;

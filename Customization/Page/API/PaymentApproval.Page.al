@@ -1,6 +1,6 @@
 namespace PropertyManagement.PropertyManagement;
 
-page 73209599 PaymentApproval
+page 73209599 BLRPaymentApproval
 {
     APIGroup = 'payment';
     APIPublisher = 'realestate';

@@ -1,4 +1,4 @@
-pageextension 73209575 "Item Card Ext" extends "Item Card"
+pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
 {
     Caption = 'Unit Card';
 
@@ -347,7 +347,7 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
                     Lookup = true;
                 }
             }
-            part("Document Attachments"; "Unit Document SubPage")
+            part("Document Attachments"; "BLRUnit Document SubPage")
             {
                 SubPageLink = "BLRUnitID" = FIELD("No.");
                 ApplicationArea = All;
@@ -446,8 +446,8 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
 
     procedure EvaluateFastTabVisibility(): Boolean
     begin
-        if Rec."BLRItem Template" = Enum::"Item Template Enum"::Service then
-            if Rec."BLRItem type template" = Enum::"Item Type Template Enum"::"Unit Service" then
+        if Rec."BLRItem Template" = Enum::"BLRItem Template Enum"::Service then
+            if Rec."BLRItem type template" = Enum::"BLRItem Type Template Enum"::"Unit Service" then
                 exit(true)
             else
                 exit(false);
@@ -455,8 +455,8 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
 
     procedure EvaluateFastTabVisibilityService(): Boolean
     begin
-        if Rec."BLRItem Template" = Enum::"Item Template Enum"::Service then
-            if Rec."BLRItem type template" = Enum::"Item Type Template Enum"::"Vendor Service" then
+        if Rec."BLRItem Template" = Enum::"BLRItem Template Enum"::Service then
+            if Rec."BLRItem type template" = Enum::"BLRItem Type Template Enum"::"Vendor Service" then
                 exit(true)
             else
                 exit(false);
@@ -464,8 +464,8 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
 
     procedure UnitChargesFieldsVisiblity(): Boolean
     begin
-        if Rec."BLRItem Template" = Enum::"Item Template Enum"::Service then
-            if Rec."BLRItem type template" = Enum::"Item Type Template Enum"::"Secondary Item" then
+        if Rec."BLRItem Template" = Enum::"BLRItem Template Enum"::Service then
+            if Rec."BLRItem type template" = Enum::"BLRItem Type Template Enum"::"Secondary Item" then
                 exit(true)
             else
                 exit(false);
@@ -473,8 +473,8 @@ pageextension 73209575 "Item Card Ext" extends "Item Card"
 
     procedure InventoryUnitVisibility(): Boolean
     begin
-        if Rec."BLRItem Template" = Enum::"Item Template Enum"::Inventory then
-            if Rec."BLRItem type template" = Enum::"Item Type Template Enum"::"Unit Inventory" then
+        if Rec."BLRItem Template" = Enum::"BLRItem Template Enum"::Inventory then
+            if Rec."BLRItem type template" = Enum::"BLRItem Type Template Enum"::"Unit Inventory" then
                 exit(true)
             else
                 exit(false);

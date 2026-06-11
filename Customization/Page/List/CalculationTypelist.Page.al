@@ -1,4 +1,4 @@
-page 73209641 "Calculation Type List"
+page 73209641 "BLRCalculation Type List"
 {
     PageType = List;
     SourceTable = "BLRCalculationType";

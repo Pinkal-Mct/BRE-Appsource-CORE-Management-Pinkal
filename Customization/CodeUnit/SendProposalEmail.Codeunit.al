@@ -1,4 +1,4 @@
-codeunit 73209617 "Send Proposal Email"
+codeunit 73209617 "BLRSend Proposal Email"
 {
     procedure SendEmail(Rec: Record "BLRLeaseProposalDetails"): Text;
     var
