@@ -97,12 +97,12 @@ table 73209693 "BLRSubUnearnedCharges"
         }
         field(73209591; "BLRG/L Balance"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'G/L Balance';
         }
         field(73209592; "BLRShortfall/Excess"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Shortfall/Excess';
         }
         field(73209593; "BLRHeader No."; Integer)

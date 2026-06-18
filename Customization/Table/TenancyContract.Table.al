@@ -947,7 +947,7 @@ table 73209702 "BLRTenancyContract"
         field(73209690; "BLRMunicipality Number"; Text[100])
         {
             Caption = 'Municipality Number';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
 

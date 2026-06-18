@@ -365,7 +365,7 @@ permissionset 73209575 BLRCoreMgtPermission
         page "BLRRevenue Allocation List" = X,
         page "BLRRevenue Allocation SubGrid" = X,
         page "BLRRevenueRecognitionDetailSub" = X,
-        page "Revenue Recognition Item Sub" = X,
+        page "BLRRevenueRecognitionItemSub" = X,
         page "BLRRevenueAllocaApprovalList" = X,
         page "BLRSubUnearnedCharges" = X,
         page "BLRSub Unearned Revenue Card" = X,

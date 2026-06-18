@@ -200,7 +200,7 @@ table 73209676 "BLRRevenueRecognitionDetails"
         }
         field(50133; "BLRRevenue Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revenue Start Date';
             Editable = false;
         }
@@ -208,11 +208,11 @@ table 73209676 "BLRRevenueRecognitionDetails"
 
     keys
     {
-        key(PK;"BLREntry No.")
+        key(PK; "BLREntry No.")
         {
             Clustered = true;
         }
-        key(SumKey;"BLRRR_No.", "BLRContract Id", "BLRRevenue Start Date")
+        key(SumKey; "BLRRR_No.", "BLRContract Id", "BLRRevenue Start Date")
         {
             SumIndexFields = "BLRTotal Value";
         }

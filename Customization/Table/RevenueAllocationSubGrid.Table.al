@@ -196,7 +196,7 @@ table 73209672 "BLRRevenueAllocationSubGrid"
         }
         field(50131; "BLRRevenue Start Date"; Date)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Revenue Start Date';
         }
 
@@ -204,11 +204,11 @@ table 73209672 "BLRRevenueAllocationSubGrid"
 
     keys
     {
-        key(Key1;"BLRHeader No.", "BLRLine No.")
+        key(Key1; "BLRHeader No.", "BLRLine No.")
         {
             Clustered = true;
         }
-        key(SumKey;"BLRHeader No.", "BLRContract Id", "BLRRevenue Start Date")
+        key(SumKey; "BLRHeader No.", "BLRContract Id", "BLRRevenue Start Date")
         {
             SumIndexFields = "BLRTotal Value";
         }

@@ -95,7 +95,7 @@ page 73209633 "BLRRevenue Allocation Card"
             group("Revenue Recognition Item")
             {
                 Caption = 'Revenue Item Details';
-                part("Revenue Recognition Item Details"; "Revenue Recognition Item Sub")
+                part("Revenue Recognition Item Details"; "BLRRevenueRecognitionItemSub")
                 {
                     SubPageLink = "BLRRR_No." = field("BLRNo.");
                     UpdatePropagation = Both;
@@ -1364,7 +1364,6 @@ page 73209633 "BLRRevenue Allocation Card"
                                 CurrentMonth := StartMonth;
                                 while (CurrentYear < EndYear) or ((CurrentYear = EndYear) and (CurrentMonth <= EndMonth)) do begin
                                     SelectedMonthStartTemp := DMY2Date(1, CurrentMonth, CurrentYear);
-                                    SelectedMonthEndTemp := CALCDATE('<CM>', SelectedMonthStartTemp);
                                     CalculatedDaysTemp := CalculateDaysInSelectedMonth(ContractRec."BLRContract Start Date", ContractRec."BLRContract End Date", MultiYearStartDate, MultiYearEndDate, CurrentMonth, CurrentYear);
                                     if CalculatedDaysTemp > 0 then begin
                                         NewLineNo := GetNextLineNo();
@@ -1708,8 +1707,6 @@ page 73209633 "BLRRevenue Allocation Card"
         PerDayRentWithoutGracePeriod := (GridAnnualAmount / TotalContractDays);
 
         if CalculatedRecoveryDays > 0 then begin
-            RecoveryAmount := CalculatedRecoveryDays * PerDayRent;
-
             FilteredContractRec.Init();
             FilteredContractRec."BLRLine No." := NewLineNo;
             FilteredContractRec."BLRHeader No." := Rec."BLRNo.";

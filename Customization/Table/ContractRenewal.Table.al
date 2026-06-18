@@ -1058,7 +1058,7 @@ table 73209600 "BLRContractRenewal"
         }
         field(73209662; "BLRMunicipality Number"; Text[100])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'Municipality Number';
 
         }

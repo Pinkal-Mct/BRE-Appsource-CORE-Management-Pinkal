@@ -1,4 +1,4 @@
-page 73209660 "Revenue Recognition Item Sub"
+page 73209660 "BLRRevenueRecognitionItemSub"
 {
     PageType = ListPart;
     ApplicationArea = All;
@@ -170,8 +170,6 @@ page 73209660 "Revenue Recognition Item Sub"
                        (TenancyContract."BLRContract End Date" >= RevenueAllocationStartDate) then begin
 
                         // Reset flag for each contract
-                        ContractProcessed := false;
-
                         // Get revenue structure details directly for this contract
                         RevenueStructure.Reset();
                         RevenueStructure.SetRange("BLRContract ID", TenancyContract."BLRContract ID");

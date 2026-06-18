@@ -258,7 +258,6 @@ page 73209636 "BLRUnearnedRevenueReportCard"
         SalesCreditMemoLines: Record "Sales Cr.Memo Line";
         PostedSalesInvoiceHeader: Record "Sales Invoice Header";
         coaSetup: Record "BLRCOASetup";
-        ledgerEntries: Record "G/L Entry";
         NewLineNo: Integer;
         StartDate, EndDate : Date;
         SuspendedDate: Date;

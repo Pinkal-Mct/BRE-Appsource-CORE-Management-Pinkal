@@ -40,7 +40,6 @@ table 73209654 "BLRPDCTransaction"
             trigger OnValidate()
             var
                 CashReceiptJournalCodeunit: Codeunit "BLRCash Receipt Journal Entry";
-                selectDate: Page "BLRSelect Date";
             begin
                 if Rec."BLRCheque Status" = Rec."BLRCheque Status"::Cancelled then
                     if xRec."BLRCheque Status" = xRec."BLRCheque Status"::"Cheque Received" then

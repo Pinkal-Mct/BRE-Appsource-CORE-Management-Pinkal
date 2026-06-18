@@ -1,24 +1,31 @@
 table 73209717 "BLRTCAdditionalTerms"
 {
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {
         field(73209575; "BLREntry No."; Integer)
         {
             AutoIncrement = true;
+            DataClassification = CustomerContent;
         }
 
         field(73209576; "BLRDocument No."; Integer)
         {
+            DataClassification = CustomerContent;
+
         }
 
         field(73209577; "BLRPoint No."; Integer)
         {
+            DataClassification = CustomerContent;
+
         }
 
         field(73209578; "BLRDescription"; Text[250])
         {
+            DataClassification = CustomerContent;
+
         }
     }
 

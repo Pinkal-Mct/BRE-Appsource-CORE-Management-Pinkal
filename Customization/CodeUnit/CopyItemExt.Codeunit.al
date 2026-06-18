@@ -13,6 +13,6 @@ codeunit 73209587 "BLRCopy Item Ext"
         TargetItem.BLRMergeSplitOption := TargetItem.BLRMergeSplitOption::Single;
         TargetItem.Modify();
 
-        unitpage.AutoGenerateUnitName(TargetItem);
+        unitpage.BLRAutoGenerateUnitName(TargetItem);
     end;
 }

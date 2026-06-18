@@ -70,13 +70,13 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         }
         addafter(Description)
         {
-            group("Posting setup")
+            group("BLRPosting setup")
             {
                 ShowCaption = false;
                 Visible = hideshowfields and isVenderService or Unitcharges;
             }
         }
-        movefirst("Posting setup"; "Gen. Prod. Posting Group", "VAT Prod. Posting Group")
+        movefirst("BLRPosting setup"; "Gen. Prod. Posting Group", "VAT Prod. Posting Group")
         modify("Service Item Group")
         {
             Editable = editablefalsefieldNonInventoryType;
@@ -88,41 +88,41 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         }
         addafter("No.")
         {
-            group(DescriptionGrp)
+            group(BLRDescriptionGrp)
             {
                 ShowCaption = false;
                 Visible = isVenderService or Unitcharges or isUnitService or isUnitInventory;
             }
         }
-        movefirst(DescriptionGrp; Description)
+        movefirst(BLRDescriptionGrp; Description)
         addafter(Type)
         {
-            group("Unit Charges Description")
+            group("BLRUnit Charges Description")
             {
                 ShowCaption = false;
                 Visible = Unitcharges or isVenderService;
 
-                field("Primary Item Type"; Rec."BLRPrimary Item Type")
+                field("BLRPrimary Item Type"; Rec."BLRPrimary Item Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Primary Item Type';
                 }
-                field("Category Types"; Rec."BLRCategory Types")
+                field("BLRCategory Types"; Rec."BLRCategory Types")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Category Types';
                 }
-                field("VAT Type"; Rec."BLRVAT Type")
+                field("BLRVAT Type"; Rec."BLRVAT Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'VAT Type';
                 }
-                field("VAT %"; Rec."BLRVAT %")
+                field("BLRVAT %"; Rec."BLRVAT %")
                 {
                     ApplicationArea = All;
                     ToolTip = 'VAT Percentage';
                 }
-                field("Charges Status"; Rec."BLRCharges Status")
+                field("BLRCharges Status"; Rec."BLRCharges Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Charges Status';
@@ -131,11 +131,11 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         }
         addafter("Base Unit of Measure")
         {
-            group("BaseUnitofMeasure")
+            group("BLRBaseUnitofMeasure")
             {
                 ShowCaption = false;
                 Visible = isUnitService or isUnitInventory;
-                field("Market Rate per Sq. Ft."; rec."BLRMarket Rate per Sq. Ft.")
+                field("BLRMarket Rate per Sq. Ft."; rec."BLRMarket Rate per Sq. Ft.")
                 {
                     ApplicationArea = All;
                     Editable = editablefalsefieldNonInventoryType;
@@ -143,13 +143,13 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                 }
             }
         }
-        addafter("Market Rate per Sq. Ft.")
+        addafter("BLRMarket Rate per Sq. Ft.")
         {
-            group("MarketRateperSq.Ft.")
+            group("BLRMarketRateperSq.Ft.")
             {
                 ShowCaption = false;
                 Visible = isUnitService or isUnitInventory;
-                field("Unit Size"; rec."BLRUnit Size")
+                field("BLRUnit Size"; rec."BLRUnit Size")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Size';
@@ -159,13 +159,13 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
             }
 
         }
-        addafter("Unit Size")
+        addafter("BLRUnit Size")
         {
-            group("UnitSize")
+            group("BLRUnitSize")
             {
                 ShowCaption = false;
                 Visible = isUnitService or isUnitInventory;
-                field("Amount"; rec."BLRAmount")
+                field("BLRAmount"; rec."BLRAmount")
                 {
                     ApplicationArea = All;
                     Caption = 'Amount';
@@ -176,11 +176,11 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         }
         addafter("Gen. Prod. Posting Group")
         {
-            group("Gen.Prod.PostingGroup")
+            group("BLRGen.Prod.PostingGroup")
             {
                 ShowCaption = false;
                 Visible = isUnitService or isUnitInventory;
-                field("Primary Classification Type"; Rec."BLRPrimary Classification Type")
+                field("BLRPrimary Classification Type"; Rec."BLRPrimary Classification Type")
                 {
                     ApplicationArea = All;
                     Caption = 'Primary Classification Type';
@@ -191,12 +191,12 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         }
         addafter(Item)
         {
-            group(UnitManagement)
+            group(BLRUnitManagement)
             {
                 Visible = isUnitService or isUnitInventory;
                 Caption = 'Unit Management';
 
-                field(FixedNumber; Rec."BLRFixedNumber")
+                field(BLRFixedNumber; Rec."BLRFixedNumber")
                 {
                     ApplicationArea = All;
                     Caption = 'FixedNumber';
@@ -204,7 +204,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                     Editable = false;
                     Visible = false;
                 }
-                field("Property ID"; Rec."BLRProperty ID")
+                field("BLRProperty ID"; Rec."BLRProperty ID")
                 {
                     ApplicationArea = All;
                     Caption = 'Property ID';
@@ -212,18 +212,18 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                     Editable = editablefalsefieldNonInventoryType;
                     trigger OnValidate()
                     begin
-                        AutoGenerateUnitName(Rec);
+                        BLRAutoGenerateUnitName(Rec);
                     end;
                 }
 
-                field("Property Name"; Rec."BLRProperty Name")
+                field("BLRProperty Name"; Rec."BLRProperty Name")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Select the associated Property Name.';
                     Caption = 'Property Name';
                     Editable = false;
                 }
-                field("Country"; Rec."BLRCountry")
+                field("BLRCountry"; Rec."BLRCountry")
                 {
                     ApplicationArea = All;
                     Caption = 'Country';
@@ -232,11 +232,11 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                     Editable = false;
                     trigger OnValidate()
                     begin
-                        AutoGenerateUnitName(Rec);
+                        BLRAutoGenerateUnitName(Rec);
                     end;
 
                 }
-                field("Emirate"; Rec."BLREmirate Name")
+                field("BLREmirate"; Rec."BLREmirate Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Emirate';
@@ -245,10 +245,10 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                     Editable = false;
                     trigger OnValidate()
                     begin
-                        AutoGenerateUnitName(Rec);
+                        BLRAutoGenerateUnitName(Rec);
                     end;
                 }
-                field("Community"; Rec."BLRCommunity")
+                field("BLRCommunity"; Rec."BLRCommunity")
                 {
                     ApplicationArea = All;
                     Caption = 'Community';
@@ -257,35 +257,35 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                     Editable = false;
                     trigger OnValidate()
                     begin
-                        AutoGenerateUnitName(Rec);
+                        BLRAutoGenerateUnitName(Rec);
                     end;
                 }
-                field("Makani Number"; Rec."BLRMakani Number")
+                field("BLRMakani Number"; Rec."BLRMakani Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Makani Number';
                     ToolTip = 'Makani Number of the Unit';
                 }
-                field("Municipality Number"; Rec."BLRMunicipality Number")
+                field("BLRMunicipality Number"; Rec."BLRMunicipality Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Municipality Number';
                     ToolTip = 'Municipality Number of the Unit';
                 }
-                field("DEWA Number"; Rec."BLRDEWA Number")
+                field("BLRDEWA Number"; Rec."BLRDEWA Number")
                 {
                     ApplicationArea = All;
                     Caption = 'DEWA Number';
                     ToolTip = 'DEWA Number of the Unit';
                 }
-                field("Floor Number"; Rec."BLRFloor Number")
+                field("BLRFloor Number"; Rec."BLRFloor Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Floor Number';
                     ToolTip = 'Floor Number of the Unit';
                     Editable = editablefalsefieldNonInventoryType;
                 }
-                field("Unit Number"; Rec."BLRUnit Number")
+                field("BLRUnit Number"; Rec."BLRUnit Number")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Number';
@@ -293,18 +293,18 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                     Editable = editablefalsefieldNonInventoryType;
                     trigger OnValidate()
                     begin
-                        AutoGenerateUnitName(Rec);
+                        BLRAutoGenerateUnitName(Rec);
                     end;
                 }
 
-                field("Unit ID"; Rec.BLRUnitID)
+                field("BLRUnit ID"; Rec.BLRUnitID)
                 {
                     ApplicationArea = All;
                     Caption = 'Unit ID';
                     ToolTip = 'Unique Identifier for the Unit';
                     Editable = false;
                 }
-                field("Unit Name"; Rec."BLRUnit Name")
+                field("BLRUnit Name"; Rec."BLRUnit Name")
                 {
                     ApplicationArea = All;
                     Caption = 'Unit Name';
@@ -312,7 +312,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                     Editable = false;
                 }
 
-                field("Usage Type"; rec."BLRUsage Type")
+                field("BLRUsage Type"; rec."BLRUsage Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Usage Type of the Unit';
@@ -320,36 +320,36 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                     Editable = false;
                 }
 
-                field("Unit Type"; rec."BLRUnit Type")
+                field("BLRUnit Type"; rec."BLRUnit Type")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Type of the Unit';
                     Lookup = true;
                     Editable = editablefalsefieldNonInventoryType;
                 }
-                field("Unit Address"; rec."BLRUnit Address")
+                field("BLRUnit Address"; rec."BLRUnit Address")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Address of the Unit';
                     Editable = editablefalsefieldNonInventoryType;
                 }
-                field("Merging/Splitting"; rec."BLRMergeSplitOption")
+                field("BLRMerging/Splitting"; rec."BLRMergeSplitOption")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Option for Merging or Splitting the Unit';
                     Editable = false;
                 }
 
-                field("Unit Status"; rec."BLRUnit Status")
+                field("BLRUnit Status"; rec."BLRUnit Status")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Current Status of the Unit';
                     Lookup = true;
                 }
             }
-            part("Document Attachments"; "BLRUnit Document SubPage")
+            part("BLRDocument Attachments"; "BLRUnit Document SubPage")
             {
-                SubPageLink = "BLRUnitID" = FIELD("No.");
+                SubPageLink = "BLRUnitID" = field("No.");
                 ApplicationArea = All;
                 Editable = editablefalsefieldNonInventoryType;
                 Visible = ShowFinancialFields and isUnitService and isVisible;
@@ -363,15 +363,16 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         {
             trigger OnAfterAction()
             begin
-                AutoGenerateUnitName(Rec);
+                BLRAutoGenerateUnitName(Rec);
             end;
         }
         addafter("Item Journal")
         {
-            action("Add New Line")
+            action("BLRAdd New Line")
             {
                 ApplicationArea = All;
                 ToolTip = 'Add a new line to the Unit Charges';
+                Image = New;
                 Visible = isService;
                 trigger OnAction()
                 var
@@ -388,7 +389,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         }
     }
 
-    procedure AutoGenerateUnitName(var TargetItem: Record Item)
+    procedure BLRAutoGenerateUnitName(var TargetItem: Record Item)
     var
         PropertyCode: Text;
         UnitID: Text;
@@ -401,14 +402,14 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         lCommunity: Text;
         Unitnumber: Text;
     begin
-        PropertyCode := FormatName(TargetItem."BLRProperty Name");
+        PropertyCode := BLRFormatName(TargetItem."BLRProperty Name");
         lCountry := Format(TargetItem."BLRCountry");
         Emirates := Format(TargetItem."BLREmirate Name");
         lCommunity := Format(TargetItem."BLRCommunity");
         Unitnumber := Format(TargetItem."BLRUnit Number");
-        CountryCode := FormatName(lCountry);
-        EmiratesCode := FormatName(Emirates);
-        CommunityCode := FormatName(lCommunity);
+        CountryCode := BLRFormatName(lCountry);
+        EmiratesCode := BLRFormatName(Emirates);
+        CommunityCode := BLRFormatName(lCommunity);
         UnitnumberCode := Format(Unitnumber);
         TargetItem."BLRUnit Name" := PropertyCode + '-SU-' + UnitnumberCode;
         UnitID := CountryCode + '-' + EmiratesCode + '-' + CommunityCode + '-' + PropertyCode + '-' + UnitnumberCode;
@@ -416,7 +417,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         TargetItem.Modify();
     end;
 
-    procedure FormatName(Name: Text): Text
+    procedure BLRFormatName(Name: Text): Text
     var
         Words: List of [Text];
         Word: Text;
@@ -444,7 +445,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         isVenderService: Boolean;
         isUnitInventory: Boolean;
 
-    procedure EvaluateFastTabVisibility(): Boolean
+    procedure BLREvaluateFastTabVisibility(): Boolean
     begin
         if Rec."BLRItem Template" = Enum::"BLRItem Template Enum"::Service then
             if Rec."BLRItem type template" = Enum::"BLRItem Type Template Enum"::"Unit Service" then
@@ -453,7 +454,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                 exit(false);
     end;
 
-    procedure EvaluateFastTabVisibilityService(): Boolean
+    procedure BLREvaluateFastTabVisibilityService(): Boolean
     begin
         if Rec."BLRItem Template" = Enum::"BLRItem Template Enum"::Service then
             if Rec."BLRItem type template" = Enum::"BLRItem Type Template Enum"::"Vendor Service" then
@@ -462,7 +463,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                 exit(false);
     end;
 
-    procedure UnitChargesFieldsVisiblity(): Boolean
+    procedure BLRUnitChargesFieldsVisiblity(): Boolean
     begin
         if Rec."BLRItem Template" = Enum::"BLRItem Template Enum"::Service then
             if Rec."BLRItem type template" = Enum::"BLRItem Type Template Enum"::"Secondary Item" then
@@ -471,7 +472,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
                 exit(false);
     end;
 
-    procedure InventoryUnitVisibility(): Boolean
+    procedure BLRInventoryUnitVisibility(): Boolean
     begin
         if Rec."BLRItem Template" = Enum::"BLRItem Template Enum"::Inventory then
             if Rec."BLRItem type template" = Enum::"BLRItem Type Template Enum"::"Unit Inventory" then
@@ -482,57 +483,57 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
 
     trigger OnModifyRecord(): Boolean
     begin
-        CurrPage."Document Attachments".Page.SetUnitId(Rec."No.");
-        ISPrimaryType := SetPrimaryType();
-        hideshowfields := hidefields();
-        editablefalsefieldNonInventoryType := editablefalseNonInventory();
-        isUnitService := EvaluateFastTabVisibility();
-        isUnitInventory := InventoryUnitVisibility();
-        isVenderService := EvaluateFastTabVisibilityService();
-        Unitcharges := UnitChargesFieldsVisiblity();
+        CurrPage."BLRDocument Attachments".Page.SetUnitId(Rec."No.");
+        ISPrimaryType := BLRSetPrimaryType();
+        hideshowfields := BLRHidefields();
+        editablefalsefieldNonInventoryType := BLREditablefalseNonInventory();
+        isUnitService := BLREvaluateFastTabVisibility();
+        isUnitInventory := BLRInventoryUnitVisibility();
+        isVenderService := BLREvaluateFastTabVisibilityService();
+        Unitcharges := BLRUnitChargesFieldsVisiblity();
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        CurrPage."Document Attachments".Page.SetUnitId(Rec."No.");
+        CurrPage."BLRDocument Attachments".Page.SetUnitId(Rec."No.");
         isVisible := true;
 
         if Rec."BLRProperty Name" = '' then
             exit
         else
-            AutoGenerateUnitName(Rec);
+            BLRAutoGenerateUnitName(Rec);
     end;
 
     trigger OnAfterGetRecord()
 
     begin
-        CurrPage."Document Attachments".Page.SetUnitId(Rec."No.");
+        CurrPage."BLRDocument Attachments".Page.SetUnitId(Rec."No.");
         if Format(Rec."No.") <> '' then
             isVisible := true
         else
             isVisible := false;
 
-        ISPrimaryType := SetPrimaryType();
-        hideshowfields := hidefields();
-        editablefalsefieldNonInventoryType := editablefalseNonInventory();
-        isUnitService := EvaluateFastTabVisibility();
-        isUnitInventory := InventoryUnitVisibility();
-        isVenderService := EvaluateFastTabVisibilityService();
-        Unitcharges := UnitChargesFieldsVisiblity();
+        ISPrimaryType := BLRSetPrimaryType();
+        hideshowfields := BLRHidefields();
+        editablefalsefieldNonInventoryType := BLREditablefalseNonInventory();
+        isUnitService := BLREvaluateFastTabVisibility();
+        isUnitInventory := BLRInventoryUnitVisibility();
+        isVenderService := BLREvaluateFastTabVisibilityService();
+        Unitcharges := BLRUnitChargesFieldsVisiblity();
     end;
 
     trigger OnAfterGetCurrRecord()
     begin
-        ISPrimaryType := SetPrimaryType();
-        hideshowfields := hidefields();
-        editablefalsefieldNonInventoryType := editablefalseNonInventory();
-        Unitcharges := UnitChargesFieldsVisiblity();
-        isUnitService := EvaluateFastTabVisibility();
-        isUnitInventory := InventoryUnitVisibility();
-        isVenderService := EvaluateFastTabVisibilityService();
+        ISPrimaryType := BLRSetPrimaryType();
+        hideshowfields := BLRHidefields();
+        editablefalsefieldNonInventoryType := BLREditablefalseNonInventory();
+        Unitcharges := BLRUnitChargesFieldsVisiblity();
+        isUnitService := BLREvaluateFastTabVisibility();
+        isUnitInventory := BLRInventoryUnitVisibility();
+        isVenderService := BLREvaluateFastTabVisibilityService();
     end;
 
-    procedure SetPrimaryType(): Boolean
+    procedure BLRSetPrimaryType(): Boolean
     var
     begin
         if Rec.Type = Rec.Type::"Non-Inventory" then
@@ -541,7 +542,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
             exit(false);
     end;
 
-    procedure hidefields(): Boolean
+    procedure BLRHidefields(): Boolean
     var
     begin
         if Rec.Type = Rec.Type::Service then
@@ -550,7 +551,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
             exit(true);
     end;
 
-    procedure editablefalseNonInventory(): Boolean
+    procedure BLREditablefalseNonInventory(): Boolean
     var
     begin
         if Rec.Type = Rec.Type::"Non-Inventory" then
@@ -562,13 +563,13 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
     trigger OnOpenPage()
     var
     begin
-        hideshowfields := hidefields();
-        editablefalsefieldNonInventoryType := editablefalseNonInventory();
-        ShowFinancialFields := not IsUserInProfile('FINANCE MANAGER');
-        isUnitService := EvaluateFastTabVisibility();
-        isUnitInventory := InventoryUnitVisibility();
-        isVenderService := EvaluateFastTabVisibilityService();
-        Unitcharges := UnitChargesFieldsVisiblity();
+        hideshowfields := BLRHidefields();
+        editablefalsefieldNonInventoryType := BLREditablefalseNonInventory();
+        ShowFinancialFields := not BLRIsUserInProfile('FINANCE MANAGER');
+        isUnitService := BLREvaluateFastTabVisibility();
+        isUnitInventory := BLRInventoryUnitVisibility();
+        isVenderService := BLREvaluateFastTabVisibilityService();
+        Unitcharges := BLRUnitChargesFieldsVisiblity();
     end;
 
     var
@@ -578,7 +579,7 @@ pageextension 73209575 "BLRItem Card Ext" extends "Item Card"
         editablefalsefieldNonInventoryType: Boolean;
         Unitcharges: Boolean;
 
-    local procedure IsUserInProfile(ProfileID: Code[20]): Boolean
+    local procedure BLRIsUserInProfile(ProfileID: Code[20]): Boolean
     var
         AccessControl: Record "User Personalization";
     begin

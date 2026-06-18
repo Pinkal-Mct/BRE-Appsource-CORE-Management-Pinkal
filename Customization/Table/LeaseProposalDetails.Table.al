@@ -1068,7 +1068,7 @@ table 73209628 "BLRLeaseProposalDetails"
         field(73209657; "BLRMunicipality Number"; Text[100])
         {
             Caption = 'Municipality Number';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
 

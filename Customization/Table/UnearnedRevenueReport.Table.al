@@ -75,7 +75,7 @@ table 73209706 "BLRUnearnedRevenueReport"
 
         field(73209583; "BLRTotal G/L Balance"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Editable = false;
         }
         field(73209584; "BLRR_Total Shortfall Excess"; Decimal)

@@ -44,14 +44,9 @@ codeunit 73209605 "BLRSendApprovalFinanceManager"
 
     procedure ComposeNewEmailBody(PaymentTransactionId: Text; TenantId: Text; ContractId: Integer): Text
     var
-        EnvInformation: Codeunit "Environment Information";
-        AzureADTenant: Codeunit "Azure AD Tenant";
         CompanyInfo: Record "Company Information";
         CompanyName: Text;
         EmailBody: Text;
-        BCTenantID: Text;
-        BCEnvName: Text;
-        urlpage: Text;
     begin
         if CompanyInfo.Get() then
             CompanyName := CompanyInfo."Name";

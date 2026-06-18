@@ -159,7 +159,7 @@ tableextension 73209581 "BLRItem Ext" extends Item
             Caption = 'Market Rate per Sq. Ft.';
             trigger OnValidate()
             begin
-                CalculateAmount();
+                BLRCalculateAmount();
             end;
         }
         field(73209595; "BLRUnit Size"; Decimal)
@@ -168,7 +168,7 @@ tableextension 73209581 "BLRItem Ext" extends Item
             Caption = 'Size (sq. ft./meters)';
             trigger OnValidate()
             begin
-                CalculateAmount();
+                BLRCalculateAmount();
             end;
         }
         field(73209596; "BLRAmount"; Decimal)
@@ -270,22 +270,22 @@ tableextension 73209581 "BLRItem Ext" extends Item
         field(73209609; "BLRMakani Number"; Text[100])
         {
             Caption = 'Makani Number';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
         field(73209610; "BLRMunicipality Number"; Text[100])
         {
             Caption = 'Municipality Number';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
         field(73209611; "BLRDEWA Number"; Text[100])
         {
             Caption = 'DEWA Number';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
-    procedure CalculateAmount()
+    procedure BLRCalculateAmount()
     var
         MarketRate: Decimal;
         UnitSize: Decimal;

@@ -97,7 +97,7 @@ table 73209694 "BLRSubUnearnedRevenueReport"
         }
         field(73209591; "BLRG/L Balance"; Decimal)
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             Caption = 'G/L Balance';
         }
         field(73209592; "BLRShortfall/Excess"; Decimal)

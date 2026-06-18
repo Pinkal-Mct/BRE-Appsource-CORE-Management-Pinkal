@@ -105,12 +105,12 @@ table 73209623 "BLRFinalSettlementRefund"
         }
         field(73209593; "BLRReceipt #"; Text[250])
         {
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
     keys
     {
-        key(PK;"BLRFC ID")
+        key(PK; "BLRFC ID")
         {
             Clustered = true;
         }

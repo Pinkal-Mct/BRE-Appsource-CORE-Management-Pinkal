@@ -112,19 +112,19 @@ table 73209634 "BLRMergedUnits"
         field(73209591; "BLRMakani Number"; Text[100])
         {
             Caption = 'Makani Number';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
         field(73209592; "BLRMunicipality Number"; Text[100])
         {
             Caption = 'Municipality Number';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
 
         }
         field(73209593; "BLRDEWA Number"; Text[100])
         {
             Caption = 'DEWA Number';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
         }
     }
     keys
