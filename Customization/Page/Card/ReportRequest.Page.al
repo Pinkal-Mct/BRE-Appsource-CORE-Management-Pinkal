@@ -2,6 +2,7 @@ page 73209632 "BLRReport Request"
 {
     PageType = Card;
     ApplicationArea = All;
+    Caption = 'Report Request';
     UsageCategory = Administration;
 
     layout

@@ -24,14 +24,14 @@ table 73209671 "BLRRevenueAllocationDetails"
         }
         field(73209578; "BLRStatus"; Option)
         {
-            OptionMembers = "Pending","Approve","Reject";
+            OptionMembers = "Pending","Approved","Rejected";
             Caption = 'Status';
             DataClassification = CustomerContent;
         }
     }
     keys
     {
-        key(PK;"BLRNo.") { Clustered = true; }
+        key(PK; "BLRNo.") { Clustered = true; }
     }
     trigger OnDelete()
     var

@@ -180,7 +180,7 @@ table 73209646 "BLRPaymentMode2"
                 paymentschedule2: Record "BLRPaymentSchedule2";
                 PDCTransRec: Record "BLRPDCTransaction";
                 CashReceiptJournalCodeunit: Codeunit 73209580;
-                Email: Codeunit "Send Payment Receipt";
+                Email: Codeunit "BLRSend Payment Receipt";
                 emailrec: Codeunit "BLRSend PaymentMode Email";
                 azureBlobUploader: Codeunit "BLRAzure AD Blob Storage";
                 TempBlob: Codeunit "Temp Blob";

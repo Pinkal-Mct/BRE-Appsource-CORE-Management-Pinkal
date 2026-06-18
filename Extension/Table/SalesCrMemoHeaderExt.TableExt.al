@@ -40,7 +40,7 @@ tableextension 73209585 "BLRSales Cr. Memo Header Ext" extends "Sales Cr.Memo He
             DataClassification = CustomerContent;
             Caption = 'Property Classification';
         }
-        field(73209590; "BLRApproval Status for CreditNote"; Option)
+        field(73209590; "BLRApprovalStatusforCreditNote"; Option)
         {
             DataClassification = CustomerContent;
             OptionMembers = " ",Approved,Rejected;

@@ -43,7 +43,7 @@ page 73209656 "BLRRevenueAllocaApprovalList"
                     begin
                         revenueallocation.SetRange("BLRNo.", Rec."BLRID");
                         if revenueallocation.FindSet() then
-                            PAGE.RunModal(PAGE::"Revenue Allocation Card", revenueallocation)
+                            PAGE.RunModal(PAGE::"BLRRevenue Allocation Card", revenueallocation)
                         else
                             Message('No Revenue Allocation found using FindFirst either.');
                     end;
@@ -128,7 +128,7 @@ page 73209656 "BLRRevenueAllocaApprovalList"
                             previewcheck := false;
                             RevenueAllocationPosting.PostRevenueAllocation(revenueallocation, previewcheck, LastDateOfMonth);
 
-                            revenueallocation."BLRStatus" := revenueallocation."BLRStatus"::Approve;
+                            revenueallocation.BLRStatus := revenueallocation.BLRStatus::Approved;
                             approvalRevenuerequest.ApprovalRevenuerequest(Rec);
                             revenueallocation.Modify();
                             Rec."BLRStatus" := Rec."BLRStatus"::Approved;
@@ -160,7 +160,7 @@ page 73209656 "BLRRevenueAllocaApprovalList"
 
                     // Update Credit Note record
                     if revenueallocation.Get(Rec."BLRID") then begin
-                        revenueallocation."BLRStatus" := revenueallocation."BLRStatus"::Reject;
+                        revenueallocation."BLRStatus" := revenueallocation."BLRStatus"::Rejected;
                         approvalRevenuerequest.RejectRevenuerequest(Rec);
                         revenueallocation.Modify();
                         Rec."BLRStatus" := Rec."BLRStatus"::Reject;

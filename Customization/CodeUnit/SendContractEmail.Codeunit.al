@@ -1,4 +1,4 @@
-codeunit 73209606 "Send Contract Email"
+codeunit 73209606 "BLRSend Contract Email"
 {
     procedure SendEmail(Rec: Record "BLRTenancyContract"): Text;
     var

@@ -56,7 +56,7 @@ page 73209613 "BLRTerminated credit note"
                 {
                     Caption = 'Applies-to Doc. Type';
                 }
-                field(approvalStatus; Rec."BLRApproval Status for CreditNote")
+                field(approvalStatus; Rec."BLRApprovalStatusforCreditNote")
                 {
                     Caption = 'Approval Status';
                 }

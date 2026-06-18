@@ -69,7 +69,7 @@ codeunit 73209589 "BLRCredit Memo Generate"
         salesHeader."Due Date" := Today;
         salesHeader."BLRProperty Classification" := pUnitType;
         salesHeader."Posting No. Series" := salesReciveable."Posted Credit Memo Nos.";
-        salesHeader."BLRApproval Status for CreditNote" := SalesHeader."BLRApproval Status for CreditNote"::Approved;
+        salesHeader."BLRApprovalStatusforCreditNote" := SalesHeader."BLRApprovalStatusforCreditNote"::Approved;
         SalesHeader.Validate("Applies-to Doc. Type", SalesHeader."Applies-to Doc. Type"::Invoice);
         SalesHeader.Validate("Applies-to Doc. No.", pInvoiceID);
         salesHeader.Insert();
@@ -141,7 +141,7 @@ codeunit 73209589 "BLRCredit Memo Generate"
         OutStream: OutStream;
         folderName: Text;
     begin
-        if SalesheaderRec."BLRApproval Status for CreditNote" <> SalesheaderRec."BLRApproval Status for CreditNote"::Approved then
+        if SalesheaderRec."BLRApprovalStatusforCreditNote" <> SalesheaderRec."BLRApprovalStatusforCreditNote"::Approved then
             Error('The Sales Credit Memo cannot be posted because the approval status is not "Approved".');
         if not ConfigRecord.FindFirst() then
             Error('Azure configuration is missing. Please set up the SAS URL in the Azure Configuration table.');

@@ -1,4 +1,4 @@
-permissionset 73209575 TablePermission
+permissionset 73209575 BLRCoreMgtPermission
 {
     Assignable = true;
     Permissions = tabledata "BLRAdditionalChargesSub" = RIMD,
@@ -252,12 +252,12 @@ permissionset 73209575 TablePermission
         codeunit BLRRejectSalesInvoice = X,
         codeunit BLRResendUpdateInvoiceFM = X,
         codeunit "BLRSecurityDepositPostingMgt." = X,
-        codeunit "Send Contract Email" = X,
+        codeunit "BLRSend Contract Email" = X,
         codeunit "BLRSend Contract Renewal Email" = X,
         codeunit "BLRSend Credit Memo to Tenant" = X,
         codeunit "BLRSendEmailToPropertyManager" = X,
         codeunit "BLRSend Mail to FM Credit Note" = X,
-        codeunit "Send Payment Receipt" = X,
+        codeunit "BLRSend Payment Receipt" = X,
         codeunit "BLRSend Payment Reciept" = X,
         codeunit "BLRSend PaymentMode Email" = X,
         codeunit "BLRSend Proposal Email" = X,
@@ -273,7 +273,7 @@ permissionset 73209575 TablePermission
         codeunit "BLRContract Renewal Response" = X,
         codeunit "BLRContractStatusSynchronizer" = X,
         codeunit "BLRCopy Item Ext" = X,
-        codeunit "Item Temaplate Management" = X,
+        codeunit "BLRItem Temaplate Management" = X,
         codeunit "BLRPayment Reminder Processor" = X,
         codeunit "BLRProperty Manager Approval" = X,
         codeunit "BLRTenant Loyalty Reminder" = X,
@@ -361,7 +361,7 @@ permissionset 73209575 TablePermission
         codeunit "BLRCreate Excel Report" = X,
         page "BLROtherChargesUnearnedRevenue" = X,
         page "BLRReport Request" = X,
-        page "Revenue Allocation Card" = X,
+        page "BLRRevenue Allocation Card" = X,
         page "BLRRevenue Allocation List" = X,
         page "BLRRevenue Allocation SubGrid" = X,
         page "BLRRevenueRecognitionDetailSub" = X,
@@ -420,7 +420,7 @@ permissionset 73209575 TablePermission
         table "BLRManagementFeeGrid" = X,
         page "BLRInteger List" = X,
         page "BLRSelect Date" = X,
-               tabledata "BLRBaseAmountData" = RIMD,
+        tabledata "BLRBaseAmountData" = RIMD,
         tabledata "BLRBaseAmountDataHeader" = RIMD,
         table "BLRBaseAmountData" = X,
         tabledata "BLRBaseAmountDataUnitWise" = RIMD,
@@ -432,5 +432,6 @@ permissionset 73209575 TablePermission
         tabledata "BLRTCAdditionalTerms" = RIMD,
         table "BLRAdditionalTerms" = X,
         table "BLRRenewalAdditionalTerms" = X,
-        table "BLRTCAdditionalTerms" = X;
+        table "BLRTCAdditionalTerms" = X,
+        table BLRBaseAmountDataHeader = X;
 }

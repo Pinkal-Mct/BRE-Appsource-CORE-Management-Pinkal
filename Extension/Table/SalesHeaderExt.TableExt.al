@@ -78,7 +78,7 @@ tableextension 73209586 "BLRSales Header Ext" extends "Sales Header"
             DataClassification = CustomerContent;
             Caption = 'Property Classification';
         }
-        field(73209590; "BLRApproval Status for CreditNote"; Option)
+        field(73209590; "BLRApprovalStatusforCreditNote"; Option)
         {
             DataClassification = CustomerContent;
             Caption = 'Approval Status';

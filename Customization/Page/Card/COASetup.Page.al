@@ -2,6 +2,7 @@ page 73209620 "BLRCOA Setup"
 {
     PageType = Card;
     ApplicationArea = All;
+    Caption = 'COA Setup';
     UsageCategory = Administration;
     SourceTable = "BLRCOASetup";
 

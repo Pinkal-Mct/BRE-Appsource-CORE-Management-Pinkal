@@ -320,7 +320,7 @@ table 73209702 "BLRTenancyContract"
                 paymentscheule1: Record "BLRPaymentSchedule";
                 paymentschedule3grid: Record "BLRPaymentSchedule2";
                 paymentscheulecard: Record "BLRPaymentSchedule";
-                emailrec: Codeunit "Send Contract Email";
+                emailrec: Codeunit "BLRSend Contract Email";
             begin
                 if Rec."BLRTenant Contract Status" = Rec."BLRTenant Contract Status"::Active then begin
                     if paymentscheule.Get(Rec."BLRContract ID") then begin

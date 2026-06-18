@@ -3,6 +3,7 @@ page 73209669 "BLRVendor Profile Templates"
     PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
+    Caption = 'Vendor Profile Templates';
     SourceTable = "BLRVendorProfileTemplate";
     CardPageId = "BLRVendor Profile Template";
 

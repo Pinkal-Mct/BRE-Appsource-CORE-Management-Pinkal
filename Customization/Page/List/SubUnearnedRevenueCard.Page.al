@@ -119,11 +119,12 @@ page 73209663 "BLRSub Unearned Revenue Card"
                     ToolTip = 'Current balance of the unearned revenue for the contract.';
                     Editable = false;
                 }
-                field(CalculatedUnearnedRevBalance; Rec."BLRCalculatedUnearnedRevB19C1")
+
+                field("G/L Balance"; Rec."BLRG/L Balance")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Calculated unearned revenue balance based on the report data.';
                     Editable = false;
+                    CaptionClass = GLBalanceCaption;
                 }
                 field("Shortfall/Excess"; Rec."BLRShortfall/Excess")
                 {
@@ -134,6 +135,7 @@ page 73209663 "BLRSub Unearned Revenue Card"
             }
         }
     }
+
 
     actions
     {
@@ -155,4 +157,16 @@ page 73209663 "BLRSub Unearned Revenue Card"
             }
         }
     }
+    var
+        GLBalanceCaption: Text;
+
+    trigger onAfterGetCurrRecord()
+    var
+        UnearnedHeader: Record "BLRUnearnedRevenueReport";
+    begin
+        if UnearnedHeader.Get(Rec."BLRHeader No.") then
+            GLBalanceCaption := StrSubstNo('G/L Balance - %1', Format(UnearnedHeader."BLREnding Date Year"))
+        else
+            GLBalanceCaption := 'G/L Balance';
+    end;
 }

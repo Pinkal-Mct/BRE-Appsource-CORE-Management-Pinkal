@@ -1,4 +1,4 @@
-page 73209633 "Revenue Allocation Card"
+page 73209633 "BLRRevenue Allocation Card"
 {
     PageType = Card;
     SourceTable = "BLRRevenueAllocationDetails";
@@ -23,15 +23,26 @@ page 73209633 "Revenue Allocation Card"
                             ClearSubgridData();
                     end;
                 }
-                field(Month; Rec."BLRMonth")
+                field(Month; Rec.BLRMonth)
                 {
                     ApplicationArea = All;
+                    Editable = Rec.BLRStatus = Rec.BLRStatus::Pending;
                     ToolTip = 'Specifies the month for which the revenue allocation is being processed.';
+
+                    trigger OnValidate()
+                    begin
+                        ValidateRecord();
+                    end;
                 }
                 field("Financial Year"; Rec."BLRFinancial Year")
                 {
                     ApplicationArea = All;
+                    Editable = Rec.BLRStatus = Rec.BLRStatus::Pending;
                     ToolTip = 'Specifies the financial year for the revenue allocation.';
+                    trigger OnValidate()
+                    begin
+                        ValidateRecord();
+                    end;
                 }
                 field(Status; Rec."BLRStatus")
                 {
@@ -241,7 +252,8 @@ page 73209633 "Revenue Allocation Card"
 
     trigger OnAfterGetRecord()
     begin
-        CalculateTotals();
+        if (Rec.BLRMonth <> Rec.BLRMonth::" ") and (Rec."BLRFinancial Year" <> 0) then
+            CalculateTotals();
         CurrPage."Revenue Recognition Item Details".Page.SetRIID(Rec."BLRNo.");
         CurrPage."Revenue Recognition Details".Page.SetRIID(Rec."BLRNo.");
     end;
@@ -355,6 +367,15 @@ page 73209633 "Revenue Allocation Card"
         revenueitem.DeleteAll();
     end;
 
+    procedure ValidateRecord()
+    var
+        RevenueAllocation: Record "BLRRevenueAllocationDetails";
+    begin
+        RevenueAllocation.SetRange("BLRMonth", Rec.BLRMonth);
+        RevenueAllocation.SetRange("BLRFinancial Year", Rec."BLRFinancial Year");
+        if not RevenueAllocation.IsEmpty() then
+            Error('Revenue Allocation for the selected month and financial year already exists. Please select a different month or financial year.');
+    end;
 
     //---------------Get Next LineNo--------------//
     procedure GetNextLineNo(): Integer

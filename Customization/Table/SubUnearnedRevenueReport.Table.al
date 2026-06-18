@@ -95,10 +95,10 @@ table 73209694 "BLRSubUnearnedRevenueReport"
             DataClassification = CustomerContent;
             Caption = 'Unearned Revenue Balance';
         }
-        field(73209591; "BLRCalculatedUnearnedRevB19C1"; Decimal)
+        field(73209591; "BLRG/L Balance"; Decimal)
         {
-            DataClassification = CustomerContent;
-            Caption = 'Calculated Unearned Revenue Balance';
+            DataClassification = ToBeClassified;
+            Caption = 'G/L Balance';
         }
         field(73209592; "BLRShortfall/Excess"; Decimal)
         {
@@ -119,7 +119,7 @@ table 73209694 "BLRSubUnearnedRevenueReport"
     }
     keys
     {
-        key(Key1;"BLRHeader No.", "BLRLine No.")
+        key(Key1; "BLRHeader No.", "BLRLine No.")
         {
             Clustered = true;
         }

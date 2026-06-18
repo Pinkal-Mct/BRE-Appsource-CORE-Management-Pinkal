@@ -119,11 +119,12 @@ page 73209662 "BLRSubUnearnedCharges"
                     Editable = false;
                     ToolTip = 'Current balance of unearned revenue for the charges.';
                 }
-                field(CalculatedUnearnedRevBalance; Rec."BLRCalculatedUnearnedRevB19C1")
+                field("G/L Balance"; Rec."BLRG/L Balance")
                 {
                     ApplicationArea = All;
                     Editable = false;
-                    ToolTip = 'Calculated balance of unearned revenue for the charges.';
+                    CaptionClass = GLBalanceCaption;
+                    ToolTip = 'Current G/L balance for the unearned charges, used for reconciliation purposes.';
                 }
                 field("Shortfall/Excess"; Rec."BLRShortfall/Excess")
                 {
@@ -155,4 +156,16 @@ page 73209662 "BLRSubUnearnedCharges"
             }
         }
     }
+    var
+        GLBalanceCaption: Text;
+
+    trigger onAfterGetCurrRecord()
+    var
+        UnearnedHeader: Record "BLRUnearnedRevenueReport";
+    begin
+        if UnearnedHeader.Get(Rec."BLRHeader No.") then
+            GLBalanceCaption := StrSubstNo('G/L Balance - %1', Format(UnearnedHeader."BLREnding Date Year"))
+        else
+            GLBalanceCaption := 'G/L Balance';
+    end;
 }

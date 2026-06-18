@@ -73,13 +73,11 @@ table 73209706 "BLRUnearnedRevenueReport"
             Editable = false;
         }
 
-        field(73209583; "BLRR_T_Cal Unearned RevBalance"; Decimal)
+        field(73209583; "BLRTotal G/L Balance"; Decimal)
         {
-            DataClassification = CustomerContent;
-            Caption = 'Total Calculated Unearned Rev Balance';
+            DataClassification = ToBeClassified;
             Editable = false;
         }
-
         field(73209584; "BLRR_Total Shortfall Excess"; Decimal)
         {
             DataClassification = CustomerContent;
@@ -89,7 +87,7 @@ table 73209706 "BLRUnearnedRevenueReport"
     }
     keys
     {
-        key(PK;"BLRNo.") { Clustered = true; }
+        key(PK; "BLRNo.") { Clustered = true; }
     }
 
 

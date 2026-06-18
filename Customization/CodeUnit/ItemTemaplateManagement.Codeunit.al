@@ -1,4 +1,4 @@
-codeunit 73209594 "Item Temaplate Management"
+codeunit 73209594 "BLRItem Temaplate Management"
 {
     var
         ItemRec: Record Item;
